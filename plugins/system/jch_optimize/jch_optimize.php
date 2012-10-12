@@ -356,7 +356,7 @@ class plgSystemJCH_Optimize extends JPlugin {
             if ($this->aCallbackArgs) {
                 $aExcludes = $this->aCallbackArgs['excludes'];
             }
-            if (!in_array($sFile, $aExcludes)) {
+            if (in_array($sFile, $aExcludes)) {
                 return $aMatches[0];
             } else {
                 if (in_array($sFile, $this->aOrder)) {
