@@ -1,6 +1,10 @@
 *.jpg
+*.JPG
 *.gif
+*.GIF
 *.jpeg
+*.JPEG
 *.png
+*.PNG
 *~
 
