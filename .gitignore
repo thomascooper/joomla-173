@@ -6,5 +6,7 @@
 *.JPEG
 *.png
 *.PNG
+cache/plg_jch_optimize/
+images/
 *~
 

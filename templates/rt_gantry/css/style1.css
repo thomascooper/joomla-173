@@ -661,3 +661,9 @@ div.latestItemsCategory {
     float: left;
     margin: 10px;
 }
+.blank_container {
+	display: none;
+}
+.blank_container .rt-block {
+	display: none;
+}
