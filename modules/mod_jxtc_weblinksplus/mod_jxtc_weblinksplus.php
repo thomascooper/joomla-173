@@ -2,7 +2,7 @@
 /*
 	JoomlaXTC Weblinks Plus Pro
 
-	version 1.0.0
+	version 1.0.1
 
 	Copyright (C) 2008,2009,2010,2011 Monev Software LLC.	All Rights Reserved.
 
@@ -81,21 +81,23 @@ if ($category) {
 	}
 }
 
+$aux = ($sortorder == 0) ? ' ASC ' : ' DESC ';
+
 switch ($sortfield) {
 	case 0: 
 		$query .= ' ORDER BY RAND()';
 	break;
 	case 1: // date
-		$query .= ' ORDER BY wlp.date '.$sortorder;
+		$query .= ' ORDER BY wlp.created'.$aux;
 	break;
 	case 2: // hits
-		$query .= ' ORDER BY wlp.hits '.$sortorder;
+		$query .= ' ORDER BY wlp.hits'.$aux;
 	break;
 	case 3: // Title
-		$query .= ' ORDER BY wlp.title '.$sortorder;
+		$query .= ' ORDER BY wlp.title'.$aux;
 	break;
 	case 4: // ordering
-		$query .= ' ORDER BY wlp.ordering '.$sortorder;
+		$query .= ' ORDER BY wlp.ordering'.$aux;
 	break;
 }
 
@@ -115,4 +117,3 @@ $results = $dispatcher->trigger('onContentPrepare', array ('com_content.article'
 $modulehtml = $item->text;
 echo '<div id="'.$jxtc.'">'.$modulehtml.'</div>';
 ?>
-<!--<div style="display:none"><a href="http://www.joomlaxtc.com">JoomlaXTC Social Group Wall - Copyright 2009,2010 Monev Software LLC</a></div>-->

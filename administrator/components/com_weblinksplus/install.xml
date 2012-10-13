@@ -2,11 +2,11 @@
 <extension type="component" version="1.6" method="upgrade">
     <name>com_weblinksplus</name>
     <author>JoomlaXTC</author>
-    <creationDate>2010-10-22</creationDate>
-    <copyright>Copyright (C) 2010,2011 Monev Software LLC. All rights reserved.</copyright>
+    <creationDate>2012-05-28</creationDate>
+    <copyright>Copyright (C) 2010-2012 Monev Software LLC. All rights reserved.</copyright>
     <license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
     <authorUrl>http://www.joomlaxtc.com</authorUrl>
-    <version>1.0.0</version>
+    <version>1.2.2</version>
     <description>COM_WEBLINKSPLUS_XML_DESCRIPTION</description>
 
     <install> <!-- Runs on install -->

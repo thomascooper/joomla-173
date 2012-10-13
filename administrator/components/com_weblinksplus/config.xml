@@ -7,8 +7,8 @@
             
         <field name="mediasource" type="folderlist" default="media" hide_none="1" hide_default="1" label="Media Source Directory" description="Folder to choose media files from." />
         <field name="mediaObey" type="radio" default="0" label="Valid extensions only" description="If enabled, only files with Joomla! legal extensions and valid for the field will be shown in media browser and accepted for upload. It is recommended to set this parameter to 'Yes' and enable file extensions in the Joomla! system configuration page." >
-          <option value="0">No</option>
-                <option value="1">Yes</option>
+            <option value="0">No</option>
+            <option value="1">Yes</option>
         </field>
         <field name="thumbx" type="text" default="60" label="Automatic Thumbnail Width" description="Width (in pixels) for automatic thumbnails." />
         <field name="thumby" type="text" default="60" label="Automatic Thumbnail Height" description="Height (in pixels) for automatic thumbnails." />
@@ -196,6 +196,23 @@
 		label="JGLOBAL_LIST_LAYOUT_OPTIONS"
 		description="COM_WEBLINKSPLUS_LIST_LAYOUT_DESC"
 	>
+        <field	name="layout" type="list" default="list" label="Layout" description="Select the layout to use">
+                <option value="grid">Grid</option>
+                <option value="list">List</option>
+        </field>
+
+        <field name="showthumbnail" type="radio" default="1" label="Show Thumbnail?" description="Show thumbnail of the weblink" >
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+        </field>
+
+        <field name="fullinmodal" type="radio" default="1" label="Show Full image in modal box?" description="Show the image set in the weblink in a modal box when user click the thumbnail" >
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+        </field>
+
+        <field name="rows" type="text" default="3" label="Rows" description="Select the number of rows to show" />
+        <field name="columns" type="text" default="3" label="Columns" description="Select the number of rows to show." />
 
         <field
 			name="show_pagination_limit"

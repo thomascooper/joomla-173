@@ -167,6 +167,23 @@
 			<field name="spacer2" type="spacer" class="text"
 					label="JGLOBAL_SUBSLIDER_DRILL_CATEGORIES_LABEL"
 			/>
+                        <field	name="layout" type="list" default="list" label="Layout" description="Select the layout to use">
+				<option value="grid">Grid</option>
+				<option value="list">List</option>
+			</field>
+                        
+                        <field name="showthumbnail" type="radio" default="1" label="Show Thumbnail?" description="Show thumbnail of the weblink" >
+                                <option value="0">No</option>
+                                <option value="1">Yes</option>
+                        </field>
+                        
+                        <field name="fullinmodal" type="radio" default="1" label="Show Full image in modal box?" description="Show the image set in the weblink in a modal box when user click the thumbnail" >
+                                <option value="0">No</option>
+                                <option value="1">Yes</option>
+                        </field>
+                        
+                        <field name="rows" type="text" default="3" label="Rows" description="Select the number of rows to show" />
+                        <field name="columns" type="text" default="3" label="Columns" description="Select the number of rows to show." />
 			<field	name="show_pagination_limit" type="list"
 			label="JGLOBAL_DISPLAY_SELECT_LABEL"
 			description="JGLOBAL_DISPLAY_SELECT_DESC">

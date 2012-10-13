@@ -2,7 +2,7 @@
 /*
 	JoomlaXTC weblinks plus Wall
 
-	version 1.0.0
+	version 1.0.1
 
 	Copyright (C) 2008,2009,2010,2011 Monev Software LLC.	All Rights Reserved.
 

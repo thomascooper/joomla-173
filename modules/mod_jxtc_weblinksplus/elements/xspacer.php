@@ -2,7 +2,7 @@
 /*
 	JoomlaXTC XSpacer
 	
-	Version 1.0.0
+	Version 1.0.1
 
 	Copyright (C) 2011  Monev Software LLC.	All Rights Reserved.
 
