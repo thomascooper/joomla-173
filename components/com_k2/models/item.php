@@ -205,7 +205,8 @@ class K2ModelItem extends JModel
 			$item->fulltext= $filter->clean( $item->fulltext );
 		}
 
-		if ($item->params->get('catItemIntroTextWordLimit') && $task=='category'){
+		//if ($item->params->get('catItemIntroTextWordLimit') && $task=='category'){
+		if ($item->params->get('catItemIntroTextWordLimit') && ($task == 'category' || $task == 'user' || $task == 'tag' || $task == 'date' || $task == 'search' || $task == '')){
 			$item->introtext = K2HelperUtilities::wordLimit($item->introtext, $item->params->get('catItemIntroTextWordLimit'));
 		}
 

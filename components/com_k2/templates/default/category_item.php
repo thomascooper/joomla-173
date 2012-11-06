@@ -25,12 +25,6 @@ K2HelperUtilities::setDefaultImage($this->item, 'itemlist', $this->params);
 	<?php echo $this->item->event->K2BeforeDisplay; ?>
 
 	<div class="catItemHeader">
-		<?php if($this->item->params->get('catItemDateCreated')): ?>
-		<!-- Date created -->
-		<span class="catItemDateCreated">
-			<?php echo JHTML::_('date', $this->item->created , JText::_('K2_DATE_FORMAT_LC2')); ?>
-		</span>
-		<?php endif; ?>
 
 	  <?php if($this->item->params->get('catItemTitle')): ?>
 	  <!-- Item title -->
@@ -63,12 +57,6 @@ K2HelperUtilities::setDefaultImage($this->item, 'itemlist', $this->params);
 	  </h3>
 	  <?php endif; ?>
 
-		<?php if($this->item->params->get('catItemAuthor')): ?>
-		<!-- Item Author -->
-		<span class="catItemAuthor">
-			<?php echo K2HelperUtilities::writtenBy($this->item->author->profile->gender); ?> <a rel="author" href="<?php echo $this->item->author->link; ?>"><?php echo $this->item->author->name; ?></a>
-		</span>
-		<?php endif; ?>
   </div>
 
   <!-- Plugins: AfterDisplayTitle -->
@@ -114,9 +102,14 @@ K2HelperUtilities::setDefaultImage($this->item, 'itemlist', $this->params);
 		    </a>
 		  </span>
 		  <div class="clr"></div>
+		<?php if($this->item->params->get('catItemDateCreated')): ?>
+		<!-- Date created -->
+		<span class="catItemDateCreated">
+			<?php echo 'Added ' . JHTML::_('date', $this->item->created , JText::_('K2_DATE_FORMAT_LC2')); ?>
+		</span>
+		<?php endif; ?>
 	  </div>
 	  <?php endif; ?>
-
 	  <?php if($this->item->params->get('catItemIntroText')): ?>
 	  <!-- Item introtext -->
 	  <div class="catItemIntroText">
@@ -124,6 +117,13 @@ K2HelperUtilities::setDefaultImage($this->item, 'itemlist', $this->params);
 	  </div>
 	  <?php endif; ?>
 
+		<?php if($this->item->params->get('catItemAuthor')): ?>
+		<!-- Item Author -->
+<div class='catItemAuthorImg'><img src='<?php echo $this->item->author->avatar; ?>' /></div>
+		<span class="catItemAuthor">
+			<?php echo K2HelperUtilities::writtenBy($this->item->author->profile->gender); ?> <a rel="author" href="<?php echo $this->item->author->link; ?>"><?php echo $this->item->author->name; ?></a>
+		</span>
+		<?php endif; ?>
 		<div class="clr"></div>
 
 	  <?php if($this->item->params->get('catItemExtraFields') && count($this->item->extra_fields)): ?>

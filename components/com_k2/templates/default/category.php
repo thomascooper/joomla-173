@@ -148,7 +148,7 @@ defined('_JEXEC') or die('Restricted access');
 				$lastContainer='';
 			?>
 			
-			<div class="itemContainer<?php echo $lastContainer; ?>"<?php echo (count($this->leading)==1) ? '' : ' style="width:'.number_format(100/$this->params->get('num_leading_columns'), 1).'%;"'; ?>>
+			<div class="<?php echo ($key%2) ? "odd" : "even"; ?> itemContainer<?php echo $lastContainer; ?>"<?php echo (count($this->leading)==1) ? '' : ' style="width:'.number_format(100/$this->params->get('num_leading_columns'), 1).'%;"'; ?>>
 				<?php
 					// Load category_item.php by default
 					$this->item=$item;
@@ -176,7 +176,7 @@ defined('_JEXEC') or die('Restricted access');
 				$lastContainer='';
 			?>
 			
-			<div class="itemContainer<?php echo $lastContainer; ?>"<?php echo (count($this->primary)==1) ? '' : ' style="width:'.number_format(100/$this->params->get('num_primary_columns'), 1).'%;"'; ?>>
+			<div class="<?php echo ($key%2) ? "odd" : "even"; ?> itemContainer<?php echo $lastContainer; ?>"<?php echo (count($this->primary)==1) ? '' : ' style="width:'.number_format(100/$this->params->get('num_primary_columns'), 1).'%;"'; ?>>
 				<?php
 					// Load category_item.php by default
 					$this->item=$item;
@@ -204,7 +204,7 @@ defined('_JEXEC') or die('Restricted access');
 				$lastContainer='';
 			?>
 			
-			<div class="itemContainer<?php echo $lastContainer; ?>"<?php echo (count($this->secondary)==1) ? '' : ' style="width:'.number_format(100/$this->params->get('num_secondary_columns'), 1).'%;"'; ?>>
+			<div class="<?php echo ($key%2) ? "odd" : "even"; ?> itemContainer<?php echo $lastContainer; ?>"<?php echo (count($this->secondary)==1) ? '' : ' style="width:'.number_format(100/$this->params->get('num_secondary_columns'), 1).'%;"'; ?>>
 				<?php
 					// Load category_item.php by default
 					$this->item=$item;
@@ -233,7 +233,7 @@ defined('_JEXEC') or die('Restricted access');
 				$lastContainer='';
 			?>
 
-			<div class="itemContainer<?php echo $lastContainer; ?>"<?php echo (count($this->links)==1) ? '' : ' style="width:'.number_format(100/$this->params->get('num_links_columns'), 1).'%;"'; ?>>
+			<div class="<?php echo ($key%2) ? "odd" : "even"; ?> itemContainer<?php echo $lastContainer; ?>"<?php echo (count($this->links)==1) ? '' : ' style="width:'.number_format(100/$this->params->get('num_links_columns'), 1).'%;"'; ?>>
 				<?php
 					// Load category_item_links.php by default
 					$this->item=$item;

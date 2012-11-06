@@ -73,7 +73,7 @@ height: 19px;
 
 /* Showcase */
 #rt-showcase {
-	height:115px;}
+	height:136px;}
 /* Leaderboard ads */
 #rt-showcase .rt-grid-2 {
         width:230px;
@@ -192,15 +192,7 @@ a#linkbar_godsent_link {
 	margin:3px 5px;
 	border: 2px solid gray
 }
-.linkbar_special {
-	width: 930px;
-	height: 95px;
-	margin-left:10px;
-	margin-right:10px;
-}
-.linkbar_special div {
-	width: 930px !important;
-}
+
 
 .linkbar_top8 {
 	padding: 10px 0 0px 10px;
@@ -229,7 +221,7 @@ a#linkbar_top8_link {
 
 /* Features */
 #rt-feature .rt-container {
-	height:375px;
+	height:244px;
 }
 #rt-feature .rt-grid-4 {
 	margin:0px;
@@ -671,17 +663,13 @@ div.latestItemsCategory {
 }
 .itp-sharepoint-fbl {
     float: left;
-    margin-right: 27px;
+    margin-right: 14px;
     margin-top: 10px;
 	width:60px;
 }
 .itp-sharepoint-digg {
     float: left;
     margin: 10px;
-}
-.itp-sharepoint-pinterest {
-	margin-left: 0px !important;
-	width: 59px;
 }
 .blank_container {
 	display: none;
@@ -692,117 +680,3 @@ div.latestItemsCategory {
 .k2Pagination ul li {
 	margin: 10px;
 }
-.componentheading {
-    color: white;
-    text-transform: uppercase;
-	background:url('/templates/rt_gantry/images/body/title_bg.gif');
-	margin:0px;
-	padding: 5px 10px;
-	border: 2px solid gray;
-	/*font-family: Tahoma;*/
-	font-family: Verdana, Verdana, Geneva, sans-serif;
-	font-weight: bold;
-    letter-spacing: -1px;
-    line-height: 1em;
-    font-size: 170%;
-}
-
-.itemList div div.even {
-	padding: 0px !important;
-	margin-top: 10px;
-	border: 1px solid #CCCCCC;
-	width: 618px !important;
-}
-.itemList div div.odd {
-	padding: 0px !important;
-	margin-top: 10px;
-	border: 1px solid #CCCCCC;
-	width: 618px !important;
-}
-div.itemContainer {
-}
-
-div div.catItemView {
-	padding: 7px 4px 4px 4px;
-}
-div.catItemImageBlock {
-	width:220px;
-	float: left;
-}
-div.catItemIntroText {
-	position: relative;
-	top: 0px;
-	width: 365px;
-	height: 78px;
-	display: block;
-	margin-left:220px;
-        font:16px Verdana;
-        color:gray;
-
-}
-div div.catItemHeader h3.catItemTitle {
-    color: #264040;
-    font-family: Verdana,Verdana,Geneva,sans-serif;
-    font-size: 20px;
-    font-weight: bold;
-    line-height: 20px;
-    margin: 0 10px;
-    padding: 0;
-    text-transform: uppercase;
-}
-div div.catItemHeader h3.catItemTitle a {
-	color: #264040;
-}
-div div.catItemBody {
-	padding: 8px 0px 0px 0px;
-	height:150px;
-	width: 612px;
-}
-div div.catItemImageBlock {
-	margin: 0px;
-	padding: 0px 8px 0px 8px;
-	height: 150px;
-}
-div span.catItemImage {
-	margin: 0px;
-	height: 128px;
-}
-div span.catItemImage a img {
-	height: 110px !important;
-}
-div.catItemAuthorImg {
-	position: relative;
-	float: right;
-	height: 34px;
-	width: 366px;
-	margin-right: 10px;
-}
-div.catItemAuthorImg img {
-	position: absolute;
-	right: 0px;
-	bottom: 0px;
-	width: 33px;
-}
-div.catItemBody span.catItemAuthor {
-	display:block;
-	float: right;
-	margin-right: 10px;
-	    color:#bbbbbb;
-    font-size:90%;
-
-}
-
-/*
-	float: right;
-	position: relative;
-	bottom: 100px;
-}*/
-div.catItemBody span.catItemDateCreated {
-	padding-left: 2px;
-	color:#bbbbbb;
-    	font-size:90%;
-
-}
-
-
-

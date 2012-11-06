@@ -154,7 +154,6 @@ class plgSystemJCH_Optimize extends JPlugin {
             $sCssRegexEnd = ')[^>])+>~ix';
             $sCssRegex = $sCssRegexStart . $sExExtensionsRegex . $sExCompRegex . $sCssRegexEnd;
             $this->sHead = preg_replace_callback($sCssRegex, array($this, 'replaceScripts'), $this->sHead);
-            //print_r($this->aLinks);
             $sNewCssLink = '</title>' . $sLnEnd . $sTab . '<link rel="stylesheet" type="text/css" ';
             $sNewCssLink .= 'href="URL"/>';
 
@@ -221,7 +220,6 @@ class plgSystemJCH_Optimize extends JPlugin {
             $sNewLink = str_replace('URL', $sUrl, $sLink);
             $this->replaceLink($sNewLink, $sType, $iCnt);
         }
-        //print_r($sFile);
         return $sId;
     }
 
@@ -530,7 +528,6 @@ class plgSystemJCH_Optimize extends JPlugin {
     protected function replaceImports($sCss, $sLnEnd) {
         unset($this->aLinks);
         $this->aCallbackArgs = array();
-        // print_r($sCss);
         $sImportCss = '';
         $sCss = preg_replace_callback('~@import.*?url\([\'"]?(.*?/([^/]+\.css))[\'"]?\);~i', array($this, 'replaceScripts'), $sCss);
         if (!empty($this->aLinks)) {
@@ -623,7 +620,6 @@ class plgSystemJCH_Optimize extends JPlugin {
         $sRegex = $sDelStart . $sRegexStart . $sMinMaxRegex . $sExImagesRegex . $sRegexEnd . $sIncImagesRegex . $sDelEnd;
 
         $iResult = preg_match_all($sRegex, $sCss, $aMatches);
-        //print_r($aMatches);
         if ($iResult <= 0) {
             return $sCss;
         }
@@ -632,8 +628,6 @@ class plgSystemJCH_Optimize extends JPlugin {
 
         $aDeclaration = $aMatches[2];
         $aImages = $aMatches[4];
-        //print_r($aDeclaration);
-        //print_r($sImages);
         $aFormValues = array();
         $aFormValues['wrap-columns'] = $this->params->get('csg_wrap_images', 'off');
         $aFormValues['build-direction'] = $this->params->get('csg_direction', 'vertical');
@@ -643,7 +637,6 @@ class plgSystemJCH_Optimize extends JPlugin {
 
         $oSpriteGen->CreateSprite($aImages);
         $aSpriteCss = $oSpriteGen->GetCssBackground();
-        //print_r($aSpriteCss);
         $aNeedles = array();
         $aReplacements = array();
         $sImageSelector = '';
