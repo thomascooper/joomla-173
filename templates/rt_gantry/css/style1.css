@@ -441,9 +441,9 @@ span.itemImage img {
     padding: 0 0 0 15px;
     width: 110px;
 }
-/* .fb-like {
+ .fb-like {
 	height:33px;
-        background: rgb(0, 0, 0); *//* fallback color *//*
+        background: rgb(0, 0, 0); /* fallback color */
         background: rgba(0, 0, 0, 0.7);
     bottom: 0px;
     left: 0;
@@ -455,7 +455,7 @@ span.itemImage img {
 }
 .fb_ltr {
 	top:5px;
-}*/
+}
 #rt-showcase .rt-grid-2 .rt-block {
 	margin:0px;
 	padding:0px;
@@ -469,9 +469,9 @@ background-size: 100%;
 .widget_table {
 	background: transparent !important;
 }
-.widget_table td {
+/*.widget_table td {
 	padding-right: 20px !important;
-}
+}*/
 .menutop {
 	top: 74px !important;
 	left: 309px !important;
@@ -542,7 +542,9 @@ background-size: 100%;
 }
 .sharepoint {
 	float:right;
-	margin-right:25px;
+	margin-bottom:7px;
+	width:100%;
+	text-align:center;
 }
 .linkbar_nailed_it {
         padding:0px;

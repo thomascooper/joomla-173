@@ -136,6 +136,7 @@ abstract class WeblinksplusHelperRoute
 
 			$component	= JComponentHelper::getComponent('com_weblinksplus');
 			$items		= $menus->getItems('component_id', $component->id);
+			if (is_array($items)){
 			foreach ($items as $item)
 			{
 				if (isset($item->query) && isset($item->query['view'])) {
@@ -149,6 +150,7 @@ abstract class WeblinksplusHelperRoute
 						self::$lookup[$view][$item->query['id']] = $item->id;
 					}
 				}
+			}
 			}
 		}
 

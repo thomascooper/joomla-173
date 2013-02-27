@@ -195,7 +195,18 @@ defined('_JEXEC') or die('Restricted access');
 
   <div class="itemBody">
 
-<div class="sharepoint">{itpsharepoint}</div>
+<div class="sharepoint">
+<!--{itpsharepoint}-->
+<div class="pw-widget pw-counter-horizontal" pw:image="[IMAGEURL]">
+	<a class="pw-button-facebook pw-look-native"></a>
+	<a class="pw-button-twitter pw-look-native"></a>
+	<a class="pw-button-stumbleupon"></a>
+	<a class="pw-button-reddit"></a>
+	<a class="pw-button-pinterest pw-look-native"></a>
+	<a class="pw-button-post-share"></a>
+</div>
+<script src="http://i.po.st/share/script/post-widget.js#publisherKey=gqdvak94kfmf6dr3fvi8" type="text/javascript"></script>
+</div>
 	  <!-- Plugins: BeforeDisplayContent -->
 	  <?php echo $this->item->event->BeforeDisplayContent; ?>
 
@@ -671,3 +682,46 @@ defined('_JEXEC') or die('Restricted access');
 	<div class="clr"></div>
 </div>
 <!-- End K2 Item Layout -->
+<h2 class="itemTitle">Trending This Week</h2>
+<script type='text/javascript'>
+
+var _CI = _CI || {};
+
+(function() {
+
+var script = document.createElement('script');
+
+ref = document.getElementsByTagName('script')[0];
+
+_CI.counter = (_CI.counter) ? _CI.counter + 1 : 1;
+
+document.write('<div id="_CI_widget_');
+
+document.write(_CI.counter+'"></div>');
+
+script.type = 'text/javascript';
+
+script.src = 'http://widget.crowdignite.com/widgets/2785?_ci_wid=_CI_widget_'+_CI.counter;
+
+script.async = true;
+
+ref.parentNode.insertBefore(script, ref);
+
+})(); </script>
+
+
+<style>
+
+#_ci_widget_div_2785 table{background:none repeat scroll 0 0 #FFF;border-spacing:0;width:620px;}
+
+#widget_table_2785 td{display:inline-block;padding-bottom:20px!important;position:relative;text-align:center;width:155px;}
+
+#widget_table_2785 a{color:#FFF!important;font-family:Arial;}
+
+#widget_table_2785 img{border:2px solid #000;}
+
+#widget_table_2785 div{background:none repeat scroll 0 0 #000!important;bottom:22px!important;display:inline-block!important;left:12px!important;opacity:0.7;padding:4px!important;position:absolute;width:123px!important;}
+
+</style>
+<h2 class="itemTitle">Hot This Month</h2>
+<script src="http://theslingshot.com/w/207/125/js"></script>

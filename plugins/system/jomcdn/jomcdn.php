@@ -500,8 +500,12 @@ class plgSystemJomCDN extends JPlugin
 			}
 
 			$patterns[] = $file->file;
+
+			$bignum = hexdec( substr(sha1($rfile), 0, 15) );
+			$smallnum = $bignum % 8;
+			$smallnum = $smallnum + 1;
 			
-			$local_cdn = 'cdn' . rand(1,20) . '.worldwideinterweb.com';
+			$local_cdn = 'cdn' . $smallnum . '.worldwideinterweb.com';
 
 			$rfile = str_replace('647638c5baf556fb5e95-54f302612dceee29987c68f812383765.r29.cf2.rackcdn.com',$local_cdn,$rfile);
 

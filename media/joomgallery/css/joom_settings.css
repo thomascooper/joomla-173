@@ -70,19 +70,3 @@ height:125px;
   width:500px; /* Set to gallery width, in px or percentage */
   height:150px;/* Set to gallery height */
 }
-
-/* Special view - Toplists*/
-.jg_topelement, .jg_favelement {
-  width:99%;
-  height:auto;
-
-}
-.jg_topelem_photo, .jg_favelem_photo {
-  width:49%;
-  float:left;
-}
-.jg_topelem_txt, .jg_favelem_txt {
-  text-align:left !important;
-  width:49%;
-  float:left;
-}

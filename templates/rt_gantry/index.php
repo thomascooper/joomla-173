@@ -24,22 +24,6 @@ require_once('lib/gantry/gantry.php');
         ?>
     </head>
     <body <?php echo $gantry->displayBodyTag(); ?>>
-<!--<script type="text/javascript">
-window.Meebo||function(c){function p(){return["<",i,' onload="var d=',g,";d.getElementsByTagName('head')[0].",
-j,"(d.",h,"('script')).",k,"='//cim.meebo.com/cim?iv=",a.v,"&",q,"=",c[q],c[l]?
-"&"+l+"="+c[l]:"",c[e]?"&"+e+"="+c[e]:"","'\"></",i,">"].join("")}var f=window,
-a=f.Meebo=f.Meebo||function(){(a._=a._||[]).push(arguments)},d=document,i="body",
-m=d[i],r;if(!m){r=arguments.callee;return setTimeout(function(){r(c)},100)}a.$=
-{0:+new Date};a.T=function(u){a.$[u]=new Date-a.$[0]};a.v=5;var j="appendChild",
-h="createElement",k="src",l="lang",q="network",e="domain",n=d[h]("div"),v=n[j](d[h]("m")),
-b=d[h]("iframe"),g="document",o,s=function(){a.T("load");a("load")};f.addEventListener?
-f.addEventListener("load",s,false):f.attachEvent("onload",s);n.style.display="none";
-m.insertBefore(n,m.firstChild).id="meebo";b.frameBorder="0";b.name=b.id="meebo-iframe";
-b.allowTransparency="true";v[j](b);try{b.contentWindow[g].open()}catch(w){c[e]=
-d[e];o="javascript:var d="+g+".open();d.domain='"+d.domain+"';";b[k]=o+"void(0);"}try{var t=
-b.contentWindow[g];t.write(p());t.close()}catch(x){b[k]=o+'d.write("'+p().replace(/"/g,
-'\\"')+'");d.close();'}a.T(1)}({network:"worldwideinterweb_na32ja"});
-</script>-->
         <?php /** Begin Drawer **/ if ($gantry->countModules('drawer')) : ?>
         <div id="rt-drawer">
             <div class="rt-container">
@@ -159,6 +143,35 @@ b.contentWindow[g];t.write(p());t.close()}catch(x){b[k]=o+'d.write("'+p().replac
 
 		parentDiv.insertBefore(sPage, sContent.nextSibling);
 	</script>
+<!-- MANUAL::Start CI slider -->
+	<div style="background:url(http://worldwideinterweb.com/templates/rt_gantry/images/body/title_bg.gif);padding-right:0;position:fixed;right:0;bottom:33px;height:125px;width:290px;">
+	<div style="color:#E3E1A3;font-family:helvetica,Arial,sans-serif;font-size:17px;font-weight:700;margin:5px;">AROUND THE WEB<a href="#" onclick="jQuery(this).parent().parent().remove();" style="display:inline-block;float:right; font-weight:normal; color:#fff; text-decoration:none;">[x]</a></div><script type='text/javascript'>
+	var _CI = _CI || {};
+	(function() {
+	var script = document.createElement('script');
+	ref = document.getElementsByTagName('script')[0];
+	_CI.counter = (_CI.counter) ? _CI.counter + 1 : 1;
+	document.write('<div id="_CI_widget_');
+	document.write(_CI.counter+'"></div>');
+	script.type = 'text/javascript';
+	script.src = 'http://widget.crowdignite.com/widgets/28257?_ci_wid=_CI_widget_'+_CI.counter;
+	script.async = true;
+	ref.parentNode.insertBefore(script, ref);
+	})(); </script>
+	<style>
+	#widget_table_28257{border-spacing:0!important;display:block;table-layout:fixed;background:#fff!important;margin:5px!important;}
+	#widget_table_28257 tr{height:85px;width:290px;display:inline-block;float:left;margin:0;padding:0;}
+	#widget_table_28257 tr td{height:75px;min-width:270px;width:270px;display:block;float:left;margin:0;padding:5px;text-align:left;}
+	#widget_table_28257 tr td>br{display:none;}
+	#widget_table_28257 tr td>a{float:left;margin-right:5px;}
+	#widget_table_28257 tr td>div{margin:3px 0 0 5px!important;width:185px!important;clear:none!important;display:block;float:left;}
+	#widget_table_28257 tr td>div a{display:inline;}
+	#widget_table_28257 img{border:0 none;}
+	#widget_table_28257 a{color:#441F01!important;font-family:tahoma,sans-serif;font-weight:700;text-decoration:none;}
+	#widget_table_28257 a:hover{text-decoration:underline;}
+	</style>
+<!-- MANUAL::End CI slider -->
+</div>
 	</body>
 </html>
 <?php
