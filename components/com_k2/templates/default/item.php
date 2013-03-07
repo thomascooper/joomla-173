@@ -724,4 +724,6 @@ ref.parentNode.insertBefore(script, ref);
 
 </style>
 <h2 class="itemTitle">Hot This Month</h2>
-<script src="http://theslingshot.com/w/207/125/js"></script>
+<!-- MANUAL::knowd traffic start-->
+<div id="knowd-widget-207"></div><script async="async" src="http://knowd.com/w/207.js?swid=125&heid=knowd-widget-207"></script>
+<!-- MANUAL::knowd traffic end-->
