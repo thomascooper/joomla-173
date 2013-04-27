@@ -143,34 +143,9 @@ require_once('lib/gantry/gantry.php');
 
 		parentDiv.insertBefore(sPage, sContent.nextSibling);
 	</script>
-<!-- MANUAL::Start CI slider -->
-	<div style="background:url(http://worldwideinterweb.com/templates/rt_gantry/images/body/title_bg.gif);padding-right:0;position:fixed;right:0;bottom:33px;height:125px;width:290px;">
-	<div style="color:#E3E1A3;font-family:helvetica,Arial,sans-serif;font-size:17px;font-weight:700;margin:5px;">AROUND THE WEB<a href="#" onclick="jQuery(this).parent().parent().remove();" style="display:inline-block;float:right; font-weight:normal; color:#fff; text-decoration:none;">[x]</a></div><script type='text/javascript'>
-	var _CI = _CI || {};
-	(function() {
-	var script = document.createElement('script');
-	ref = document.getElementsByTagName('script')[0];
-	_CI.counter = (_CI.counter) ? _CI.counter + 1 : 1;
-	document.write('<div id="_CI_widget_');
-	document.write(_CI.counter+'"></div>');
-	script.type = 'text/javascript';
-	script.src = 'http://widget.crowdignite.com/widgets/28257?_ci_wid=_CI_widget_'+_CI.counter;
-	script.async = true;
-	ref.parentNode.insertBefore(script, ref);
-	})(); </script>
-	<style>
-	#widget_table_28257{border-spacing:0!important;display:block;table-layout:fixed;background:#fff!important;margin:5px!important;}
-	#widget_table_28257 tr{height:85px;width:290px;display:inline-block;float:left;margin:0;padding:0;}
-	#widget_table_28257 tr td{height:75px;min-width:270px;width:270px;display:block;float:left;margin:0;padding:5px;text-align:left;}
-	#widget_table_28257 tr td>br{display:none;}
-	#widget_table_28257 tr td>a{float:left;margin-right:5px;}
-	#widget_table_28257 tr td>div{margin:3px 0 0 5px!important;width:185px!important;clear:none!important;display:block;float:left;}
-	#widget_table_28257 tr td>div a{display:inline;}
-	#widget_table_28257 img{border:0 none;}
-	#widget_table_28257 a{color:#441F01!important;font-family:tahoma,sans-serif;font-weight:700;text-decoration:none;}
-	#widget_table_28257 a:hover{text-decoration:underline;}
-	</style>
-<!-- MANUAL::End CI slider -->
+<!-- MANUAL::Start knowd slider -->
+<div id="knowd-widget-266"></div><script async="async" src="http://knowd.com/w/266.js?swid=125&heid=knowd-widget-266"></script>
+<!-- MANUAL::End knowd slider -->
 </div>
 	</body>
 </html>
