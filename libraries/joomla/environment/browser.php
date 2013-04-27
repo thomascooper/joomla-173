@@ -494,7 +494,11 @@ class JBrowser extends JObject
 					}
 					// Set browser version, not engine version
 					preg_match('|Version[/ ]([0-9.]+)|', $this->_agent, $version);
-					list($this->_majorVersion, $this->_minorVersion) = explode('.', $version[1]);
+					if (isset($version[1])) {
+						list($this->_majorVersion, $this->_minorVersion) = explode('.', $version[1]);
+					}else{
+						list($this->_majorVersion, $this->_minorVersion) = array('0'=>'0');
+					}
 				} else {
 					// Konqueror.
 					$this->setFeature('javascript', 1.5);
