@@ -10,7 +10,7 @@ class JConfig {
 	public $debug = '0';
 	public $debug_lang = '0';
 	public $dbtype = 'mysqli';
-	public $host = '10.182.98.61';
+	public $host = '10.1.1.35';
 	public $user = 'joomla_user';
 	public $password = 'CHu=ukaW?a_w';
 	public $db = 'joomla_db';
@@ -49,10 +49,13 @@ class JConfig {
 	public $sef_suffix = '1';
 	public $unicodeslugs = '0';
 	public $feed_limit = '10';
-	public $log_path = '/var/www/html/www.worldwideinterweb.com/htdocs/logs';
-	public $tmp_path = '/var/www/html/www.worldwideinterweb.com/htdocs/tmp';
+	public $log_path = '/var/logs/httpd';
+	public $tmp_path = '/tmp';
 	public $lifetime = '75';
 	public $session_handler = 'database';
+	// re-enable for memcache
+	//public $session_handler = 'memcache';
+	//public $memcache_settings = 'a:3:{s:10:"persistent";s:1:"0";s:11:"compression";s:1:"0";s:7:"servers";a:1:{i:0;a:2:{s:4:"host";s:9:"10.1.1.36";s:4:"port";s:5:"11211";}}}';
 	public $MetaRights = 'Copyright © 2012 Team Party Worldwide, LLC. All Rights Reserved.';
 	public $sitename_pagetitles = '0';
 	public $force_ssl = '0';
