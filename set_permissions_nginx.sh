@@ -19,39 +19,39 @@ if [ $B = 1 ]
 then
 echo "Setting Permissions.. for user: $C and user:apache"
 
-chown $C:apache administrator/components
-chown $C:apache administrator/language
-chown $C:apache administrator/language/en-GB
-chown $C:apache administrator/language/overrides
-chown $C:apache administrator/manifests/files
-chown $C:apache administrator/manifests/libraries
-chown $C:apache administrator/manifests/packages
-chown $C:apache administrator/modules
-chown $C:apache administrator/templates
-chown $C:apache components
-chown $C:apache -R images
-chown $C:apache images/banners
-chown $C:apache images/sampledata
-chown $C:apache language
-chown $C:apache language/en-GB
-chown $C:apache language/overrides
-chown $C:apache libraries
-chown $C:apache -R media
-chown $C:apache modules
-chown $C:apache plugins
-chown $C:apache plugins/authentication
-chown $C:apache plugins/content
-chown $C:apache plugins/editors
-chown $C:apache plugins/editors-xtd
-chown $C:apache plugins/extension
-chown $C:apache plugins/search
-chown $C:apache plugins/system
-chown $C:apache plugins/user
-chown $C:apache tmp
-chown $C:apache logs
-chown $C:apache templates
-chown $C:apache -R cache
-chown $C:apache administrator/cache
+chown nginx:nginx administrator/components
+chown nginx:nginx administrator/language
+chown nginx:nginx administrator/language/en-GB
+chown nginx:nginx administrator/language/overrides
+chown nginx:nginx administrator/manifests/files
+chown nginx:nginx administrator/manifests/libraries
+chown nginx:nginx administrator/manifests/packages
+chown nginx:nginx administrator/modules
+chown nginx:nginx administrator/templates
+chown nginx:nginx components
+chown nginx:nginx -R images
+chown nginx:nginx images/banners
+chown nginx:nginx images/sampledata
+chown nginx:nginx language
+chown nginx:nginx language/en-GB
+chown nginx:nginx language/overrides
+chown nginx:nginx libraries
+chown nginx:nginx -R media
+chown nginx:nginx modules
+chown nginx:nginx plugins
+chown nginx:nginx plugins/authentication
+chown nginx:nginx plugins/content
+chown nginx:nginx plugins/editors
+chown nginx:nginx plugins/editors-xtd
+chown nginx:nginx plugins/extension
+chown nginx:nginx plugins/search
+chown nginx:nginx plugins/system
+chown nginx:nginx plugins/user
+chown nginx:nginx -R tmp
+chown nginx:nginx logs
+chown nginx:nginx templates
+chown nginx:nginx -R cache
+chown nginx:nginx administrator/cache
 
 chmod 770 administrator/components
 chmod 770 administrator/language
