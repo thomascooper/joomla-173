@@ -52,10 +52,9 @@ class JConfig {
 	public $log_path = '/var/logs/httpd';
 	public $tmp_path = '/tmp';
 	public $lifetime = '75';
-	public $session_handler = 'database';
-	// re-enable for memcache
-	//public $session_handler = 'memcache';
-	//public $memcache_settings = 'a:3:{s:10:"persistent";s:1:"0";s:11:"compression";s:1:"0";s:7:"servers";a:1:{i:0;a:2:{s:4:"host";s:9:"10.1.1.36";s:4:"port";s:5:"11211";}}}';
+	//public $session_handler = 'database';
+	public $session_handler = 'memcache';
+	public $memcache_settings = 'a:3:{s:10:"persistent";s:1:"0";s:11:"compression";s:1:"0";s:7:"servers";a:1:{i:0;a:2:{s:4:"host";s:9:"10.1.1.36";s:4:"port";s:5:"11211";}}}';
 	public $MetaRights = 'Copyright © 2012 Team Party Worldwide, LLC. All Rights Reserved.';
 	public $sitename_pagetitles = '0';
 	public $force_ssl = '0';
