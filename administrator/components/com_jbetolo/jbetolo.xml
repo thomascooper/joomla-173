@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="component" version="2.5" method="upgrade">
+	<name>jbetolo</name>
+	<author>jproven.com</author>
+        <creationDate>April 2013</creationDate>
+	<copyright>Copyright (C) 2013 jproven.com. All rights reserved. </copyright>
+	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
+        <authorEmail>info@jproven.com</authorEmail>
+	<authorUrl>http://www.jproven.com</authorUrl>
+	<version>2.5.0.44e92e4</version>
+	<description>jbetolo is a front-end optimization extension</description>
+	<files folder="components/com_jbetolo">
+		<filename>index.html</filename>
+		<filename>jbetolo.php</filename>
+	</files>
+        <!--<install><sql><file driver="mysqli" charset="utf8">setup/install.mysqli.sql</file></sql></install>
+        <uninstall><sql><file driver="mysqli" charset="utf8">setup/uninstall.mysqli.sql</file></sql></uninstall>-->
+	<administration>
+                <menu>jbetolo</menu>                
+                <files folder="administrator/components/com_jbetolo">
+                        <filename>index.html</filename>
+                        <filename>jbetolo.php</filename>
+                        <folder>helpers</folder>
+                        <folder>setup</folder>
+                </files>
+		<languages folder="administrator/language">
+			<language tag="en-GB">en-GB/en-GB.com_jbetolo.ini</language>
+			<language tag="en-GB">en-GB/en-GB.com_jbetolo.sys.ini</language>
+		</languages>
+	</administration>
+        <additional>
+                <plugin name="jbetolo" folder="plugins/system/jbetolo" group="system">jbetolo system plugin</plugin>
+        </additional>
+        <scriptfile>script.jbetolo.php</scriptfile>
+</extension>

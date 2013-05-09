@@ -1,0 +1,18 @@
+
+# @version:	2.5.0.44e92e4 - 2013 April 08 08:34:00 +0300
+# @package:	jbetolo
+# @subpackage:	jbetolo
+# @copyright:	Copyright (C) 2010 - 2013 jproven.com. All rights reserved. 
+# @license:	GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
+
+
+<FilesMatch "\.(css|js|eot|ttf|svg|otf)$">
+        FileETag None
+        <IfModule mod_headers.c>
+                Header set X-Powered-By "jbetolo/2.0"
+        </IfModule>
+</FilesMatch>
+
+Options +FollowSymLinks
+RewriteEngine On
+RewriteRule (.*) HTTP_HOST_REPLACEindex.php?option=com_jbetolo&task=serve&cfile=$1 [L]
