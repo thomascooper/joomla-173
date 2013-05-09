@@ -519,14 +519,14 @@ class JCache extends JObject
 
 		// Make sure the module buffer is an array.
 		if (!isset($buffer1['module']) || !is_array($buffer1['module'])) {
-			$buffer1['module'] = array();
+			$buffer1['module'] = NULL;
 		}
 
 		// View body data
 		$cached['body'] = $data;
 
 		// Document head data
-		if ($loptions['nohead'] != 1) {
+		if ($loptions['nohead'] != 1 && method_exists($document,'getHeadData')) {
 			$cached['head'] = $document->getHeadData();
 
 			if ($loptions['modulemode'] == 1) {
@@ -551,11 +551,15 @@ class JCache extends JObject
 
 			// Make sure the module buffer is an array.
 			if (!isset($buffer2['module']) || !is_array($buffer2['module'])) {
-				$buffer2['module'] = array();
+				$buffer2['module'] = NULL;
 			}
 
 			// Compare the second module buffer against the first buffer.
-			$cached['module'] = array_diff_assoc($buffer2['module'], $buffer1['module']);
+			if(is_array($buffer2) && is_array($buffer1)) {
+				if(is_array($buffer2['module']) && is_array($buffer1['module'])) {
+					$cached['module'] = array_diff_assoc($buffer2['module'], $buffer1['module']);
+				}
+			}
 		}
 
 		return $cached;
