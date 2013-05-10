@@ -46,7 +46,7 @@ RewriteRule .* index.php [F]
 # www redirect (or vice versa), place that code here. Ensure those
 # redirects use the correct RewriteRule syntax and the [R=301,L] flags.
 #
-RewriteCond %{HTTP_HOST} !^www\.worldwideinterweb\.com
+RewriteCond %{HTTP_HOST} !^(www\.worldwideinterweb\.com|10.1.1.3.)
 #RewriteCond %{HTTP_HOST} !^10.1.1.3.
 RewriteRule ^(.*)$ http://www.worldwideinterweb.com/$1 [R=301,L,QSA]
 
