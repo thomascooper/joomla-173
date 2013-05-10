@@ -138,13 +138,13 @@ if ($realpages) {
 	}
 	// FX
 	$jxtcsettings = "{opacityin:$nptipoi,opacityout:$nptipoo,verticalin:$nptipvi,verticalout:$nptipvo,horizontalin:$nptiphi,horizontalout:$nptipho,durationin:$nptipdi,durationout:$nptipdo,pause:$nptpause,fxtype:new ".($nptipAnim=='linear' ? "Fx.Transition(Fx.Transitions.linear)" : "Fx.Transition(Fx.Transitions.$nptipAnim.$nptipEase)").",centered:'$nptipCenter'}";
-	$doc->addScript('/media/JoomlaXTC/showcaseFX.js');
-	$doc->addScriptDeclaration("window.addEvent('load', function(){ // ".$module->id."
-	var ".$jxtc."slidebox = new slidebox('$jxtc','$sbFX',$sbObj,$sbTran);
-	var ".$jxtc."jxtcpops = new jxtcpops('$jxtc',$jxtcsettings);
-	var ".$jxtc."jxtctips = new jxtctips('$jxtc',$jxtcsettings);
-	var ".$jxtc."jxtchover = new jxtchover('$jxtc','$hoi','$hoo');
-	});");
+	//$doc->addScript('/media/JoomlaXTC/showcaseFX.js');
+	//$doc->addScriptDeclaration("window.addEvent('load', function(){ // ".$module->id."
+	//var ".$jxtc."slidebox = new slidebox('$jxtc','$sbFX',$sbObj,$sbTran);
+	//var ".$jxtc."jxtcpops = new jxtcpops('$jxtc',$jxtcsettings);
+	//var ".$jxtc."jxtctips = new jxtctips('$jxtc',$jxtcsettings);
+	//var ".$jxtc."jxtchover = new jxtchover('$jxtc','$hoi','$hoo');
+	//});");
 	$tType=array('','linear','Quad','Cubic','Quart','Quint','Expo','Circ','Sine','Back','Bounce','Elastic');
 	$tEase=array('','easeIn','easeOut','easeInOut');
 	

@@ -68,7 +68,7 @@ class GantryFusionLayout extends AbstractRokMenuLayout
 
         if ($gantry->browser->name == 'ie' && $effect == 'slide and fade') $effect = "slide";
 
-        if ($enablejs) {
+        if ($enablejs == 'x') {
             $gantry->addScript($gantry->baseUrl . 'modules/mod_roknavmenu/themes/fusion/js/fusion.js');
             ob_start();
             ?>

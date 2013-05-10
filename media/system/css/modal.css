@@ -26,7 +26,7 @@
 	overflow: visible;
 	padding: 10px;
 	/* invalid values, but looks smoother! */
-	-moz-border-radius: 3px;
+	/*-moz-border-radius: 3px;*/
 	-webkit-border-radius: 3px;
 	border-radius: 3px;
 }
@@ -88,7 +88,7 @@
 /* Shadows */
 #sbox-window.shadow {
 	-webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
-	-moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+	/*-moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);*/
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
 }
 

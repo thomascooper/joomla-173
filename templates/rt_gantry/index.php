@@ -22,6 +22,8 @@ require_once('lib/gantry/gantry.php');
             $gantry->displayHead();
             $gantry->addStyles(array('template.css','joomla.css','style.css'));
         ?>
+<script src="http://jquery-ui.googlecode.com/svn/tags/latest/ui/minified/jquery-ui.min.js"></script>
+<script src="http://jquery-ui.googlecode.com/svn/tags/latest/ui/minified/jquery.effects.core.min.js"></script>
     </head>
     <body <?php echo $gantry->displayBodyTag(); ?>>
         <?php /** Begin Drawer **/ if ($gantry->countModules('drawer')) : ?>
@@ -134,7 +136,7 @@ require_once('lib/gantry/gantry.php');
 		<?php /** Begin Analytics **/ if ($gantry->countModules('analytics')) : ?>
 		<?php echo $gantry->displayModules('analytics','basic','basic'); ?>
 		<?php /** End Analytics **/ endif; ?>
-	<script type='text/javascript'>
+<!--	<script type='text/javascript'>
 		var sPage = document.getElementById("k2-pagination");
 
 		var sContent = document.getElementById("rt-content-bottom");
@@ -143,6 +145,7 @@ require_once('lib/gantry/gantry.php');
 
 		parentDiv.insertBefore(sPage, sContent.nextSibling);
 	</script>
+-->
 <!-- MANUAL::Start knowd slider -->
 <div id="knowd-widget-266"></div><script async="async" src="http://knowd.com/w/266.js?swid=125&heid=knowd-widget-266"></script>
 <!-- MANUAL::End knowd slider -->
