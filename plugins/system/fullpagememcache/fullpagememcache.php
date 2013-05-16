@@ -24,12 +24,8 @@ class  plgSystemFullPageMemcache extends JPlugin
 
 			$namespace = '__ns__'.$_SERVER['HTTP_HOST'];
 			$key = $namespace.md5($_SERVER['REQUEST_METHOD'] . ' '. $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].$_SERVER['HTTP_USER_AGENT']) . 0;
-			#$key = $namespace.md5($_SERVER['HTTP_USER_AGENT']) . 0;
-			#$key = $namespace.$_SERVER['REQUEST_METHOD'] . '%20'. $_SERVER['HTTP_HOST'] . $req_token . 0;
 
 			$buffer = JResponse::toString($mainframe->getCfg('gzip'));
-			//$buffer = JResponse::toString(false);
-			#$data = "EXTRACT_HEADERS\r\nContent-Type: text/html; charset=UTF-8\r\n";
 			$data = "EXTRACT_HEADERS\r\nContent-Type: gzip; charset=UTF-8\r\n";
 			$data .= "\r\n";
 			$data .= $buffer."\r\n";
