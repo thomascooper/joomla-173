@@ -11,7 +11,7 @@ class  plgSystemFullPageMemcache extends JPlugin
 	}
 
 	function onAfterRender() {
-		//if(class_exists('Memcached')) {
+		if(class_exists('Memcached')) {
 			$mainframe = JFactory::getApplication();
 			$req_token = str_replace(' ','%20',$_SERVER['REQUEST_URI'].$_SERVER['HTTP_USER_AGENT']);
 			$utf_token = mb_convert_encoding($req_token, "UTF-8");
@@ -37,5 +37,5 @@ class  plgSystemFullPageMemcache extends JPlugin
 			$duration = $minutes * 60;
 			$ret = $m->add($key,$data,$duration);
 		}
-	//}
+	}
 }
