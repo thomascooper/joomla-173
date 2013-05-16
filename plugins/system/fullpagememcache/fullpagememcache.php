@@ -31,7 +31,11 @@ class  plgSystemFullPageMemcache extends JPlugin
 			$data .= $buffer."\r\n";
 			$data .= '<!-- Memcached using key:'.$key.' @ '.date('Y-m-d H:i:s').' uri: '.$_SERVER['REQUEST_URI'].' //-->';
 
-			$ret = $m->add($key,$data,7200);
+			// Set duration in minutes
+			$minutes = 15;
+
+			$duration = $minutes * 60;
+			$ret = $m->add($key,$data,$duration);
 		}
 	//}
 }
