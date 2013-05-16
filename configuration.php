@@ -38,7 +38,7 @@ class JConfig {
 	public $smtphost = 'localhost';
 	public $smtpsecure = 'none';
 	public $smtpport = '25';
-	public $caching = '1';
+	public $caching = '0';
 	public $cache_handler = 'apc';
 	public $cachetime = '15';
 	public $MetaDesc = 'World Wide Interweb. It\'s basically the internet and stuff. You know... funny original videos, photo galleries based on some sort of like super cool themes. That sort of thing.';
@@ -52,7 +52,6 @@ class JConfig {
 	public $log_path = '/var/logs/httpd';
 	public $tmp_path = '/tmp';
 	public $lifetime = '75';
-	//public $session_handler = 'database';
 	public $session_handler = 'memcache';
 	public $memcache_settings = 'a:3:{s:10:"persistent";s:1:"0";s:11:"compression";s:1:"0";s:7:"servers";a:1:{i:0;a:2:{s:4:"host";s:9:"10.1.1.36";s:4:"port";s:5:"11211";}}}';
 	public $MetaRights = 'Copyright © 2012 Team Party Worldwide, LLC. All Rights Reserved.';
@@ -61,4 +60,8 @@ class JConfig {
 	public $feed_email = 'author';
 	public $cookie_domain = '';
 	public $cookie_path = '';
+	public $memcache_persist = '1';
+	public $memcache_compress = '0';
+	public $memcache_server_host = 'localhost';
+	public $memcache_server_port = '11211';
 }
