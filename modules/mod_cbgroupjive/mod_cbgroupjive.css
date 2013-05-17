@@ -1,0 +1,54 @@
+.cbGjExternal .cbGjExternalInner .gjModuleContent .gjModuleContentBody {
+	padding: 0 6px 0 6px;
+}
+
+.cbGjExternal .cbGjExternalInner .gjModuleContent .gjModuleContentBodyInfo,
+.cbGjExternal .cbGjExternalInner .gjModuleContent .gjModuleContentBodyFooter {
+	padding-top: 3px;
+}
+
+.cbGjExternal .cbGjExternalInner .gjModuleContent .gjModuleContentLogo img,
+.cbGjExternal .cbGjExternalInner .gjModuleContent .gjModuleContentLogo object,
+.cbGjExternal .cbGjExternalInner .gjModuleContent .gjModuleContentLogo embed {
+	max-width: 90%;
+}
+
+.cbGjExternal .cbGjExternalInner .gjModuleContentDivider {
+	border-bottom: 1px solid #DDD;
+	margin: 6px 0;
+}
+
+.cbGjExternal .cbGjExternalInner .gjModuleContentBox {
+	display: inline-block;
+	text-align: center;
+	width: 120px;
+	margin-right: 10px;
+	margin-bottom: 10px;
+	vertical-align: top;
+}
+
+.cbGjExternal .cbGjExternalInner .gjModuleContentBox .gjModuleContentBoxRow,
+.cbGjExternal .cbGjExternalInner .gjModuleContentLogo .gjModuleContentLogoRow {
+	margin-bottom: 5px;
+	word-wrap: break-word;
+}
+
+.cbGjExternal .cbGjExternalInner .gjModuleContentBox .gjModuleContentBoxRow img,
+.cbGjExternal .cbGjExternalInner .gjModuleContentBox .gjModuleContentBoxRow object,
+.cbGjExternal .cbGjExternalInner .gjModuleContentBox .gjModuleContentBoxRow embed {
+	max-width: 90%;
+}
+
+.cbGjExternal .cbGjExternalInner .gjModuleContent .gjModuleContentBodyTitle,
+.cbGjExternal .cbGjExternalInner .gjModuleContent .gjModuleContentBodyInfo,
+.cbGjExternal .cbGjExternalInner .gjModuleContent .gjModuleContentBodyFooter {
+	word-wrap: break-word;
+}
+
+.cbGjExternal .cbGjExternalInner .gjIntVideosH .gjModuleContentBox {
+	width: 200px;
+}
+
+.cbGjExternal .cbGjExternalInner .gjIntVideosV .gjModuleContentBox {
+	width: 100%;
+}

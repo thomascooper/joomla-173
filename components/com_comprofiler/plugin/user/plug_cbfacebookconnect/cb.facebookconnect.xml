@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cbinstall version="1.0.0" type="plugin" group="user">
+	<name>CB Facebook Connect</name>
+	<author>Kyle L. (aka Krileon), Beat and Nick</author>
+	<creationDate>2013-04-03</creationDate>
+	<copyright>(C) 2005-2013 joomlapolis.com</copyright>
+	<license>http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU/GPL version 2</license>
+	<authorUrl>www.joomlapolis.com</authorUrl>
+	<version>1.9</version>
+	<description>CB Facebook Connect 3.0.2: A cb login authentication integration plugin for facebook.</description>
+	<files>
+		<filename plugin="cb.facebookconnect">cb.facebookconnect.php</filename>
+		<filename>index.html</filename>
+		<filename>images/bootstrap/glyphicons-halflings.png</filename>
+		<filename>images/bootstrap/glyphicons-halflings-white.png</filename>
+		<filename>images/bootstrap/index.html</filename>
+		<filename>images/facebook/bg.png</filename>
+		<filename>images/facebook/button.png</filename>
+		<filename>images/facebook/icon.png</filename>
+		<filename>images/facebook/index.html</filename>
+		<filename>images/index.html</filename>
+		<filename>js/jquery.oauthpopup.js</filename>
+		<filename>js/jquery.oauthpopup.min.js</filename>
+		<filename>js/index.html</filename>
+		<filename>css/buttons.css</filename>
+		<filename>css/registration.css</filename>
+		<filename>css/index.html</filename>
+	</files>
+	<fieldtypes>
+		<field type="facebook_userid" label="Facebook" unique="true">
+			<database version="1">
+				<table name="#__comprofiler" class="moscomprofiler" maintable="true" strict="false" drop="never" shared="true">
+					<columns>
+						<column name="" nametype="namesuffix" type="sql:varchar(50)" null="true" default="NULL" />
+					</columns>
+					<indexes strict="false">
+						<index name="" nametype="namesuffix">
+							<column name="" nametype="namesuffix" />
+						</index>
+					</indexes>
+				</table>
+			</database>
+			<params>
+			</params>
+		</field>
+	</fieldtypes>
+	<params>
+		<param name="fb_instructions" type="custom" class="cbfacebookconnectPlugin" method="loadInstructions" default="" label="" description="" />
+		<fieldset name="fb_app" label="Application" description="">
+			<param name="fb_app_id" type="text" size="20" default="" label="App ID" description="Input Facebook application id or application key." />
+			<param name="fb_app_secretkey" type="text" size="35" default="" label="App Secret" description="Input Facebook application secret." />
+			<param name="fb_app_enabled" type="list" default="1" label="Enabled" description="Enable or disable Facebook integration. This allows quick enable or disable without having to clear parameters.">
+				<option value="0">Disabled</option>
+				<option value="1">Enabled</option>
+			</param>
+		</fieldset>
+		<fieldset name="fb_reg" label="Registration" description="">
+			<param name="fb_register" type="list" default="1" label="Register" description="Enable or disable Facebook account registration. Register allows for non-existing Community Builder users to register with their Facebook account credentials.">
+				<option value="0">Disabled</option>
+				<option value="1">Enabled</option>
+			</param>
+			<param name="fb_reg_usergroup" type="custom" class="cbfacebookconnectPlugin" method="loadUsergroupsList" default="" label="Usergroup" description="Select Facebook registration usergroup of users." />
+			<param name="fb_reg_approve" type="list" default="0" label="Approval" description="Select Facebook registration to require admin approval.">
+				<option value="0">No (override CB)</option>
+				<option value="1">Yes (override CB)</option>
+				<option value="2">Default (CB setting)</option>
+			</param>
+			<param name="fb_reg_confirm" type="list" default="0" label="Confirmation" description="Select Facebook registration to require email confirmation.">
+				<option value="0">No (override CB)</option>
+				<option value="1">Default (CB setting)</option>
+			</param>
+			<param name="fb_link" type="list" default="1" label="Linking" description="Enable or disable Facebook account linking. Linking allows existing Community Builder users while logged in to link their Facebook account to their existing Community Builder account.">
+				<option value="0">Disabled</option>
+				<option value="1">Enabled</option>
+			</param>
+		</fieldset>
+		<fieldset name="fb_login" label="Login" description="">
+			<param name="fb_redirect_firstlog" type="text" size="30" default="" label="First Redirect" description="Input optional Facebook first time login redirect URL (e.g. index.php?option=com_comprofiler)." />
+			<param name="fb_redirect_log" type="text" size="30" default="" label="Redirect" description="Input optional Facebook login redirect URL (e.g. index.php?option=com_comprofiler)." />
+		</fieldset>
+		<fieldset name="fb_menu" label="Menu" description="">
+			<param name="fb_unlink" type="list" default="1" label="Unlink" description="Enable or disable Facebook unlink link on CB Menu. Please note in accordance with Facebook application policies a user must be provided with a means to unlink their account. If disabled an alternative means to unlink must be provided.">
+				<option value="0">Disabled</option>
+				<option value="1">Enabled</option>
+			</param>
+		</fieldset>
+		<fieldset name="fb_buttons" label="Buttons" description="">
+			<param name="fb_button" type="list" default="2" label="Button Style" description="Select how Facebook button is displayed.">
+				<option value="0">Compact</option>
+				<option value="1">Normal</option>
+				<option value="2">Module Orientation</option>
+				<option value="3">Module Type</option>
+			</param>
+			<param name="fb_button_signin" type="text" size="25" default="" label="Sign In Button" description="Optionally input alternative title for Facebook Sign In button. If left blank will default to Sign In." />
+			<param name="fb_button_link" type="text" size="25" default="" label="Link Button" description="Optionally input alternative title for Facebook Link button. If left blank will default to Link." />
+		</fieldset>
+		<fieldset name="fb_curl" label="cURL" description="">
+			<param name="fb_curl_ipv4" type="list" default="1" label="Force IPV4" description="Enable or disable force usage of IPV4.">
+				<option value="0">No</option>
+				<option value="1">Yes</option>
+			</param>
+		</fieldset>
+		<fieldset name="fb_debug" label="Debug" description="">
+			<param name="fb_debug_curl" type="custom" class="cbfacebookconnectPlugin" method="checkCURL" default="" label="cURL" description="Test if cURL PHP module is installed." />
+			<param name="fb_debug_json" type="custom" class="cbfacebookconnectPlugin" method="checkJSON" default="" label="JSON" description="Test if JSON PHP module is installed." />
+			<param name="fb_debug_api" type="custom" class="cbfacebookconnectPlugin" method="checkAPI" default="" label="API" description="Test if plugin is configured." />
+		</fieldset>
+	</params>
+	<tabs>
+		<tab type="existingSytemTab" class="getContactTab">
+			<fields>
+				<field type="facebook_userid" title="Facebook ID" name="fb_userid" description="Your Facebook ID allowing API calls; if unauthorized only public calls will validate." registration="0" readonly="1" profile="0" />
+			</fields>
+		</tab>
+	</tabs>
+	<database>
+	</database>
+</cbinstall>

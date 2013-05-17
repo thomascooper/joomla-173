@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cbinstall version="1.0" type="plugin" group="user/plug_cbgroupjive/plugins">
+	<name>CB GroupJive Events</name>
+	<creationDate>2013-02-11</creationDate>
+	<author>Kyle (aka Krileon)</author>
+	<authorEmail>krileon@joomlapolis.com</authorEmail>
+	<copyright>(C) 2008-2013 Joomlapolis</copyright>
+	<license>http://www.gnu.org/licenses/gpl.html GNU/GPL</license>
+	<authorUrl>http://www.joomlapolis.com</authorUrl>
+	<version>1.9</version>
+	<description>Provides groups with Events to easily and quickly schedule between one another. Configured from within GroupJive Configuration when published.</description>
+	<release>2.7.0</release>
+	<files>
+		<filename plugin="cbgroupjiveevents">cbgroupjiveevents.php</filename>
+		<filename>index.html</filename>
+		<filename>js/jquery-timepicker.css</filename>
+		<filename>js/jquery-timepicker.js</filename>
+		<filename>js/jquery-timepicker.min.js</filename>
+		<filename>js/index.html</filename>
+	</files>
+	<params>
+	</params>
+	<database version="1">
+		<table name="#__groupjive_plugin_events" class="" strict="true" drop="never">
+			<columns strict="true" drop="never">
+				<column name="id" type="sql:int(11)" unsigned="true" auto_increment="1" />
+				<column name="published" type="sql:int(11)" default="1" />
+				<column name="user_id" type="sql:int(11)" />
+				<column name="group" type="sql:int(11)" />
+				<column name="title" type="sql:varchar(255)" />
+				<column name="event" type="sql:text" />
+				<column name="location" type="sql:varchar(255)" null="true" />
+				<column name="address" type="sql:varchar(255)" null="true" />
+				<column name="latitude" type="sql:varchar(255)" null="true" />
+				<column name="longitude" type="sql:varchar(255)" null="true" />
+				<column name="attending" type="sql:text" null="true" />
+				<column name="date" type="sql:datetime" default="0000-00-00 00:00:00" />
+			</columns>
+			<indexes strict="true" drop="never">
+				<index name="PRIMARY" type="primary">
+					<column name="id" />
+				</index>
+				<index name="published">
+					<column name="published" />
+				</index>
+				<index name="user_id">
+					<column name="user_id" />
+				</index>
+				<index name="group">
+					<column name="group" />
+				</index>
+				<index name="group_user_id">
+					<column name="group" />
+					<column name="user_id" />
+				</index>
+			</indexes>
+		</table>
+	</database>
+</cbinstall>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cbinstall version="4.5.3" type="plugin" group="user">
+	<name>CB LastViews Tab</name>
+	<author>Trail :: Debugger and code restyler: dani_bs</author>
+	<creationDate>2010-04-08</creationDate>
+	<copyright>(C) 2005-2010 joomlapolis.com and www.djTrail.nl</copyright>
+	<license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
+	<authorEmail>trail@djTrail.nl</authorEmail>
+	<authorUrl>www.djTrail.nl</authorUrl>
+	<version>1.2</version>
+	<description>CB LastViews Tab provides a User Tab for displaying latest profile views (C) 2005-2010 joomlapolis.com and www.djTrail.nl - JPKarmaWare</description>
+	<files>
+		<filename plugin="cb.lastviews">cb.lastviews.php</filename>
+		<filename>index.html</filename>
+	</files>
+	<params>
+	</params>
+	<tabs>
+		<tab name="Last Visitors" description="" class="getLastViewsTab" fields="0"  sys="0" position="cb_tabmain" displaytype="tab">
+			<params>
+				<param name="LVlistlimit" type="text" size="3" default="10" label="The number of last views displayed" description="How many views should be displayed?" />
+				<param name="LVexclusionlistTXT" type="text" size="30" default="62,67,100000" label="You may enter a comma seperated list of user IDs that will be excluded from display." description="Use this to hide admins, mods or certain individuals if you like." />
+				<param name="LVadminTXT" type="text" size="30" default="(admin)" label="Language" description="Language for -(admin)-" />
+				<param name="LVthelastTXT" type="text" size="30" default="The last" label="Language" description="Language for -The last-" />
+				<param name="LVviewsTXT" type="text" size="30" default="views" label="Language" description="Language for -views-" />
+				<param name="LVavatarTXT" type="text" size="30" default="Avatar" label="Language" description="Language for -avatar-" />
+				<param name="LVnameTXT" type="text" size="30" default="Name" label="Language" description="Language for -name-" />
+				<param name="LVtimeTXT" type="text" size="30" default="Time" label="Language" description="Language for -time-" />
+				<param name="LVtotalTXT" type="text" size="30" default="Total" label="Language" description="Language for -total-" />
+				<param name="LVguestsTXT" type="text" size="30" default="Guest have visited this profile." label="Language" description="Language for -guests have visited this profile-" />
+				<param name="LVadmingroupTXT" type="text" size="2" default="18" label="Admin Group" description="The admin or moderator group to whom the total visits count is shown. 18 for authors and up (same as special setting and default), 19 for editors and up, 20 for publishers and up, etc.." />
+				<param name="LVhideadminOPTION" type="radio" default="1" label="Enable Total Visits Display To Specified Admin Group?" description="Enable showing total to the previously set usergroup and higher?">
+					<option value="0">Hide</option>
+					<option value="1">Show</option>
+				</param>
+				<param name="LVhidetotalOPTION" type="radio" default="0" label="Enable Total Visits Display To Profile Owners?" description="Total can be shown to specified admin/moderator group, even when disabled for profile owners.">
+					<option value="0">Hide</option>
+					<option value="1">Show</option>
+				</param>
+				<param name="LVshowtotalOPTION" type="radio" default="0" label="Also show totals to other logged in users?" description="For this setting to work, the total display setting above has to be enabled.">
+					<option value="0">Hide</option>
+					<option value="1">Show</option>
+				</param>
+				<param name="LVhideguestsOPTION" type="radio" default="1" label="Show Guestcount?" description="Show the number of guests that have visited this profile? (Hide when you don\'t allow guests to view profiles)">
+					<option value="0">Hide</option>
+					<option value="1">Show</option>
+				</param>
+				<param name="LVusernameOPTION" type="list" default="0" label="Do you want to display the username or the name of the user." description="Choose what to display. Username or Name.">
+					<option value="0">Username</option>
+					<option value="1">Name</option>
+					<option value="2">Username (Name)</option>
+					<option value="3">Name (Username)</option>
+				</param>
+				<param name="LVdateformatOPTION" type="list" default="2" label="How would you like the date displayed?" description="Choose in what order to display the date.">
+					<option value="0">dd/mm hh:mm</option>
+					<option value="1">dd-mm hh:mm</option>
+					<option value="2">dd/mm/yyyy hh:mm</option>
+					<option value="3">dd-mm-yyyy hh:mm</option>
+					<option value="4">mm/dd hh:mm</option>
+					<option value="5">mm-dd hh:mm</option>
+					<option value="6">mm/dd/yyyy hh:mm</option>
+					<option value="7">mm-dd-yyyy hh:mm</option>
+					<option value="98">Joomla _DATE_FORMAT_LC</option>
+					<option value="99">Joomla _DATE_FORMAT_LC2</option>
+				</param>
+				<param name="@spacer" type="spacer" default="This plugin is JPkarmaware and was created by me, Trail. If you use this JPKarmaWare plugin you have to pay me due Karma" label="Karmaware:" description="" />
+				<param name="JPKarmaWareOPTION" type="radio" default="0" label="Did you pay me due karma for this karmaware plugin on www.joomlapolis.com ?" description="This plugin is JPkarmaware and was created by me, Trail. If you use this JPKarmaWare plugin you have to pay me due Karma" >
+					<option value="0">No</option>
+					<option value="1">Yes</option>
+				</param>
+			</params>
+			<fields></fields>
+		</tab>
+	</tabs>
+</cbinstall>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cbinstall version="1.0" type="plugin" group="user/plug_cbgroupjive/plugins">
+	<name>CB GroupJive About</name>
+	<creationDate>2013-02-11</creationDate>
+	<author>Kyle (aka Krileon)</author>
+	<authorEmail>krileon@joomlapolis.com</authorEmail>
+	<copyright>(C) 2008-2013 Joomlapolis</copyright>
+	<license>http://www.gnu.org/licenses/gpl.html GNU/GPL</license>
+	<authorUrl>http://www.joomlapolis.com</authorUrl>
+	<version>1.9</version>
+	<description>Provides groups with a About tab to display information. Configured from within GroupJive Configuration when published.</description>
+	<release>2.7.0</release>
+	<files>
+		<filename plugin="cbgroupjiveabout">cbgroupjiveabout.php</filename>
+		<filename>index.html</filename>
+	</files>
+	<params>
+	</params>
+	<database>
+	</database>
+</cbinstall>

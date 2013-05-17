@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<extension type="module" version="1.6.0" client="site" method="upgrade">
+	<name>CB GroupJive</name>
+	<creationDate>2013-02-11</creationDate>
+	<author>Kyle (aka Krileon)</author>
+	<authorEmail>krileon@joomlapolis.com</authorEmail>
+	<authorUrl>http://www.joomlapolis.com</authorUrl>
+	<copyright>(C) 2008-2013 Joomlapolis</copyright>
+	<license>http://www.gnu.org/licenses/gpl.html GNU/GPL</license>
+	<version>2.7.0</version>
+	<description>Multi-purpose module displaying various GroupJive content.</description>
+	<files>
+		<filename module="mod_cbgroupjive">mod_cbgroupjive.php</filename>
+		<filename>mod_cbgroupjive.css</filename>
+		<filename>index.html</filename>
+	</files>
+	<config>
+		<fields name="params">
+			<fieldset name="basic">
+				<field name="moduleclass_sfx" type="text" default="" label="Module Class Suffix" description="A suffix to be applied to the css class of the module, this allows individual module styling." />
+				<field name="gj_layout" type="list" default="0" label="Layout" description="Select display layout. Only applies to Latest Categories, Popular Categories, Latest Groups, and Popular Groups.">
+					<option value="0">Vertical</option>
+					<option value="1">Horizontal</option>
+				</field>
+				<field name="gj_mode" type="list" default="2" label="Mode" description="Select module display mode. Will determine what content is rendered inside the module. Both Panes modes will attempt to render the Left Pane (Logo, Menu, Information) when on a GroupJive page.">
+					<option value="0">Latest Categories</option>
+					<option value="1">Popular Categories</option>
+					<option value="2">Latest Groups</option>
+					<option value="3">Popular Groups</option>
+					<option value="4">Statistics</option>
+					<option value="5">Panes (jQuery)</option>
+					<option value="6">Panes (API)</option>
+					<option value="7">My Categories</option>
+					<option value="8">My Groups</option>
+					<option value="9">Joined Groups</option>
+					<option value="16">Invited To</option>
+					<option value="10">Approval</option>
+					<option value="11">Wall Posts (Integration)</option>
+					<option value="12">Scheduled Events (Integration)</option>
+					<option value="13">Uploaded Photos (Integration)</option>
+					<option value="14">Published Videos (Integration)</option>
+					<option value="15">Uploaded Files (Integration)</option>
+				</field>
+			</fieldset>
+			<fieldset name="basic4" label="Categories" description="Only applies to Latest Groups, Popular Groups, My Groups, and Joined Groups modes.">
+				<field name="gj_includecat" type="text" size="15" default="" label="Include" description="Optionally input comma seperated list of category IDs to include in display." />
+				<field name="gj_excludecat" type="text" size="15" default="" label="Exclude" description="Optionally input comma seperated list of category IDs to exclude from display." />
+			</fieldset>
+			<fieldset name="basic5" label="Groups" description="Only applies to Wall Posts, Scheduled Events, Uploaded Photos, Published Videos, and Uploaded Files modes.">
+				<field name="gj_includegrp" type="text" size="15" default="" label="Include" description="Optionally input comma seperated list of group IDs to include in display." />
+				<field name="gj_excludegrp" type="text" size="15" default="" label="Exclude" description="Optionally input comma seperated list of group IDs to exclude from display." />
+			</fieldset>
+			<fieldset name="basic6" label="Items" description="Only applies to Latest Categories, Popular Categories, Latest Groups, Popular Groups, My Categoris, My Groups, Joined Groups, Wall Posts, Scheduled Events, Uploaded Photos, Published Videos, and Uploaded Files modes.">
+				<field name="gj_display" type="text" size="5" default="5" label="Display" description="Input maximum number of items to display." />
+				<field name="gj_length" type="text" size="5" default="15" label="Name Length" description="Optionally specifc maximum item name (e.g. Category Name) length. Set as 0 for no limitation." />
+				<field name="gj_include" type="text" size="15" default="" label="Include" description="Optionally input comma seperated list of IDs to include in display." />
+				<field name="gj_exclude" type="text" size="15" default="" label="Exclude" description="Optionally input comma seperated list of IDs to exclude from display." />
+			</fieldset>
+		</fields>
+	</config>
+</extension>

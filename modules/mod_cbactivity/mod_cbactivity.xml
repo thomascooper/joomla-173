@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<extension type="module" version="1.6.0" client="site" method="upgrade">
+	<name>CB Activity</name>
+	<creationDate>2013-04-10</creationDate>
+	<author>Kyle (aka Krileon)</author>
+	<authorEmail>krileon@joomlapolis.com</authorEmail>
+	<authorUrl>http://www.joomlapolis.com</authorUrl>
+	<copyright>(C) 2008-2013 Joomlapolis</copyright>
+	<license>http://www.gnu.org/licenses/gpl.html GNU/GPL</license>
+	<version>2.3.0</version>
+	<description>Displays CB Activity as a module.</description>
+	<files>
+		<filename module="mod_cbactivity">mod_cbactivity.php</filename>
+		<filename>index.html</filename>
+	</files>
+	<config>
+		<fields name="params">
+			<fieldset name="basic">
+				<field name="activity_display" type="list" default="1" label="Display" description="Select whos activity is displayed.">
+					<option value="1">Everyone</option>
+					<option value="2">Connections Only</option>
+					<option value="3">Self Only</option>
+					<option value="4">Connections and Self</option>
+				</field>
+				<field name="activity_cut_off" type="list" default="5" label="Date Cut Off" description="Select how far out activity is displayed. E.g. selecting 1 week will only show activity that has occurred within the last week.">
+					<option value="1">No Limit</option>
+					<option value="2">1 Day</option>
+					<option value="3">1 Week (7 Days)</option>
+					<option value="4">2 Weeks</option>
+					<option value="5">1 Month (30 Days)</option>
+					<option value="6">3 Months</option>
+					<option value="7">6 Months</option>
+					<option value="8">1 Year (365 Days)</option>
+				</field>
+				<field name="activity_avatar" type="list" default="0" label="Avatar" description="Select display of activity owners avatar.">
+					<option value="0">Hide</option>
+					<option value="1">Show</option>
+				</field>
+				<field name="activity_limit" type="text" size="15" default="10" label="Limit" description="Input maximum activity entries to display." />
+				<field name="activity_title_length" type="text" size="15" default="100" label="Title Length" description="Input maximum title length for activity entries. Set blank or 0 for no limit." />
+				<field name="activity_desc_length" type="text" size="15" default="100" label="Description Length" description="Input maximum description length activity entries. Set blank or 0 for no limit." />
+				<field name="activity_img_thumbnails" type="list" default="1" label="Image Thumbnails" description="Enable or disable usage of thumbnails when an image is displayed.">
+					<option value="0">Disable</option>
+					<option value="1">Enable</option>
+				</field>
+				<field name="moduleclass_sfx" type="text" label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL" description="COM_MODULES_FIELD_MODULECLASS_SFX_DESC" />
+			</fieldset>
+		</fields>
+	</config>
+</extension>

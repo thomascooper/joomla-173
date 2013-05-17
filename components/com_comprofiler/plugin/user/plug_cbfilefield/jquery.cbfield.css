@@ -1,0 +1,17 @@
+.cbajLoading {
+	background-image:		url(images/loading.gif);
+	background-repeat:		no-repeat;
+	background-position:	20px 0px;
+	width:					59px;
+	height:					19px;
+}
+
+.cbajAjaxForm input.cbajButSubmit {
+	margin-left:			3px;
+}
+.cbajAjaxForm input.cbajButCancel {
+	margin-left:			4px;
+}
+.cbajValue {
+	cursor:					pointer;
+}

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cbinstall version="1.0.0" type="plugin" group="user">
+	<name>CB Twitter</name>
+	<author>Kyle L. (aka Krileon), Beat and Nick</author>
+	<creationDate>2013-04-03</creationDate>
+	<copyright>(C) 2005-2013 joomlapolis.com</copyright>
+	<license>http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU/GPL version 2</license>
+	<authorUrl>www.joomlapolis.com</authorUrl>
+	<version>1.9</version>
+	<description>CB Twitter 3.0.2: A cb login authentication integration plugin for twtter.</description>
+	<files>
+		<filename plugin="cb.twitter">cb.twitter.php</filename>
+		<filename>index.html</filename>
+		<filename>images/bootstrap/glyphicons-halflings.png</filename>
+		<filename>images/bootstrap/glyphicons-halflings-white.png</filename>
+		<filename>images/bootstrap/index.html</filename>
+		<filename>images/twitter/bg.png</filename>
+		<filename>images/twitter/button.png</filename>
+		<filename>images/twitter/icon.png</filename>
+		<filename>images/twitter/index.html</filename>
+		<filename>images/index.html</filename>
+		<filename>js/jquery.oauthpopup.js</filename>
+		<filename>js/jquery.oauthpopup.min.js</filename>
+		<filename>js/index.html</filename>
+		<filename>css/buttons.css</filename>
+		<filename>css/registration.css</filename>
+		<filename>css/index.html</filename>
+	</files>
+	<fieldtypes>
+		<field type="twitter_userid" label="Twitter ID" unique="true">
+			<database version="1">
+				<table name="#__comprofiler" class="moscomprofiler" maintable="true" strict="false" drop="never" shared="true">
+					<columns>
+						<column name="" nametype="namesuffix" type="sql:varchar(50)" null="true" default="NULL" />
+					</columns>
+					<indexes strict="false">
+						<index name="" nametype="namesuffix">
+							<column name="" nametype="namesuffix" />
+						</index>
+					</indexes>
+				</table>
+			</database>
+			<params>
+			</params>
+		</field>
+	</fieldtypes>
+	<params>
+		<param name="twitter_instructions" type="custom" class="cbtwitterPlugin" method="loadInstructions" default="" label="" description="" />
+		<fieldset name="twitter_app" label="Application" description="">
+			<param name="twitter_app_consumer_key" type="text" size="35" default="" label="Consumer Key" description="" />
+			<param name="twitter_app_consumer_secret" type="text" size="35" default="" label="Consumer Secret" description="" />
+			<param name="twitter_app_enabled" type="list" default="1" label="Enabled" description="Enable or disable Twitter integration. This allows quick enable or disable without having to clear parameters.">
+				<option value="0">Disabled</option>
+				<option value="1">Enabled</option>
+			</param>
+		</fieldset>
+		<fieldset name="twitter_reg" label="Registration" description="">
+			<param name="twitter_register" type="list" default="1" label="Register" description="Enable or disable Twitter account registration. Register allows for non-existing Community Builder users to register with their Twitter account credentials.">
+				<option value="0">Disabled</option>
+				<option value="1">Enabled</option>
+			</param>
+			<param name="twitter_reg_usergroup" type="custom" class="cbtwitterPlugin" method="loadUsergroupsList" default="" label="Usergroup" description="Select Twitter registration usergroup of users." />
+			<param name="twitter_reg_approve" type="list" default="0" label="Approval" description="Select Twitter registration to require admin approval.">
+				<option value="0">No (override CB)</option>
+				<option value="1">Yes (override CB)</option>
+				<option value="2">Default (CB setting)</option>
+			</param>
+			<param name="twitter_reg_confirm" type="list" default="0" label="Confirmation" description="Select Twitter registration to require email confirmation.">
+				<option value="0">No (override CB)</option>
+				<option value="1">Default (CB setting)</option>
+			</param>
+			<param name="twitter_link" type="list" default="1" label="Linking" description="Enable or disable Twitter account linking. Linking allows existing Community Builder users while logged in to link their Twitter account to their existing Community Builder account.">
+				<option value="0">Disabled</option>
+				<option value="1">Enabled</option>
+			</param>
+		</fieldset>
+		<fieldset name="twitter_login" label="Login" description="">
+			<param name="twitter_redirect_firstlog" type="text" size="30" default="" label="First Redirect" description="Input optional Twitter first time login redirect URL (e.g. index.php?option=com_comprofiler)." />
+			<param name="twitter_redirect_log" type="text" size="30" default="" label="Redirect" description="Input optional Twitter login redirect URL (e.g. index.php?option=com_comprofiler)." />
+		</fieldset>
+		<fieldset name="twitter_buttons" label="Buttons" description="">
+			<param name="twitter_button" type="list" default="2" label="Button Style" description="Select how Twitter button is displayed.">
+				<option value="0">Compact</option>
+				<option value="1">Normal</option>
+				<option value="2">Module Orientation</option>
+				<option value="3">Module Type</option>
+			</param>
+			<param name="twitter_button_signin" type="text" size="25" default="" label="Sign In Button" description="Optionally input alternative title for Twitter Sign In button. If left blank will default to Sign In." />
+			<param name="twitter_button_link" type="text" size="25" default="" label="Link Button" description="Optionally input alternative title for Twitter Link button. If left blank will default to Link." />
+		</fieldset>
+		<fieldset name="twitter_curl" label="cURL" description="">
+			<param name="twitter_curl_ipv4" type="list" default="1" label="Force IPV4" description="Enable or disable force usage of IPV4.">
+				<option value="0">No</option>
+				<option value="1">Yes</option>
+			</param>
+		</fieldset>
+		<fieldset name="twitter_debug" label="Debug" description="">
+			<param name="twitter_debug_curl" type="custom" class="cbtwitterPlugin" method="checkCURL" default="" label="cURL" description="Test if cURL PHP module is installed." />
+			<param name="twitter_debug_json" type="custom" class="cbtwitterPlugin" method="checkJSON" default="" label="JSON" description="Test if JSON PHP module is installed." />
+			<param name="twitter_debug_api" type="custom" class="cbtwitterPlugin" method="checkAPI" default="" label="API" description="Test if plugin is configured." />
+		</fieldset>
+	</params>
+	<tabs>
+		<tab type="existingSytemTab" class="getContactTab">
+			<fields>
+				<field type="twitter_userid" title="Twitter ID" name="twitter_userid" description="Your Twitter ID allowing API calls; if unauthorized only public calls will validate." registration="0" readonly="1" profile="0" />
+			</fields>
+		</tab>
+	</tabs>
+	<database>
+	</database>
+</cbinstall>

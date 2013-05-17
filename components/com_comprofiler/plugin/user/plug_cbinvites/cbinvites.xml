@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cbinstall version="1.0" type="plugin" group="user">
+	<name>CB Invites</name>
+	<creationDate>2012-12-19</creationDate>
+	<author>Krileon</author>
+	<authorUrl>mailto:krileon@joomlapolis.com</authorUrl>
+	<copyright>(C) 2005-2012 Joomlapolis</copyright>
+	<copyrightUrl>http://www.joomlapolis.com</copyrightUrl>
+	<license>GNU/GPL</license>
+	<licenseUrl>http://www.gnu.org/licenses/gpl.html</licenseUrl>
+	<project>http://forge.joomlapolis.com/projects/cb-cbinvites</project>
+	<description>Component plugin allowing users to invite others to join the site.</description>
+	<version>1.9</version>
+	<release>3.0.0</release>
+	<files>
+		<filename plugin="cbinvites">cbinvites.php</filename>
+		<filename>admin.cbinvites.css</filename>
+		<filename>admin.cbinvites.html.php</filename>
+		<filename>admin.cbinvites.php</filename>
+		<filename>cbinvites.class.php</filename>
+		<filename>component.cbinvites.php</filename>
+		<filename>field.cbinvites.php</filename>
+		<filename>index.html</filename>
+		<filename>plugin.cbinvites.php</filename>
+		<filename>tab.cbinvites.php</filename>
+		<filename>toolbar.cbinvites.html.php</filename>
+		<filename>toolbar.cbinvites.php</filename>
+		<filename>images/icon-32-config.png</filename>
+		<filename>images/icon-32-invites.png</filename>
+		<filename>images/icon-32-plugin.png</filename>
+		<filename>images/icon-48-config.png</filename>
+		<filename>images/icon-48-invites.png</filename>
+		<filename>images/icon-48-plugin.png</filename>
+		<filename>images/icon-128-config.png</filename>
+		<filename>images/icon-128-invites.png</filename>
+		<filename>images/icon-128-plugin.png</filename>
+		<filename>images/publish.png</filename>
+		<filename>images/unpublish.png</filename>
+		<filename>images/index.html</filename>
+		<filename>templates/default/images/glyphicons-halflings.png</filename>
+		<filename>templates/default/images/glyphicons-halflings-white.png</filename>
+		<filename>templates/default/images/index.html</filename>
+		<filename>templates/default/index.html</filename>
+		<filename>templates/default/invite_edit.php</filename>
+		<filename>templates/default/tab.php</filename>
+		<filename>templates/default/template.css</filename>
+		<filename>templates/index.html</filename>
+	</files>
+	<handler ui="admin" class="cbinvitesAdmin" />
+	<actions ui="admin">
+		<action name="default" request="" action="" />
+	</actions>
+	<fieldtypes>
+		<field type="invite_code" label="Invite Code" unique="true">
+			<database version="1">
+				<table name="#__comprofiler" class="moscomprofiler" maintable="true" strict="false" drop="never" shared="true">
+					<columns>
+						<column name="" nametype="namesuffix" type="sql:varchar(50)" null="true" default="NULL" />
+					</columns>
+				</table>
+			</database>
+			<params>
+			</params>
+		</field>
+	</fieldtypes>
+	<tabs>
+		<tab type="existingSytemTab" class="getContactTab">
+			<fields>
+				<field type="invite_code" title="Invite Code" name="invite_code" description="Your registration invite code." registration="1" readonly="1" profile="0" />
+			</fields>
+		</tab>
+		<tab name="Invites" description="" class="cbinvitesTab" fields="0" position="cb_tabmain" displaytype="tab" ordering_register="1">
+			<params>
+			</params>
+		</tab>
+	</tabs>
+	<params>
+	</params>
+	<database version="1">
+		<table name="#__comprofiler_plugin_invites" class="" strict="true" drop="never">
+			<columns strict="true" drop="never">
+				<column name="id" type="sql:int(11)" unsigned="true" auto_increment="1" />
+				<column name="user_id" type="sql:int(11)" />
+				<column name="to" type="sql:varchar(255)" />
+				<column name="subject" type="sql:varchar(255)" null="true" />
+				<column name="body" type="sql:varchar(255)" null="true" />
+				<column name="code" type="sql:varchar(255)" null="true" />
+				<column name="sent" type="sql:datetime" default="0000-00-00 00:00:00" />
+				<column name="accepted" type="sql:datetime" default="0000-00-00 00:00:00" />
+				<column name="user" type="sql:int(11)" null="true" />
+			</columns>
+			<indexes strict="true" drop="never">
+				<index name="PRIMARY" type="primary">
+					<column name="id" />
+				</index>
+				<index name="user_id">
+					<column name="user_id" />
+				</index>
+				<index name="user">
+					<column name="user" />
+				</index>
+			</indexes>
+		</table>
+	</database>
+</cbinstall>

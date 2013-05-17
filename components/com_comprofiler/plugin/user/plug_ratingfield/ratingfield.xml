@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+	/**
+	* Community Builder User Plugin: plug_ratingfield
+	* @version $Id: ratingfield.xml 2565 2012-08-27 14:21:30Z nant $
+	* @package plug_ratingfield
+	* @subpackage ratingfield.xml
+	* @author CB Joe and Beat
+	* @copyright (C) CB Joe and Beat, www.joomlapolis.com
+	* @license Limited http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU/GPL version 2
+	* @final 1.0
+	*/
+-->
+<cbinstall version="1.0.0" type="plugin" group="user">
+	<name>Rating Field</name>
+	<author>CBJoe and Beat</author>
+	<creationDate>2009-02-11</creationDate>
+	<copyright>(C) 2006-2012 joomlapolis.com</copyright>
+	<license>http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU/GPL version 2</license>
+	<authorEmail>cbjoe@joomlapolis.com</authorEmail>
+	<authorUrl>www.joomlapolis.com</authorUrl>
+	<version>1.2</version>
+	<description>
+		CB Stars-Rating FieldType 1.0: A cb fields plugin to add a rating field type to the available cb field types.
+	</description>
+	<files>
+		<filename>index.html</filename>
+		<filename plugin="ratingfield">ratingfield.php</filename>
+	</files>
+	<types>
+		<type name="yesno" base="list" valuetype="int">
+			<option value="1">Yes</option>
+			<option value="0">No</option>
+		</type>
+	</types>	
+	<tabs>
+	</tabs>
+	<fieldtypes>
+		<field type="myrating" label="Stars - My Rating">
+			<database version="1">
+				<table name="#__comprofiler" class="moscomprofiler" maintable="true" strict="false" drop="never" shared="true">
+					<columns>
+						<column name="" nametype="namesuffix" type="sql:float" unsigned="false" null="false" default="0" />
+					</columns>
+				</table>
+			</database>
+			<params>
+				<fieldset label="Configuration Settings" description="">
+					<param name="NumStars" type="text" default="5" label="Number of Units" description="Maximum number of units that should be used for this field." />
+					<param name="RatingFraction" type="list" default="1" label="Rating Fraction" description="Select the fraction of a unit you want the user to be able to select">
+								<option value="1">Whole (1)</option>
+								<option value="2">Half (1/2)</option>
+								<option value="3">Thirds (1/3)</option>
+								<option value="4">Quarters (1/4)</option>
+					</param>
+				</fieldset>
+				<fieldset label="Language Strings" description="">
+					<param name="RatingSelfTitle" type="text" default="Self" label="Self Display Title" description="The title to display when refering to the rating provided by the profile owner (language-translated from English in the CB language plugin file)." />
+					<param name="RatingVisitorTitle" type="text" default="Visitor" label="Visitor Display Title" description="The title to display when refering to the rating provided by profile visitors (language-translated from English in the CB language plugin file)." />
+					<param name="RatingActionTitle" type="text" default="Rating" label="Action Title" description="The verb to use when refering to the action being taken, i.e Rating or Voting (language-translated from English in the CB language plugin file)." />
+					<param name="RatingTxtThankYou" type="text" default="Thank you for rating!" label="Thank you text" description="The &quot;Thank you for rating!&quot; text displayed in ajax after voting (language-translated from English in the CB language plugin file)." />
+					<param name="RatingUnitTitle" type="text" default="Star" label="Singular Unit Title" description="The title to display when refering to a single rating unit, i.e Star or Vote (language-translated from English in the CB language plugin file)." />
+					<param name="RatingUnitsTitle" type="text" default="Stars" label="Plural Unit Title" description="The title to display when refering to multiple rating unit, i.e Stars or Votes (language-translated from English in the CB language plugin file)." />
+					<param name="RatingTitle0" type="text" default="Poorest" label="Rating Text 0" description="Please provide a description for each of the total number of rating units configured above (language-translated from English in the CB language plugin file)." />
+					<param name="RatingTitle1" type="text" default="Poor" label="Rating Text 1" description="Please provide a description for each of the total number of rating units configured above (language-translated from English in the CB language plugin file)." />
+					<param name="RatingTitle2" type="text" default="Average" label="Rating Text 2" description="Please provide a description for each of the total number of rating units configured above (language-translated from English in the CB language plugin file)." />
+					<param name="RatingTitle3" type="text" default="Good" label="Rating Text 3" description="Please provide a description for each of the total number of rating units configured above (language-translated from English in the CB language plugin file)." />
+					<param name="RatingTitle4" type="text" default="Better" label="Rating Text 4" description="Please provide a description for each of the total number of rating units configured above (language-translated from English in the CB language plugin file)." />
+					<param name="RatingTitle5" type="text" default="Best" label="Rating Text 5" description="Please provide a description for each of the total number of rating units configured above (language-translated from English in the CB language plugin file)." />
+					<param name="RatingTitle6" type="text" default="" label="Rating Text 6" description="Please provide a description for each of the total number of rating units configured above (language-translated from English in the CB language plugin file)." />
+					<param name="RatingTitle7" type="text" default="" label="Rating Text 7" description="Please provide a description for each of the total number of rating units configured above (language-translated from English in the CB language plugin file)." />
+					<param name="RatingTitle8" type="text" default="" label="Rating Text 8" description="Please provide a description for each of the total number of rating units configured above (language-translated from English in the CB language plugin file)." />
+					<param name="RatingTitle9" type="text" default="" label="Rating Text 9" description="Please provide a description for each of the total number of rating units configured above (language-translated from English in the CB language plugin file)." />
+					<param name="RatingTitle10" type="text" default="" label="Rating Text 10" description="Please provide a description for each of the total number of rating units configured above (language-translated from English in the CB language plugin file)." />
+					<param name="RatingTitle11" type="text" default="" label="Rating Text 11" description="Please provide a description for each of the total number of rating units configured above (language-translated from English in the CB language plugin file)." />
+				</fieldset>
+			</params>
+		</field>
+		<field type="yourrating" label="Stars - Your Rating">
+			<database version="1">
+				<table name="#__comprofiler" class="moscomprofiler" maintable="true" strict="false" drop="never" shared="true">
+					<columns>
+						<column name="" nametype="namesuffix" type="sql:float" unsigned="false" null="false" default="0" />
+						<column name="_count" nametype="namesuffix" type="sql:int(11)" unsigned="false" null="false" default="0" />
+					</columns>
+				</table>
+			</database>
+			<params>
+				<fieldset label="Configuration Settings" description="">
+					<param name="NumStars" type="text" default="5" label="Number of Units" description="Maximum number of units that should be used for this field." />
+					<param name="RatingFraction" type="list" default="1" label="Rating Fraction" description="Select the fraction of a unit you want the user to be able to select">
+								<option value="1">Whole (1)</option>
+								<option value="2">Half (1/2)</option>
+								<option value="3">Thirds (1/3)</option>
+								<option value="4">Quarters (1/4)</option>
+					</param>
+					<param name="AllowAnnonymous" type="xml:yesno" default="1" label="Allow Annonymous Ratings" description="If set to &quot;Yes&quot;, ratings will be permitted by visitors who are not logged in." />
+					<param name="EnableLogging" type="xml:yesno" default="1" label="Log Rating Details" description="If set to &quot;Yes&quot;, details about each rating will be logged such as IP Address, User ID, DateTime, etc." />
+					<if name="EnableLogging" type="showhide" operator="=" value="1" valuetype="const:int">
+						<else action="set" name="MultiVotes" value="0" type="const:int" />
+						<param name="MultiVotes" type="xml:yesno" default="0" label="Allow Multiple Ratings" description="If set to &quot;Yes&quot;, user will be able to cast multiple votes" />
+						<if name="MultiVotes" type="showhide" operator="=" value="1" valuetype="const:int">
+							<else action="set" name="VoteGap" value="0" type="const:int" />
+							<param name="VoteGap" type="text" default="0" label="Seconds between Ratings" description="The number of seconds a user will be required to wait prior to performing an additional rating." />	
+						</if>
+					</if>
+				</fieldset>
+				<fieldset label="Language Strings" description="">
+					<param name="RatingSelfTitle" type="text" default="Self" label="Self Display Title" description="The title to display when refering to the rating provided by the profile owner (language-translated from English in the CB language plugin file)." />
+					<param name="RatingVisitorTitle" type="text" default="Visitor" label="Visitor Display Title" description="The title to display when refering to the rating provided by profile visitors (language-translated from English in the CB language plugin file)." />
+					<param name="RatingActionTitle" type="text" default="Rating" label="Action Title" description="The verb to use when refering to the action being taken, i.e Rating or Voting (language-translated from English in the CB language plugin file)." />
+					<param name="RatingTxtThankYou" type="text" default="Thank you for rating!" label="Thank you text" description="The &quot;Thank you for rating!&quot; text displayed in ajax after voting (language-translated from English in the CB language plugin file)." />
+					<param name="RatingUnitTitle" type="text" default="Star" label="Singular Unit Title" description="The title to display when refering to a single rating unit, i.e Star or Vote (language-translated from English in the CB language plugin file)." />
+					<param name="RatingUnitsTitle" type="text" default="Stars" label="Plural Unit Title" description="The title to display when refering to multiple rating unit, i.e Stars or Votes (language-translated from English in the CB language plugin file)." />
+					<param name="RatingTitle0" type="text" default="Poorest" label="Rating Text 0" description="Please provide a description for each of the total number of rating units configured above (language-translated from English in the CB language plugin file)." />
+					<param name="RatingTitle1" type="text" default="Poor" label="Rating Text 1" description="Please provide a description for each of the total number of rating units configured above (language-translated from English in the CB language plugin file)." />
+					<param name="RatingTitle2" type="text" default="Average" label="Rating Text 2" description="Please provide a description for each of the total number of rating units configured above (language-translated from English in the CB language plugin file)." />
+					<param name="RatingTitle3" type="text" default="Good" label="Rating Text 3" description="Please provide a description for each of the total number of rating units configured above (language-translated from English in the CB language plugin file)." />
+					<param name="RatingTitle4" type="text" default="Better" label="Rating Text 4" description="Please provide a description for each of the total number of rating units configured above (language-translated from English in the CB language plugin file)." />
+					<param name="RatingTitle5" type="text" default="Best" label="Rating Text 5" description="Please provide a description for each of the total number of rating units configured above (language-translated from English in the CB language plugin file)." />
+					<param name="RatingTitle6" type="text" default="" label="Rating Text 6" description="Please provide a description for each of the total number of rating units configured above (language-translated from English in the CB language plugin file)." />
+					<param name="RatingTitle7" type="text" default="" label="Rating Text 7" description="Please provide a description for each of the total number of rating units configured above (language-translated from English in the CB language plugin file)." />
+					<param name="RatingTitle8" type="text" default="" label="Rating Text 8" description="Please provide a description for each of the total number of rating units configured above (language-translated from English in the CB language plugin file)." />
+					<param name="RatingTitle9" type="text" default="" label="Rating Text 9" description="Please provide a description for each of the total number of rating units configured above (language-translated from English in the CB language plugin file)." />
+					<param name="RatingTitle10" type="text" default="" label="Rating Text 10" description="Please provide a description for each of the total number of rating units configured above (language-translated from English in the CB language plugin file)." />
+					<param name="RatingTitle11" type="text" default="" label="Rating Text 11" description="Please provide a description for each of the total number of rating units configured above (language-translated from English in the CB language plugin file)." />
+				</fieldset>
+			</params>
+		</field>
+	</fieldtypes>
+	<fieldsparams>
+	</fieldsparams>
+	<params>
+	</params>
+	<database version="1">
+		<table name="#__comprofiler_ratingfield_log" class="" strict="true" drop="never">
+			<columns strict="true" drop="never">
+				<column name="id" type="sql:int(11)" unsigned="true" auto_increment="1" strict="true" />
+				<column name="fieldid" type="sql:int(11)" unsigned="true" strict="true" />
+				<column name="rateruserid" type="sql:int(11)" unsigned="true" null="true" strict="true" />
+				<column name="raterip" type="sql:varchar(255)" strict="true" />
+				<column name="rateduserid" type="sql:int(11)" unsigned="true" strict="true" />
+				<column name="rating" type="sql:float" unsigned="true" null="true" strict="true" />
+				<column name="date" type="sql:datetime" null="true" strict="true" />
+			</columns>
+			<indexes strict="true" drop="never">
+				<index name="PRIMARY" type="primary">
+					<column name="id" />
+				</index>
+				<index name="rateduserid">
+					<column name="fieldid" />
+					<column name="rateduserid" />
+				</index>
+				<index name="rateruserid">
+					<column name="fieldid" />
+					<column name="rateruserid" />
+				</index>
+			</indexes>
+		</table>
+	</database>	
+	<install>
+		<queries>
+		</queries>
+	</install>
+	<uninstall>
+	</uninstall>
+</cbinstall>

@@ -1,0 +1,47 @@
+#cbAdminMainWrapper .cbicon-48-cbinvites-plugin {
+	background-image: url(images/icon-48-plugin.png);
+}
+
+#cbAdminMainWrapper .cbicon-48-cbinvites-config {
+	background-image: url(images/icon-48-config.png);
+}
+
+#cbAdminMainWrapper .cbicon-48-cbinvites-invites {
+	background-image: url(images/icon-48-invites.png);
+}
+
+#cbAdminMainWrapper .cbicon-32-cbinvites-plugin,
+#cbAdminMainWrapper i.icon-cbinvites-plugin {
+	background-image: url(images/icon-32-plugin.png);
+}
+
+#cbAdminMainWrapper .cbicon-32-cbinvites-config,
+#cbAdminMainWrapper i.icon-cbinvites-config {
+	background-image: url(images/icon-32-config.png);
+}
+
+#cbAdminMainWrapper .cbicon-32-cbinvites-invites,
+#cbAdminMainWrapper i.icon-cbinvites-invites {
+	background-image: url(images/icon-32-invites.png);
+}
+
+#cbAdminMainWrapper i[class^="icon-cbinvites"] {
+	background-size: 13px;
+}
+
+.cbinvitesAdminToolbar > .cbtoolbaractions > .btn-group {
+	display: inline-block;
+}
+
+#invitesConfig .dynamic-tab-pane-control.tab-pane {
+	width: auto;
+	margin: 6px;
+}
+
+#invitesConfig .dynamic-tab-pane-control .tab-page {
+	width: auto;
+}
+
+#invitesConfig .adminlist {
+	padding: 6px;
+}

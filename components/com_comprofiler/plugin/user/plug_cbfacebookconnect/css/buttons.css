@@ -1,0 +1,84 @@
+/* Facebook */
+
+.jpcool_dialog ul.cbMenuULlist li.cbMenu_UE_MENU_FB_INVITE a,
+.module ul.cbMenuULlist li.cbMenu_UE_MENU_FB_INVITE a {
+	background: url(../images/facebook/icon.png) no-repeat 2px 2px;
+	display: block;
+}
+
+.jpcool_dialog ul.cbMenuULlist li.cbMenu_UE_MENU_FB_INVITE a:hover,
+.module ul.cbMenuULlist li.cbMenu_UE_MENU_FB_INVITE a:hover {
+	background: #d8dfea url(../images/facebook/icon.png) no-repeat 2px 2px;
+}
+
+.jpcool_dialog ul.cbMenuULlist li.cbMenu_UE_MENU_FB_UNJOIN a,
+.module ul.cbMenuULlist li.cbMenu_UE_MENU_FB_UNJOIN a {
+	background: url(../images/facebook/icon.png) no-repeat 2px 2px;
+	display: block;
+}
+
+.jpcool_dialog ul.cbMenuULlist li.cbMenu_UE_MENU_FB_UNJOIN a:hover,
+.module ul.cbMenuULlist li.cbMenu_UE_MENU_FB_UNJOIN a:hover {
+	background: #d8dfea url(../images/facebook/icon.png) no-repeat 2px 2px;
+}
+
+.facebook_button_bg {
+	background-image: url(../images/facebook/bg.png);
+	background-repeat: repeat-x;
+	background-position: 0 0;
+	margin-top: 2px;
+	margin-bottom: 2px;
+	margin-right: 2px;
+	font-size: 10px;
+	height: 21px;
+	min-width: 90px;
+	display: inline-block;
+}
+
+.facebook_button,
+.facebook_button:hover,
+.facebook_button:link,
+.facebook_button:visited,
+.facebook_button:focus,
+.facebook_button:active {
+	vertical-align: top;
+	display: inline-block;
+	background-color: transparent;
+	background-image: url(../images/facebook/icon.png);
+	background-repeat: no-repeat;
+	background-position: 0 0;
+	cursor: pointer;
+	height: 21px;
+	width: 100%;
+	color: white;
+	font-size: 10px;
+	font-weight: bold;
+	text-indent: 25px;
+	text-align: left;
+	text-decoration: none;
+	line-height: 20px;
+	margin: 0 5px 0 0;
+	padding: 0;
+	border: 0;
+}
+
+.facebook_button_small,
+.facebook_button_small:hover,
+.facebook_button_small:link,
+.facebook_button_small:visited,
+.facebook_button_small:focus,
+.facebook_button_small:active {
+	display: inline-block;
+	background-color: transparent;
+	background-image: url(../images/facebook/icon.png);
+	background-repeat: no-repeat;
+	background-position: 0 0;
+	cursor: pointer;
+	height: 19px;
+	width: 19px;
+	line-height: 20px;
+	margin-left: 2px;
+	margin-right: 2px;
+	padding: 0;
+	border: 0;
+}

@@ -1,0 +1,73 @@
+/* Twitter */
+
+.jpcool_dialog ul.cbMenuULlist li.cbMenu_UE_MENU_TWITTER_PROFILE a,
+.module ul.cbMenuULlist li.cbMenu_UE_MENU_TWITTER_PROFILE a {
+	background: url(../images/twitter/icon.png) no-repeat 2px 2px;
+	display: block;
+}
+
+.jpcool_dialog ul.cbMenuULlist li.cbMenu_UE_MENU_TWITTER_PROFILE a:hover,
+.module ul.cbMenuULlist li.cbMenu_UE_MENU_TWITTER_PROFILE a:hover {
+	background: #d8dfea url(../images/twitter/icon.png) no-repeat 2px 2px;
+}
+
+.twitter_button_bg {
+	background-image: url(../images/twitter/bg.png);
+	background-repeat: repeat-x;
+	background-position: 0 0;
+	margin-top: 2px;
+	margin-bottom: 2px;
+	margin-right: 2px;
+	font-size: 10px;
+	height: 21px;
+	min-width: 90px;
+	display: inline-block;
+}
+
+.twitter_button,
+.twitter_button:hover,
+.twitter_button:link,
+.twitter_button:visited,
+.twitter_button:focus,
+.twitter_button:active {
+	vertical-align: top;
+	display: inline-block;
+	background-color: transparent;
+	background-image: url(../images/twitter/icon.png);
+	background-repeat: no-repeat;
+	background-position: 0px 0px;
+	cursor: pointer;
+	height: 21px;
+	width: 100%;
+	color: white;
+	font-size: 10px;
+	font-weight: bold;
+	text-indent: 25px;
+	text-align: left;
+	text-decoration: none;
+	line-height: 20px;
+	margin: 0 5px 0 0;
+	padding: 0;
+	border: 0;
+}
+
+.twitter_button_small,
+.twitter_button_small:hover,
+.twitter_button_small:link,
+.twitter_button_small:visited,
+.twitter_button_small:focus,
+.twitter_button_small:active {
+	display: inline-block;
+	background-color: transparent;
+	background-image: url(../images/twitter/icon.png);
+	background-repeat: no-repeat;
+	background-position: 0 0;
+	cursor: pointer;
+	height: 19px;
+	width: 19px;
+	line-height: 20px;
+	margin-left: 2px;
+	margin-right: 2px;
+	padding: 0;
+	border: 0;
+}

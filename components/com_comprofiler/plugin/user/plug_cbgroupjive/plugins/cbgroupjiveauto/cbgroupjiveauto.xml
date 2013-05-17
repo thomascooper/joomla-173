@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cbinstall version="1.0" type="plugin" group="user/plug_cbgroupjive/plugins">
+	<name>CB GroupJive Auto</name>
+	<creationDate>2013-02-11</creationDate>
+	<author>Kyle (aka Krileon)</author>
+	<authorEmail>krileon@joomlapolis.com</authorEmail>
+	<copyright>(C) 2008-2013 Joomlapolis</copyright>
+	<license>http://www.gnu.org/licenses/gpl.html GNU/GPL</license>
+	<authorUrl>http://www.joomlapolis.com</authorUrl>
+	<version>1.9</version>
+	<description>Provides auto join/create of categories/groups based off field condition (optional) and access for new and existing users. Also provides a field at registration to offer auto joining of group(s).</description>
+	<release>2.7.0</release>
+	<files>
+		<filename plugin="cbgroupjiveauto">cbgroupjiveauto.php</filename>
+		<filename>cbgroupjiveauto.css</filename>
+		<filename>index.html</filename>
+		<filename>images/icon-16-auto.png</filename>
+		<filename>images/icon-32-auto.png</filename>
+		<filename>images/icon-48-auto.png</filename>
+		<filename>images/icon-128-auto.png</filename>
+		<filename>images/index.html</filename>
+	</files>
+	<fieldtypes>
+		<field type="cbgjautojoin" label="Auto Join" unique="false">
+			<database version="1">
+				<table name="#__comprofiler" class="moscomprofiler" maintable="true" strict="false" drop="never" shared="true">
+					<columns>
+					</columns>
+				</table>
+			</database>
+			<params>
+				<param name="cbgjautojoin_display" type="list" default="1" label="Display" description="Display determines if user can select single or multiple groups to join.">
+					<option value="0">Single-Select</option>
+					<option value="1">Multi-Select</option>
+				</param>
+				<param name="cbgjautojoin_mode" type="list" default="1" label="Mode" description="Mode determines how the select field is populated. Either manually by selecting a list of groups or automatically and selecting a list of groups to exclude.">
+					<option value="0">Manual</option>
+					<option value="1">Automatic</option>
+				</param>
+				<if name="cbgjautojoin_mode" type="showhide" operator="=" value="0" valuetype="const:int">
+					<param name="cbgjautojoin_cats_include" type="custom" class="cbgjautoField" method="loadCategoriesList" default="" label="Include Categories" description="Select categories to include in select list." />
+					<param name="cbgjautojoin_grps_include" type="custom" class="cbgjautoField" method="loadGroupsList" default="" label="Include Groups" description="Select groups to include in select list. If group category is not included then group will not be included." />
+				</if>
+				<if name="cbgjautojoin_mode" type="showhide" operator="=" value="1" valuetype="const:int">
+					<param name="cbgjautojoin_cats_exclude" type="custom" class="cbgjautoField" method="loadCategoriesList" default="" label="Exclude Categories" description="Select categories to exclude in select list." />
+					<param name="cbgjautojoin_grps_exclude" type="custom" class="cbgjautoField" method="loadGroupsList" default="" label="Exclude Groups" description="Select groups to exclude in select list. If group category is excluded then group will be excluded." />
+				</if>
+				<param name="cbgjautojoin_status" type="list" default="1" label="Status" description="Select join status of a user.">
+					<option value="-1">Banned</option>
+					<option value="0">Inactive</option>
+					<option value="1">Active</option>
+					<option value="2">Moderator</option>
+					<option value="3">Admin</option>
+					<option value="4">Owner</option>
+				</param>
+				<param name="cbgjautojoin_display_cats" type="list" default="1" label="Display Categories" description="Select category display within select list. Categories are not selectable and is purely for display purposes.">
+					<option value="0">Hide</option>
+					<option value="1">Show</option>
+				</param>
+				<param name="cbgjautojoin_authorized" type="list" default="0" label="Authorized" description="Select if a user needs to be authorized to view the category or join the group to select it for auto joining.">
+					<option value="0">No</option>
+					<option value="1">Yes</option>
+				</param>
+			</params>
+		</field>
+	</fieldtypes>
+	<params>
+	</params>
+	<database version="1">
+		<table name="#__groupjive_plugin_auto" class="" strict="true" drop="never">
+			<columns strict="true" drop="never">
+				<column name="id" type="sql:int(11)" unsigned="true" auto_increment="1" />
+				<column name="title" type="sql:varchar(255)" null="true" />
+				<column name="description" type="sql:text" null="true" />
+				<column name="trigger" type="sql:text" />
+				<column name="object" type="sql:int(11)" default="0" />
+				<column name="variable" type="sql:int(11)" default="1" />
+				<column name="access" type="sql:text" />
+				<column name="field" type="sql:text" null="true" />
+				<column name="operator" type="sql:text" null="true" />
+				<column name="value" type="sql:text" null="true" />
+				<column name="exclude" type="sql:text" null="true" />
+				<column name="published" type="sql:int(11)" default="0" />
+				<column name="ordering" type="sql:int(11)" default="99999" />
+				<column name="params" type="sql:mediumtext" null="true" />
+			</columns>
+			<indexes strict="true" drop="never">
+				<index name="PRIMARY" type="primary">
+					<column name="id" />
+				</index>
+			</indexes>
+		</table>
+	</database>
+</cbinstall>

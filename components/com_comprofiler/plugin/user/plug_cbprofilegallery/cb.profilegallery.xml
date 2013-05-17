@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+* Joomla Community Builder User Plugin: plug_cbprofilegallery
+* @version $Id$
+* @package plug_cbprofilegallery
+* @subpackage cb.profilegallery.xml
+* @author Nant, JoomlaJoe and Beat
+* @copyright (C) Nant, JoomlaJoe and Beat, 2005-2011, www.joomlapolis.com
+* @license Limited http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU/GPL version 2
+* @final 1.2.2 (compatible with CB 1.2+)
+*/
+-->
+<cbinstall version="1.0.3" type="plugin" group="user">
+	<name>CB Profile Gallery</name>
+	<author>Nick A.</author>
+	<creationDate>2009-03-04</creationDate>
+	<copyright>(C) 2005-2012 joomlapolis.com</copyright>
+	<license>http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU/GPL version 2</license>
+	<authorEmail>nant@joomlapolis.com</authorEmail>
+	<authorUrl>www.joomlapolis.com</authorUrl>
+	<version>1.2</version>
+	<description>CB Gallery 1.2.2 - Provides an all-in-one CB Profile Gallery plugin. 
+	</description>
+	<files>
+		<filename plugin="cb.profilegallery">cb.profilegallery.php</filename>
+		<filename>index.html</filename>
+		<filename>js/index.html</filename>
+		<filename>js/profilegallery.js</filename>
+		<filename>js/profilegallery.min.js</filename>
+ 		<filename>images/blank.gif</filename>
+		<filename>images/index.html</filename>
+		<filename>images/cbprofilegallerylogo.jpg</filename>
+		<filename>images/pgtn_nonimageitem.gif</filename>
+		<filename>images/pgtn_docitem.gif</filename>
+		<filename>images/pgtn_pdfitem.gif</filename>
+		<filename>images/pgtn_xlsitem.gif</filename>
+		<filename>images/pgtn_zipitem.gif</filename>
+		<filename>images/pgtn_txtitem.gif</filename>
+		<filename>images/pgtn_pptitem.gif</filename>
+		<filename>images/pgtn_pngitem.gif</filename>
+		<filename>images/pgtn_jpgitem.gif</filename>
+		<filename>images/pgtn_gifitem.gif</filename>
+		<filename>images/pgtn_bmpitem.gif</filename>
+		<filename>images/pgtn_mp3item.gif</filename>
+		<filename>images/pgtn_wmpitem.gif</filename>
+		<filename>images/pgtn_swfitem.gif</filename>
+		<filename>images/pgtn_movitem.gif</filename>
+		<filename>images/block-arrow.gif</filename>
+		<filename>images/none-arrow.gif</filename>
+		<filename>images/archive_f2.png</filename>
+		<filename>images/delete_f2.png</filename>
+		<filename>images/publish_f2.png</filename>
+		<filename>images/unarchive_f2.png</filename>
+		<filename>images/unpublish_f2.png</filename>
+		<filename>images/edit_f2.png</filename>
+		<filename>images/publish.gif</filename>
+		<filename>images/unpublish.gif</filename>
+		<filename>images/revoke.gif</filename>
+		<filename>images/approve.gif</filename>
+		<filename>images/delete.gif</filename>
+		<filename>images/edit.gif</filename>
+		<filename>install.profilegallery.php</filename>
+		<filename>uninstall.profilegallery.php</filename>
+	</files>
+	<params>
+        <param name="@spacer" type="spacer" default="" label=" " description="" />
+        <param name="PGLOGO" type="custom" class="getProfileGalleryTab" method="_show_pg_logo" default="" label="CB Gallery 1.2" description="" />
+        <param name="@spacer" type="spacer" default="" label=" " description="" />
+		<param name="@spacer" type="spacer" default="This plugin was created by Nick A. with the (much needed) support of JoomlaJoe and Beat B. Alternative icon set contributed by Rembrandt. " label="Credits:" description="" />
+		<param name="@spacer" type="spacer" default="This plugin is distributed under a limited GNU/GPL license and cannot be modified to work with anything else outside of the Community Builder suite supported by the Joomlapolis.com site" label="License:" description="" />
+        <param name="@spacer" type="spacer" default="Please support further development of this plugin and CB by donating at www.joomlapolis.com" label="Donations:" description="" />
+        <param name="@spacer" type="spacer" default="" label=" " description="" />
+		<param name="@spacer" type="spacer" default="Please look at the relevant tab for additional parameters" label="Parameters:" description="" />
+		<param name="pgManagementTabEnabled" type="radio" default="0" label="Approval Tab Enabled" description="[This feature is not implemented yet] Specify Yes to enable gallery management tab for moderators (default: No).">
+			        <option value="0">No</option>
+			        <option value="1">Yes</option>
+		</param>
+		<param name="pgModeratorNotification" type="radio" default="1" label="Moderator Notification" description="Specify Yes to enable notification email messages sent to moderators (default: Yes).">
+			        <option value="0">No</option>
+			        <option value="1">Yes</option>
+		</param>
+	</params>
+    <fieldtypes>
+        <field type="cbpgInteger" label="Integer Number">
+            <database version="1">
+                <table name="#__comprofiler" class="moscomprofiler" maintable="true" strict="false" drop="never" shared="true">
+                    <columns>
+                        <column name="" nametype="namesuffix" type="sql:int(11)" unsigned="false" null="true" default="NULL" strict="true" />
+                     </columns>
+                </table>
+            </database>
+        </field>
+        <field type="cbpgIntegerZero" label="Integer Number (zero)">
+            <database version="1">
+                <table name="#__comprofiler" class="moscomprofiler" maintable="true" strict="false" drop="never" shared="true">
+                    <columns>
+                        <column name="" nametype="namesuffix" type="sql:int(11)" unsigned="false" null="false" default="0" strict="true" />
+                     </columns>
+                </table>
+            </database>
+        </field>
+    </fieldtypes>
+	<tabs>
+		<tab name="_UE_PROFILE_GALLERY" description="_UE_PROFILE_GALLERY_DESC" class="getProfileGalleryTab" fields="0" position="cb_tabmain" displaytype="tab">
+			<params>
+				<param name="pgGalleryAutoEnabled" type="radio" default="1" label="Gallery Automatically Enabled" description="Specify No to require each user or moderator (depending on setting of next 'Allow User to Enable' parameter) to enable his/her gallery by editing his/her profile setting (default: Yes).">
+			        <option value="0">No</option>
+			        <option value="1">Yes</option>
+				</param>
+                <param name="pgAllowUserEnable" type="radio" default="1" label="Allow User to Enable" description="Specify Yes to allow user to enable his/her gallery by editing his/her profile setting. If set to No, then CB moderator or backend admin must enable gallery for each user (default: Yes).">
+                    <option value="0">No</option>
+                    <option value="1">Yes</option>
+                </param>
+				<param name="pgPagingEnabled" type="radio" default="1" label="Enable Paging" description="Specify Yes to allow entries to automatically page when they exceed the number per page limit (default: Yes).">
+			        <option value="0">No</option>
+			        <option value="1">Yes</option>
+				</param>
+				<param name="pgOpMode" type="list" default="IMAGEMODE" label="Gallery Operations Mode" description="Select which mode you want the gallery to operate in (default: Images)">
+			        <option value="IMAGEMODE">Images</option>
+			        <option value="FILEMODE">Files</option>
+			        <option value="MIXEDMODE">Images and Files</option>
+				</param>
+				<param name="pgImageFileTypeList" type="text" default="jpg,gif,png" label="Image File List" description="Comma separated file extension list for allowable image items (default: jpg,gif,png)." />
+				<param name="pgOtherFileTypeList" type="text" default="zip,doc,pdf,txt,xls" label="Other File List" description="Comma separated file extension list allowable for non image items (default: zip,doc,pdf,txt,xls)." />
+				<param name="pgSortOption" type="list" default="DATEDESC" label="Sort Option" description="Select which sorting option to apply when displaying gallery items (default: Newer items first).">
+			        <option value="DATEASC">Older items first</option>
+			        <option value="DATEDESC">Newer items first</option>
+				</param>
+				<param name="pgAccessMode" type="list" default="REG" label="Access Mode" description="Select which access mode type to allow when viewing the gallery tab (default: Registered Only).">
+			        <option value="PUB">Public</option>
+			        <option value="REG">Registered Only</option>
+			        <option value="REG-S">Registered Only - Stealth</option>
+			        <option value="CON">Connections Only</option>
+			        <option value="CON-S">Connections Only - Stealth</option>
+				</param>
+				<param name="pgAllowAccessModeOverride" type="radio" default="1" label="Allow Access Mode Override" description="Select Yes to allow users to override default access mode setting for gallery tab viewing (default: yes).">
+			        <option value="0">No</option>
+			        <option value="1">Yes</option>
+				</param>
+				<param name="pgAllowModeratorFrontEndUploads" type="radio" default="1" label="Allow Moderator FE Uploads" description="Select Yes to allow moderators to upload items on behalf of users when viewing their profiles in the front-end (default: Yes)">
+			        <option value="0">No</option>
+			        <option value="1">Yes</option>
+				</param>
+				<param name="pgDisplayFormat" type="list" default="DF1" label="Display Format" description="Select which format to use when displaying gallery items (default: Default (thumbnail))">
+			        <option value="DF1">Default (thumbnail)</option>
+			        <option value="DF2">Table list</option>
+			        <option value="DF3">Thumbnail lightbox</option>
+				</param>
+				<param name="pgDisplayFormatParameters" type="text" default="10,...,100,0,70,10" label="Display Format Parameters" description="Comma separated parameters to use during html rendering of profile gallery items. First value is the number of chars to truncate title at when viewing thumbnail (default: 10). Second value is the string you want to follow after the truncated title (default: ...). Third value is the number of pixels to add to verticle dimension of the thumbnail to allow icon buttons to fit (default: 100). Fourth value is the number of pixels to add to the horizontal dimension of the thumbnail (default: 0). (default:10,...,100,0,70,10)." />
+				<param name="pgAllowDisplayFormatOverride" type="radio" default="1" label="Allow Display Format Override" description="Select Yes to allow users to override default format setting for gallery viewing (default: Yes).">
+			        <option value="0">No</option>
+			        <option value="1">Yes</option>
+				</param>
+				<param name="pgAutoPublish" type="radio" default="1" label="Autopublish" description="Default setting for newly submitted items. Can be over-ridden by any user from the cb field profile updates (default: Yes).">
+			        <option value="0">No</option>
+			        <option value="1">Yes</option>
+				</param>
+				<param name="pgAllowAutoPublishOverride" type="radio" default="0" label="Allow Auto-publish Override" description="Select Yes to allow users to override default autopublish status for new gallery items (default: No).">
+			        <option value="0">No</option>
+			        <option value="1">Yes</option>
+				</param>
+				<param name="pgAutoApprove" type="radio" default="1" label="Auto-approve" description="Select Yes to automatically approve submitted items or No to force item approval by authorized moderators (default: Yes).">
+			        <option value="0">No</option>
+			        <option value="1">Yes</option>
+				</param>
+				<param name="pgAllowAutoApproveOverride" type="radio" default="1" label="Allow Auto-approve Override" description="Select Yes to allow admins to override default autoapprove setting for individual users via the backend user management (default: Yes).">
+			        <option value="0">No</option>
+			        <option value="1">Yes</option>
+				</param>
+				<param name="pgButtonIcons" type="radio" default="0" label="Gallery Button Icons" description="Select Yes to over-ride default icon images (default: No).">
+			        <option value="0">Default</option>
+			        <option value="1">Over-ride</option>
+				</param>
+				<param name="pgIconList" type="text" default="delete.gif,unpublish.gif,publish.gif,approve.gif,revoke.gif,edit.gif" label="Gallery Icon List" description="Comma separated file list for gallery icon images (must be 5 items otherwise system will revert to default icons). Icons must be located in components --> com_comprofiler --> plugin --> user --> plug_cbprofilegallery --> images folder (default: delete.gif,unpublish.gif,publish.gif,approve.gif,revoke.gif,edit.gif)." />
+				<param name="@spacer" type="spacer" default="" label="" description="" />
+		    	<param name="pgEntriesPerPage" type="text" default="5" label="Entries per Page" description="Number of entries shown per page (default: 5)." />
+				<param name="pgNumberOfGalleryItems" type="text" default="10" label="Items Quota" description="Default gallery items quota per user (default: 10)."/>
+				<param name="pgMaxWidth" type="text" default="500" label="Maximum width" description="Maximum image width for single image upload in pixels. Images exceeding this value will be resized (default: 500)." />
+				<param name="pgMaxHeight" type="text" default="500" label="Maximum height" description="Maximum image height for single image upload in pixels. Images exceeding this value will be resized (default: 500)." />
+				<param name="pgMaxSize" type="text" default="250" label="Maximum size" description="Maximum gallery item size in Kbytes allowed for single uploaded item. Files exceeding this size will be rejected (default: 250)." />
+				<param name="pgTNMaxWidth" type="text" default="150" label="Maximum thumbnail width" description="Maximum thumbnail width in pixels for image item resizing (default: 150)." />
+				<param name="pgTNMaxHeight" type="text" default="150" label="Maximum thumbnail height" description="Maximum thumbnail height in pixels for image item resizing (default: 150)." />
+				<param name="pgDefaultQuota" type="text" default="1024" label="Storage quota" description="Default storage quota in Kbytes for individual user. Can be over-ridden by admin for VIP users (default: 1024)." />		
+				<param name="@spacer" type="spacer" default="" label="" description="" />
+			</params>
+			<fields>
+				<field type="radio" title="_pg_EnableProfileGallery" name="cb_pgenable" description="_pg_EnableProfileGallery_Desc" registration="0" readonly="0" profile="0">
+					<fieldvalue title="_UE_YES" ordering="1" sys="0" />
+					<fieldvalue title="_UE_NO" ordering ="2" sys="0" />
+				</field>
+				<field type="radio" title="_pg_AutoPublish" name="cb_pgautopublish" description="_pg_AutoPublish_Desc" registration="0" readonly="0" profile="0">
+					<fieldvalue title="_UE_YES" ordering="1" sys="0" />
+					<fieldvalue title="_UE_NO" ordering ="2" sys="0" />
+				</field>
+				<field type="radio" title="_pg_AutoApprove" name="cb_pgautoapprove" description="_pg_AutoApprove_Desc" registration="0" readonly="1" profile="0">
+					<fieldvalue title="_UE_YES" ordering="1" sys="0" />
+					<fieldvalue title="_UE_NO" ordering ="2" sys="0" />
+				</field>
+				<field type="text" title="_pg_ShortGreeting" name="cb_pgshortgreeting" description="_pg_ShortGreeting_Desc" registration="0" readonly="0" profile="0" />
+                <field type="cbpgInteger" title="_pg_TotalAllowedQuotaSize" name="cb_pgtotalquotasize" description="_pg_TotalAllowedQuotaSize_Desc" registration="0" readonly="1" profile="0" />
+                <field type="cbpgInteger" title="_pg_TotalAllowedQuotaItems" name="cb_pgtotalquotaitems" description="_pg_TotalAllowedQuotaItems_Desc" registration="0" readonly="1" profile="0" />
+                <field type="cbpgInteger" title="_pg_MaxSingleUploadSize" name="cb_pguploadsize" description="_pg_MaxSingleUploadSize_Desc" registration="0" readonly="1" profile="0" />
+				<field type="text" title="_pg_ShortGreeting" name="cb_pgshortgreeting" description="_pg_ShortGreeting_Desc" registration="0" readonly="0" profile="0" />
+                <field type="cbpgIntegerZero" title="_pg_CurrentUploadedItemsCount" name="cb_pgtotalitems" description="_pg_CurrentUploadedItemsCount_Desc" registration="0" readonly="1" profile="0" />
+                <field type="cbpgIntegerZero" title="_pg_CurrentUploadedItemsSize" name="cb_pgtotalsize" description="_pg_CurrentUploadedItemsSize_Desc" registration="0" readonly="1" profile="0" />
+				<field type="date" title="_pg_LastUpdate" name="cb_pglastupdate" description="_pg_LastUpdate_Desc" registration="0" readonly="1" profile="0" />
+				<field type="select" title="_pg_AccessMode" name="cb_pgaccessmode" description="_pg_AccessMode_Desc" registration="0" readonly="0" profile="0">
+					<fieldvalue title="PUB" ordering="1" sys="0" />
+					<fieldvalue title="REG" ordering="2" sys="0" />
+					<fieldvalue title="CON" ordering="3" sys="0" />
+					<fieldvalue title="REG-S" ordering="4" sys="0" />
+					<fieldvalue title="CON-S" ordering="5" sys="0" />
+				</field>
+				<field type="select" title="_pg_DisplayFormat" name="cb_pgdisplayformat" description="_pg_DisplayFormat_Desc" registration="0" readonly="0" profile="0">
+					<fieldvalue title="DF1" ordering="1" sys="0" />
+					<fieldvalue title="DF2" ordering="2" sys="0" />
+					<fieldvalue title="DF3" ordering="3" sys="0" />
+				</field>
+			</fields>
+		</tab>
+			<tab name="_UE_PROFILE_GALLERY_MODERATION" description="_UE_PROFILE_GALLERY_MODERATION_DESC" class="getProfileGalleryManagementTab" fields="0" position="cb_tabmain" displaytype="tab">
+			<params>
+			</params>
+		</tab>
+	</tabs>
+	<install>
+	</install>
+	<uninstall>
+	</uninstall>
+	<installfile>install.profilegallery.php</installfile>
+	<uninstallfile>uninstall.profilegallery.php</uninstallfile>
+    <database>
+        <table name="#__comprofiler_plug_profilegallery" class="" strict="true" drop="never">
+            <columns strict="true" drop="never">
+                <column name="id" type="sql:int(10)" auto_increment="1" strict="true" />
+                <column name="userid" type="sql:int(10)" null="true" strict="true" />
+                <column name="pgitemorder" type="sql:int(10)" null="true" strict="true" />
+                <column name="pgitemtype" type="sql:varchar(10)" default="UNKNOWN" strict="true" />
+                <column name="pgitemfilename" type="sql:varchar(50)" null="true" strict="true" />
+                <column name="pgitemtitle" type="sql:varchar(50)" null="true" strict="true" />
+                <column name="pgitemdescription" type="sql:text" strict="true" />
+                <column name="pgitemdate" type="sql:datetime" null="true" strict="true" />
+                <column name="pgitemsize" type="sql:int(10)" strict="true" />
+                <column name="pgitempublished" type="sql:tinyint(1)" strict="true" />
+                <column name="pgitemapproved" type="sql:tinyint(1)" strict="true" />
+            </columns>
+            <indexes strict="true" drop="never">
+                <index name="PRIMARY" type="primary">
+                    <column name="id" />
+                </index>
+                <index name="userid_order_date">
+                    <column name="userid" />
+                    <column name="pgitemorder" />
+                    <column name="pgitemdate" />
+                </index>
+                <index name="pub_appr_userid_order_date">
+                    <column name="pgitempublished" />
+                    <column name="pgitemapproved" />
+                    <column name="userid" />
+                    <column name="pgitemorder" />
+                    <column name="pgitemdate" />
+                </index>
+            </indexes>
+        </table>
+    </database>
+</cbinstall>

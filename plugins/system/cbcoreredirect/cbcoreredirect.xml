@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="plugin" version="1.6" group="system" method="upgrade">
+	<name>System - CB Core Redirect</name>
+	<creationDate>2012-04-02</creationDate>
+	<author>Kyle (aka Krileon)</author>
+	<authorEmail>krileon@joomlapolis.com</authorEmail>
+	<authorUrl>http://www.joomlapolis.com</authorUrl>
+	<copyright>(C) 2008-2012 Joomlapolis</copyright>
+	<license>http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU/GPL version 2</license>
+	<version>1.0.0</version>
+	<description>Automatically redirects from Joomla core user pages (Login, Registration, Forgot Login) to CBs user pages.</description>
+	<files>
+		<filename plugin="cbcoreredirect">cbcoreredirect.php</filename>
+		<filename>index.html</filename>
+	</files>
+	<config>
+		<fields name="params">
+			<fieldset name="basic">
+				<field name="rewrite_urls" type="list" default="1" label="Rewrite URLs" description="Enable or disable rewriting of Joomla Users component URLs to CB URLs.">
+					<option value="0">Disabled</option>
+					<option value="1">Enabled</option>
+				</field>
+				<field name="itemids" type="list" default="1" label="Itemids" description="Enable or disable parsing of URLs for Itemid if missing.">
+					<option value="0">Disabled</option>
+					<option value="1">Enabled</option>
+				</field>
+			</fieldset>
+		</fields>
+	</config>
+</extension>

@@ -1,0 +1,47 @@
+#cbAdminMainWrapper .cbicon-48-cbactivity-activity {
+	background-image: url(images/icon-48-activity.png);
+}
+
+#cbAdminMainWrapper .cbicon-48-cbactivity-plugin {
+	background-image: url(images/icon-48-plugin.png);
+}
+
+#cbAdminMainWrapper .cbicon-48-cbactivity-config {
+	background-image: url(images/icon-48-config.png);
+}
+
+#cbAdminMainWrapper .cbicon-32-cbactivity-activity,
+#cbAdminMainWrapper i.icon-cbactivity-activity {
+	background-image: url(images/icon-32-activity.png);
+}
+
+#cbAdminMainWrapper .cbicon-32-cbactivity-plugin,
+#cbAdminMainWrapper i.icon-cbactivity-plugin {
+	background-image: url(images/icon-32-plugin.png);
+}
+
+#cbAdminMainWrapper .cbicon-32-cbactivity-config,
+#cbAdminMainWrapper i.icon-cbactivity-config {
+	background-image: url(images/icon-32-config.png);
+}
+
+#cbAdminMainWrapper i[class^="icon-cbactivity"] {
+	background-size: 13px;
+}
+
+.cbactivityAdminToolbar > .cbtoolbaractions > .btn-group {
+	display: inline-block;
+}
+
+#activityConfig .dynamic-tab-pane-control.tab-pane {
+	width: auto;
+	margin: 6px;
+}
+
+#activityConfig .dynamic-tab-pane-control .tab-page {
+	width: auto;
+}
+
+#activityConfig .adminlist {
+	padding: 6px;
+}

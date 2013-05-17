@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cbinstall version="1.0.0" type="plugin" group="user">
+	<name>CB File Field</name>
+	<author>Kyle L. (aka Krileon), Beat and Nick</author>
+	<creationDate>2012-06-27</creationDate>
+	<copyright>(C) 2005-2012 joomlapolis.com</copyright>
+	<license>http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU/GPL version 2</license>
+	<authorEmail>beat@joomlapolis.com</authorEmail>
+	<authorUrl>www.joomlapolis.com</authorUrl>
+	<version>1.8</version>
+	<description>CB File Field plugin 1.6: A cb fields plugin to add a file field type to available cb field types.</description>
+	<files>
+		<filename plugin="cb.filefield">cb.filefield.php</filename>
+		<filename>jquery.cbfield.js</filename>
+		<filename>jquery.cbfield.min.js</filename>
+		<filename>jquery.cbfield.css</filename>
+		<filename>index.html</filename>
+		
+		<filename>images/bmp.png</filename>
+		<filename>images/css.png</filename>
+		<filename>images/doc.png</filename>
+		<filename>images/exe.png</filename>
+		<filename>images/fla.png</filename>
+		<filename>images/gif.png</filename>
+		<filename>images/html.png</filename>
+		<filename>images/ini.png</filename>
+		<filename>images/jpeg.png</filename>
+		<filename>images/jpg.png</filename>
+		<filename>images/js.png</filename>
+		<filename>images/mov.png</filename>
+		<filename>images/mp3.png</filename>
+		<filename>images/mpeg.png</filename>
+		<filename>images/mpg.png</filename>
+		<filename>images/msi.png</filename>
+		<filename>images/none.png</filename>
+		<filename>images/pdf.png</filename>		
+		<filename>images/php.png</filename>
+		<filename>images/psd.png</filename>
+		<filename>images/rar.png</filename>
+		<filename>images/rtf.png</filename>
+		<filename>images/swf.png</filename>
+		<filename>images/tar.png</filename>
+		<filename>images/txt.png</filename>
+		<filename>images/url.png</filename>
+		<filename>images/wav.png</filename>
+		<filename>images/wmp.png</filename>
+		<filename>images/wmv.png</filename>
+		<filename>images/xls.png</filename>
+		<filename>images/xml.png</filename>
+		<filename>images/zip.png</filename>
+		<filename>images/loading.gif</filename>
+		<filename>images/index.html</filename>
+	</files>
+	<fieldtypes>
+		<field type="file" label="File">
+			<data name="" nametype="namesuffix" type="sql:varchar(255)" null="true" default="NULL" />
+			<params>
+				<fieldset name="field_validation" label="Field" description="This field type allows users to upload any file to your webserver which matches the criterias checked (file-extension, file-size) regardless of real file contents. This plugin can not check files for appropriate content, including any content inappropriate for your site audience or any damageable content for users (viruses and other dangerous content). It should be used only on closed users servers, or be very carefuly monitored by site moderators.">
+					<param name="fieldFile_icons" type="list" default="0" label="File Extension Icons" description="Enable display of icons based on extension.">
+								<option value="0">Show</option>
+								<option value="1">Hide</option>
+					</param>
+					<param name="fieldFile_notify" type="list" default="0" label="Notify" description="Send notification e-mail for this field.">
+								<option value="0">Enable</option>
+								<option value="1">Disable</option>
+					</param>
+					<if name="fieldFile_notify" type="showhide" operator="=" value="0" valuetype="const:int">
+						<param name="fieldFile_notifyatch" type="list" default="1" label="Send File" description="Send file as attachment with notification e-mail.">
+									<option value="0">Enable</option>
+									<option value="1">Disable</option>
+						</param>
+					</if>
+				</fieldset>
+				<fieldset label="Field entry validation" description="">
+					<param name="fieldValidateFile_types" type="text" default="zip,rar,doc,pdf,txt,xls" label="Allowed File Types" description="File extensions allowed for upload. The following extensions are not allowed regardless of Allowed File Types for security reasons: php, php3, php4, php5, asp, exe, and py." />
+					<param name="fieldValidateFile_sizeMax" type="text" default="1024" label="Maximum File Size" description="Maximum size of file in KBs permitted for upload." />
+					<param name="fieldValidateFile_sizeMin" type="text" default="0" label="Minimum File Size" description="Minimum size of file in KBs permitted for upload." />							
+				</fieldset>
+				<fieldset name="field_ajax" label="Ajax" description="">
+					<param name="fieldAjax" type="list" default="1" label="Ajax" description="Enable or disable ajax for this field.">
+								<option value="1">Enabled</option>
+								<option value="0">Disabled</option>
+					</param>
+					<if name="fieldAjax" type="showhide" operator="=" value="1" valuetype="const:int">
+						<param name="cbAjplaceholdertext" type="text" default="Click to edit" label="Placeholder Text" description="Text to display if field is empty." />
+						<param name="cbAjtooltiptext" type="text" default="Click to edit..." label="Tooltip text" description="Text displayed upon mouseover." />
+						<param name="cbAjsubmittext" type="text" default="Save" label="Submit text" description="Submit button text. Leave blank to disable." />
+						<param name="cbAjresettext" type="text" default="Cancel" label="Reset text" description="Reset button text. Leave blank to disable." />
+						<param name="cbAjclass" type="text" default="" label="Class" description="CSS class to style the field." />
+					</if>
+				</fieldset>				
+			</params>
+		</field>
+	</fieldtypes>
+	<params>
+		<fieldset name="fieldFile_notify_email" label="Notifcation E-mail" description="">
+			<param name="fieldFile_notify_fromname" type="text" size="20" default="" label="From Name" description="Name e-mail is being sent from. Leave blank to use system from name." />
+			<param name="fieldFile_notify_from" type="text" size="25" default="" label="From Address" description="Address e-mail is being sent from. Leave blank to use system from address." />
+			<param name="fieldFile_notify_to" type="text" size="40" default="" label="To" description="Comma separated list of addresses (e.g. user@mysite.com,admin@mysite.com). Supports substitutions. Leave blank to send to moderators." />
+			<param name="fieldFile_notify_subject" type="text" size="30" default="[username] uploaded a file" label="Subject" description="Subject of e-mail. Supports substitutions." />
+			<param name="fieldFile_notify_body" type="textarea" cols="30" rows="5" default="[username] ([user_id]) has uploaded [file] to [field]." label="Body" description="Body of e-mail. Use [file] to send file name and [field] to send field name with body. Supports substitutions." />
+		</fieldset>
+	</params>
+	<database>
+	</database>
+</cbinstall>

@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+* Joomla Community Builder Gallery Plugin Module: mod_cbgallery
+* @version $Id$
+* @package mod_cbgallery
+* @subpackage mod_cbgallery.xml
+* @author Nant, JoomlaJoe and Beat
+* @copyright (C) Nant, JoomlaJoe and Beat, 2005-2012, www.joomlapolis.com
+* @license Limited http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU/GPL version 2
+* @final 1.2.2
+*/
+-->
+<install type="module" version="1.5" client="site" method="upgrade">
+	<name>CB Gallery Module</name>
+	<author>Nick A.</author>
+	<creationDate>2009-03-04</creationDate>
+	<copyright>(C) 2005-2012 joomlapolis.com</copyright>
+	<license>http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU/GPL version 2</license>
+	<authorEmail>nant@joomlapolis.com</authorEmail>
+	<authorUrl>www.joomlapolis.com</authorUrl>
+	<version>1.2.2</version>
+	<description>CB Gallery Module 1.2.2</description>
+	<files>
+		<filename module="mod_cbgallery">mod_cbgallery.php</filename>
+		<filename>mod_cbgallery/cbgallery1.js</filename>
+		<filename>mod_cbgallery/spacer.gif</filename>
+	</files>
+	<params>
+		<param name="moduleclass_sfx" type="text" default="" label="Module Class Suffix" description="A suffix to be applied to the css class of the module (table.moduletable), this allows individual module styling" />
+		<param name="@spacer" type="spacer" default="" label="" description="" />
+		<param name="pgm_display_mode" type="list" default="0" label="Display Mode" description="Set the display mode used to present the gallery items">
+			<option value="0">Static</option>
+			<option value="1">JS Conveyor belt Scroller</option>
+		</param>
+		<param name="@spacer" type="spacer" default="" label="Search Parameters" description="Search Parameters" />
+		<param name="pgm_gallery_search_order" type="list" default="0" label="Gallery Search Ordering" description="Set the searching order to be used when presenting the gallery items retrieved (default random)">
+			<option value="0">Random</option>
+			<option value="1">Newest</option>
+			<option value="2">Oldest</option>
+			<option value="3">Largest</option>
+			<option value="4">Smallest</option>
+		</param>
+		<param name="pgm_date_filter" type="radio" default="0" label="Date filter" description="Date filter to use (default: None)">
+			<option value="0">None</option>
+			<option value="1">Last X days</option>
+			<option value="2">This week</option>
+			<option value="3">This month</option>
+			<option value="4">Since previous visit (not implemented)</option>
+		</param>
+		<param name="pgm_number_of_days" type="text" default="10" label="Number of days" description="The number of days back to search (combined with last x days option - default 10)" />
+		<param name="@spacer" type="spacer" default="" label="Filter Parameters" description="Filter Parameters" />
+		<param name="pgm_gallery_filter_option" type="list" default="0" label="Gallery Filter Option" description="Set the desired gallery item filter option to be used (default None)">
+			<option value="0">None (all approved and published items)</option>
+			<option value="1">Public view (all items items viewable by public)</option>
+			<option value="2">Registered and Public view (all items viewable by registered members and public)</option>
+			<option value="3">Registered view only (only items marked as viewable by registered members)</option>
+			<option value="4">Connected view only (only items marked as viewable by connection)</option>
+			<option value="5">User Connected items only (only connected items to current user)</option>
+			<option value="6">All non-approved published items</option>
+			<option value="7">All non-approved non-published items</option>
+		</param>
+		<param name="pgm_filter_userids" type="text" default="" label="List of userids" description="A comma separated list of userids to focus on" />
+		<param name="pgm_item_count" type="text" default="1" label="Number of Items" description="The number of items to display (default 1 - use 0 for all items!)" />
+		<param name="pgm_item_types" type="text" default="jpg,gif,png" label="Gallery Item Types" description="Selects items from specific types (to specify more than one types, separate with a comma , )." />
+
+		<param name="@spacer" type="spacer" default="" label="Global Presentation Parameters" description="Global Presentation Parameters" />
+		<param name="pgm_item_width" type="text" default="100" label="Gallery Item Width" description="Maximum display width of item in pixels (default 100)" />
+		<param name="pgm_item_height" type="text" default="100" label="Gallery Item Height" description="Maximum display height of item in pixels (default 100)" />		
+
+		<param name="@spacer" type="spacer" default="" label="Static Presentation Parameters" description="Static Presentation Parameters" />
+		
+		<param name="pgm_static_box_style" type="textarea" cols="20" rows="5" default="border:1px solid;padding:5px;" label="Static box style" description="Style parameters for static box container (default border:1px solid;padding:5px;)" />
+		<param name="pgm_static_layout_option" type="radio" default="0" label="Static Layout Option" description="Set the desired static layout to be used (default Center vertical)">
+			<option value="0">Center (vertical)</option>
+			<option value="1">Left (vertical)</option>
+			<option value="2">Left (horizontal)</option>
+		</param>
+		<param name="pgm_static_gallery_item_header" type="list" default="0" label="Gallery Item Header" description="Set the desired gallery item header">
+			<option value="0">None</option>
+			<option value="1">Gallery Item Title</option>
+			<option value="2">Gallery Item Description</option>
+			<option value="3">Gallery Item Size</option>
+			<option value="4">Gallery Item Date</option>
+			<option value="5">Username</option>
+		</param>
+		<param name="pgm_static_gallery_item_header_parms" type="text" default="[,10,...,]" label="Gallery Item Header Parameters" description="Comma separated parameters to use during html rendering of header - (default [,10,...,] will display [XXXXXXXXXX...])" />
+		<param name="pgm_static_gallery_header_link" type="radio" default="0" label="Gallery Header Link" description="Set the desired gallery header link">
+			<option value="0">None</option>
+			<option value="1">Link to Profile Gallery Tab</option>
+		</param>
+		<param name="pgm_static_gallery_item_header_style" type="textarea" cols="20" rows="5" default="background:#BDBDBD;color:#555555;" label="Gallery Item Header Style" description="Style to use" />
+		<param name="pgm_static_gallery_item_link" type="radio" default="1" label="Gallery Item Link" description="Set the desired gallery item link">
+			<option value="0">None</option>
+			<option value="1">Link to Profile Gallery Tab</option>
+		</param>
+		<param name="pgm_static_gallery_item_footer" type="list" default="0" label="Gallery Item Footer" description="Set the desired gallery item footer">
+			<option value="0">None</option>
+			<option value="1">Gallery Item Title</option>
+			<option value="2">Gallery Item Description</option>
+			<option value="3">Gallery Item Size</option>
+			<option value="4">Gallery Item Date</option>
+			<option value="5">Username</option>
+		</param>
+		<param name="pgm_static_gallery_item_footer_parms" type="text" default="[,10,...,]" label="Gallery Item Footer Parameters" description="Comma separated parameters to use during html rendering of footer (default [,10,...,] will display [XXXXXXXXXX...])" />
+		<param name="pgm_static_gallery_footer_link" type="radio" default="0" label="Gallery Footer Link" description="Set the desired gallery header link">
+			<option value="0">None</option>
+			<option value="1">Link to Profile Gallery Tab</option>
+		</param>
+		<param name="pgm_static_gallery_item_footer_style" type="textarea" cols="20" rows="5" default="background:#BDBDBD;color:#555555;" label="Gallery Item Footer Style" description="Style to use" />
+		<param name="pgm_static_gallery_item_display_parms" type="text" default="70,5" label="Gallery Item Display Parameters" description="Comma separated parameters to use during html rendering of profile gallery items (default:70,5)." />
+		<param name="pgm_static_gallery_date_style" type="text" default="%d %b %Y" label="Gallery Item Date Style" description="Style to use for dates (default:%d %b %Y)" />
+		
+		<param name="@spacer" type="spacer" default="" label="Javascript Scroller Parameters" description="Javascript Scroller Parameters" />
+		<param name="pgm_scroller_width" type="text" default="140" label="Scroller Width" description="Set the total scroller width (default:140)" />
+		<param name="pgm_scroller_speed" type="text" default="3" label="Scroller Speed" description="Enter speed for scroller (1-slow to 10-fast, default:3)" />		
+		<param name="pgm_scroller_height" type="text" default="140" label="Scroller Height" description="Enter height for scroller (normally should match image height)" />	
+		<param name="pgm_scroller_background_color" type="text" default="#EAEAEA" label="Scroller Background Color" description="Enter the background color of the scroller (default #EAEAEA)" />
+		<param name="pgm_scroller_imagegap" type="textarea" cols="20" rows="5" default="&lt;img src='modules/mod_cbgallery/spacer.gif' width='5'/&gt; " label="Scroller image gap" description="Enter image gap html code (default: &lt;img src='modules/mod_cbgallery/spacer.gif' width='5'/&gt;)" />
+		<param name="pgm_scroller_slideshowgap" type="text" default="5" label="Scroller slideshow gap" description="Enter gap in px between end image and first image (default:5)" />		
+	</params>
+	<!--	Joomla 1.6.x Implementation-->
+	<config>
+		<fields name="params">
+			<fieldset name="basic">
+				<field name="moduleclass_sfx" type="text" default="" label="Module Class Suffix" description="A suffix to be applied to the css class of the module (table.moduletable), this allows individual module styling" />
+				<field name="@spacer" type="spacer" default="" label="" description="" />
+				<field name="pgm_display_mode" type="list" default="0" label="Display Mode" description="Set the display mode used to present the gallery items">
+					<option value="0">Static</option>
+					<option value="1">JS Conveyor belt Scroller</option>
+				</field>
+				<field name="@spacer" type="spacer" default="" label="Search Parameters" description="Search Parameters" />
+				<field name="pgm_gallery_search_order" type="list" default="0" label="Gallery Search Ordering" description="Set the searching order to be used when presenting the gallery items retrieved (default random)">
+					<option value="0">Random</option>
+					<option value="1">Newest</option>
+					<option value="2">Oldest</option>
+					<option value="3">Largest</option>
+					<option value="4">Smallest</option>
+				</field>
+				<field name="pgm_date_filter" type="radio" default="0" label="Date filter" description="Date filter to use (default: None)">
+					<option value="0">None</option>
+					<option value="1">Last X days</option>
+					<option value="2">This week</option>
+					<option value="3">This month</option>
+					<option value="4">Since previous visit (not implemented)</option>
+				</field>
+				<field name="pgm_number_of_days" type="text" default="10" label="Number of days" description="The number of days back to search (combined with last x days option - default 10)" />
+				<field name="@spacer" type="spacer" default="" label="Filter Parameters" description="Filter Parameters" />
+				<field name="pgm_gallery_filter_option" type="list" default="0" label="Gallery Filter Option" description="Set the desired gallery item filter option to be used (default None)">
+					<option value="0">None (all approved and published items)</option>
+					<option value="1">Public view (all items items viewable by public)</option>
+					<option value="2">Registered and Public view (all items viewable by registered members and public)</option>
+					<option value="3">Registered view only (only items marked as viewable by registered members)</option>
+					<option value="4">Connected view only (only items marked as viewable by connection)</option>
+					<option value="5">User Connected items only (only connected items to current user)</option>
+					<option value="6">All non-approved published items</option>
+					<option value="7">All non-approved non-published items</option>
+				</field>
+				<field name="pgm_filter_userids" type="text" default="" label="List of userids" description="A comma separated list of userids to focus on" />
+				<field name="pgm_item_count" type="text" default="1" label="Number of Items" description="The number of items to display (default 1 - use 0 for all items!)" />
+				<field name="pgm_item_types" type="text" default="jpg,gif,png" label="Gallery Item Types" description="Selects items from specific types (to specify more than one types, separate with a comma , )." />
+				<field name="@spacer" type="spacer" default="" label="Global Presentation Parameters" description="Global Presentation Parameters" />
+				<field name="pgm_item_width" type="text" default="100" label="Gallery Item Width" description="Maximum display width of item in pixels (default 100)" />
+				<field name="pgm_item_height" type="text" default="100" label="Gallery Item Height" description="Maximum display height of item in pixels (default 100)" />		
+				<field name="@spacer" type="spacer" default="" label="Static Presentation Parameters" description="Static Presentation Parameters" />
+				<field name="pgm_static_box_style" type="textarea" cols="20" rows="5" default="border:1px solid;padding:5px;" label="Static box style" description="Style parameters for static box container (default border:1px solid;padding:5px;)" />
+				<field name="pgm_static_layout_option" type="radio" default="0" label="Static Layout Option" description="Set the desired static layout to be used (default Center vertical)">
+					<option value="0">Center (vertical)</option>
+					<option value="1">Left (vertical)</option>
+					<option value="2">Left (horizontal)</option>
+				</field>
+				<field name="pgm_static_gallery_item_header" type="list" default="0" label="Gallery Item Header" description="Set the desired gallery item header">
+					<option value="0">None</option>
+					<option value="1">Gallery Item Title</option>
+					<option value="2">Gallery Item Description</option>
+					<option value="3">Gallery Item Size</option>
+					<option value="4">Gallery Item Date</option>
+					<option value="5">Username</option>
+				</field>
+				<field name="pgm_static_gallery_item_header_parms" type="text" default="[,10,...,]" label="Gallery Item Header Parameters" description="Comma separated parameters to use during html rendering of header - (default [,10,...,] will display [XXXXXXXXXX...])" />
+				<field name="pgm_static_gallery_header_link" type="radio" default="0" label="Gallery Header Link" description="Set the desired gallery header link">
+					<option value="0">None</option>
+					<option value="1">Link to Profile Gallery Tab</option>
+				</field>
+				<field name="pgm_static_gallery_item_header_style" type="textarea" cols="20" rows="5" default="background:#BDBDBD;color:#555555;" label="Gallery Item Header Style" description="Style to use" />
+				<field name="pgm_static_gallery_item_link" type="radio" default="1" label="Gallery Item Link" description="Set the desired gallery item link">
+					<option value="0">None</option>
+					<option value="1">Link to Profile Gallery Tab</option>
+				</field>
+				<field name="pgm_static_gallery_item_footer" type="list" default="0" label="Gallery Item Footer" description="Set the desired gallery item footer">
+					<option value="0">None</option>
+					<option value="1">Gallery Item Title</option>
+					<option value="2">Gallery Item Description</option>
+					<option value="3">Gallery Item Size</option>
+					<option value="4">Gallery Item Date</option>
+					<option value="5">Username</option>
+				</field>
+				<field name="pgm_static_gallery_item_footer_parms" type="text" default="[,10,...,]" label="Gallery Item Footer Parameters" description="Comma separated parameters to use during html rendering of footer (default [,10,...,] will display [XXXXXXXXXX...])" />
+				<field name="pgm_static_gallery_footer_link" type="radio" default="0" label="Gallery Footer Link" description="Set the desired gallery header link">
+					<option value="0">None</option>
+					<option value="1">Link to Profile Gallery Tab</option>
+				</field>
+				<field name="pgm_static_gallery_item_footer_style" type="textarea" cols="20" rows="5" default="background:#BDBDBD;color:#555555;" label="Gallery Item Footer Style" description="Style to use" />
+				<field name="pgm_static_gallery_item_display_parms" type="text" default="70,5" label="Gallery Item Display Parameters" description="Comma separated parameters to use during html rendering of profile gallery items (default:70,5)." />
+				<field name="pgm_static_gallery_date_style" type="text" default="%d %b %Y" label="Gallery Item Date Style" description="Style to use for dates (default:%d %b %Y)" />
+				<field name="@spacer" type="spacer" default="" label="Javascript Scroller Parameters" description="Javascript Scroller Parameters" />
+				<field name="pgm_scroller_width" type="text" default="140" label="Scroller Width" description="Set the total scroller width (default:140)" />
+				<field name="pgm_scroller_speed" type="text" default="3" label="Scroller Speed" description="Enter speed for scroller (1-slow to 10-fast, default:3)" />		
+				<field name="pgm_scroller_height" type="text" default="140" label="Scroller Height" description="Enter height for scroller (normally should match image height)" />	
+				<field name="pgm_scroller_background_color" type="text" default="#EAEAEA" label="Scroller Background Color" description="Enter the background color of the scroller (default #EAEAEA)" />
+				<field name="pgm_scroller_imagegap" type="textarea" cols="20" rows="5" default="&lt;img src='modules/mod_cbgallery/spacer.gif' width='5'/&gt; " label="Scroller image gap" description="Enter image gap html code (default: &lt;img src='modules/mod_cbgallery/spacer.gif' width='5'/&gt;)" />
+				<field name="pgm_scroller_slideshowgap" type="text" default="5" label="Scroller slideshow gap" description="Enter gap in px between end image and first image (default:5)" />		
+			</fieldset>
+		</fields>
+	</config>
+</install>

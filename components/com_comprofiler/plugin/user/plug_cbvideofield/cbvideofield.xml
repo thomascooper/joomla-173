@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cbinstall version="1.0.0" type="plugin" group="user">
+	<name>CB Video Field</name>
+	<creationDate>2012-05-08</creationDate>
+	<author>Krileon</author>
+	<authorUrl>mailto:krileon@allmysocials.com</authorUrl>
+	<copyright>(C) 2005-2012 Joomlapolis</copyright>
+	<copyrightUrl>http://www.joomlapolis.com</copyrightUrl>
+	<license>GNU/GPL</license>
+	<licenseUrl>http://www.gnu.org/licenses/gpl.html</licenseUrl>
+	<project>http://forge.joomlapolis.com/projects/cb-cbvideofield</project>
+	<description>CB Video Field 1.0.0: A cb fields plugin to add a video field type to available cb field types.</description>
+	<version>1.8</version>
+	<files>
+		<filename plugin="cbvideofield">cbvideofield.php</filename>
+		<filename>index.html</filename>
+	</files>
+	<fieldtypes>
+		<field type="video" label="Video">
+			<data name="" nametype="namesuffix" type="sql:varchar(255)" null="true" default="NULL" />
+			<params>
+				<fieldset label="Field text parameters" description="">
+					<param name="fieldMinLength" type="text" default="0" label="Minimum length" description="Minimum length of content (0 = no minimum)" />
+					<fieldset label="Field entry validation" description="">
+						<param name="fieldValidateExpression" type="list" default="" label="Authorized input" description="Type of input authorized.">
+							<option value="">Any string ( /.*/ ) </option>
+							<option value="singleword">Single word ( /^[a-z]*$/i )</option>
+							<option value="multiplewords">Multiple words with spaces ( /^([a-z]+ *)*$/i )</option>
+							<option value="singleaznum">Single a-z,A-Z,0-9,_ word ( /^[a-z]+[a-z0-9_]*$/i )</option>
+							<option value="atleastoneofeach">At least 6 chars, 1 a-z, 1 A-Z, 1 0-9, 1 special</option>
+							<option value="customregex">Custom PERL regular expression</option>
+						</param>
+						<if name="fieldValidateExpression" type="showhide" operator="=" value="customregex" valuetype="const:text">
+							<param name="pregexp" type="text" default="/^.*$/" label="Perl Regular Expression" description="Any string: /^.*$/ , only digits: /^[0-9]*$/, only a-z + A-Z + digits: /^[0-9a-z]*$/i" />
+						</if>
+						<if name="fieldValidateExpression" type="showhide" operator="!=" value="" valuetype="const:text">
+							<param name="fieldValidateInBrowser" type="list" default="1" label="Also validate in browser" description="If you validate in browser too, wrong entries will display text immediately, but the regular expression will be visible in page source too.">
+								<option value="0">Validate only server-side</option>
+								<option value="1">Validate browser side too</option>
+							</param>
+							<param name="pregexperror" type="text" default="Not a valid input" label="Error in case of invalid input" description="Enter a clear and helpful error message in case of validation pattern mismatch." />
+						</if>
+					</fieldset>
+					<param name="fieldValidateForbiddenList_register" type="text" default="http:,https:,mailto:,//.[url],&lt;a,&lt;/a&gt;,&amp;#" label="Forbidden words at registration" description="You can set a list of bad words (separated by comma ,) which are not allowed in this field for registration. Use comma twice (,,) to add comma as bad character." />
+					<param name="fieldValidateForbiddenList_edit" type="text" default="" label="Forbidden words in user profile edits" description="You can set a list of bad words (separated by comma ,) which are not allowed in this field when user updates his profile in profile edits. Use comma twice (,,) to add comma as bad character." />
+				</fieldset>
+				<fieldset label="Field video parameters" description="">
+					<param name="video_width" type="text" default="350" size="5" label="Width" description="Input the size in pixels the height of the video embed." />
+					<param name="video_height" type="text" default="250" size="5" label="Height" description="Input the size in pixels the width of the video embed." />
+					<param name="video_thumbwidth" type="text" default="150" size="5" label="Thumb Width" description="Input the size in pixels the height of the video thumbnail embed." />
+					<param name="video_thumbheight" type="text" default="150" size="5" label="Thumb Height" description="Input the size in pixels the width of the video thumbnail embed." />
+					<param name="video_exclude" type="custom" class="CBfield_video" method="loadProviders" default="unknown" label="Exclude" description="Optionally exclude video providers from available list of providers." />
+				</fieldset>
+			</params>
+		</field>
+	</fieldtypes>
+	<params>
+	</params>
+	<database>
+	</database>
+</cbinstall>

@@ -1,0 +1,480 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+* Joomla Community Builder User Plugin: plug_cbprofilebook
+* @version $Id: cb.profilebook.xml 2653 2012-10-25 15:40:07Z kyle $
+* @package plug_cbprofilebook
+* @subpackage cb.profilebook.xml
+* @author JoomlaJoe and Beat
+* @copyright (C) JoomlaJoe and Beat 2005-2011, www.joomlapolis.com and various
+* @license Limited http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU/GPL version 2
+* @final 1.2 for CB 1.2+
+*/
+-->
+<cbinstall version="1.0" type="plugin" group="user">
+	<name>CB ProfileBook</name>
+	<author>JoomlaJoe and Beat</author>
+	<creationDate>2012-10-25</creationDate>
+	<copyright>(C) 2006-2012 www.joomlapolis.com</copyright>
+	<license>http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU/GPL version 2</license>
+	<authorEmail>joomlajoe@joomlapolis.com</authorEmail>
+	<authorUrl>www.joomlapolis.com</authorUrl>
+	<version>1.3</version>
+	<description>Provides each registered user with there own Guestbook like system. Version 1.3 is compatible natively with CB 1.2+ (and Joomla 1.5.x, Joomla 1.0.x and Mambo 4.5.2 - 4.6.5). if installed on CB 1.4 it will also work on Joomla 1.6.x.</description>
+	<files>
+		<filename plugin="cb.profilebook">cb.profilebook.php</filename>
+		<filename>index.html</filename>
+		<filename>bb_adm.js</filename>
+		<filename>bb_adm.min.js</filename>
+		<filename>classes/bbcode.inc.php</filename>
+		<filename>classes/index.html</filename>
+		<filename>smilies/angry.png</filename>
+		<filename>smilies/arrow.gif</filename>
+		<filename>smilies/blink.png</filename>
+		<filename>smilies/blush.png</filename>
+		<filename>smilies/cheerful.png</filename>
+		<filename>smilies/cool.png</filename>
+		<filename>smilies/devil.png</filename>
+		<filename>smilies/dizzy.png</filename>
+		<filename>smilies/ermm.png</filename>
+		<filename>smilies/grin.png</filename>
+		<filename>smilies/kissing.png</filename>
+		<filename>smilies/laughing.png</filename>
+		<filename>smilies/pinch.png</filename>
+		<filename>smilies/sad.png</filename>
+		<filename>smilies/shocked.png</filename>
+		<filename>smilies/sick.png</filename>
+		<filename>smilies/sideways.png</filename>
+		<filename>smilies/silly.png</filename>
+		<filename>smilies/smile.png</filename>
+		<filename>smilies/tongue.png</filename>
+		<filename>smilies/unsure.png</filename>
+		<filename>smilies/w00t.png</filename>
+		<filename>smilies/wassat.png</filename>
+		<filename>smilies/whistling.png</filename>
+		<filename>smilies/wink.png</filename>
+		<filename>smilies/none-arrow.gif</filename>
+		<filename>smilies/block-arrow.gif</filename>		
+		<filename>smilies/index.html</filename>
+		<filename>install.profilebook.php</filename>
+		<filename>uninstall.profilebook.php</filename>
+	</files>
+	<params>
+		<param name="pbStatRating" type="radio" default="1" label="Add Rating to Stats List" description="Adds the average user profile rating to the users stats section">
+			<option value="0">No</option>
+			<option value="1">Yes</option>
+		</param>
+		<param name="pbStatRatingText" type="text" default="Rating" label="Status Field Rating Label" description="Label to be used to show stats for rating" />    
+		<param name="pbUnistallMode" type="list" default="0" label="Unistall Mode" description="Default option is to remove code and leave database and existing items (this is the case when preparing for upgrade) otherwise remove completely">
+			<option value="0">Leave database table and existing items</option>
+			<option value="1">Remove database table and existing items</option>                                      
+		</param>
+	</params>
+	<tabs>
+		<tab name="ProfileBook" description="" class="getprofilebookTab" fields="1" position="cb_tabmain" displaytype="tab">
+			<params>
+				<fieldset name="fmains" label="Main settings" description="">
+					<param name="pbEntriesPerPage" type="text" default="10" label="Entries per Page" description="Number of entries shown per page." />    
+					<param name="pbSortDirection" type="list" default="DESC" label="Sort Order" description="Set the sort order of entries on a profile based on submission date/time.">
+						<option value="ASC">Ascending</option>
+						<option value="DESC">Descending</option>
+					</param>
+				</fieldset>
+				<fieldset name="ffeatures" label="Enabled features" description="">
+					<param name="pbAllowAnony" type="list" default="0" label="Anonymous Entries" description="Allow unregistered users to write entries.">
+						<option value="0">No</option>
+						<option value="1">Yes</option>
+					</param>
+					<param name="pbCaptcha" type="list" default="1" label="Enable Captcha integration" description="If CB captcha plugin is installed, allows to use it.">
+						<option value="0">No</option>
+						<option value="1">Yes, only for not logged-in guests</option>
+						<option value="2">Yes, also for logged-in users</option>
+					</param>
+					<param name="pbEnableRating" type="list" default="2" label="Enable User Rating" description="Allow users to rate profile">
+						<option value="0">No</option>
+						<option value="1">Yes, Optional</option>
+						<option value="2">Yes, Optional but Remind</option>
+						<option value="3">Yes, Mandatory</option>
+					</param>
+				</fieldset>
+				<fieldset name="ffeatures" label="Content interpreters" description="">
+					<param name="pbShowTitle" type="list" default="0" label="Show title" description="Show name of logged-in users">
+						<option value="0">No</option>
+						<option value="1">Yes</option>
+					</param>
+					<param name="pbAllowSmiles" type="list" default="1" label="Allow Smilies" description="Allow users add smilies to their post">
+						<option value="0">No</option>
+						<option value="1">Yes</option>
+					</param>
+					<param name="pbAllowBBCode" type="list" default="1" label="Allow BBCode" description="Allow users to add bbcode to their post">
+						<option value="0">No</option>
+						<option value="1">Yes</option>
+					</param>
+					<if name="pbAllowBBCode" type="showhide" operator="=" value="1" valuetype="const:string">
+						<fieldset name="fbbcodes" label="Special BB-codes" description="">
+							<param name="pbAllowImgBBCode" type="list" default="0" label="Allow [img] BBCode" description="Allow users to add images urls with [img] bbcode to their post. WARNING: cross-linking images might bring copyright issues, and unsafe content to your site, if not moderated.">
+								<option value="0">No</option>
+								<option value="1">Yes</option>
+							</param>
+							<param name="pbAllowVideoBBCode" type="list" default="0" label="Allow [video] BBCode" description="Allow users to add videos from youtube, googleVideo, vimeo and more with [video] bbcode to their post. WARNING: cross-linking videos might bring copyright issues, and unsafe content to your site, if not moderated.">
+								<option value="0">No</option>
+								<option value="1">Yes</option>
+							</param>
+						</fieldset>
+					<else action="set" name="pbAllowImgBBCode" value="0" type="const:string" />
+					<else action="set" name="pbAllowVideoBBCode" value="0" type="const:string" />
+					</if>
+				</fieldset>
+				<fieldset name="fmoref" label="More features" description="">
+					<param name="pbPagingEngabbled" type="list" default="1" label="Enable Paging" description="Allow entries to automatically page when they exceed the number per page limit.">
+						<option value="0">No</option>
+						<option value="1">Yes</option>
+					</param>
+					<param name="pbEnableGesture" type="list" default="0" label="Enable Gesture" description="When a user is viewing an entry from another registered user a link will appear that will allow them to return the gesture.">
+						<option value="0">No</option>
+						<option value="1">Yes</option>
+					</param>
+					<param name="pbShowEditor" type="list" default="0" label="Show editor by default" description="Allow posters to directly enter their text.">
+						<option value="0">Hidden</option>
+						<option value="1">Visible</option>
+					</param>
+				</fieldset>
+				<fieldset name="fextras" label="Extra fields" description="">
+					<param name="pbShowName" type="list" default="1" label="Show name" description="Show name of logged-in users">
+						<option value="0">No</option>
+						<option value="1">Yes</option>
+					</param>
+					<param name="pbShowEmail" type="list" default="0" label="Show email" description="Show email of logged-in users">
+						<option value="0">No</option>
+						<option value="1">Yes</option>
+					</param>
+					<param name="pbUseLocation" type="list" default="1" label="Use Location Field" description="Allow posters to enter a location as part of their entry">
+						<option value="0">No</option>
+						<option value="1">Yes</option>
+					</param>
+					<if name="pbUseLocation" type="showhide" operator="=" value="1" valuetype="const:string">
+						<param name="pbLocationField" type="field" default="" label="Location Field" description="Select the name of the field which contains the equivalent field in the Community Build Field manager.  If blank, registered users will be asked for a location." />
+					</if>
+					<param name="pbUseWebAddress" type="list" default="1" label="Use Web Address Field" description="Allow posters to enter a web address as part of their entry">
+						<option value="0">No</option>
+						<option value="1">Yes</option>
+					</param>
+					<if name="pbUseWebAddress" type="showhide" operator="=" value="1" valuetype="const:string">
+						<param name="pbWebField" type="field" default="" label="Web Address Field" description="Select the name of the field which contains the equivalent field in the Community Build Field manager.  If blank, registered users will be asked for a web address." />
+					</if>
+				</fieldset>
+				<fieldset name="edisplay" label="Entry display" description="">
+					<param name="pbEntryShowName" type="list" default="1" label="Show entry name" description="Show name of entry poster">
+						<option value="0">No</option>
+						<option value="1">Yes</option>
+					</param>
+					<param name="pbEntryShowEmail" type="list" default="1" label="Show entry email" description="Show email of entry poster">
+						<option value="0">No</option>
+						<option value="1">Yes</option>
+					</param>
+					<param name="pbEntryShowIP" type="list" default="1" label="Show entry ip address" description="Show ip address of entry poster. Note ip address is only visible to moderators.">
+						<option value="0">No</option>
+						<option value="1">Yes</option>
+					</param>
+					<param name="pbEntryShowAvatar" type="list" default="1" label="Use entry avatar" description="Show avatar of entry poster">
+						<option value="0">No</option>
+						<option value="1">Yes</option>
+					</param>
+				</fieldset>
+			</params>
+			<fields>
+				<field type="radio" title="Enable Profile Entries" name="cb_pb_enable" description="Enable visitors to your profile to make comments about you and your profile." registration="0" readonly="0" profile="0">
+					<fieldvalue title="_UE_YES" ordering="1" sys="0" />
+					<fieldvalue title="_UE_NO" ordering ="2" sys="0" />
+				</field>
+				<field type="radio" title="Auto Publish" name="cb_pb_autopublish" description="Enable Auto Publish if you want entries submitted to be automatically approved and displayed on your profile." registration="0" readonly="0" profile="0" >
+					<fieldvalue title="_UE_YES" ordering="1" sys="0" />
+					<fieldvalue title="_UE_NO" ordering ="2" sys="0" />
+				</field>
+				<field type="radio" title="Notify Me" name="cb_pb_notifyme" description="Enable Notify Me if you'd like to receive an email notification each time someone submits an entry.  This is recommended if you are not using the Auto Publish feature." registration="0" readonly="0" profile="0" >
+					<fieldvalue title="_UE_YES" ordering="1" sys="0" />
+					<fieldvalue title="_UE_NO" ordering ="2" sys="0" />
+				</field>
+			</fields>
+		</tab>
+		<tab name="ProfileBlog" description="" class="getprofilebookblogTab" fields="1" position="cb_tabmain" displaytype="tab">
+			<params>
+				<fieldset name="fmains" label="Main settings" description="">
+					<param name="pbEntriesPerPage" type="text" default="5" label="Entries per Page" description="Number of entries shown per page." />    
+					<param name="pbSortDirection" type="list" default="DESC" label="Sort Order" description="Set the sort order of entries on a profile based on submission date/time.">
+						<option value="ASC">Ascending</option>
+						<option value="DESC">Descending</option>
+					</param>
+				</fieldset>
+				<fieldset name="ffeatures" label="Content interpreters" description="">
+					<param name="pbShowTitle" type="list" default="1" label="Show title" description="Show name of logged-in users">
+						<option value="0">No</option>
+						<option value="1">Yes</option>
+					</param>
+					<param name="pbAllowSmiles" type="list" default="1" label="Allow Smilies" description="Allow users add smilies to their post">
+						<option value="0">No</option>
+						<option value="1">Yes</option>
+					</param>
+					<param name="pbAllowBBCode" type="list" default="1" label="Allow BBCode" description="Allow users to add bbcode to their post">
+						<option value="0">No</option>
+						<option value="1">Yes</option>
+					</param>
+					<if name="pbAllowBBCode" type="showhide" operator="=" value="1" valuetype="const:string">
+						<fieldset name="fbbcodes" label="Special BB-codes" description="">
+							<param name="pbAllowImgBBCode" type="list" default="0" label="Allow [img] BBCode" description="Allow users to add images urls with [img] bbcode to their post. WARNING: cross-linking images might bring copyright issues, and unsafe content to your site, if not moderated.">
+								<option value="0">No</option>
+								<option value="1">Yes</option>
+							</param>
+							<param name="pbAllowVideoBBCode" type="list" default="0" label="Allow [video] BBCode" description="Allow users to add videos from youtube, googleVideo, vimeo and more with [video] bbcode to their post. WARNING: cross-linking videos might bring copyright issues, and unsafe content to your site, if not moderated.">
+								<option value="0">No</option>
+								<option value="1">Yes</option>
+							</param>
+						</fieldset>
+						<else action="set" name="pbAllowImgBBCode" value="0" type="const:string" />
+						<else action="set" name="pbAllowVideoBBCode" value="0" type="const:string" />
+					</if>
+				</fieldset>
+				<fieldset name="fmoref" label="More features" description="">
+					<param name="pbPagingEngabbled" type="list" default="1" label="Enable Paging" description="Allow entries to automatically page when they exceed the number per page limit.">
+						<option value="0">No</option>
+						<option value="1">Yes</option>
+					</param>
+					<param name="pbShowEditor" type="list" default="0" label="Show editor by default" description="Allow posters to directly enter their text.">
+						<option value="0">Hidden</option>
+						<option value="1">Visible</option>
+					</param>
+				</fieldset>
+				<fieldset name="edisplay" label="Entry display" description="">
+					<param name="pbEntryShowName" type="list" default="1" label="Show entry name" description="Show name of entry poster">
+						<option value="0">No</option>
+						<option value="1">Yes</option>
+					</param>
+					<param name="pbEntryShowEmail" type="list" default="1" label="Show entry email" description="Show email of entry poster">
+						<option value="0">No</option>
+						<option value="1">Yes</option>
+					</param>
+					<param name="pbEntryShowIP" type="list" default="1" label="Show entry ip address" description="Show ip address of entry poster. Note ip address is only visible to moderators.">
+						<option value="0">No</option>
+						<option value="1">Yes</option>
+					</param>
+					<param name="pbEntryShowAvatar" type="list" default="1" label="Use entry avatar" description="Show avatar of entry poster">
+						<option value="0">No</option>
+						<option value="1">Yes</option>
+					</param>
+				</fieldset>
+			</params>
+			<fields>
+				<field type="radio" title="Enable Profile Blog" name="cb_pb_enable_blog" description="Enable your blog on your profile." registration="0" readonly="0" profile="0">
+					<fieldvalue title="_UE_YES" ordering="1" sys="0" />
+					<fieldvalue title="_UE_NO" ordering ="2" sys="0" />
+				</field>
+			</fields>
+		</tab>
+		<tab name="ProfileWall" description="" class="getprofilebookwallTab" fields="1" position="cb_tabmain" displaytype="tab">
+			<params>
+				<fieldset name="fmains" label="Main settings" description="">
+					<param name="pbEntriesPerPage" type="text" default="10" label="Entries per Page" description="Number of entries shown per page." />    
+					<param name="pbSortDirection" type="list" default="DESC" label="Sort Order" description="Set the sort order of entries on a profile based on submission date/time.">
+						<option value="ASC">Ascending</option>
+						<option value="DESC">Descending</option>
+					</param>
+				</fieldset>
+					<fieldset name="ffeatures" label="Enabled features" description="">
+						<param name="pbAllowAnony" type="list" default="0" label="Anonymous Entries" description="Allow unregistered users to write entries.">
+							<option value="0">No</option>
+							<option value="1">Yes</option>
+						</param>
+						<param name="pbCaptcha" type="list" default="1" label="Enable Captcha integration" description="If CB captcha plugin is installed, allows to use it.">
+							<option value="0">No</option>
+							<option value="1">Yes, only for not logged-in guests</option>
+							<option value="2">Yes, also for logged-in users</option>
+						</param>
+						<param name="pbEnableRating" type="list" default="0" label="Enable User Rating" description="Allow users to rate profile">
+							<option value="0">No</option>
+							<option value="1">Yes, Optional</option>
+							<option value="2">Yes, Optional but Remind</option>
+							<option value="3">Yes, Mandatory</option>
+						</param>
+					</fieldset>
+				<fieldset name="ffeatures" label="Content interpreters" description="">
+					<param name="pbShowTitle" type="list" default="0" label="Show title" description="Show title field">
+						<option value="0">No</option>
+						<option value="1">Yes</option>
+					</param>
+					<param name="pbAllowSmiles" type="list" default="1" label="Allow Smilies" description="Allow users add smilies to their post">
+						<option value="0">No</option>
+						<option value="1">Yes</option>
+					</param>
+					<param name="pbAllowBBCode" type="list" default="1" label="Allow BBCode" description="Allow users to add bbcode to their post">
+						<option value="0">No</option>
+						<option value="1">Yes</option>
+					</param>
+					<if name="pbAllowBBCode" type="showhide" operator="=" value="1" valuetype="const:string">
+						<fieldset name="fbbcodes" label="Special BB-codes" description="">
+							<param name="pbAllowImgBBCode" type="list" default="0" label="Allow [img] BBCode" description="Allow users to add images urls with [img] bbcode to their post. WARNING: cross-linking images might bring copyright issues, and unsafe content to your site, if not moderated.">
+								<option value="0">No</option>
+								<option value="1">Yes</option>
+							</param>
+							<param name="pbAllowVideoBBCode" type="list" default="0" label="Allow [video] BBCode" description="Allow users to add videos from youtube, googleVideo, vimeo and more with [video] bbcode to their post. WARNING: cross-linking videos might bring copyright issues, and unsafe content to your site, if not moderated.">
+								<option value="0">No</option>
+								<option value="1">Yes</option>
+							</param>
+						</fieldset>
+					<else action="set" name="pbAllowImgBBCode" value="0" type="const:string" />
+					<else action="set" name="pbAllowVideoBBCode" value="0" type="const:string" />
+					</if>
+				</fieldset>
+				<fieldset name="fmoref" label="More features" description="">
+					<param name="pbPagingEngabbled" type="list" default="1" label="Enable Paging" description="Allow entries to automatically page when they exceed the number per page limit.">
+						<option value="0">No</option>
+						<option value="1">Yes</option>
+					</param>
+					<param name="pbEnableGesture" type="list" default="0" label="Enable Gesture" description="When a user is viewing an entry from another registered user a link will appear that will allow them to return the gesture.">
+						<option value="0">No</option>
+						<option value="1">Yes</option>
+					</param>
+					<param name="pbShowEditor" type="list" default="0" label="Show editor by default" description="Allow posters to directly enter their text.">
+						<option value="0">Hidden</option>
+						<option value="1">Visible</option>
+					</param>
+				</fieldset>
+				<fieldset name="fextras" label="Extra fields" description="">
+					<param name="pbShowName" type="list" default="0" label="Show name" description="Show name of logged-in users">
+						<option value="0">No</option>
+						<option value="1">Yes</option>
+					</param>
+					<param name="pbShowEmail" type="list" default="0" label="Show email" description="Show email of logged-in users">
+						<option value="0">No</option>
+						<option value="1">Yes</option>
+					</param>
+					<param name="pbUseLocation" type="list" default="0" label="Use Location Field" description="Allow posters to enter a location as part of their entry">
+						<option value="0">No</option>
+						<option value="1">Yes</option>
+					</param>
+					<if name="pbUseLocation" type="showhide" operator="=" value="1" valuetype="const:string">
+						<param name="pbLocationField" type="field" default="" label="Location Field" description="Select the name of the field which contains the equivalent field in the Community Build Field manager.  If blank, registered users will be asked for a location." />
+					</if>
+					<param name="pbUseWebAddress" type="list" default="0" label="Use Web Address Field" description="Allow posters to enter a web address as part of their entry">
+						<option value="0">No</option>
+						<option value="1">Yes</option>
+					</param>
+					<if name="pbUseWebAddress" type="showhide" operator="=" value="1" valuetype="const:string">
+						<param name="pbWebField" type="field" default="" label="Web Address Field" description="Select the name of the field which contains the equivalent field in the Community Build Field manager.  If blank, registered users will be asked for a web address." />
+					</if>
+				</fieldset>
+				<fieldset name="edisplay" label="Entry display" description="">
+					<param name="pbEntryShowName" type="list" default="1" label="Show entry name" description="Show name of entry poster">
+						<option value="0">No</option>
+						<option value="1">Yes</option>
+					</param>
+					<param name="pbEntryShowEmail" type="list" default="1" label="Show entry email" description="Show email of entry poster">
+						<option value="0">No</option>
+						<option value="1">Yes</option>
+					</param>
+					<param name="pbEntryShowIP" type="list" default="1" label="Show entry ip address" description="Show ip address of entry poster. Note ip address is only visible to moderators.">
+						<option value="0">No</option>
+						<option value="1">Yes</option>
+					</param>
+					<param name="pbEntryShowAvatar" type="list" default="1" label="Use entry avatar" description="Show avatar of entry poster">
+						<option value="0">No</option>
+						<option value="1">Yes</option>
+					</param>
+				</fieldset>
+			</params>
+			<fields>
+				<field type="radio" title="Enable Profile Wall" name="cb_pb_enable_wall" description="Enable the wall on your profile so yourself and visitors can write on it." registration="0" readonly="0" profile="0">
+					<fieldvalue title="_UE_YES" ordering="1" sys="0" />
+					<fieldvalue title="_UE_NO" ordering ="2" sys="0" />
+				</field>
+				<field type="radio" title="Auto Publish" name="cb_pb_autopublish_wall" description="Enable Auto Publish if you want entries submitted to be automatically approved and displayed on your profile." registration="0" readonly="0" profile="0" >
+					<fieldvalue title="_UE_YES" ordering="1" sys="0" />
+					<fieldvalue title="_UE_NO" ordering ="2" sys="0" />
+				</field>
+				<field type="radio" title="Notify Me" name="cb_pb_notifyme_wall" description="Enable Notify Me if you'd like to receive an email notification each time someone submits an entry.  This is recommended if you are not using the Auto Publish feature." registration="0" readonly="0" profile="0" >
+					<fieldvalue title="_UE_YES" ordering="1" sys="0" />
+					<fieldvalue title="_UE_NO" ordering ="2" sys="0" />
+				</field>
+			</fields>
+		</tab>
+		<tab type="existingSytemTab" class="getStatusTab">
+			<fields>
+				<field type="pb_profile_rating" title="Rating" name="cb_pb_profile_rating" description="" registration="0" readonly="1" profile="1" calculated="1" tab="Status" />
+			</fields>
+		</tab>
+	</tabs>
+	<fieldtypes>
+		<field type="pb_profile_rating" label="Avg Profile Rating" unique="true">
+			<database version="1">
+				<table name="#__comprofiler" class="moscomprofiler" maintable="true" strict="false" drop="never" shared="true">
+					<columns>
+					</columns>
+				</table>
+			</database>
+			<params>
+			</params>
+		</field>
+	</fieldtypes>
+	<database version="1">
+		<table name="#__comprofiler_plug_profilebook" class="" strict="true" drop="never">
+			<columns strict="true" drop="never">
+				<column name="id" type="sql:int(11)" unsigned="true" auto_increment="1" strict="true" />
+				<column name="mode" type="sql:char(1)" null="false" default="g" strict="true" />
+				<column name="posterid" type="sql:int(11)" unsigned="true" null="true" strict="true" />
+				<column name="posterip" type="sql:varchar(255)" strict="true" />
+				<column name="postername" type="sql:varchar(255)" null="true" default="" strict="true" />
+				<column name="posteremail" type="sql:varchar(255)" null="true" strict="true" />
+				<column name="posterlocation" type="sql:varchar(255)" null="true" strict="true" />
+				<column name="posterurl" type="sql:varchar(255)" null="true" strict="true" />
+				<column name="postervote" type="sql:int(11)" unsigned="true" null="true" strict="true" />
+				<column name="postertitle" type="sql:varchar(128)" strict="true" />
+				<column name="postercomment" type="sql:text" strict="true" />
+				<column name="date" type="sql:datetime" null="true" strict="true" />
+				<column name="userid" type="sql:int(11)" unsigned="true" strict="true" />
+				<column name="feedback" type="sql:text" null="true" strict="true" />
+				<column name="editdate" type="sql:datetime" null="true" strict="true" />
+				<column name="editedbyid" type="sql:int(11)" unsigned="true" strict="true" />
+				<column name="editedbyname" type="sql:varchar(255)" null="true" strict="true" />
+				<column name="published" type="sql:tinyint(3)" strict="true" />
+				<column name="status" type="sql:tinyint(3)" strict="true" />
+			</columns>
+			<indexes strict="true" drop="never">
+				<index name="PRIMARY" type="primary">
+					<column name="id" />
+				</index>
+				<index name="user_mode_date">
+					<column name="userid" />
+					<column name="mode" />
+					<column name="date" />
+				</index>
+				<index name="pub_user_mode_date">
+					<column name="published" />
+					<column name="userid" />
+					<column name="mode" />
+					<column name="date" />
+				</index>
+				<index name="mode_pub_date">
+					<column name="mode" />
+					<column name="published" />
+					<column name="date" />
+				</index>
+				<index name="status_user_mode">
+					<column name="status" />
+					<column name="userid" />
+					<column name="mode" />
+				</index>
+				<index name="poster_mode_pub_date">
+					<column name="posterid" />
+					<column name="mode" />
+					<column name="published" />
+					<column name="date" />
+				</index>
+			</indexes>
+		</table>
+	</database>
+	<install>
+	</install>
+  	<uninstall>
+	</uninstall>
+	<installfile>install.profilebook.php</installfile>
+	<uninstallfile>uninstall.profilebook.php</uninstallfile>
+</cbinstall>

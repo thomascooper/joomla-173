@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cbinstall version="1.0" type="plugin" group="user">
+	<name>CB Activity</name>
+	<creationDate>2013-04-10</creationDate>
+	<author>Krileon</author>
+	<authorUrl>mailto:krileon@joomlapolis.com</authorUrl>
+	<copyright>(C) 2008-2013 Joomlapolis</copyright>
+	<copyrightUrl>http://www.joomlapolis.com</copyrightUrl>
+	<license>GNU/GPL</license>
+	<licenseUrl>http://www.gnu.org/licenses/gpl.html</licenseUrl>
+	<project>http://forge.joomlapolis.com/projects/cb-activity</project>
+	<description>Displays various user activity on profile.</description>
+	<version>1.9</version>
+	<release>2.3.0</release>
+	<files>
+		<filename plugin="cbactivity">cbactivity.php</filename>
+		<filename>admin.cbactivity.css</filename>
+		<filename>admin.cbactivity.html.php</filename>
+		<filename>admin.cbactivity.php</filename>
+		<filename>cbactivity.class.php</filename>
+		<filename>component.cbactivity.php</filename>
+		<filename>index.html</filename>
+		<filename>plugin.cbactivity.php</filename>
+		<filename>tab.cbactivity.php</filename>
+		<filename>toolbar.cbactivity.html.php</filename>
+		<filename>toolbar.cbactivity.php</filename>
+		<filename>images/icon-128-activity.png</filename>
+		<filename>images/icon-128-config.png</filename>
+		<filename>images/icon-128-plugin.png</filename>
+		<filename>images/icon-32-activity.png</filename>
+		<filename>images/icon-32-config.png</filename>
+		<filename>images/icon-32-plugin.png</filename>
+		<filename>images/icon-48-activity.png</filename>
+		<filename>images/icon-48-config.png</filename>
+		<filename>images/icon-48-plugin.png</filename>
+		<filename>images/index.html</filename>
+		<filename>js/index.html</filename>
+		<filename>js/jquery.timeago.js</filename>
+		<filename>js/jquery.timeago.min.js</filename>
+		<filename>templates/default/images/glyphicons-halflings.png</filename>
+		<filename>templates/default/images/glyphicons-halflings-white.png</filename>
+		<filename>templates/default/images/index.html</filename>
+		<filename>templates/default/jquery.php</filename>
+		<filename>templates/default/activity.php</filename>
+		<filename>templates/default/index.html</filename>
+		<filename>templates/default/recent.php</filename>
+		<filename>templates/default/tab.php</filename>
+		<filename>templates/default/template.css</filename>
+		<filename>templates/index.html</filename>
+	</files>
+	<handler ui="admin" class="cbactivityAdmin" />
+	<actions ui="admin">
+		<action name="default" request="" action="" />
+	</actions>
+	<tabs>
+		<tab name="Activity" description="" class="cbactivityTab" fields="0" position="cb_tabmain" displaytype="tab" ordering_register="1">
+			<params>
+			</params>
+		</tab>
+	</tabs>
+	<params>
+	</params>
+	<database version="1">
+		<table name="#__comprofiler_plugin_activity" class="" strict="true" drop="never">
+			<columns strict="true" drop="never">
+				<column name="id" type="sql:int(11)" unsigned="true" auto_increment="1" strict="true" />
+				<column name="user_id" type="sql:int(11)" />
+				<column name="user" type="sql:int(11)" null="true" />
+				<column name="type" type="sql:varchar(255)" />
+				<column name="subtype" type="sql:varchar(255)" null="true" />
+				<column name="item" type="sql:varchar(255)" null="true" />
+				<column name="from" type="sql:text" null="true" />
+				<column name="to" type="sql:text" null="true" />
+				<column name="title" type="sql:varchar(255)" null="true" />
+				<column name="message" type="sql:text" null="true" />
+				<column name="icon" type="sql:varchar(255)" null="true" />
+				<column name="class" type="sql:varchar(255)" null="true" />
+				<column name="date" type="sql:datetime" default="0000-00-00 00:00:00" />
+			</columns>
+			<indexes strict="true" drop="always">
+				<index name="PRIMARY" type="primary">
+					<column name="id" />
+				</index>
+				<index name="user_id">
+					<column name="user_id" />
+				</index>
+			</indexes>
+		</table>
+	</database>
+</cbinstall>

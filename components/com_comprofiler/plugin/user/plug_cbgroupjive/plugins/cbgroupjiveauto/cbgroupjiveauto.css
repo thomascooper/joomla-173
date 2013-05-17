@@ -1,0 +1,12 @@
+#cbAdminMainWrapper .cbicon-48-gjauto {
+	background-image: url( 'images/icon-48-auto.png' );
+}
+
+#cbAdminMainWrapper .cbicon-32-gjauto,
+#cbAdminMainWrapper i.icon-gjauto {
+	background-image: url( 'images/icon-32-auto.png' );
+}
+
+.gjautoHide {
+	display: none !important;
+}

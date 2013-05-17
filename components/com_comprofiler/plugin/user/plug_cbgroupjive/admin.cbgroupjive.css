@@ -1,0 +1,101 @@
+#cbAdminMainWrapper .cbicon-48-gjplugin {
+	background-image: url( 'images/icon-48-plugin.png' );
+}
+
+#cbAdminMainWrapper .cbicon-48-gjcategories {
+	background-image: url( 'images/icon-48-categories.png' );
+}
+
+#cbAdminMainWrapper .cbicon-48-gjconfig {
+	background-image: url( 'images/icon-48-config.png' );
+}
+
+#cbAdminMainWrapper .cbicon-48-gjgroups {
+	background-image: url( 'images/icon-48-groups.png' );
+}
+
+#cbAdminMainWrapper .cbicon-48-gjinvites {
+	background-image: url( 'images/icon-48-invites.png' );
+}
+
+#cbAdminMainWrapper .cbicon-48-gjtools {
+	background-image: url( 'images/icon-48-tools.png' );
+}
+
+#cbAdminMainWrapper .cbicon-48-gjusers {
+	background-image: url( 'images/icon-48-users.png' );
+}
+
+#cbAdminMainWrapper .cbicon-48-gjintegrations {
+	background-image: url( 'images/icon-48-integrations.png' );
+}
+
+#cbAdminMainWrapper .cbicon-48-gjmenus {
+	background-image: url( 'images/icon-48-menus.png' );
+}
+
+#cbAdminMainWrapper .cbicon-32-gjplugin,
+#cbAdminMainWrapper i.icon-gjplugin {
+	background-image: url( 'images/icon-32-plugin.png' );
+}
+
+#cbAdminMainWrapper .cbicon-32-gjcategories,
+#cbAdminMainWrapper i.icon-gjcategories {
+	background-image: url( 'images/icon-32-categories.png' );
+}
+
+#cbAdminMainWrapper .cbicon-32-gjconfig,
+#cbAdminMainWrapper i.icon-gjconfig {
+	background-image: url( 'images/icon-32-config.png' );
+}
+
+#cbAdminMainWrapper .cbicon-32-gjgroups,
+#cbAdminMainWrapper i.icon-gjgroups {
+	background-image: url( 'images/icon-32-groups.png' );
+}
+
+#cbAdminMainWrapper .cbicon-32-gjinvites,
+#cbAdminMainWrapper i.icon-gjinvites {
+	background-image: url( 'images/icon-32-invites.png' );
+}
+
+#cbAdminMainWrapper .cbicon-32-gjtools,
+#cbAdminMainWrapper i.icon-gjtools {
+	background-image: url( 'images/icon-32-tools.png' );
+}
+
+#cbAdminMainWrapper .cbicon-32-gjusers,
+#cbAdminMainWrapper i.icon-gjusers {
+	background-image: url( 'images/icon-32-users.png' );
+}
+
+#cbAdminMainWrapper .cbicon-32-gjintegrations,
+#cbAdminMainWrapper i.icon-gjintegrations {
+	background-image: url( 'images/icon-32-integrations.png' );
+}
+
+#cbAdminMainWrapper .cbicon-32-gjmenus,
+#cbAdminMainWrapper i.icon-gjmenus {
+	background-image: url( 'images/icon-32-menus.png' );
+}
+
+#cbAdminMainWrapper i[class^="icon-gj"] {
+	background-size: 13px;
+}
+
+.gjAdminToolbar > .cbtoolbaractions > .btn-group {
+	display: inline-block;
+}
+
+#gjConfig .dynamic-tab-pane-control.tab-pane {
+	width: auto;
+	margin: 6px;
+}
+
+#gjConfig .dynamic-tab-pane-control .tab-page {
+	width: auto;
+}
+
+#gjConfig .adminlist {
+	padding: 6px;
+}

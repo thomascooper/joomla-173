@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cbinstall version="1.0" type="plugin" group="user">
+	<name>CB GroupJive</name>
+	<creationDate>2013-02-11</creationDate>
+	<author>Kyle (aka Krileon)</author>
+	<authorUrl>mailto:krileon@joomlapolis.com</authorUrl>
+	<copyright>(C) 2008-2013 Joomlapolis</copyright>
+	<copyrightUrl>http://www.joomlapolis.com</copyrightUrl>
+	<license>GNU/GPL</license>
+	<licenseUrl>http://www.gnu.org/licenses/gpl.html</licenseUrl>
+	<version>1.9</version>
+	<description>CB GroupJive; a powerful and featureful group integration to Community Builder.</description>
+	<release>2.7.0</release>
+	<files>
+		<filename plugin="cbgroupjive">cbgroupjive.php</filename>
+		<filename>admin.cbgroupjive.css</filename>
+		<filename>admin.cbgroupjive.php</filename>
+		<filename>admin.cbgroupjive.html.php</filename>
+		<filename>toolbar.cbgroupjive.php</filename>
+		<filename>toolbar.cbgroupjive.html.php</filename>
+		<filename>cbgroupjive.class.php</filename>
+		<filename>component.cbgroupjive.php</filename>
+		<filename>plugin.cbgroupjive.php</filename>
+		<filename>tab.cbgroupjive.php</filename>
+		<filename>index.html</filename>
+		<filename>images/icon-16-categories.png</filename>
+		<filename>images/icon-16-config.png</filename>
+		<filename>images/icon-16-groups.png</filename>
+		<filename>images/icon-16-invites.png</filename>
+		<filename>images/icon-16-menus.png</filename>
+		<filename>images/icon-16-plugin.png</filename>
+		<filename>images/icon-16-tools.png</filename>
+		<filename>images/icon-16-users.png</filename>
+		<filename>images/icon-16-integrations.png</filename>
+		<filename>images/icon-32-categories.png</filename>
+		<filename>images/icon-32-config.png</filename>
+		<filename>images/icon-32-groups.png</filename>
+		<filename>images/icon-32-invites.png</filename>
+		<filename>images/icon-32-menus.png</filename>
+		<filename>images/icon-32-plugin.png</filename>
+		<filename>images/icon-32-tools.png</filename>
+		<filename>images/icon-32-users.png</filename>
+		<filename>images/icon-32-integrations.png</filename>
+		<filename>images/icon-48-categories.png</filename>
+		<filename>images/icon-48-config.png</filename>
+		<filename>images/icon-48-groups.png</filename>
+		<filename>images/icon-48-invites.png</filename>
+		<filename>images/icon-48-menus.png</filename>
+		<filename>images/icon-48-plugin.png</filename>
+		<filename>images/icon-48-tools.png</filename>
+		<filename>images/icon-48-users.png</filename>
+		<filename>images/icon-48-integrations.png</filename>
+		<filename>images/icon-128-categories.png</filename>
+		<filename>images/icon-128-config.png</filename>
+		<filename>images/icon-128-groups.png</filename>
+		<filename>images/icon-128-invites.png</filename>
+		<filename>images/icon-128-menus.png</filename>
+		<filename>images/icon-128-plugin.png</filename>
+		<filename>images/icon-128-tools.png</filename>
+		<filename>images/icon-128-users.png</filename>
+		<filename>images/icon-128-integrations.png</filename>
+		<filename>images/default.png</filename>
+		<filename>images/default_category.png</filename>
+		<filename>images/default_overview.png</filename>
+		<filename>images/default_panel.png</filename>
+		<filename>images/downarrow.png</filename>
+		<filename>images/lock.png</filename>
+		<filename>images/pending.png</filename>
+		<filename>images/publish.png</filename>
+		<filename>images/unlock.png</filename>
+		<filename>images/unpublish.png</filename>
+		<filename>images/uparrow.png</filename>
+		<filename>images/edit.png</filename>
+		<filename>images/save.png</filename>
+		<filename>images/moveup.png</filename>
+		<filename>images/movedown.png</filename>
+		<filename>images/index.html</filename>
+		<filename>plugins/index.html</filename>
+		<filename>templates/index.html</filename>
+		<filename>templates/default/images/glyphicons-halflings.png</filename>
+		<filename>templates/default/images/glyphicons-halflings-white.png</filename>
+		<filename>templates/default/images/index.html</filename>
+		<filename>templates/default/category.php</filename>
+		<filename>templates/default/category_all.php</filename>
+		<filename>templates/default/category_approval.php</filename>
+		<filename>templates/default/category_edit.php</filename>
+		<filename>templates/default/category_groups.php</filename>
+		<filename>templates/default/category_main.php</filename>
+		<filename>templates/default/category_message.php</filename>
+		<filename>templates/default/category_nested.php</filename>
+		<filename>templates/default/category_panes.php</filename>
+		<filename>templates/default/group.php</filename>
+		<filename>templates/default/group_all.php</filename>
+		<filename>templates/default/group_approval.php</filename>
+		<filename>templates/default/group_edit.php</filename>
+		<filename>templates/default/group_invites.php</filename>
+		<filename>templates/default/group_invites_list.php</filename>
+		<filename>templates/default/group_main.php</filename>
+		<filename>templates/default/group_message.php</filename>
+		<filename>templates/default/group_nested.php</filename>
+		<filename>templates/default/group_panes.php</filename>
+		<filename>templates/default/group_users.php</filename>
+		<filename>templates/default/group_users_approval.php</filename>
+		<filename>templates/default/index.html</filename>
+		<filename>templates/default/jquery_inputlimit.php</filename>
+		<filename>templates/default/jquery_validation.php</filename>
+		<filename>templates/default/notifications.php</filename>
+		<filename>templates/default/overview.php</filename>
+		<filename>templates/default/overview_main.php</filename>
+		<filename>templates/default/overview_message.php</filename>
+		<filename>templates/default/overview_panes.php</filename>
+		<filename>templates/default/panel.php</filename>
+		<filename>templates/default/panel_main.php</filename>
+		<filename>templates/default/panel_panes.php</filename>
+		<filename>templates/default/tab.php</filename>
+		<filename>templates/default/tab_categories.php</filename>
+		<filename>templates/default/tab_groups.php</filename>
+		<filename>templates/default/tab_invited.php</filename>
+		<filename>templates/default/tab_invites.php</filename>
+		<filename>templates/default/tab_joined.php</filename>
+		<filename>templates/default/template.css</filename>
+	</files>
+	<handler ui="admin" class="cbgjAdmin" />
+	<actions ui="admin">
+		<action name="default" request="" action="" />
+	</actions>
+	<tabs>
+		<tab name="Groups" description="" class="cbgjTab" fields="0" position="cb_tabmain" displaytype="tab" ordering_register="1">
+			<params>
+			</params>
+		</tab>
+	</tabs>
+	<params>
+	</params>
+	<database version="1">
+		<table name="#__groupjive_categories" class="" strict="true" drop="never">
+			<columns strict="true" drop="never">
+				<column name="id" type="sql:int(11)" unsigned="true" auto_increment="1" />
+				<column name="published" type="sql:int(11)" default="1" />
+				<column name="parent" type="sql:int(11)" default="0" />
+				<column name="user_id" type="sql:int(11)" />
+				<column name="name" type="sql:text" />
+				<column name="description" type="sql:text" null="true" />
+				<column name="logo" type="sql:varchar(255)" null="true" />
+				<column name="access" type="sql:int(11)" default="-2" />
+				<column name="types" type="sql:varchar(255)" />
+				<column name="create" type="sql:int(11)" default="1" />
+				<column name="create_access" type="sql:int(11)" default="-1" />
+				<column name="nested" type="sql:int(11)" default="1" />
+				<column name="nested_access" type="sql:int(11)" default="-1" />
+				<column name="date" type="sql:datetime" default="0000-00-00 00:00:00" />
+				<column name="ordering" type="sql:int(11)" default="99999" />
+				<column name="params" type="sql:text" null="true" />
+			</columns>
+			<indexes strict="true" drop="never">
+				<index name="PRIMARY" type="primary">
+					<column name="id" />
+				</index>
+				<index name="published">
+					<column name="published" />
+				</index>
+				<index name="parent">
+					<column name="parent" />
+				</index>
+				<index name="user_id">
+					<column name="user_id" />
+				</index>
+				<index name="access">
+					<column name="access" />
+				</index>
+			</indexes>
+		</table>
+		<table name="#__groupjive_groups" class="" strict="true" drop="never">
+			<columns strict="true" drop="never">
+				<column name="id" type="sql:int(11)" unsigned="true" auto_increment="1" />
+				<column name="published" type="sql:int(11)" default="1" />
+				<column name="category" type="sql:int(11)" />
+				<column name="parent" type="sql:int(11)" default="0" />
+				<column name="user_id" type="sql:int(11)" />
+				<column name="name" type="sql:text" />
+				<column name="description" type="sql:text" null="true" />
+				<column name="logo" type="sql:varchar(255)" null="true" />
+				<column name="access" type="sql:int(11)" default="-2" />
+				<column name="type" type="sql:int(11)" default="1" />
+				<column name="invite" type="sql:int(11)" default="0" />
+				<column name="users" type="sql:int(11)" default="1" />
+				<column name="nested" type="sql:int(11)" default="1" />
+				<column name="nested_access" type="sql:int(11)" default="-1" />
+				<column name="date" type="sql:datetime" default="0000-00-00 00:00:00" />
+				<column name="ordering" type="sql:int(11)" default="1" />
+				<column name="params" type="sql:text" null="true" />
+			</columns>
+			<indexes strict="true" drop="never">
+				<index name="PRIMARY" type="primary">
+					<column name="id" />
+				</index>
+				<index name="published">
+					<column name="published" />
+				</index>
+				<index name="category">
+					<column name="category" />
+				</index>
+				<index name="parent">
+					<column name="parent" />
+				</index>
+				<index name="user_id">
+					<column name="user_id" />
+				</index>
+				<index name="access">
+					<column name="access" />
+				</index>
+			</indexes>
+		</table>
+		<table name="#__groupjive_users" class="" strict="true" drop="never">
+			<columns strict="true" drop="never">
+				<column name="id" type="sql:int(11)" unsigned="true" auto_increment="1" />
+				<column name="user_id" type="sql:int(11)" />
+				<column name="group" type="sql:int(11)" />
+				<column name="date" type="sql:datetime" default="0000-00-00 00:00:00" />
+				<column name="status" type="sql:int(11)" default="0" />
+				<column name="params" type="sql:text" null="true" />
+			</columns>
+			<indexes strict="true" drop="never">
+				<index name="PRIMARY" type="primary">
+					<column name="id" />
+				</index>
+				<index name="user_id">
+					<column name="user_id" />
+				</index>
+				<index name="group">
+					<column name="group" />
+				</index>
+				<index name="status">
+					<column name="status" />
+				</index>
+			</indexes>
+		</table>
+		<table name="#__groupjive_invites" class="" strict="true" drop="never">
+			<columns strict="true" drop="never">
+				<column name="id" type="sql:int(11)" unsigned="true" auto_increment="1" />
+				<column name="user_id" type="sql:int(11)" />
+				<column name="group" type="sql:int(11)" />
+				<column name="invited" type="sql:datetime" default="0000-00-00 00:00:00" />
+				<column name="accepted" type="sql:datetime" default="0000-00-00 00:00:00" />
+				<column name="code" type="sql:varchar(255)" null="true" />
+				<column name="email" type="sql:varchar(255)" null="true" />
+				<column name="user" type="sql:int(11)" />
+			</columns>
+			<indexes strict="true" drop="never">
+				<index name="PRIMARY" type="primary">
+					<column name="id" />
+				</index>
+				<index name="user_id">
+					<column name="user_id" />
+				</index>
+				<index name="group">
+					<column name="group" />
+				</index>
+				<index name="user">
+					<column name="user" />
+				</index>
+				<index name="email">
+					<column name="email" />
+				</index>
+				<index name="group_user_id">
+					<column name="group" />
+					<column name="user_id" />
+				</index>
+			</indexes>
+		</table>
+		<table name="#__groupjive_notifications" class="" strict="true" drop="never">
+			<columns strict="true" drop="never">
+				<column name="id" type="sql:int(11)" unsigned="true" auto_increment="1" />
+				<column name="user_id" type="sql:int(11)" />
+				<column name="type" type="sql:varchar(255)" />
+				<column name="item" type="sql:varchar(255)" />
+				<column name="params" type="sql:text" null="true" />
+			</columns>
+			<indexes strict="true" drop="never">
+				<index name="PRIMARY" type="primary">
+					<column name="id" />
+				</index>
+				<index name="user_id">
+					<column name="user_id" />
+				</index>
+				<index name="type">
+					<column name="type" />
+				</index>
+				<index name="item">
+					<column name="item" />
+				</index>
+			</indexes>
+		</table>
+	</database>
+</cbinstall>
