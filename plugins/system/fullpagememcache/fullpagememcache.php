@@ -13,6 +13,7 @@ class  plgSystemFullPageMemcache extends JPlugin
 	function onAfterRender() {
 		if(class_exists('Memcached')) {
 			$mainframe = JFactory::getApplication();
+			if(!$mainframe->isAdmin()) {
         		//$body = JResponse::getBody();
 
 			// Get all local CSS files
@@ -45,6 +46,7 @@ class  plgSystemFullPageMemcache extends JPlugin
 			$ret = $m->add($key,$data,$duration);
 
 			echo $buffer;
+		}
 		}
 	}
     /**
