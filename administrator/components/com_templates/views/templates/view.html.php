@@ -1,14 +1,10 @@
 <?php
 /**
- * @version		$Id$
- * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
+ * @copyright	Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-// No direct access.
 defined('_JEXEC') or die;
-
-jimport('joomla.application.component.view');
 
 /**
  * View class for a list of template styles.
@@ -17,7 +13,7 @@ jimport('joomla.application.component.view');
  * @subpackage	com_templates
  * @since		1.6
  */
-class TemplatesViewTemplates extends JView
+class TemplatesViewTemplates extends JViewLegacy
 {
 	/**
 	 * @var		array
@@ -56,6 +52,14 @@ class TemplatesViewTemplates extends JView
 		if (count($errors = $this->get('Errors'))) {
 			JError::raiseError(500, implode("\n", $errors));
 			return false;
+		}
+
+		// Check if there are no matching items
+		if(!count($this->items)) {
+			JFactory::getApplication()->enqueueMessage(
+				JText::_('COM_TEMPLATES_MSG_MANAGE_NO_TEMPLATES')
+				, 'warning'
+			);
 		}
 
 		$this->addToolbar();

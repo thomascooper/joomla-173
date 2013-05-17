@@ -1,7 +1,6 @@
 <?php
 /**
- * @version		$Id$
- * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
+ * @copyright	Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
  */
 
@@ -116,7 +115,7 @@ class MenusModelMenu extends JModelForm
 
 		// Check for a table object error.
 		if ($return === false && $table->getError()) {
-			$this->serError($table->getError());
+			$this->setError($table->getError());
 			return $false;
 		}
 
@@ -280,7 +279,7 @@ class MenusModelMenu extends JModelForm
 	 *
 	 * @since	1.6
 	 */
-	function cleanCache($group = null, $client_id = 0) {
+	protected function cleanCache($group = null, $client_id = 0) {
 		parent::cleanCache('com_modules');
 		parent::cleanCache('mod_menu');
 	}

@@ -1,22 +1,18 @@
 <?php
 /**
- * @version		$Id$
  * @package		Joomla.Administrator
  * @subpackage	com_config
- * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
+ * @copyright	Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-// no direct access
 defined('_JEXEC') or die;
-
-jimport('joomla.application.component.view');
 
 /**
  * @package		Joomla.Administrator
  * @subpackage	com_config
  */
-class ConfigViewApplication extends JView
+class ConfigViewApplication extends JViewLegacy
 {
 	public $state;
 	public $form;
@@ -48,7 +44,6 @@ class ConfigViewApplication extends JView
 		$mediaParams = JComponentHelper::getParams('com_media');
 
 		// Load settings for the FTP layer.
-		jimport('joomla.client.helper');
 		$ftp = JClientHelper::setCredentialsFromRequest('ftp');
 
 		$this->assignRef('form',	$form);

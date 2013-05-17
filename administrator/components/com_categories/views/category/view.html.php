@@ -1,14 +1,10 @@
 <?php
 /**
- * @version		$Id$
- * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
+ * @copyright	Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-// Check to ensure this file is included in Joomla!
 defined('_JEXEC') or die;
-
-jimport('joomla.application.component.view');
 
 /**
  * HTML View class for the Categories component
@@ -17,7 +13,7 @@ jimport('joomla.application.component.view');
  * @package		Joomla.Administrator
  * @subpackage	com_categories
  */
-class CategoriesViewCategory extends JView
+class CategoriesViewCategory extends JViewLegacy
 {
 	protected $form;
 	protected $item;
@@ -65,7 +61,7 @@ class CategoriesViewCategory extends JView
 		}
 
  		// The extension can be in the form com_foo.section
-		$parts = explode('.',$extension);
+		$parts = explode('.', $extension);
 		$component = $parts[0];
 		$section = (count($parts) > 1) ? $parts[1] : null;
 
@@ -96,13 +92,13 @@ class CategoriesViewCategory extends JView
 		}
 
 		// Load specific css component
-		JHtml::_('stylesheet',$component.'/administrator/categories.css', array(), true);
+		JHtml::_('stylesheet', $component.'/administrator/categories.css', array(), true);
 
 		// Prepare the toolbar.
-		JToolBarHelper::title($title, 'category-'.($isNew?'add':'edit').' '.substr($component,4).($section?"-$section":'').'-category-'.($isNew?'add':'edit'));
+		JToolBarHelper::title($title, 'category-'.($isNew?'add':'edit').' '.substr($component, 4).($section?"-$section":'').'-category-'.($isNew?'add':'edit'));
 
 		// For new records, check the create permission.
-		if ($isNew && $canDo->get('core.create')) {
+		if ($isNew && (count($user->getAuthorisedCategories($component, 'core.create')) > 0)) {
 			JToolBarHelper::apply('category.apply');
 			JToolBarHelper::save('category.save');
 			JToolBarHelper::save2new('category.save2new');
@@ -133,7 +129,7 @@ class CategoriesViewCategory extends JView
 
 		// Compute the ref_key if it does exist in the component
 		if (!$lang->hasKey($ref_key = strtoupper($component.($section?"_$section":'')).'_CATEGORY_'.($isNew?'ADD':'EDIT').'_HELP_KEY')) {
-			$ref_key = 'JHELP_COMPONENTS_'.strtoupper(substr($component,4).($section?"_$section":'')).'_CATEGORY_'.($isNew?'ADD':'EDIT');
+			$ref_key = 'JHELP_COMPONENTS_'.strtoupper(substr($component, 4).($section?"_$section":'')).'_CATEGORY_'.($isNew?'ADD':'EDIT');
 		}
 
 		// Get help for the category/section view for the component by

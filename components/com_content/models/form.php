@@ -1,9 +1,8 @@
 <?php
 /**
- * @version		$Id$
  * @package		Joomla.Site
  * @subpackage	com_content
- * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
+ * @copyright	Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
  */
 
@@ -40,7 +39,7 @@ class ContentModelForm extends ContentModelArticle
 		$this->setState('article.catid', JRequest::getInt('catid'));
 
 		$return = JRequest::getVar('return', null, 'default', 'base64');
-		$this->setState('return_page', base64_decode($return));
+		$this->setState('return_page', urldecode(base64_decode($return)));
 
 		// Load the parameters.
 		$params	= $app->getParams();
@@ -105,8 +104,10 @@ class ContentModelForm extends ContentModelArticle
 		else {
 			// New item.
 			$catId = (int) $this->getState('article.catid');
+
 			if ($catId) {
 				$value->params->set('access-change', $user->authorise('core.edit.state', 'com_content.category.'.$catId));
+				$value->catid = $catId;
 			}
 			else {
 				$value->params->set('access-change', $user->authorise('core.edit.state', 'com_content'));
@@ -129,6 +130,6 @@ class ContentModelForm extends ContentModelArticle
 	 */
 	public function getReturnPage()
 	{
-		return base64_encode($this->getState('return_page'));
+		return base64_encode(urlencode($this->getState('return_page')));
 	}
 }

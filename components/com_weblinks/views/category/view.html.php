@@ -1,16 +1,12 @@
 <?php
 /**
- * version $Id$
  * @package		Joomla.Site
  * @subpackage	com_weblinks
- * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
+ * @copyright	Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-// no direct access
 defined('_JEXEC') or die;
-
-jimport('joomla.application.component.view');
 
 /**
  * HTML View class for the WebLinks component
@@ -19,7 +15,7 @@ jimport('joomla.application.component.view');
  * @subpackage	com_weblinks
  * @since		1.5
  */
-class WeblinksViewCategory extends JView
+class WeblinksViewCategory extends JViewLegacy
 {
 	protected $state;
 	protected $items;
@@ -70,7 +66,7 @@ class WeblinksViewCategory extends JView
 			$item->slug	= $item->alias ? ($item->id.':'.$item->alias) : $item->id;
 
 			if ($item->params->get('count_clicks', $params->get('count_clicks')) == 1) {
-				$item->link = JRoute::_('index.php?option=com_weblinks&task=weblink.go&&id='. $item->id);
+				$item->link = JRoute::_('index.php?option=com_weblinks&task=weblink.go&id='. $item->id);
 			}
 			else {
 				$item->link = $item->url;

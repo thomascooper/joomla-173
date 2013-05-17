@@ -1,16 +1,12 @@
 <?php
 /**
- * version $Id$
  * @package		Joomla.Site
  * @subpackage	com_newsfeeds
- * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
+ * @copyright	Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-// Check to ensure this file is included in Joomla!
 defined('_JEXEC') or die;
-
-jimport('joomla.application.component.view');
 
 /**
  * HTML View class for the Newsfeeds component
@@ -19,7 +15,7 @@ jimport('joomla.application.component.view');
  * @subpackage	com_newsfeeds
  * @since		1.0
  */
-class NewsfeedsViewCategory extends JView
+class NewsfeedsViewCategory extends JViewLegacy
 {
 	protected $state;
 	protected $items;

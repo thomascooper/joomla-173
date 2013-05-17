@@ -1,14 +1,10 @@
 <?php
 /**
- * @version		$Id$
- * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
+ * @copyright	Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
  * @license		GNU General Public License, see LICENSE.php
  */
 
-// No direct access.
 defined('_JEXEC') or die;
-
-jimport( 'joomla.application.component.controller' );
 
 /**
  * Login Controller
@@ -17,7 +13,7 @@ jimport( 'joomla.application.component.controller' );
  * @subpackage	com_login
  * @since		1.5
  */
-class LoginController extends JController
+class LoginController extends JControllerLegacy
 {
 	/**
 	 * Typical view method for MVC based architecture
@@ -50,7 +46,7 @@ class LoginController extends JController
 	public function login()
 	{
 		// Check for request forgeries.
-		JRequest::checkToken('request') or jexit(JText::_('JINVALID_TOKEN'));
+		JSession::checkToken('request') or jexit(JText::_('JINVALID_TOKEN'));
 
 		$app = JFactory::getApplication();
 
@@ -60,7 +56,7 @@ class LoginController extends JController
 
 		$result = $app->login($credentials, array('action' => 'core.login.admin'));
 
-		if (!JError::isError($result)) {
+		if (!($result instanceof Exception)) {
 			$app->redirect($return);
 		}
 
@@ -74,7 +70,7 @@ class LoginController extends JController
 	 */
 	public function logout()
 	{
-		JRequest::checkToken('default') or jexit(JText::_('JInvalid_Token'));
+		JSession::checkToken('request') or jexit(JText::_('JInvalid_Token'));
 
 		$app = JFactory::getApplication();
 
@@ -86,7 +82,7 @@ class LoginController extends JController
 
 		$result = $app->logout($userid, $options);
 
-		if (!JError::isError($result)) {
+		if (!($result instanceof Exception)) {
 			$model 	= $this->getModel('login');
 			$return = $model->getState('return');
 			$app->redirect($return);

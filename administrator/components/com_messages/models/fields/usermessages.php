@@ -1,17 +1,13 @@
 <?php
 /**
- * @version		$Id$
  * @package		Joomla.Administrator
  * @subpackage	com_messages
- * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
+ * @copyright	Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
  */
 
 defined('_JEXEC') or die;
 
-jimport('joomla.form.formfield');
-jimport('joomla.form.helper');
-jimport('joomla.access.access');
 JFormHelper::loadFieldClass('user');
 
 /**
@@ -41,7 +37,7 @@ class JFormFieldUserMessages extends JFormFieldUser
 		$query->select('id');
 		$query->from('#__usergroups');
 		$db->setQuery($query);
-		$groups = $db->loadResultArray();
+		$groups = $db->loadColumn();
 
 		// Check for a database error.
 		if ($db->getErrorNum()) {

@@ -1,8 +1,7 @@
 <?php
 /**
- * @version		$Id$
  * @package		Joomla.Site
- * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
+ * @copyright	Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
  */
 
@@ -148,13 +147,16 @@ function ContactParseRoute($segments)
 
 	// From the categories view, we can only jump to a category.
 	$id = (isset($item->query['id']) && $item->query['id'] > 1) ? $item->query['id'] : 'root';
-	$categories = JCategories::getInstance('Contact')->get($id)->getChildren();
+
+	$contactCategory = JCategories::getInstance('Contact')->get($id);
+
+	$categories = ($contactCategory) ? $contactCategory->getChildren() : array();
 	$vars['catid'] = $id;
 	$vars['id'] = $id;
 	$found = 0;
 	foreach($segments as $segment)
 	{
-		$segment = $advanced ? str_replace(':', '-',$segment) : $segment;
+		$segment = $advanced ? str_replace(':', '-', $segment) : $segment;
 		foreach($categories as $category)
 		{
 			if ($category->slug == $segment || $category->alias == $segment)

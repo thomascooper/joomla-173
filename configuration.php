@@ -17,7 +17,7 @@ class JConfig {
 	public $dbprefix = 'jom17_';
 	public $live_site = '';
 	public $secret = 'DvcJbwEPm3X3ccI8';
-	public $gzip = '1';
+	public $gzip = '0';
 	public $error_reporting = 'default';
 	public $helpurl = 'http://help.joomla.org/proxy/index.php?option=com_help&keyref=Help16:{keyref}';
 	public $ftp_host = '127.0.0.1';

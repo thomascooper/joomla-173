@@ -1,14 +1,10 @@
 <?php
 /**
- * @version		$Id$
- * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
+ * @copyright	Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-// No direct access
 defined('_JEXEC') or die;
-
-jimport('joomla.application.component.view');
 
 /**
  * View to edit a contact.
@@ -17,7 +13,7 @@ jimport('joomla.application.component.view');
  * @subpackage	com_contact
  * @since		1.6
  */
-class ContactViewContact extends JView
+class ContactViewContact extends JViewLegacy
 {
 	protected $form;
 	protected $item;
@@ -56,7 +52,8 @@ class ContactViewContact extends JView
 		$userId		= $user->get('id');
 		$isNew		= ($this->item->id == 0);
 		$checkedOut	= !($this->item->checked_out == 0 || $this->item->checked_out == $userId);
-		$canDo		= ContactHelper::getActions($this->state->get('filter.category_id'));
+		// Since we don't track these assets at the item level, use the category id.
+		$canDo		= ContactHelper::getActions($this->item->catid, 0);
 
 		JToolBarHelper::title(JText::_('COM_CONTACT_MANAGER_CONTACT'), 'contact.png');
 

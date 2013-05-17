@@ -1,14 +1,10 @@
 <?php
 /**
- * @version		$Id$
- * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
+ * @copyright	Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-// no direct access
 defined('_JEXEC') or die;
-
-jimport('joomla.plugin.plugin');
 
 /**
  * Joomla! System Remember Me Plugin
@@ -30,8 +26,7 @@ class plgSystemRemember extends JPlugin
 		$user = JFactory::getUser();
 		if ($user->get('guest'))
 		{
-			jimport('joomla.utilities.utility');
-			$hash = JUtility::getHash('JLOGIN_REMEMBER');
+			$hash = JApplication::getHash('JLOGIN_REMEMBER');
 
 			if ($str = JRequest::getString($hash, '', 'cookie', JREQUEST_ALLOWRAW | JREQUEST_NOTRIM))
 			{
@@ -39,9 +34,10 @@ class plgSystemRemember extends JPlugin
 
 				// Create the encryption key, apply extra hardening using the user agent string.
                 // Since we're decoding, no UA validity check is required.
-				$key = JUtility::getHash(@$_SERVER['HTTP_USER_AGENT']);
+				$privateKey = JApplication::getHash(@$_SERVER['HTTP_USER_AGENT']);
 
-				$crypt = new JSimpleCrypt($key);
+				$key = new JCryptKey('simple', $privateKey, $privateKey);
+				$crypt = new JCrypt(new JCryptCipherSimple, $key);
 				$str = $crypt->decrypt($str);
                 $cookieData = @unserialize($str);
                 // Deserialized cookie could be any object structure, so make sure the
@@ -70,7 +66,7 @@ class plgSystemRemember extends JPlugin
 					$cookie_path = $config->get('cookie_path', '/');
 					// Clear the remember me cookie
 					setcookie(
-                        JUtility::getHash('JLOGIN_REMEMBER'), false, time() - 86400,
+                        JApplication::getHash('JLOGIN_REMEMBER'), false, time() - 86400,
                         $cookie_path, $cookie_domain
                     );
 				}

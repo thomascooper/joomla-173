@@ -1,14 +1,12 @@
 <?php
 /**
- * @version		$Id: categories.php
- * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
+ * @copyright	Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-// Check to ensure this file is included in Joomla!
 defined('_JEXEC') or die;
 
-jimport('joomla.application.component.model');
+jimport('joomla.application.component.modellist');
 
 /**
  * This models supports retrieving lists of contact categories.
@@ -17,7 +15,7 @@ jimport('joomla.application.component.model');
  * @subpackage	com_contact
  * @since		1.6
  */
-class ContactModelCategories extends JModel
+class ContactModelCategories extends JModelList
 {
 	/**
 	 * Model context string.

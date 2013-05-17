@@ -1,13 +1,11 @@
 <?php
 /**
- * @version		$Id$
  * @package		Joomla.Administrator
  * @subpackage	com_cpanel
- * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
+ * @copyright	Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-// Check to ensure this file is included in Joomla!
 defined('_JEXEC') or die;
 
 /**
@@ -17,6 +15,6 @@ defined('_JEXEC') or die;
  * @subpackage	com_cpanel
  * @since 1.5
  */
-class CpanelController extends JController
+class CpanelController extends JControllerLegacy
 {
 }

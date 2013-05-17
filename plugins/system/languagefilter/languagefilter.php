@@ -1,16 +1,12 @@
 <?php
 /**
- * @version		$Id$
- * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
+ * @copyright	Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
  */
 
 // no direct access
 defined('_JEXEC') or die;
-
-jimport('joomla.language.helper');
-jimport('joomla.plugin.plugin');
-
+JLoader::register('MenusHelper', JPATH_ADMINISTRATOR . '/components/com_menus/helpers/menus.php');
 /**
  * Joomla! Language Filter Plugin
  *
@@ -28,11 +24,14 @@ class plgSystemLanguageFilter extends JPlugin
 	protected static $default_lang;
 	protected static $default_sef;
 
+	protected static $cookie;
+
 	private static $_user_lang_code;
 
 	public function __construct(&$subject, $config)
 	{
 		// Ensure that constructor is called one time
+		self::$cookie = SID == '';
 		if (!self::$default_lang) {
 			$app = JFactory::getApplication();
 			$router = $app->getRouter();
@@ -43,6 +42,16 @@ class plgSystemLanguageFilter extends JPlugin
 				self::$lang_codes 	= JLanguageHelper::getLanguages('lang_code');
 				self::$default_lang = JComponentHelper::getParams('com_languages')->get('site', 'en-GB');
 				self::$default_sef 	= self::$lang_codes[self::$default_lang]->sef;
+
+				$user = JFactory::getUser();
+				$levels = $user->getAuthorisedViewLevels();
+				foreach (self::$sefs as $sef => &$language)
+				{
+					if (isset($language->access) && $language->access && !in_array($language->access, $levels))
+					{
+						unset(self::$sefs[$sef]);
+					}
+				}
 
 				$app->setLanguageFilter(true);
 				$uri = JFactory::getURI();
@@ -73,9 +82,9 @@ class plgSystemLanguageFilter extends JPlugin
 					$conf = JFactory::getConfig();
 					$cookie_domain 	= $conf->get('config.cookie_domain', '');
 					$cookie_path 	= $conf->get('config.cookie_path', '/');
-					setcookie(JUtility::getHash('language'), $lang_code, time() + 365 * 86400, $cookie_path, $cookie_domain);
+					setcookie(JApplication::getHash('language'), $lang_code, time() + 365 * 86400, $cookie_path, $cookie_domain);
 					// set the request var
-					JRequest::setVar('language',$lang_code);
+					JRequest::setVar('language', $lang_code);
 				}
 			}
 			parent::__construct($subject, $config);
@@ -89,7 +98,8 @@ class plgSystemLanguageFilter extends JPlugin
 	public function onAfterInitialise()
 	{
 		$app = JFactory::getApplication();
-		$app->set('menu_associations', $this->params->get('menu_associations', 0));
+		$app->menu_associations = $this->params->get('menu_associations', 0);
+
 		if ($app->isSite()) {
 			self::$tag = JFactory::getLanguage()->getTag();
 
@@ -133,9 +143,9 @@ class plgSystemLanguageFilter extends JPlugin
 
 					// test if the url contains same vars as in menu link
 					$test = true;
-					foreach ($vars as $key=>$value)
+					foreach ($uri->getQuery(true) as $key=>$value)
 					{
-						if ($uri->hasVar($key) && $uri->getVar($key) != $value)
+						if (!in_array($key, array('format', 'Itemid', 'lang')) && !(isset($vars[$key]) && $vars[$key] == $value))
 						{
 							$test = false;
 							break;
@@ -158,7 +168,12 @@ class plgSystemLanguageFilter extends JPlugin
 
 		if (self::$mode_sef) {
 			$uri->delVar('lang');
-			if ($this->params->get('remove_default_prefix', 0) == 0 || $sef != self::$default_sef || $sef != self::$lang_codes[self::$tag]->sef)
+			if (
+				$this->params->get('remove_default_prefix', 0) == 0 ||
+				$sef != self::$default_sef ||
+				$sef != self::$lang_codes[self::$tag]->sef ||
+				$this->params->get('detect_browser', 1) && JLanguageHelper::detectLanguage() != self::$tag && !self::$cookie
+			)
 			{
 				$uri->setPath($uri->getPath().'/'.$sef.'/');
 			}
@@ -174,14 +189,16 @@ class plgSystemLanguageFilter extends JPlugin
 
 	public function parseRule(&$router, &$uri)
 	{
+		$app = JFactory::getApplication();
+
 		$array = array();
-		$lang_code = JRequest::getString(JUtility::getHash('language'), null ,'cookie');
+		$lang_code = JRequest::getString(JApplication::getHash('language'), null , 'cookie');
 		// No cookie - let's try to detect browser language or use site default
 		if (!$lang_code) {
 			if ($this->params->get('detect_browser', 1)){
 				$lang_code = JLanguageHelper::detectLanguage();
 			} else {
-				$lang_code = self::$default_sef;
+				$lang_code = self::$default_lang;
  			}
 		}
 		if (self::$mode_sef) {
@@ -190,11 +207,9 @@ class plgSystemLanguageFilter extends JPlugin
 
 			$sef = $parts[0];
 
-			$app = JFactory::getApplication();
-
 			// Redirect only if not in post
 			$post = JRequest::get('POST');
-			if (JRequest::getMethod() != "POST" || count($post) == 0)
+			if (!empty($lang_code) && ($app->input->getMethod() != "POST" || count($post) == 0))
 			{
 				if ($this->params->get('remove_default_prefix', 0) == 0)
 				{
@@ -231,7 +246,10 @@ class plgSystemLanguageFilter extends JPlugin
 						}
 					}
 					// redirect if sef is the default one
-					elseif ($sef == self::$default_sef)
+					elseif (isset(self::$sefs[$sef]) &&
+						self::$default_lang == self::$sefs[$sef]->lang_code &&
+						(!$this->params->get('detect_browser', 1) || JLanguageHelper::detectLanguage() == self::$tag || self::$cookie)
+					)
 					{
 						array_shift($parts);
 						$uri->setPath(implode('/' , $parts));
@@ -259,7 +277,7 @@ class plgSystemLanguageFilter extends JPlugin
 				$sef = isset(self::$lang_codes[$lang_code]) ? self::$lang_codes[$lang_code]->sef : self::$default_sef;
 				$uri->setVar('lang', $sef);
 				$post = JRequest::get('POST');
-				if (JRequest::getMethod() != "POST" || count($post) == 0)
+				if ($app->input->getMethod() != "POST" || count($post) == 0)
 				{
 					$app = JFactory::getApplication();
 					$app->redirect(JURI::base(true).'/index.php?'.$uri->getQuery());
@@ -324,20 +342,20 @@ class plgSystemLanguageFilter extends JPlugin
 			{
 				if ($app->isSite())
 				{
-					$app->setUserState('com_users.edit.profile.redirect',null);
+					$app->setUserState('com_users.edit.profile.redirect', null);
 				}
 			}
 			else
 			{
 				if ($app->isSite())
 				{
-					$app->setUserState('com_users.edit.profile.redirect','index.php?Itemid='.$app->getMenu()->getDefault($lang_code)->id.'&lang='.$lang_codes[$lang_code]->sef);
+					$app->setUserState('com_users.edit.profile.redirect', 'index.php?Itemid='.$app->getMenu()->getDefault($lang_code)->id.'&lang='.$lang_codes[$lang_code]->sef);
 					self::$tag = $lang_code;
 					// Create a cookie
 					$conf = JFactory::getConfig();
 					$cookie_domain 	= $conf->get('config.cookie_domain', '');
 					$cookie_path 	= $conf->get('config.cookie_path', '/');
-					setcookie(JUtility::getHash('language'), $lang_code, time() + 365 * 86400, $cookie_path, $cookie_domain);
+					setcookie(JApplication::getHash('language'), $lang_code, time() + 365 * 86400, $cookie_path, $cookie_domain);
 				}
 			}
 		}
@@ -354,20 +372,138 @@ class plgSystemLanguageFilter extends JPlugin
 	 */
 	public function onUserLogin($user, $options = array())
 	{
-		$app = JFactory::getApplication();
-		if ($app->isSite())
+ 		$app  = JFactory::getApplication();
+ 		$menu = $app->getMenu();
+		if ($app->isSite() && $this->params->get('automatic_change', 1))
 		{
-			if ($this->params->get('automatic_change', 1)) {
-				$lang_code = $user['language'];
-				if (empty($lang_code)) {
-					$lang_code = self::$default_lang;
+			// Load associations
+			$assoc = isset($app->menu_associations) ? $app->menu_associations : 0;
+
+			if ($assoc)
+			{
+				$active = $menu->getActive();
+				if ($active)
+				{
+					$associations = MenusHelper::getAssociations($active->id);
 				}
-				self::$tag = $lang_code;
-				// Create a cookie
-				$conf = JFactory::getConfig();
-				$cookie_domain 	= $conf->get('config.cookie_domain', '');
-				$cookie_path 	= $conf->get('config.cookie_path', '/');
-				setcookie(JUtility::getHash('language'), $lang_code, time() + 365 * 86400, $cookie_path, $cookie_domain);
+			}
+
+			$lang_code = $user['language'];
+			if (empty($lang_code))
+			{
+				$lang_code = self::$default_lang;
+			}
+			if ($lang_code != self::$tag)
+			{
+				// Change language
+ 				self::$tag = $lang_code;
+
+ 				// Create a cookie
+ 				$conf = JFactory::getConfig();
+ 				$cookie_domain 	= $conf->get('config.cookie_domain', '');
+ 				$cookie_path 	= $conf->get('config.cookie_path', '/');
+ 				setcookie(JApplication::getHash('language'), $lang_code, time() + 365 * 86400, $cookie_path, $cookie_domain);
+
+				// Change the language code
+				JFactory::getLanguage()->setLanguage($lang_code);
+
+				// Change the redirect (language have changed)
+				if (isset($associations[$lang_code]) && $menu->getItem($associations[$lang_code])) {
+					$itemid = $associations[$lang_code];
+					$app->setUserState('users.login.form.return', 'index.php?&Itemid='.$itemid);
+				}
+				else
+				{
+					$itemid = isset($homes[$lang_code]) ? $homes[$lang_code]->id : $homes['*']->id;
+					$app->setUserState('users.login.form.return', 'index.php?&Itemid='.$itemid);
+				}
+ 			}
+ 		}
+	}
+
+	/**
+	 * This method adds alternate meta tags for associated menu items
+	 *
+	 * @return	nothing
+	 * @since	1.7
+	 */
+	public function onAfterDispatch()
+	{
+		$app = JFactory::getApplication();
+		$doc = JFactory::getDocument();
+
+		if ($app->isSite() && $this->params->get('alternate_meta') && $doc->getType() == 'html')
+		{
+			// Get active menu item
+			$active = $app->getMenu()->getActive();
+			if (!$active) {
+				return;
+			}
+
+			// Get menu item link
+			if ($app->getCfg('sef')) {
+				$active_link = JRoute::_('index.php?Itemid='.$active->id, false);
+			} else {
+				$active_link = JRoute::_($active->link.'&Itemid='.$active->id, false);
+			}
+			if ($active_link == JUri::base(true).'/') {
+				$active_link .= 'index.php';
+			}
+
+			// Get current link
+			$current_link = JRequest::getUri();
+			if ($current_link == JUri::base(true).'/') {
+				$current_link .= 'index.php';
+			}
+
+			// Check the exact menu item's URL
+			if ($active_link == $current_link)
+			{
+				// Get menu item associations
+				JLoader::register('MenusHelper', JPATH_ADMINISTRATOR . '/components/com_menus/helpers/menus.php');
+				$associations = MenusHelper::getAssociations($active->id);
+
+				// Remove current menu item
+				unset($associations[$active->language]);
+
+				// Associated menu items in other languages
+				if ($associations && $this->params->get('menu_associations'))
+				{
+					$menu 	= $app->getMenu();
+					$server = JURI::getInstance()->toString(array('scheme', 'host', 'port'));
+
+					foreach(JLanguageHelper::getLanguages() as $language) {
+						if (isset($associations[$language->lang_code])) {
+							$item = $menu->getItem($associations[$language->lang_code]);
+							if ($item && JLanguage::exists($language->lang_code)) {
+								if ($app->getCfg('sef')) {
+									$link = JRoute::_('index.php?Itemid='.$associations[$language->lang_code].'&lang='.$language->sef);
+								} else {
+									$link = JRoute::_($item->link.'&Itemid='.$associations[$language->lang_code].'&lang='.$language->sef);
+								}
+								$doc->addHeadLink($server . $link, 'alternate', 'rel', array('hreflang' => $language->lang_code));
+							}
+						}
+					}
+				}
+				// Homepages in other languages
+				elseif ($active->home)
+				{
+					$menu 	= $app->getMenu();
+					$server = JURI::getInstance()->toString(array('scheme', 'host', 'port'));
+
+					foreach(JLanguageHelper::getLanguages() as $language) {
+						$item = $menu->getDefault($language->lang_code);
+						if ($item && $item->language != $active->language && $item->language != '*' && JLanguage::exists($language->lang_code)) {
+							if ($app->getCfg('sef')) {
+								$link = JRoute::_('index.php?Itemid='.$item->id.'&lang='.$language->sef);
+							} else {
+								$link = JRoute::_($item->link.'&Itemid='.$item->id.'&lang='.$language->sef);
+							}
+							$doc->addHeadLink($server . JRoute::_($item->link.'&Itemid='.$item->id.'&lang='.$language->sef), 'alternate', 'rel', array('hreflang' => $language->lang_code));
+						}
+					}
+				}
 			}
 		}
 	}

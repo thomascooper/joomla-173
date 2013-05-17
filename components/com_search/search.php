@@ -1,19 +1,15 @@
 <?php
 /**
- * @version		$Id$
  * @package		Joomla.Site
  * @subpackage	com_search
- * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
+ * @copyright	Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-// no direct access
 defined('_JEXEC') or die;
 
-jimport('joomla.application.component.controller');
-
 // Create the controller
-$controller = JController::getInstance('Search');
+$controller = JControllerLegacy::getInstance('Search');
 
 // Perform the Request task
 $controller->execute(JRequest::getCmd('task'));

@@ -1,11 +1,9 @@
 <?php
 /**
- * @version		$Id$
- * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
+ * @copyright	Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-// No direct access.
 defined('_JEXEC') or die;
 
 /**
@@ -46,12 +44,10 @@ class TemplatesHelper
 		$user	= JFactory::getUser();
 		$result	= new JObject;
 
-		$actions = array(
-			'core.admin', 'core.manage', 'core.create', 'core.edit', 'core.edit.state', 'core.delete'
-		);
+		$actions = JAccess::getActions('com_templates');
 
 		foreach ($actions as $action) {
-			$result->set($action, $user->authorise($action, 'com_templates'));
+			$result->set($action->name, $user->authorise($action->name, 'com_templates'));
 		}
 
 		return $result;
@@ -87,7 +83,7 @@ class TemplatesHelper
 			$query->where('client_id='.(int) $clientId);
 		}
 
-		$query->select('element as value, name as text');
+		$query->select('element as value, name as text, extension_id as e_id');
 		$query->from('#__extensions');
 		$query->where('type='.$db->quote('template'));
 		$query->where('enabled=1');
@@ -106,7 +102,7 @@ class TemplatesHelper
 		$filePath = JPath::clean($templateBaseDir.'/templates/'.$templateDir.'/templateDetails.xml');
 		if (is_file($filePath))
 		{
-			$xml = JApplicationHelper::parseXMLInstallFile($filePath);
+			$xml = JInstaller::parseXMLInstallFile($filePath);
 
 			if ($xml['type'] != 'template') {
 				return false;

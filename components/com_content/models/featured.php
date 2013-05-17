@@ -1,9 +1,8 @@
 <?php
 /**
- * @version		$Id$
  * @package		Joomla.Site
  * @subpackage	com_content
- * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
+ * @copyright	Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
  */
 
@@ -40,7 +39,7 @@ class ContentModelFeatured extends ContentModelArticles
 		parent::populateState($ordering, $direction);
 
 		// List state information
-		$limitstart = JRequest::getVar('limitstart', 0, '', 'int');
+		$limitstart = JRequest::getUInt('limitstart', 0);
 		$this->setState('list.start', $limitstart);
 
 		$params = $this->state->params;
@@ -130,10 +129,10 @@ class ContentModelFeatured extends ContentModelArticles
 
 		// Filter by categories
 		if (is_array($featuredCategories = $this->getState('filter.frontpage.categories'))) {
-			$query->where('a.catid IN (' . implode(',',$featuredCategories) . ')');
+			$query->where('a.catid IN (' . implode(',', $featuredCategories) . ')');
 		}
 
-		//echo nl2br(str_replace('#__','jos_',$query));
+
 		return $query;
 	}
 }

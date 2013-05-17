@@ -1,16 +1,12 @@
 <?php
 /**
- * @version		$Id$
  * @package		Joomla.Administrator
  * @subpackage	com_installer
- * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
+ * @copyright	Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-// no direct access
 defined('_JEXEC') or die;
-
-jimport('joomla.application.component.view');
 
 /**
  * Extension Manager Default View
@@ -19,7 +15,7 @@ jimport('joomla.application.component.view');
  * @subpackage	com_installer
  * @since		1.5
  */
-class InstallerViewDefault extends JView
+class InstallerViewDefault extends JViewLegacy
 {
 	/**
 	 * @since	1.5
@@ -48,7 +44,7 @@ class InstallerViewDefault extends JView
 			$showMessage	= ($message1 || $message2);
 		}
 
-		$this->assign('showMessage',	$showMessage);
+		$this->showMessage = $showMessage;
 		$this->assignRef('state',		$state);
 
 		JHtml::_('behavior.tooltip');

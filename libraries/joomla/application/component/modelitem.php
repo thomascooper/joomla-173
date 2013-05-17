@@ -3,7 +3,7 @@
  * @package     Joomla.Platform
  * @subpackage  Application
  *
- * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
+ * @copyright   Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
@@ -24,7 +24,6 @@ abstract class JModelItem extends JModel
 	 * An item.
 	 *
 	 * @var    array
-	 * @since  11.1
 	 */
 	protected $_item = null;
 
@@ -43,16 +42,15 @@ abstract class JModelItem extends JModel
 	 * different modules that might need different sets of data or different
 	 * ordering requirements.
 	 *
-	 * @param   string   $context  A prefix for the store id.
+	 * @param   string  $id  A prefix for the store id.
 	 *
-	 * @return  string   A store id.
+	 * @return  string  A store id.
 	 *
 	 * @since   11.1
 	 */
 	protected function getStoreId($id = '')
 	{
 		// Compile the store id.
-
 		return md5($id);
 	}
 }

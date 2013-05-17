@@ -1,14 +1,12 @@
 <?php
 /**
- * @version		$Id$
- * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
+ * @copyright	Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-// Check to ensure this file is included in Joomla!
 defined('_JEXEC') or die;
 
-jimport('joomla.application.component.model');
+jimport('joomla.application.component.modellist');
 
 /**
  * This models supports retrieving lists of article categories.
@@ -17,7 +15,7 @@ jimport('joomla.application.component.model');
  * @subpackage	com_content
  * @since		1.6
  */
-class ContentModelCategories extends JModel
+class ContentModelCategories extends JModelList
 {
 	/**
 	 * Model context string.

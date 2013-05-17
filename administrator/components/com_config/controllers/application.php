@@ -1,9 +1,8 @@
 <?php
 /**
- * @version		$Id$
  * @package		Joomla.Administrator
  * @subpackage	com_config
- * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
+ * @copyright	Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
  */
 
@@ -13,7 +12,7 @@ defined('_JEXEC') or die;
  * @package		Joomla.Administrator
  * @subpackage	com_config
  */
-class ConfigControllerApplication extends JController
+class ConfigControllerApplication extends JControllerLegacy
 {
 	/**
 	 * Class Constructor
@@ -39,7 +38,7 @@ class ConfigControllerApplication extends JController
 	public function save()
 	{
 		// Check for request forgeries.
-		JRequest::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
+		JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
 
 		// Check if the user is authorized to do this.
 		if (!JFactory::getUser()->authorise('core.admin'))
@@ -49,7 +48,6 @@ class ConfigControllerApplication extends JController
 		}
 
 		// Set FTP credentials, if given.
-		jimport('joomla.client.helper');
 		JClientHelper::setCredentialsFromRequest('ftp');
 
 		// Initialise variables.
@@ -69,7 +67,7 @@ class ConfigControllerApplication extends JController
 
 			// Push up to three validation messages out to the user.
 			for ($i = 0, $n = count($errors); $i < $n && $i < 3; $i++) {
-				if (JError::isError($errors[$i])) {
+				if ($errors[$i] instanceof Exception) {
 					$app->enqueueMessage($errors[$i]->getMessage(), 'warning');
 				} else {
 					$app->enqueueMessage($errors[$i], 'warning');
@@ -132,7 +130,6 @@ class ConfigControllerApplication extends JController
 		}
 
 		// Set FTP credentials, if given
-		jimport('joomla.client.helper');
 		JClientHelper::setCredentialsFromRequest('ftp');
 
 		// Clean the session data.
@@ -147,7 +144,6 @@ class ConfigControllerApplication extends JController
 		jimport('joomla.filesystem.file');
 
 		// Set FTP credentials, if given
-		jimport('joomla.client.helper');
 		JClientHelper::setCredentialsFromRequest('ftp');
 
 		if (($data = file_get_contents('http://help.joomla.org/helpsites.xml')) === false) {
@@ -167,14 +163,14 @@ class ConfigControllerApplication extends JController
 	 */
 	public function removeroot()
 	{
+		// Check for request forgeries.
+		JSession::checkToken('get') or die('Invalid Token');
+
 		// Check if the user is authorized to do this.
 		if (!JFactory::getUser()->authorise('core.admin')) {
 			JFactory::getApplication()->redirect('index.php', JText::_('JERROR_ALERTNOAUTHOR'));
 			return;
 		}
-
-		// Check for request forgeries.
-		JRequest::checkToken( 'get' ) or die( 'Invalid Token' );
 
 		// Initialise model.
 		$model	= $this->getModel('Application');

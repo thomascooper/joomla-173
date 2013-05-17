@@ -1,9 +1,8 @@
 <?php
 /**
- * @version		$Id$
  * @package		Joomla.Administrator
  * @subpackage	com_templates
- * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
+ * @copyright	Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
  */
 
@@ -189,7 +188,6 @@ class TemplatesModelSource extends JModelForm
 	public function save($data)
 	{
 		jimport('joomla.filesystem.file');
-		jimport('joomla.client.helper');
 
 		// Get the template.
 		$template = $this->getTemplate();

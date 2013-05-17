@@ -1,7 +1,6 @@
 <?php
 /**
- * @version		$Id$
- * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
+ * @copyright	Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
  */
 
@@ -25,29 +24,28 @@ class modMenuHelper
 	 */
 	static function getList(&$params)
 	{
+		$app = JFactory::getApplication();
+		$menu = $app->getMenu();
+
+		// If no active menu, use default
+		$active = ($menu->getActive()) ? $menu->getActive() : $menu->getDefault();
+
 		$user = JFactory::getUser();
 		$levels = $user->getAuthorisedViewLevels();
 		asort($levels);
-		$key = 'menu_items'.$params.implode(',', $levels);
+		$key = 'menu_items'.$params.implode(',', $levels).'.'.$active->id;
 		$cache = JFactory::getCache('mod_menu', '');
 		if (!($items = $cache->get($key)))
 		{
 			// Initialise variables.
 			$list		= array();
 			$db			= JFactory::getDbo();
-			$user		= JFactory::getUser();
-			$app		= JFactory::getApplication();
-			$menu		= $app->getMenu();
-
-			// If no active menu, use default
-			$active = ($menu->getActive()) ? $menu->getActive() : $menu->getDefault();
 
 			$path		= $active->tree;
 			$start		= (int) $params->get('startLevel');
 			$end		= (int) $params->get('endLevel');
 			$showAll	= $params->get('showAllChildren');
-			$maxdepth	= $params->get('maxdepth');
-			$items 		= $menu->getItems('menutype',$params->get('menutype'));
+			$items 		= $menu->getItems('menutype', $params->get('menutype'));
 
 			$lastitem	= 0;
 
@@ -57,7 +55,6 @@ class modMenuHelper
 					if (($start && $start > $item->level)
 						|| ($end && $item->level > $end)
 						|| (!$showAll && $item->level > 1 && !in_array($item->parent_id, $path))
-						|| ($maxdepth && $item->level > $maxdepth)
 						|| ($start > 1 && !in_array($item->tree[$start-2], $path))
 					) {
 						unset($items[$i]);
@@ -80,6 +77,7 @@ class modMenuHelper
 					$item->active		= false;
 					$item->flink = $item->link;
 
+					// Reverted back for CMS version 2.5.6
 					switch ($item->type)
 					{
 						case 'separator':
@@ -116,10 +114,10 @@ class modMenuHelper
 						$item->flink = JRoute::_($item->flink);
 					}
 
-					$item->title = htmlspecialchars($item->title);
-					$item->anchor_css = htmlspecialchars($item->params->get('menu-anchor_css', ''));
-					$item->anchor_title = htmlspecialchars($item->params->get('menu-anchor_title', ''));
-					$item->menu_image = $item->params->get('menu_image', '') ? htmlspecialchars($item->params->get('menu_image', '')) : '';
+					$item->title = htmlspecialchars($item->title, ENT_COMPAT, 'UTF-8', false);
+					$item->anchor_css   = htmlspecialchars($item->params->get('menu-anchor_css', ''), ENT_COMPAT, 'UTF-8', false);
+					$item->anchor_title = htmlspecialchars($item->params->get('menu-anchor_title', ''), ENT_COMPAT, 'UTF-8', false);
+					$item->menu_image   = $item->params->get('menu_image', '') ? htmlspecialchars($item->params->get('menu_image', ''), ENT_COMPAT, 'UTF-8', false) : '';
 				}
 
 				if (isset($items[$lastitem])) {

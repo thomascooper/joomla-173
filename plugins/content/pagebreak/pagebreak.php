@@ -1,7 +1,6 @@
 <?php
 /**
- * @version		$Id$
- * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
+ * @copyright	Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
  */
 
@@ -11,6 +10,7 @@ defined('_JEXEC') or die;
 jimport('joomla.html.pagination');
 jimport('joomla.html.html.sliders');
 jimport('joomla.html.html.tabs');
+jimport('joomla.utilities.utility');
 
 /**
  * Page break plugin
@@ -61,7 +61,7 @@ class plgContentPagebreak extends JPlugin
 			return;
 		}
 
-		$style = $this->params->get('style','pages');
+		$style = $this->params->get('style', 'pages');
 
 		// Expression to search for.
 		$regex = '#<hr(.*)class="system-pagebreak"(.*)\/>#iU';
@@ -192,16 +192,16 @@ class plgContentPagebreak extends JPlugin
 						} elseif (isset($match['title'])) {
 							$title	= stripslashes($match['title']);
 						} else {
-							$title	= JText::sprintf('PLG_CONTENT_PAGEBREAK_PAGE_NUM', $key);
+							$title	= JText::sprintf('PLG_CONTENT_PAGEBREAK_PAGE_NUM', $key + 1);
 						}
-						$t[] = (string) JHtml::_($style.'.panel', $match['title'],'basic-details');
+						$t[] = (string) JHtml::_($style.'.panel', $title, 'basic-details');
 					}
 					$t[] = (string) $subtext;
 				}
 
 				$t[] = (string) JHtml::_($style.'.end');
 
-				$row->text = implode(' ',$t);
+				$row->text = implode(' ', $t);
 			}
 		}
 		return true;
@@ -214,7 +214,7 @@ class plgContentPagebreak extends JPlugin
 	protected function _createTOC(&$row, &$matches, &$page)
 	{
 		$heading = isset($row->title) ? $row->title : JText::_('PLG_CONTENT_PAGEBREAK_NO_TITLE');
-		$limitstart = JRequest::getInt('limitstart', 0);
+		$limitstart = JRequest::getUInt('limitstart', 0);
 		$showall = JRequest::getInt('showall', 0);
 		// TOC header.
 		$row->toc .= '<div id="article-index">';

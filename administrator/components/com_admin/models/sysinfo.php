@@ -1,21 +1,17 @@
 <?php
 /**
- * @version		$Id$
- * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
+ * @copyright	Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-// no direct access
 defined('_JEXEC') or die;
-
-jimport('joomla.application.component.model');
 
 /**
  * @package		Joomla.Administrator
  * @subpackage	com_admin
  * @since		1.6
  */
-class AdminModelSysInfo extends JModel
+class AdminModelSysInfo extends JModelLegacy
 {
 	/**
 	 * @var array some php settings
@@ -85,7 +81,7 @@ class AdminModelSysInfo extends JModel
 	{
 		if (is_null($this->config))
 		{
-			$registry = JFactory::getConfig();
+			$registry = new JRegistry(new JConfig);
 			$this->config = $registry->toArray();
 			$hidden = array('host', 'user', 'password', 'ftp_user', 'ftp_pass', 'smtpuser', 'smtppass');
 			foreach($hidden as $key) {

@@ -1,15 +1,12 @@
 <?php
 
 /**
- * @version		$Id$
- * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
+ * @copyright	Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
  */
 
 // No direct access
 defined('_JEXEC') or die;
-
-jimport('joomla.plugin.plugin');
 
 /**
  * GMail Authentication Plugin
@@ -40,16 +37,22 @@ class plgAuthenticationGMail extends JPlugin {
 				// check if the username isn't blacklisted
 				if (!in_array($credentials['username'], $blacklist)) {
 				$suffix = $this->params->get('suffix', '');
-				$applysuffix = $this->params->get('applysuffix',0);
+				$applysuffix = $this->params->get('applysuffix', 0);
 				// check if we want to do suffix stuff, typically for Google Apps for Your Domain
 				if($suffix && $applysuffix) {
 					$offset = strpos($credentials['username'], '@');
-					if($offset && $applysuffix == 2) {
-						// if we already have an @, get rid of it and replace it
-						$credentials['username'] = substr($credentials['username'], 0, $offset);
+					if($applysuffix == 1 && $offset === false) {
+						// Apply suffix if missing
+						$credentials['username'] .= '@'.$suffix;
 					}
-					// apply the suffix
-					$credentials['username'] .= '@'.$suffix;
+					else if($applysuffix == 2) {
+						// Always use suffix
+						if ($offset) {
+							// if we already have an @, get rid of it and replace it
+							$credentials['username'] = substr($credentials['username'], 0, $offset);
+						}
+						$credentials['username'] .= '@'. $suffix;
+					}
 				}
 				$curl = curl_init('https://mail.google.com/mail/feed/atom');
 				curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
@@ -84,7 +87,7 @@ class plgAuthenticationGMail extends JPlugin {
 		}
 		$response->type = 'GMail';
 		if ($success) {
-			$response->status		= JAUTHENTICATE_STATUS_SUCCESS;
+			$response->status		= JAuthentication::STATUS_SUCCESS;
 			$response->error_message = '';
 			if (strpos($credentials['username'], '@') === FALSE) {
 				if ($suffix) { // if there is a suffix then we want to apply it
@@ -99,7 +102,7 @@ class plgAuthenticationGMail extends JPlugin {
 			$response->username = $credentials['username'];
 			$response->fullname = $credentials['username'];
 		} else {
-			$response->status		= JAUTHENTICATE_STATUS_FAILURE;
+			$response->status		= JAuthentication::STATUS_FAILURE;
 			$response->error_message	= JText::sprintf('JGLOBAL_AUTH_FAILED', $message);
 		}
 	}

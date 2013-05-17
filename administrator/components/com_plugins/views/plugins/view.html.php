@@ -1,14 +1,10 @@
 <?php
 /**
- * @version		$Id$
- * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
+ * @copyright	Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-// No direct access.
 defined('_JEXEC') or die;
-
-jimport('joomla.application.component.view');
 
 /**
  * View class for a list of plugins.
@@ -17,7 +13,7 @@ jimport('joomla.application.component.view');
  * @subpackage	com_plugins
  * @since		1.5
  */
-class PluginsViewPlugins extends JView
+class PluginsViewPlugins extends JViewLegacy
 {
 	protected $items;
 	protected $pagination;
@@ -36,6 +32,14 @@ class PluginsViewPlugins extends JView
 		if (count($errors = $this->get('Errors'))) {
 			JError::raiseError(500, implode("\n", $errors));
 			return false;
+		}
+
+			// Check if there are no matching items
+		if(!count($this->items)){
+			JFactory::getApplication()->enqueueMessage(
+				JText::_('COM_PLUGINS_MSG_MANAGE_NO_PLUGINS')
+				, 'warning'
+			);
 		}
 
 		parent::display($tpl);
