@@ -844,4 +844,5 @@ div div.facebook_button_bg {
 	position: fixed;
 	bottom: 4px;
 	left: 4px;
+	z-index:1000;
 }
