@@ -18,15 +18,15 @@ class JConfig {
 	public $live_site = '';
 	public $secret = 'DvcJbwEPm3X3ccI8';
 	public $gzip = '1';
-	public $error_reporting = 'default';
-	public $helpurl = 'http://help.joomla.org/proxy/index.php?option=com_help&keyref=Help16:{keyref}';
+	//public $error_reporting = 'simple';
+	public $helpurl = 'http://help.joomla.org/proxy/index.php?option=com_help&keyref=Help{major}{minor}:{keyref}';
 	public $ftp_host = '127.0.0.1';
 	public $ftp_port = '21';
 	public $ftp_user = '';
 	public $ftp_pass = '';
 	public $ftp_root = '';
 	public $ftp_enable = '0';
-	public $offset = 'UTC';
+	public $offset = 'America/New_York';
 	public $offset_user = 'UTC';
 	public $mailer = 'mail';
 	public $mailfrom = 'admin@worldwideinterweb.com';
@@ -53,7 +53,6 @@ class JConfig {
 	public $tmp_path = '/tmp';
 	public $lifetime = '75';
 	public $session_handler = 'memcache';
-	public $memcache_settings = 'a:3:{s:10:"persistent";s:1:"0";s:11:"compression";s:1:"0";s:7:"servers";a:1:{i:0;a:2:{s:4:"host";s:9:"10.1.1.36";s:4:"port";s:5:"11211";}}}';
 	public $MetaRights = 'Copyright © 2012 Team Party Worldwide, LLC. All Rights Reserved.';
 	public $sitename_pagetitles = '0';
 	public $force_ssl = '0';
@@ -62,6 +61,7 @@ class JConfig {
 	public $cookie_path = '';
 	public $memcache_persist = '1';
 	public $memcache_compress = '0';
-	public $memcache_server_host = 'localhost';
+	public $memcache_server_host = '127.0.0.1';
 	public $memcache_server_port = '11211';
+	public $captcha = 'recaptcha';
 }

@@ -814,3 +814,34 @@ div.bottomBoard {
 div#k2Container {
 	padding:0px !important;
 }
+div div.facebook_button_bg {
+	float: left;
+	position: fixed;
+	bottom: 4px;
+	left: 4px;
+	z-index: 1000;
+}
+.cblogin {
+	position:fixed;
+}
+/*
+.cblogin .rt-block {
+	width:0px;
+	height:0px;
+	margin:0px;
+	padding:0px;
+
+}
+*/
+#login-formcblogin .userdata {
+	visibility:hidden;
+}
+#system-message-container {
+	position: fixed;
+	top: -1000px;
+}
+.cbLogoutButtonSpan {
+	position: fixed;
+	bottom: 4px;
+	left: 4px;
+}
