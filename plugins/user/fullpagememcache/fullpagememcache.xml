@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="2.5" type="plugin" group="user">
+	<name>plg_user_fullpagememcache</name>
+	<author>Joomla! Project</author>
+	<creationDate>April 2009</creationDate>
+	<copyright>Copyright (C) 2005 - 2011 Open Source Matters. All rights reserved.</copyright>
+	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
+	<authorEmail>admin@joomla.org</authorEmail>
+	<authorUrl>www.joomla.org</authorUrl>
+	<version>1.7.0</version>
+	<description>Set Cookie after login</description>
+	<files>
+		<filename plugin="fullpagememcache">fullpagememcache.php</filename>
+		<filename>index.html</filename>
+	</files>
+</extension>
