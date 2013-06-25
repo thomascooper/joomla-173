@@ -1,0 +1,124 @@
+/* FRONTEND CSS
+*********************************************/
+html {
+  overflow-y: scroll;
+}
+body {
+  background-color: #FFFFFF;
+}
+
+body {
+  background: url(../images/main_bg.gif) repeat fixed center center transparent !important;
+}
+
+#content-middle {
+  background: url(../images/contest-bg.jpg) center top no-repeat !important;
+  width:760px;
+  height:900px;
+  margin: 0 auto;
+  padding: 116px 0 0 0;
+}
+
+.ccms_form_element input {
+  width:208px;
+}
+#content1_container_div {
+ /* margin-top:18px;*/
+}
+#input_submit_111_container_div {
+  position:relative;
+  left:499px;
+  top:323px;
+}
+#content1_container_div {
+  position:relative;
+  top:353px;
+  left:492px;
+}
+#zipcode1_container_div {
+  position:relative;
+  top:383px;
+  left:492px;
+}
+#email1_container_div {
+  position:relative;
+  top:413px;
+  left:492px;
+}
+#username1_container_div {
+  position:relative;
+  top:442px;
+  left:492px;
+}
+.ccms_form_element label {
+  font-weight:normal !important;
+}
+.chronoform {
+  position:absolute;
+  top:-1000px;
+}
+div div.facebook_button_bg {
+    height: 171px;
+    left: 987px;
+    position: relative;
+    top: -478px;
+    width: 207px;
+}
+.cblogin {
+}
+#login-formcblogin .userdata {
+}
+#system-message-container {
+	position: fixed;
+	top: -1000px;
+}
+.cbLogoutButtonSpan {
+}
+.cbLoginForm {
+    left: -300px;
+    position: relative;
+    width: 10px;
+}
+/* LAYOUT
+*********************************************/
+/* Floats */
+.float-left {
+  float: left;
+}
+.float-right {
+  float: right;
+}
+.group:before,
+.group:after {
+  content: "";
+  display: table;
+}
+.group:after {
+  clear: both;
+}
+.ie7 .group {
+  zoom: 1;
+}
+
+/* Media Queries
+*********************************************/
+/* Retina */
+@media screen and (-webkit-min-device-pixel-ratio: 2), screen and (max--moz-device-pixel-ratio: 2) {
+  
+}
+/* Landscape phones and down */
+@media (max-width: 480px) {
+  
+}
+/* Landscape phone to portrait tablet */
+@media (max-width: 767px) {
+  
+}
+/* Portrait tablet to landscape and desktop */
+@media (min-width: 768px) and (max-width: 979px) {
+  
+}
+/* Large desktop */
+@media (min-width: 1200px) {
+  
+}

@@ -824,6 +824,10 @@ div div.facebook_button_bg {
 .cblogin {
 	position:fixed;
 }
+#mod_login_logoutform {
+	position:relative;
+	top:-1000px;
+}
 /*
 .cblogin .rt-block {
 	width:0px;
@@ -845,4 +849,8 @@ div div.facebook_button_bg {
 	bottom: 4px;
 	left: 4px;
 	z-index:1000;
+}
+.cbLoginForm {
+	position:fixed;
+	top: -1000px;
 }

@@ -68,7 +68,15 @@ defined('_JEXEC') or die('Restricted access');
 			<?php endif; ?>
 			<td width="10%" align="left" class='title'><a href="#show_data" onclick="return listItemTask('cb<?php echo $i;?>','show_data')">Record #<?php echo $i + 1 + $pageNav->limitstart; ?></a></td>
 			<?php foreach($extra_table_fields as $table_field): ?>
-				<th width="10%" align="left" class='title' style="text-align: left;"><?php echo $row->$table_field; ?></th>
+				<th width="10%" align="left" class='title' style="text-align: left;">
+<?php
+if ($table_field === 'content') {
+echo "<a href='{$row->$table_field}'>{$row->$table_field}</a>"; 
+}else{
+echo $row->$table_field;
+}
+?>
+				</th>
 			<?php endforeach; ?>
 			<?php foreach($extra_dataview_actions as $action_k => $action_title): ?>
 				<td width="10%" align="left" class='title'><a href="#admin_form:<?php echo $action_k; ?>" onclick="return listItemTask('cb<?php echo $i;?>','admin_form:<?php echo $action_k; ?>')"><?php echo $action_title; ?> #<?php echo $i + 1 + $pageNav->limitstart; ?></a></td>

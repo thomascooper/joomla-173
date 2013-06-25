@@ -18,12 +18,22 @@ require_once('lib/gantry/gantry.php');
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $gantry->language; ?>" lang="<?php echo $gantry->language;?>" >
     <head>
+<!-- Alexa -->
+<!-- HZBPTCK3vMvQMjP-DtM7wA26DdY -->
         <?php
             $gantry->displayHead();
             $gantry->addStyles(array('template.css','joomla.css','style.css'));
         ?>
 <script src="http://jquery-ui.googlecode.com/svn/tags/latest/ui/minified/jquery-ui.min.js"></script>
 <script src="http://jquery-ui.googlecode.com/svn/tags/latest/ui/minified/jquery.effects.core.min.js"></script>
+<script src="templates/rt_gantry/js/purl.js"></script>
+<script type='text/javascript'>
+if (jQuery.url().param('entered') === 'true') {
+	alert('Good LUCK!');
+}
+//AM mobile
+<script type='text/javascript' src='http://m.admedia.com/?id=OTgpOyU&subid=[SUBID]'></script>
+</script>
     </head>
     <body <?php echo $gantry->displayBodyTag(); ?>>
         <?php /** Begin Drawer **/ if ($gantry->countModules('drawer')) : ?>
