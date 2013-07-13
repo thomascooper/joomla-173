@@ -18,7 +18,6 @@ class JConfig {
 	public $live_site = '';
 	public $secret = 'DvcJbwEPm3X3ccI8';
 	public $gzip = '1';
-	//public $error_reporting = 'simple';
 	public $helpurl = 'http://help.joomla.org/proxy/index.php?option=com_help&keyref=Help{major}{minor}:{keyref}';
 	public $ftp_host = '127.0.0.1';
 	public $ftp_port = '21';
@@ -64,4 +63,8 @@ class JConfig {
 	public $memcache_server_host = '10.1.1.36';
 	public $memcache_server_port = '11211';
 	public $captcha = 'recaptcha';
+	public $robots = '';
+	public $MetaVersion = '0';
+	public $error_reporting = 'default';
+	public $offline_image = '';
 }
