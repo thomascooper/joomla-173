@@ -59,10 +59,16 @@ body {
 }
 div div.facebook_button_bg {
     height: 171px;
-    left: 987px;
+    left: 498px;
     position: relative;
-    top: -478px;
-    width: 207px;
+    top: 853px;
+    width: 165px;
+background-size: 1px 24px;
+}
+.facebook_button {
+background-size: 22px auto;
+line-height: 25px !important;
+padding-left: 4px !important;
 }
 .cblogin {
 }
@@ -75,7 +81,7 @@ div div.facebook_button_bg {
 .cbLogoutButtonSpan {
 }
 .cbLoginForm {
-    left: -300px;
+    top: -1000px;
     position: relative;
     width: 10px;
 }
@@ -99,6 +105,13 @@ div div.facebook_button_bg {
 .ie7 .group {
   zoom: 1;
 }
+.fb-like {
+  width:50px;
+  overflow:hidden;
+    top: -386px;
+    left: 668px;
+}
+
 
 /* Media Queries
 *********************************************/
