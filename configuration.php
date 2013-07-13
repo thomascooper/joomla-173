@@ -3,7 +3,7 @@ class JConfig {
 	public $offline = '0';
 	public $offline_message = 'This site is down for maintenance.<br /> Please check back again soon.';
 	public $display_offline_message = '1';
-	public $sitename = 'World Wide Interweb';
+	public $sitename = 'TEST WWI';
 	public $editor = 'jce';
 	public $list_limit = '20';
 	public $access = '1';
@@ -13,7 +13,7 @@ class JConfig {
 	public $host = '10.1.1.35';
 	public $user = 'joomla_user';
 	public $password = 'CHu=ukaW?a_w';
-	public $db = 'joomla_db';
+	public $db = 'joomla_25';
 	public $dbprefix = 'jom17_';
 	public $live_site = '';
 	public $secret = 'DvcJbwEPm3X3ccI8';
@@ -62,6 +62,15 @@ class JConfig {
 	public $cookie_path = '';
 	public $memcache_persist = '1';
 	public $memcache_compress = '0';
+<<<<<<< Updated upstream
 	public $memcache_server_host = 'localhost';
 	public $memcache_server_port = '11211';
+=======
+	public $memcache_server_host = '127.0.0.1';
+	public $memcache_server_port = '11211';
+	public $robots = 'noindex, nofollow';
+	public $MetaVersion = '0';
+	public $offline_image = '';
+	public $captcha = 'recaptcha';
+>>>>>>> Stashed changes
 }

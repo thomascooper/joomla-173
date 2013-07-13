@@ -18,7 +18,14 @@ require_once('lib/gantry/gantry.php');
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $gantry->language; ?>" lang="<?php echo $gantry->language;?>" >
     <head>
+	<script type="text/javascript">
+    		var wwi_protocol, expires;
+		wwi_protocol = (("https:" == document.location.protocol) ? "wwi_https" : "wwi_http");
+        	expires = "";
+    		document.cookie = "wwi_protocol=" + wwi_protocol + expires + "; path=/";
+	</script>
         <?php
+$this->base = '';
             $gantry->displayHead();
             $gantry->addStyles(array('template.css','joomla.css','style.css'));
         ?>
@@ -26,6 +33,11 @@ require_once('lib/gantry/gantry.php');
 <script src="http://jquery-ui.googlecode.com/svn/tags/latest/ui/minified/jquery.effects.core.min.js"></script>
     </head>
     <body <?php echo $gantry->displayBodyTag(); ?>>
+<?php
+	$mainframe = JFactory::getApplication();
+	$jdb = $mainframe->getCfg('db');
+?>
+<p>DEV SITE: <?php echo $jdb;?></p>
         <?php /** Begin Drawer **/ if ($gantry->countModules('drawer')) : ?>
         <div id="rt-drawer">
             <div class="rt-container">

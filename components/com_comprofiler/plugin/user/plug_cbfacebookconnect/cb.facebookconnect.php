@@ -1357,7 +1357,7 @@ class cbfacebookconnectClass {
 
 				$plugin->option		=	'com_comprofiler';
 				$plugin->relPath	=	'components/' . $plugin->option . '/plugin/' . $plugin->type . '/' . $plugin->folder;
-				$plugin->livePath	=	$site . '/' . $plugin->relPath;
+				$plugin->livePath	=	 '/' . $plugin->relPath;
 				$plugin->absPath	=	$path . '/' . $plugin->relPath;
 				$plugin->xml		=	$plugin->absPath . '/' . $plugin->element . '.xml';
 				$plugin->scheme		=	( ( isset( $_SERVER['HTTPS'] ) && ( ! empty( $_SERVER['HTTPS'] ) ) && ( $_SERVER['HTTPS'] != 'off' ) ) ? 'https' : 'http' );
@@ -1483,7 +1483,7 @@ class cbfacebookconnectClass {
 	static public function setReturnURL( $raw = false ) {
 		global $_CB_framework;
 
-		if ( isset( $_SERVER['HTTPS'] ) && ( ! empty( $_SERVER['HTTPS'] ) ) && ( strtolower( $_SERVER['HTTPS'] ) != 'off' ) ) {
+		if ( isset( $_SERVER['SERVER_PORT'] ) &&   $_SERVER['SERVER_PORT'] === '443'  ) {
 			$return					=	'https://';
 		} else {
 			$return					=	'http://';
