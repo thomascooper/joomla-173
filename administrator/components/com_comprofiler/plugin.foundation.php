@@ -2543,6 +2543,10 @@ class CBframework {
 				if ( checkJversion() >= 1 ) {
 					if ( $this->getUi() == 1 ) {
 						$live_site	=	JURI::base();
+						if (!empty($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] === '443') {
+							$live_site = preg_replace('/http:/','https:', JURI::base());
+						}
+
 					} elseif ( checkJversion() == 2 ) {
 						$live_site	=	preg_replace( '%administrator/%', '', JURI::base() );
 					} else {

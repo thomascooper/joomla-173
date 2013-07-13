@@ -18,7 +18,9 @@ a:hover {color: #000;}
 	background:url('/templates/rt_gantry/images/header/header_bg.gif') !important;
 }
 #rt-sidebar-a {background-color: transparent;
+top:-129px;
 margin-top: 16px;
+position:relative;
 }
 #rt-sidebar-b {background-color: #e9e9e9;}
 #rt-sidebar-c {background-color: #f0f0f0;}
@@ -193,13 +195,13 @@ a#linkbar_godsent_link {
 	border: 2px solid gray
 }
 .linkbar_special {
-	width: 930px;
+	width: 610px;
 	height: 95px;
 	margin-left:10px;
 	margin-right:10px;
 }
 .linkbar_special div {
-	width: 930px !important;
+	width: 610px !important;
 }
 
 .linkbar_top8 {
@@ -229,7 +231,7 @@ a#linkbar_top8_link {
 
 /* Features */
 #rt-feature .rt-container {
-	height:375px;
+	height:525px;
 }
 #rt-feature .rt-grid-4 {
 	margin:0px;
@@ -853,4 +855,11 @@ div div.facebook_button_bg {
 .cbLoginForm {
 	position:fixed;
 	top: -1000px;
+.contest-banner {
+	height:150px;
+}
+.contest-img {
+margin-top:5px;
+margin-left:10px;
+	width:940px;
 }

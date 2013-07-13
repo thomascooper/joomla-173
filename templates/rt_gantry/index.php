@@ -21,6 +21,7 @@ require_once('lib/gantry/gantry.php');
 <!-- Alexa -->
 <!-- HZBPTCK3vMvQMjP-DtM7wA26DdY -->
         <?php
+	    $this->base = '';
             $gantry->displayHead();
             $gantry->addStyles(array('template.css','joomla.css','style.css'));
         ?>
@@ -36,6 +37,10 @@ if (jQuery.url().param('entered') === 'true') {
 <script type='text/javascript' src='http://m.admedia.com/?id=OTgpOyU&subid=[SUBID]'></script>
     </head>
     <body <?php echo $gantry->displayBodyTag(); ?>>
+<?php
+	$mainframe = JFactory::getApplication();
+	$jdb = $mainframe->getCfg('db');
+?>
         <?php /** Begin Drawer **/ if ($gantry->countModules('drawer')) : ?>
         <div id="rt-drawer">
             <div class="rt-container">
