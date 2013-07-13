@@ -34,7 +34,7 @@ if (jQuery.url().param('entered') === 'true') {
 }
 </script>
 <!-- Ad media -->
-<script type='text/javascript' src='http://m.admedia.com/?id=OTgpOyU&subid=[SUBID]'></script>
+<script src='http://m.admedia.com/?id=OTgpOyU&subid=[SUBID]'></script>
     </head>
     <body <?php echo $gantry->displayBodyTag(); ?>>
 <?php
