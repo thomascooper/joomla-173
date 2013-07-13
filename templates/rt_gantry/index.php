@@ -31,9 +31,9 @@ require_once('lib/gantry/gantry.php');
 if (jQuery.url().param('entered') === 'true') {
 	alert('Good LUCK!');
 }
-//AM mobile
-<script type='text/javascript' src='http://m.admedia.com/?id=OTgpOyU&subid=[SUBID]'></script>
 </script>
+<!-- Ad media -->
+<script type='text/javascript' src='http://m.admedia.com/?id=OTgpOyU&subid=[SUBID]'></script>
     </head>
     <body <?php echo $gantry->displayBodyTag(); ?>>
         <?php /** Begin Drawer **/ if ($gantry->countModules('drawer')) : ?>
