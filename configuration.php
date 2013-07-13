@@ -62,15 +62,10 @@ class JConfig {
 	public $cookie_path = '';
 	public $memcache_persist = '1';
 	public $memcache_compress = '0';
-<<<<<<< Updated upstream
-	public $memcache_server_host = 'localhost';
-	public $memcache_server_port = '11211';
-=======
 	public $memcache_server_host = '127.0.0.1';
 	public $memcache_server_port = '11211';
 	public $robots = 'noindex, nofollow';
 	public $MetaVersion = '0';
 	public $offline_image = '';
 	public $captcha = 'recaptcha';
->>>>>>> Stashed changes
 }
