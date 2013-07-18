@@ -60,6 +60,7 @@ class JConfig {
 	public $cookie_path = '';
 	public $memcache_persist = '1';
 	public $memcache_compress = '0';
+	//public $memcache_server_host = '127.O.0.1';
 	public $memcache_server_host = '10.1.1.36';
 	public $memcache_server_port = '11211';
 	public $captcha = 'recaptcha';

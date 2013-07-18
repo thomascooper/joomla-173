@@ -25,8 +25,8 @@ require_once('lib/gantry/gantry.php');
             $gantry->displayHead();
             $gantry->addStyles(array('template.css','joomla.css','style.css'));
         ?>
-<script src="http://jquery-ui.googlecode.com/svn/tags/latest/ui/minified/jquery-ui.min.js"></script>
-<script src="http://jquery-ui.googlecode.com/svn/tags/latest/ui/minified/jquery.effects.core.min.js"></script>
+<script src="templates/rt_gantry/js/jquery-ui.min.js"></script>
+<script src="templates/rt_gantry/js/jquery.effects.core.min.js"></script>
 <script src="templates/rt_gantry/js/purl.js"></script>
 <script type='text/javascript'>
 if (jQuery.url().param('entered') === 'true') {

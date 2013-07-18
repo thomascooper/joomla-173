@@ -876,6 +876,7 @@ class Gantry {
 
         foreach ($out_files as $link) {
             $addit = true;
+		$link->url = $link->url.'?v=1';
             foreach($this->_styles as $style_priority => $priority_links){
                 $index = array_search($link, $priority_links);
                 if ($index !== false){
