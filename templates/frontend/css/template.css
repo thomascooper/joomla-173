@@ -27,28 +27,39 @@ body {
 }
 #input_submit_111_container_div {
   position:relative;
-  left:499px;
-  top:323px;
+  left:-48px;
+  top:291px;
+  float: right;
+}
+#input_submit_111_container_div input[type="submit"]:enabled {
+background-color:green;
+color:white;
 }
 #content1_container_div {
   position:relative;
-  top:353px;
-  left:492px;
+  top:321px;
+  left:-41px;
+  float:right;
+  width:222px;
 }
 #zipcode1_container_div {
   position:relative;
-  top:383px;
-  left:492px;
+  top:350px;
+  left:-41px;
+  float:right;
+  width:222px;
 }
 #email1_container_div {
   position:relative;
-  top:413px;
-  left:492px;
+  top:380px;
+  left:-41px;
+  float:right;
 }
 #username1_container_div {
   position:relative;
-  top:442px;
-  left:492px;
+  top:410px;
+  left:-41px;
+  float:right;
 }
 .ccms_form_element label {
   font-weight:normal !important;
@@ -58,12 +69,14 @@ body {
   top:-1000px;
 }
 div div.facebook_button_bg {
-    height: 171px;
+   background-size: 1px 24px;
+    float: right;
+    height: 24px;
     left: 498px;
-    position: relative;
-    top: 853px;
+    margin: 0 auto;
+    position: absolute;
+    top: 836px;
     width: 165px;
-background-size: 1px 24px;
 }
 .facebook_button {
 background-size: 22px auto;
@@ -79,11 +92,27 @@ padding-left: 4px !important;
 	top: -1000px;
 }
 .cbLogoutButtonSpan {
+    float: right;
+    position: absolute;
+    left: 495px;
+    top: 836px;
+}
+.cbLogoutButtonSpan  input[type="submit"] {
+width:167px;
+height:26px;
 }
 .cbLoginForm {
-    top: -1000px;
-    position: relative;
-    width: 10px;
+    float: left;
+    height: 1px;
+    position: absolute;
+    top: -300px;
+    width: 760px;
+}
+#mod_login_logoutform {
+    float: left;
+    margin: 0;
+    position: absolute;
+    top: -300px;
 }
 /* LAYOUT
 *********************************************/
@@ -108,8 +137,9 @@ padding-left: 4px !important;
 .fb-like {
   width:50px;
   overflow:hidden;
-    top: -386px;
-    left: 668px;
+    top: 420px;
+    left: -41px;
+  float: right;
 }
 
 

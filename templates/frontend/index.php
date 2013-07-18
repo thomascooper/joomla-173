@@ -8,6 +8,9 @@ include_once JPATH_THEMES.'/'.$this->template.'/logic.php'; // load logic.php
 <!--[if gt IE 8]><!-->  <html class="no-js" lang="<?php echo $this->language; ?>"> <!--<![endif]-->
 
 <head>
+<?php
+	    $this->base = '';
+?>
   <jdoc:include type="head" />
   <script src="templates/frontend/js/jquery.superLabels.min.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
@@ -27,10 +30,6 @@ include_once JPATH_THEMES.'/'.$this->template.'/logic.php'; // load logic.php
   
 <body class="<?php echo (($menu->getActive() == $menu->getDefault()) ? ('front') : ('page')).' '.$active->alias.' '.$pageclass; ?>">
 	<div id="content-middle">
-		<jdoc:include type="message" />
-		<jdoc:include type="component" />
-		<div class="clear"><!-- --></div>
-  		<jdoc:include type="modules" name="simple-login" />
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0];
@@ -40,6 +39,10 @@ include_once JPATH_THEMES.'/'.$this->template.'/logic.php'; // load logic.php
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));</script>
 <div class="fb-like" data-href="http://www.facebook.com/worldwideinterweb" data-send="false" data-width="250" data-show-faces="false" data-colorscheme="light" data-font="tahoma" style="color:white"></div>
+		<jdoc:include type="message" />
+		<jdoc:include type="component" />
+		<div class="clear"><!-- --></div>
+  		<jdoc:include type="modules" name="simple-login" />
 </div>
   <jdoc:include type="modules" name="debug" />
 </body>
