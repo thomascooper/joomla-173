@@ -18,6 +18,13 @@ body {
   margin: 0 auto;
   padding: 116px 0 0 0;
 }
+.contest-submitted #content-middle {
+  background: url(../images/contest-bg-empty.jpg) center top no-repeat !important;
+}
+.contest-submitted .fb-like {
+    position: fixed;
+    top: -1000px;
+}
 
 .ccms_form_element input {
   width:208px;
