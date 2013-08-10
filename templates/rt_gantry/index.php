@@ -28,13 +28,10 @@ require_once('lib/gantry/gantry.php');
 <script src="templates/rt_gantry/js/jquery-ui.min.js"></script>
 <script src="templates/rt_gantry/js/jquery.effects.core.min.js"></script>
 <script src="templates/rt_gantry/js/purl.js"></script>
-<script type='text/javascript'>
-if (jQuery.url().param('entered') === 'true') {
-	alert('Good LUCK!');
-}
-</script>
-<!-- Ad media -->
-<script src='http://m.admedia.com/?id=OTgpOyU&subid=[SUBID]'></script>
+<!-- mobile theory mobile -->
+<script type="text/javascript">if(navigator.userAgent.match(/iphone|ipod|android/i))document.write('\x3cscript type="text/javascript" src="http://overpass.mobiletheory.com/ab0">\x3c/script>');</script>
+<!-- mobile theory tablet -->
+<script type="text/javascript">if(navigator.userAgent.match(/|ipad|/i))document.write('\x3cscript type="text/javascript" src="http://overpass.mobiletheory.com/aaf">\x3c/script>');</script>
     </head>
     <body <?php echo $gantry->displayBodyTag(); ?>>
 <?php
