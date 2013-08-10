@@ -43,15 +43,10 @@ include_once JPATH_THEMES.'/'.$this->template.'/logic.php'; // load logic.php
   
 <body class="<?php echo (($menu->getActive() == $menu->getDefault()) ? ('front') : ('page')).' '.$active->alias.' '.$pageclass; ?>">
 	<div id="content-middle">
-<div id="fb-root"></div>
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
-<div class="fb-like" data-href="http://www.facebook.com/worldwideinterweb" data-send="false" data-width="250" data-show-faces="false" data-colorscheme="light" data-font="tahoma" style="color:white"></div>
+<div class="fb-like">
+<iframe src="//www.facebook.com/plugins/like.php?href=https%3A%2F%2Fapps.facebook.com%2Fworldwideinterweb&amp;width=50&amp;height=21&amp;colorscheme=light&amp;layout=button_count&amp;action=like&amp;show_faces=false&amp;send=false&amp;appId=654546621229488" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:50px; height:21px;" allowTransparency="true"></iframe>
+</div>
+
 		<jdoc:include type="message" />
 		<jdoc:include type="component" />
 		<div class="clear"><!-- --></div>
