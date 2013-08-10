@@ -35,7 +35,7 @@ body {
 #input_submit_111_container_div {
   position:relative;
   left:-48px;
-  top:291px;
+  top:422px;
   float: right;
 }
 #input_submit_111_container_div input[type="submit"]:enabled {
@@ -44,27 +44,27 @@ color:white;
 }
 #content1_container_div {
   position:relative;
-  top:321px;
+  top:451px;
   left:-41px;
   float:right;
   width:222px;
 }
 #zipcode1_container_div {
   position:relative;
-  top:350px;
+  top:450px;
   left:-41px;
   float:right;
   width:222px;
 }
 #email1_container_div {
   position:relative;
-  top:380px;
+  top:480px;
   left:-41px;
   float:right;
 }
 #username1_container_div {
   position:relative;
-  top:410px;
+  top:510px;
   left:-41px;
   float:right;
 }
@@ -82,7 +82,7 @@ div div.facebook_button_bg {
     left: 498px;
     margin: 0 auto;
     position: absolute;
-    top: 836px;
+    top: 936px;
     width: 165px;
 }
 .facebook_button {
@@ -102,7 +102,7 @@ padding-left: 4px !important;
     float: right;
     position: absolute;
     left: 495px;
-    top: 836px;
+    top: 935px;
 }
 .cbLogoutButtonSpan  input[type="submit"] {
 width:167px;
@@ -143,10 +143,12 @@ height:26px;
 }
 .fb-like {
   width:50px;
+height: 30px;
   overflow:hidden;
-    top: 420px;
+    top: 520px;
     left: -41px;
   float: right;
+position:relative;
 }
 
 
