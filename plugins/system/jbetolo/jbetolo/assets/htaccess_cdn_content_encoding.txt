@@ -1,5 +1,0 @@
-<IfModule mod_headers.c>
-        <FilesMatch "\.(js|css)$">
-                Header append Content-Encoding gzip
-        </FilesMatch>
-</IfModule>
