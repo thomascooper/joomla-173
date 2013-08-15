@@ -158,9 +158,16 @@ require_once('lib/gantry/gantry.php');
 		parentDiv.insertBefore(sPage, sContent.nextSibling);
 	</script>
 -->
-<!-- MANUAL::Start knowd slider -->
-<div id="knowd-widget-266"></div><script async="async" src="http://knowd.com/w/266.js?swid=125&heid=knowd-widget-266"></script>
-<!-- MANUAL::End knowd slider -->
+<!-- MANUAL::Start mkgid slider -->
+<div id="MarketGid2581" class="news-block-magick"><center>
+        <a href="http://mgid.com/" target="_blank">Loading...</a>
+</center></div>
+<script type="text/javascript">
+    var MarketGidDate = new Date();
+    document.write('<scr'+'ipt type="text/javascript" '
+    +'src="http://jsn.dt07.net/w/o/worldwideinterweb.com.2581.js?t='+MarketGidDate.getYear()+MarketGidDate.getMonth()+MarketGidDate.getDay()+MarketGidDate.getHours() + '" charset="utf-8" ></scr'+'ipt>');
+</script>
+<!-- MANUAL::End mkgid slider -->
 </div>
 	</body>
 </html>

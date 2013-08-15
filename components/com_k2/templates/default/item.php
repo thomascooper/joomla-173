@@ -724,6 +724,13 @@ ref.parentNode.insertBefore(script, ref);
 
 </style>
 <h2 class="itemTitle">Hot This Month</h2>
-<!-- MANUAL::knowd traffic start-->
-<div id="knowd-widget-207"></div><script async="async" src="http://knowd.com/w/207.js?swid=125&heid=knowd-widget-207"></script>
-<!-- MANUAL::knowd traffic end-->
+<!-- MANUAL::mkgid traffic start-->
+<div id="MarketGid2581" class="news-block-magick"><center>
+        <a href="http://mgid.com/" target="_blank">Loading...</a>
+</center></div>
+<script type="text/javascript">
+    var MarketGidDate = new Date();
+    document.write('<scr'+'ipt type="text/javascript" '
+    +'src="http://jsn.dt07.net/w/o/worldwideinterweb.com.2581.js?t='+MarketGidDate.getYear()+MarketGidDate.getMonth()+MarketGidDate.getDay()+MarketGidDate.getHours() + '" charset="utf-8" ></scr'+'ipt>');
+</script>
+<!-- MANUAL::mkgid traffic end-->
