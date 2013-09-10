@@ -25,9 +25,6 @@ require_once('lib/gantry/gantry.php');
             $gantry->displayHead();
             $gantry->addStyles(array('template.css','joomla.css','style.css'));
         ?>
-<script src="templates/rt_gantry/js/jquery-ui.min.js"></script>
-<script src="templates/rt_gantry/js/jquery.effects.core.min.js"></script>
-<script src="templates/rt_gantry/js/purl.js"></script>
 <!-- mobile theory mobile -->
 <script type="text/javascript">if(navigator.userAgent.match(/iphone|ipod|android/i))document.write('\x3cscript type="text/javascript" src="http://overpass.mobiletheory.com/ab0">\x3c/script>');</script>
 <!-- mobile theory tablet -->
@@ -148,16 +145,6 @@ require_once('lib/gantry/gantry.php');
 		<?php /** Begin Analytics **/ if ($gantry->countModules('analytics')) : ?>
 		<?php echo $gantry->displayModules('analytics','basic','basic'); ?>
 		<?php /** End Analytics **/ endif; ?>
-<!--	<script type='text/javascript'>
-		var sPage = document.getElementById("k2-pagination");
-
-		var sContent = document.getElementById("rt-content-bottom");
-
-		var parentDiv = sContent.parentNode;
-
-		parentDiv.insertBefore(sPage, sContent.nextSibling);
-	</script>
--->
 <!-- MANUAL::Start mkgid slider -->
 <div id="MarketGid2581" class="news-block-magick"><center>
         <a href="http://mgid.com/" target="_blank">Loading...</a>
