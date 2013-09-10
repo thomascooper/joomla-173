@@ -31,7 +31,7 @@ require_once('lib/gantry/gantry.php');
 <!-- mobile theory mobile -->
 <script type="text/javascript">if(navigator.userAgent.match(/iphone|ipod|android/i))document.write('\x3cscript type="text/javascript" src="http://overpass.mobiletheory.com/ab0">\x3c/script>');</script>
 <!-- mobile theory tablet -->
-<script type="text/javascript">if(navigator.userAgent.match(/|ipad|/i))document.write('\x3cscript type="text/javascript" src="http://overpass.mobiletheory.com/aaf">\x3c/script>');</script>
+<script type="text/javascript">if(navigator.userAgent.match(/ipad/i))document.write('\x3cscript type="text/javascript" src="http://overpass.mobiletheory.com/aaf">\x3c/script>');</script>
     </head>
     <body <?php echo $gantry->displayBodyTag(); ?>>
 <?php
