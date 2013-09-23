@@ -12,7 +12,7 @@ body {
 }
 
 #content-middle {
-  background: url(../images/contest-bg.jpg) center top no-repeat !important;
+  background: url(../images/contest-bg_rev6.jpg) center top no-repeat !important;
   width:760px;
   height:900px;
   margin: 0 auto;
@@ -32,41 +32,9 @@ body {
 #content1_container_div {
  /* margin-top:18px;*/
 }
-#input_submit_111_container_div {
-  position:relative;
-  left:-48px;
-  top:422px;
-  float: right;
-}
 #input_submit_111_container_div input[type="submit"]:enabled {
 background-color:green;
 color:white;
-}
-#content1_container_div {
-  position:relative;
-  top:451px;
-  left:-41px;
-  float:right;
-  width:222px;
-}
-#zipcode1_container_div {
-  position:relative;
-  top:450px;
-  left:-41px;
-  float:right;
-  width:222px;
-}
-#email1_container_div {
-  position:relative;
-  top:480px;
-  left:-41px;
-  float:right;
-}
-#username1_container_div {
-  position:relative;
-  top:510px;
-  left:-41px;
-  float:right;
 }
 .ccms_form_element label {
   font-weight:normal !important;
@@ -76,38 +44,14 @@ color:white;
   position:absolute;
   top:-1000px;
 }
-div div.facebook_button_bg {
-   background-size: 1px 24px;
-    float: right;
-    height: 24px;
-    left: 498px;
-    margin: 0 auto;
-    position: absolute;
-    top: 936px;
-    width: 165px;
-}
 .facebook_button {
 background-size: 22px auto;
 line-height: 25px !important;
 padding-left: 4px !important;
 }
-.cblogin {
-}
-#login-formcblogin .userdata {
-}
 #system-message-container {
 	position: fixed;
 	top: -1000px;
-}
-.cbLogoutButtonSpan {
-    float: right;
-    position: absolute;
-    left: 495px;
-    top: 935px;
-}
-.cbLogoutButtonSpan  input[type="submit"] {
-width:167px;
-height:26px;
 }
 .cbLoginForm {
     float: left;
@@ -142,17 +86,89 @@ height:26px;
 .ie7 .group {
   zoom: 1;
 }
+
+
+div div.facebook_button_bg {
+	background-size: 1px 24px;
+	float: right;
+	height: 24px;
+	left: 275px;
+	margin: 0 auto;
+	position: absolute;
+	top: 707px;
+	width: 165px;
+}
+.cbLogoutButtonSpan  input[type="submit"] {
+	width:167px;
+	height:26px;
+}
+.cbLogoutButtonSpan {
+	float: right;
+	position: absolute;
+	left: 274px;
+	top: 707px;
+}
 .fb-like {
-  width:50px;
-height: 30px;
-  overflow:hidden;
-    top: 522px;
-    left: -41px;
-  float: right;
-position:relative;
+	width:80px;
+	height: 22px;
+	top: 293px;
+	left: -230px;
+	float: right;
+	position:relative;
+	overflow:hidden;
+}
+.fb-like span {
+	width:50px;
+	overflow:hidden;
 }
 .fb_edge_widget_with_comment span.fb_edge_comment_widget iframe.fb_ltr {
     display: none !important;
+}
+#content1_container_div {
+	position:relative;
+	top:161px;
+	left:-263px;
+	float:right;
+	padding-left:0px;
+	width:222px;
+}
+#empty_container_div {
+	visibility:hidden;
+	height:1px;
+	padding:0px;
+	margin:0px;
+}
+#u_0_6 {
+	visibility:hidden;
+}
+#input_submit_111_container_div {
+	position:relative;
+	left:-270px;
+	top:136px;
+	float: right;
+}
+#username1_container_div {
+	position:relative;
+	top:-1000px;
+	left:-41px;
+	float:right;
+	width:222px;
+	visibility:hidden;
+}
+#zipcode1_container_div {
+	position:relative;
+	top:-1000px;
+	left:-41px;
+	float:right;
+	width:222px;
+	visibility:hidden;
+}
+#email1_container_div {
+	position:relative;
+	top:-1000px;
+	left:-41px;
+	float:right;
+	visibility:hidden;
 }
 
 /* Media Queries

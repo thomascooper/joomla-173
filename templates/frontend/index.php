@@ -8,6 +8,7 @@ include_once JPATH_THEMES.'/'.$this->template.'/logic.php'; // load logic.php
 <!--[if gt IE 8]><!-->  <html class="no-js" lang="<?php echo $this->language; ?>"> <!--<![endif]-->
 
 <head>
+<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
 <?php
 	    $this->base = '';
 ?>
@@ -42,17 +43,77 @@ include_once JPATH_THEMES.'/'.$this->template.'/logic.php'; // load logic.php
 </head>
   
 <body class="<?php echo (($menu->getActive() == $menu->getDefault()) ? ('front') : ('page')).' '.$active->alias.' '.$pageclass; ?>">
-	<div id="content-middle">
-<div class="fb-like">
-<iframe src="//www.facebook.com/plugins/like.php?href=https%3A%2F%2Fapps.facebook.com%2Fworldwideinterweb&amp;width=50&amp;height=21&amp;colorscheme=light&amp;layout=button_count&amp;action=like&amp;show_faces=false&amp;send=false&amp;appId=654546621229488" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:50px; height:21px;" allowTransparency="true"></iframe>
-</div>
+<div id="fb-root"></div>
+<script>
+  window.fbAsyncInit = function() {
+    // init the FB JS SDK
+    FB.init({
+      appId      : '654546621229488',                        // App ID from the app dashboard
+      status     : true,                                 // Check Facebook Login status
+      xfbml      : true                                  // Look for social plugins on the page
+    });
 
+    // Additional initialization code such as adding Event Listeners goes here
+FB.Event.subscribe('edge.create', function(response) {
+// do something with response.session
+console.log('liked');
+$( ".pluginButton" ).css( "border", "10px solid red" );
+<?php
+if(isset($_SESSION['__default']['cbfacebookconnect_facebook']['access_token'])) {
+echo 'var is_logged = true;';
+}else{
+echo 'var is_logged = false;';
+}
+
+?>
+if (is_logged) {
+$("#contest-submit").removeAttr("disabled");
+}
+});
+FB.Event.subscribe('edge.remove', function(response) {
+// do something with response.session
+console.log('unliked');
+$( ".pluginButton" ).css( "border", "10px solid red" );
+$("#contest-submit").attr("disabled", "disabled");
+});
+  };
+
+  // Load the SDK asynchronously
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/all.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+</script>
+	<div id="content-middle">
+<div class="fb-like" data-href="https://www.facebook.com/worldwideinterweb/" data-width="50" data-layout="button_count" data-show-faces="false" data-send="false"></div>
+<?php
+if(isset($_SESSION['__default']['cbfacebookconnect_facebook']['access_token'])) {
+$access_token = $_SESSION['__default']['cbfacebookconnect_facebook']['access_token'];
+require_once("facebook-php-sdk/src/facebook.php");
+
+$config = array();
+$config['appId'] = '654546621229488';
+$config['secret'] = '608f488e9112acfc42f1c45eaddf6298';
+
+$facebook = new Facebook($config);
+$facebook->setAccessToken($access_token);
+$data = $facebook->api('me/likes/293181650699530');
+}
+?>
 		<jdoc:include type="message" />
 		<jdoc:include type="component" />
 		<div class="clear"><!-- --></div>
   		<jdoc:include type="modules" name="simple-login" />
 </div>
   <jdoc:include type="modules" name="debug" />
+<?php if (!$data['data']) { ?>
+<script>
+$("#contest-submit").attr("disabled", "disabled");
+</script>
+<?php } ?>
 </body>
 
 </html>
