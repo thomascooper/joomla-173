@@ -146,13 +146,13 @@ require_once('lib/gantry/gantry.php');
 		<?php echo $gantry->displayModules('analytics','basic','basic'); ?>
 		<?php /** End Analytics **/ endif; ?>
 <!-- MANUAL::Start mkgid slider -->
-<div id="MarketGid2581" class="news-block-magick"><center>
+<div id="MarketGid2580" class="news-block-magick"><center>
         <a href="http://mgid.com/" target="_blank">Loading...</a>
 </center></div>
 <script type="text/javascript">
     var MarketGidDate = new Date();
     document.write('<scr'+'ipt type="text/javascript" '
-    +'src="http://jsn.dt07.net/w/o/worldwideinterweb.com.2581.js?t='+MarketGidDate.getYear()+MarketGidDate.getMonth()+MarketGidDate.getDay()+MarketGidDate.getHours() + '" charset="utf-8" ></scr'+'ipt>');
+    +'src="http://jsn.dt07.net/w/o/worldwideinterweb.com.2580.js?t='+MarketGidDate.getYear()+MarketGidDate.getMonth()+MarketGidDate.getDay()+MarketGidDate.getHours() + '" charset="utf-8" ></scr'+'ipt>');
 </script>
 <!-- MANUAL::End mkgid slider -->
 </div>
