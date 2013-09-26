@@ -18,6 +18,7 @@ require_once('lib/gantry/gantry.php');
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $gantry->language; ?>" lang="<?php echo $gantry->language;?>" >
     <head>
+<?php JHTML::_('behavior.modal'); ?>
 <!-- Alexa -->
 <!-- HZBPTCK3vMvQMjP-DtM7wA26DdY -->
         <?php
