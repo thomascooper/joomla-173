@@ -196,16 +196,7 @@ defined('_JEXEC') or die('Restricted access');
   <div class="itemBody">
 
 <div class="sharepoint">
-<!--{itpsharepoint}-->
-<div class="pw-widget pw-counter-horizontal" pw:image="[IMAGEURL]">
-	<a class="pw-button-facebook pw-look-native"></a>
-	<a class="pw-button-twitter pw-look-native"></a>
-	<a class="pw-button-stumbleupon"></a>
-	<a class="pw-button-reddit"></a>
-	<a class="pw-button-pinterest pw-look-native"></a>
-	<a class="pw-button-post-share"></a>
-</div>
-<script src="http://i.po.st/share/script/post-widget.js#publisherKey=gqdvak94kfmf6dr3fvi8" type="text/javascript"></script>
+{itpsharepoint}
 </div>
 	  <!-- Plugins: BeforeDisplayContent -->
 	  <?php echo $this->item->event->BeforeDisplayContent; ?>

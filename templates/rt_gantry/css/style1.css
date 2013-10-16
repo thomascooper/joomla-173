@@ -542,12 +542,6 @@ background-size: 100%;
 .item538 {
 	display: none;
 }
-.sharepoint {
-	float:right;
-	margin-bottom:7px;
-	width:100%;
-	text-align:center;
-}
 .linkbar_nailed_it {
         padding:0px;
 }
@@ -673,19 +667,25 @@ div.latestItemsCategory {
 	float:left;
 	position:absolute;
 }
-.itp-sharepoint-fbl {
-    float: left;
-    margin-right: 27px;
-    margin-top: 10px;
-	width:60px;
+.sharepoint {
+	float:right;
+	margin-top:2px;
+	height: 70px;
+	width:100%;
+	text-align:center;
 }
-.itp-sharepoint-digg {
-    float: left;
-    margin: 10px;
+.itp-sharepoint {
+	margin: 0 auto;
+	width: 360px;
 }
-.itp-sharepoint-pinterest {
-	margin-left: 0px !important;
-	width: 59px;
+div.itp-sharepoint div {
+	margin: 0px 10px;
+	display:inline;
+	position:relative;
+	width:50px;
+}
+div.itp-sharepoint div.itp-sharepoint-pinterest {
+	margin:20px 10px 0px 10px;
 }
 .blank_container {
 	display: none;
