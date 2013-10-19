@@ -10,11 +10,10 @@ body {
 body {
   background: url(../images/main_bg.gif) repeat fixed center center transparent !important;
 }
-
 #content-middle {
   background: url(../images/contest-bg_rev6.jpg) center top no-repeat !important;
   width:760px;
-  height:900px;
+  height:590px;
   margin: 0 auto;
   padding: 116px 0 0 0;
 }
