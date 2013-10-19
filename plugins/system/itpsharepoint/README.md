@@ -1,12 +1,27 @@
 ITPSharePoint Plugin for Joomla! 
 ==========================
-( Version 1.3 )
+( Version 1.5 )
 --------------------------
-
-
 
 Changelog
 ---------
+
+v1.5
+---------
+* Added option for adding Facebook Namespace, when the render type is XFBML.
+* Improved ShortURL class
+
+v1.4
+---------
+* Added some new Twitter languages
+* Added ablility to be used on 'https'-Domain (SSL)
+* Added Google Share button
+* Added Short URL services - goo.gl, bit.ly, bitly.com, j.mp, tiny.cc,..
+* Removed the Digg and ReTwittMe buttons. Those services do not work anymore.
+* Updated the code of buttons SumbpleUpon, Facebook, Pinterest, BufferApp.
+* Improved Pinterest and Buffer App buttons
+* Improved language
+
 v1.3
 -----
 * Added Pinterest button
