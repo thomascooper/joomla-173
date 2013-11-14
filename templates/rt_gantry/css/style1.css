@@ -670,22 +670,26 @@ div.latestItemsCategory {
 .sharepoint {
 	float:right;
 	margin-top:2px;
-	height: 70px;
+	height: 10px;
 	width:100%;
 	text-align:center;
 }
 .itp-sharepoint {
-	margin: 0 auto;
-	width: 360px;
+	width: 100px;
+	left: -110px;
+	position:absolute;
 }
 div.itp-sharepoint div {
-	margin: 0px 10px;
-	display:inline;
+	background: url("/templates/rt_gantry/images/body/content_bg.gif");
+	padding: 4px;
 	position:relative;
-	width:50px;
-}
-div.itp-sharepoint div.itp-sharepoint-pinterest {
-	margin:20px 10px 0px 10px;
+	border: 1px solid #5F9EA0;
+	height:20px;
+	text-align: left;
+	width: auto;
+	float: none;
+	margin: 0px;
+	/*width: 64px;*/
 }
 .blank_container {
 	display: none;
