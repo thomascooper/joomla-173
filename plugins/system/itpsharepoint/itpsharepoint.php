@@ -198,7 +198,6 @@ class plgSystemITPSharePoint extends JPlugin {
         
         $html .= $this->getFacebookLike($this->params, $url);
         $html .= $this->getStumbpleUpon($this->params, $url);
-        $html .= $this->getPinterest($this->params, $url, $title);
         $html .= $this->getGoogleShare($this->params, $url);
         $html .= $this->getTwitter($this->params, $url, $title);
         $html .= $this->getLinkedIn($this->params, $url);
@@ -206,6 +205,7 @@ class plgSystemITPSharePoint extends JPlugin {
         $html .= $this->getReddit($this->params, $url, $title);
         $html .= $this->getTumblr($this->params, $url);
         $html .= $this->getGooglePlusOne($this->params, $url);
+        $html .= $this->getPinterest($this->params, $url, $title);
         
         // Gets extra buttons
         $html   .= $this->getExtraButtons($this->params, $url, $title);
@@ -951,12 +951,21 @@ class plgSystemITPSharePoint extends JPlugin {
             }
             
             $html .= '<div class="itp-sharepoint-pinterest">';
-            $html .= '<a href="http://pinterest.com/pin/create/button/?url=' . rawurlencode($url) . $media. '&amp;description=' . rawurlencode($title) . '" class="pin-it-button" count-layout="'.$params->get("pinterestType", "horizontal").'"><img border="0" src="//assets.pinterest.com/images/PinExt.png" title="'.JText::_("PLG_SYSTEM_ITPSHAREPOINT_PIN_IT").'" /></a>';
+            $html .= '<a href="http://pinterest.com/pin/create/button/?url=' . rawurlencode($url) . $media. '&amp;description=' . rawurlencode($title) . '" class="pin-it-button" data-pin-config="beside" data-pin-do="buttonPin"><img border="0" src="//assets.pinterest.com/images/PinExt.png" title="'.JText::_("PLG_SYSTEM_ITPSHAREPOINT_PIN_IT").'" /></a>';
             $html .= '</div>';
             
             // Load the JS library
             if($params->get("loadPinterestJsLib")) {
-                $html .= '<script src="//assets.pinterest.com/js/pinit.js"></script>';
+                //$html .= '<script src="//assets.pinterest.com/js/pinit.js"></script>';
+                $html .= "<script type='text/javascript'>
+(function(d){
+  var f = d.getElementsByTagName('SCRIPT')[0], p = d.createElement('SCRIPT');
+  p.type = 'text/javascript';
+  p.async = true;
+  p.src = '//assets.pinterest.com/js/pinit.js';
+  f.parentNode.insertBefore(p, f);
+}(document));
+</script>";
             }
         }
         
