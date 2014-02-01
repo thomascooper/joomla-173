@@ -35,11 +35,20 @@ require_once('lib/gantry/gantry.php');
 <?php
 	$mainframe = JFactory::getApplication();
 	$jdb = $mainframe->getCfg('db');
+	echo "$jdb<br/>";
 ?>
         <?php /** Begin Drawer **/ if ($gantry->countModules('drawer')) : ?>
         <div id="rt-drawer">
             <div class="rt-container">
                 <?php echo $gantry->displayModules('drawer','standard','standard'); ?>
+                <div class="clear"></div>
+            </div>
+        </div>
+        <?php /** End Drawer **/ endif; ?>
+        <?php /** Begin status bar **/ if ($gantry->countModules('statustop')) : ?>
+        <div id="rt-statustop">
+            <div class="rt-container">
+                <?php echo $gantry->displayModules('statustop','standard','standard'); ?>
                 <div class="clear"></div>
             </div>
         </div>
