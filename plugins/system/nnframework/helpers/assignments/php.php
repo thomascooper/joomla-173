@@ -3,7 +3,7 @@
  * NoNumber Framework Helper File: Assignments: PHP
  *
  * @package         NoNumber Framework
- * @version         13.8.9
+ * @version         13.11.22
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -20,51 +20,65 @@ class NNFrameworkAssignmentsPHP
 {
 	function passPHP(&$parent, &$params, $selection = array(), $assignment = 'all', $article = 0)
 	{
-		if (!is_array($selection)) {
+		if (!is_array($selection))
+		{
 			$selection = array($selection);
 		}
 
 		$pass = 0;
-		foreach ($selection as $php) {
+		foreach ($selection as $php)
+		{
 			// replace \n with newline and other fix stuff
 			$php = str_replace('\|', '|', $php);
 			$php = preg_replace('#(?<!\\\)\\\n#', "\n", $php);
 			$php = trim(str_replace('[:REGEX_ENTER:]', '\n', $php));
 
-			if ($php == '') {
+			if ($php == '')
+			{
 				$pass = 1;
 				break;
 			}
 
-			if (!$article && !(strpos($php, '$article') === false) && $parent->params->option == 'com_content' && $parent->params->view == 'article') {
+			if (!$article && !(strpos($php, '$article') === false) && $parent->params->option == 'com_content' && $parent->params->view == 'article')
+			{
 				require_once JPATH_SITE . '/components/com_content/models/article.php';
 				$model = JModelLegacy::getInstance('article', 'contentModel');
 				$article = $model->getItem($parent->params->id);
-			} else {
+			}
+			else
+			{
 				$article = '';
 			}
-			if (!isset($Itemid)) {
+			if (!isset($Itemid))
+			{
 				$Itemid = JFactory::getApplication()->input->getInt('Itemid', 0);
 			}
-			if (!isset($mainframe)) {
+			if (!isset($mainframe))
+			{
 				$mainframe = JFactory::getApplication();
 			}
-			if (!isset($app)) {
+			if (!isset($app))
+			{
 				$app = JFactory::getApplication();
 			}
-			if (!isset($document)) {
+			if (!isset($document))
+			{
 				$document = JFactory::getDocument();
 			}
-			if (!isset($doc)) {
+			if (!isset($doc))
+			{
 				$doc = JFactory::getDocument();
 			}
-			if (!isset($database)) {
+			if (!isset($database))
+			{
 				$database = JFactory::getDBO();
 			}
-			if (!isset($db)) {
+			if (!isset($db))
+			{
 				$db = JFactory::getDBO();
 			}
-			if (!isset($user)) {
+			if (!isset($user))
+			{
 				$user = JFactory::getUser();
 			}
 			$php .= ';return 1;';
@@ -76,7 +90,8 @@ class NNFrameworkAssignmentsPHP
 			unset($temp_PHP_func);
 			ob_end_clean();
 
-			if ($pass) {
+			if ($pass)
+			{
 				break;
 			}
 		}

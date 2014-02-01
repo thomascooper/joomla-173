@@ -4,7 +4,7 @@
  * Displays Title with checkbox
  *
  * @package         NoNumber Framework
- * @version         13.8.9
+ * @version         13.11.22
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -33,22 +33,26 @@ class JFormFieldNN_TitleSelection extends JFormField
 		$toggler = new nnFieldToggler;
 
 		$this->value = (int) $this->value;
-		$label = $this->def('label');
-		$param_name = $this->def('name');
+		$label = $this->get('label');
+		$param_name = $this->get('name');
 
 		$html = array();
 
-		if ($label) {
+		if ($label)
+		{
 			$label = NNText::html_entity_decoder(JText::_($label));
 
 			$html[] = '<div style="clear: both;"></div>';
 
 			$class = 'nn_panel nn_panel_title nn_panel_toggle';
 			$checked = '';
-			if ($this->value === 1) {
+			if ($this->value === 1)
+			{
 				$class .= ' nn_panel_include';
 				$checked = ' checked="checked"';
-			} else if ($this->value === 2) {
+			}
+			else if ($this->value === 2)
+			{
 				$class .= ' nn_panel_exclude';
 				$checked = ' checked="checked"';
 			}
@@ -63,7 +67,9 @@ class JFormFieldNN_TitleSelection extends JFormField
 			$html[] = '<div class="nn_panel nn_panel"><div class="nn_block">';
 
 			$html[] = '<ul class="adminformlist"><li>';
-		} else {
+		}
+		else
+		{
 			$html[] = '<div style="clear: both;"></div>';
 			$html[] = '</li></ul>';
 
@@ -76,7 +82,7 @@ class JFormFieldNN_TitleSelection extends JFormField
 		return implode($html);
 	}
 
-	private function def($val, $default = '')
+	private function get($val, $default = '')
 	{
 		return (isset($this->params[$val]) && (string) $this->params[$val] != '') ? (string) $this->params[$val] : $default;
 	}

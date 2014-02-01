@@ -4,7 +4,7 @@
  * Displays a multiselectbox of available VirtueMart categories / products
  *
  * @package         NoNumber Framework
- * @version         13.8.9
+ * @version         13.11.22
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -21,24 +21,27 @@ require_once JPATH_PLUGINS . '/system/nnframework/helpers/text.php';
 class JFormFieldNN_VirtueMart extends JFormField
 {
 	public $type = 'VirtueMart';
+	private $params = null;
+	private $db = null;
+	private $max_list_count = 0;
 
 	protected function getInput()
 	{
-		if (!NNFrameworkFunctions::extensionInstalled('virtuemart')) {
+		if (!NNFrameworkFunctions::extensionInstalled('virtuemart'))
+		{
 			return '<fieldset class="radio"><label class="nn_label nn_label_error">' . JText::_('ERROR') . ': ' . JText::sprintf('NN_FILES_NOT_FOUND', JText::_('NN_VIRTUEMART')) . '</label></fieldset>';
 		}
 
 		$this->params = $this->element->attributes();
-
-		$group = $this->def('group', 'categories');
-
 		$this->db = JFactory::getDBO();
+
+		$group = $this->get('group', 'categories');
+
 		$tables = $this->db->getTableList();
-		if (!in_array($this->db->getPrefix() . 'virtuemart_' . $group, $tables)) {
+		if (!in_array($this->db->getPrefix() . 'virtuemart_' . $group, $tables))
+		{
 			return '<fieldset class="radio"><label class="nn_label nn_label_error">' . JText::_('ERROR') . ': ' . JText::sprintf('NN_TABLE_NOT_FOUND', JText::_('NN_VIRTUEMART')) . '</label></fieldset>';
 		}
-
-		$this->params = $this->element->attributes();
 
 		$parameters = NNParameters::getInstance();
 		$params = $parameters->getPluginParams('nnframework');
@@ -52,20 +55,24 @@ class JFormFieldNN_VirtueMart extends JFormField
 		$config = $this->db->loadResult();
 		$lang = substr($config, strpos($config, 'vmlang='));
 		$lang = substr($lang, 0, strpos($lang, '|'));
-		if (preg_match('#"([^"]*_[^"]*)"#', $lang, $lang)) {
+		if (preg_match('#"([^"]*_[^"]*)"#', $lang, $lang))
+		{
 			$this->lang = $lang['1'];
-		} else {
+		}
+		else
+		{
 			$this->lang = 'en_gb';
 		}
 
-		if (!is_array($this->value)) {
+		if (!is_array($this->value))
+		{
 			$this->value = explode(',', $this->value);
 		}
 
 		$options = $this->{'get' . $group}();
 
-		$size = (int) $this->def('size');
-		$multiple = $this->def('multiple');
+		$size = (int) $this->get('size');
+		$multiple = $this->get('multiple');
 
 		require_once JPATH_PLUGINS . '/system/nnframework/helpers/html.php';
 		return nnHtml::selectlist($options, $this->name, $this->value, $this->id, $size, $multiple);
@@ -80,11 +87,12 @@ class JFormFieldNN_VirtueMart extends JFormField
 		$this->db->setQuery($query);
 		$total = $this->db->loadResult();
 
-		if ($total > $this->max_list_count) {
+		if ($total > $this->max_list_count)
+		{
 			return -1;
 		}
 
-		$show_ignore = $this->def('show_ignore');
+		$show_ignore = $this->get('show_ignore');
 
 		$query->clear()
 			->select('c.virtuemart_category_id as id, cc.category_parent_id AS parent_id, l.category_name AS title, c.published')
@@ -100,9 +108,11 @@ class JFormFieldNN_VirtueMart extends JFormField
 		// TODO: use node model
 		$children = array();
 
-		if ($items) {
+		if ($items)
+		{
 			// first pass - collect children
-			foreach ($items as $v) {
+			foreach ($items as $v)
+			{
 				$pt = $v->parent_id;
 				$list = @$children[$pt] ? $children[$pt] : array();
 				array_push($list, $v);
@@ -115,14 +125,17 @@ class JFormFieldNN_VirtueMart extends JFormField
 
 		// assemble items to the array
 		$options = array();
-		if ($show_ignore) {
-			if (in_array('-1', $this->value)) {
+		if ($show_ignore)
+		{
+			if (in_array('-1', $this->value))
+			{
 				$this->value = array('-1');
 			}
 			$options[] = JHtml::_('select.option', '-1', '- ' . JText::_('NN_IGNORE') . ' -', 'value', 'text', 0);
 			$options[] = JHtml::_('select.option', '-', '&nbsp;', 'value', 'text', 1);
 		}
-		foreach ($list as $item) {
+		foreach ($list as $item)
+		{
 			$item->treename = NNText::prepareSelectItem($item->treename, $item->published, '', 1);
 			$options[] = JHtml::_('select.option', $item->id, $item->treename, 'value', 'text', 0);
 		}
@@ -139,7 +152,8 @@ class JFormFieldNN_VirtueMart extends JFormField
 		$this->db->setQuery($query);
 		$total = $this->db->loadResult();
 
-		if ($total > $this->max_list_count) {
+		if ($total > $this->max_list_count)
+		{
 			return -1;
 		}
 
@@ -157,7 +171,8 @@ class JFormFieldNN_VirtueMart extends JFormField
 
 		// assemble items to the array
 		$options = array();
-		foreach ($list as $item) {
+		foreach ($list as $item)
+		{
 			$item->name = $item->name . ' [' . $item->sku . ']' . ($item->cat ? ' [' . $item->cat . ']' : '');
 			$item->name = NNText::prepareSelectItem($item->name, $item->published);
 			$options[] = JHtml::_('select.option', $item->id, $item->name, 'value', 'text', 0);
@@ -166,7 +181,7 @@ class JFormFieldNN_VirtueMart extends JFormField
 		return $options;
 	}
 
-	private function def($val, $default = '')
+	private function get($val, $default = '')
 	{
 		return (isset($this->params[$val]) && (string) $this->params[$val] != '') ? (string) $this->params[$val] : $default;
 	}

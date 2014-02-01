@@ -1,7 +1,7 @@
 <?php
 /**
  * @package          NoNumber Framework
- * @version         13.8.9
+ * @version         13.11.22
  *
  * @author           Peter van Westen <peter@nonumber.nl>
  * @link             http://www.nonumber.nl
@@ -26,9 +26,9 @@ defined('_JEXEC') or die;
 /**
  * Search Component Search Model
  *
- * @package		Joomla.Site
- * @subpackage	com_search
- * @since 1.5
+ * @package        Joomla.Site
+ * @subpackage     com_search
+ * @since          1.5
  */
 class SearchModelSearch extends JModelLegacy
 {
@@ -70,7 +70,7 @@ class SearchModelSearch extends JModelLegacy
 		parent::__construct();
 
 		//Get configuration
-		$app	= JFactory::getApplication();
+		$app = JFactory::getApplication();
 		$config = JFactory::getConfig();
 
 		// Get the pagination request variables
@@ -78,9 +78,9 @@ class SearchModelSearch extends JModelLegacy
 		$this->setState('limitstart', $app->input->getInt('limitstart', 0));
 
 		// Set the search parameters
-		$keyword		= urldecode($app->input->getString('searchword', ''));
-		$match			= $app->input->getWord('searchphrase', 'all');
-		$ordering		= $app->input->getWord('ordering', 'newest');
+		$keyword = urldecode($app->input->getString('searchword', ''));
+		$match = $app->input->getWord('searchphrase', 'all');
+		$ordering = $app->input->getWord('ordering', 'newest');
 		$this->setSearch($keyword, $match, $ordering);
 
 		//Set the search areas
@@ -91,26 +91,31 @@ class SearchModelSearch extends JModelLegacy
 	/**
 	 * Method to set the search parameters
 	 *
-	 * @access	public
+	 * @access    public
+	 *
 	 * @param string search string
 	 * @param string mathcing option, exact|any|all
 	 * @param string ordering option, newest|oldest|popular|alpha|category
 	 */
 	function setSearch($keyword, $match = 'all', $ordering = 'newest')
 	{
-		if (isset($keyword)) {
+		if (isset($keyword))
+		{
 			$this->setState('origkeyword', $keyword);
-			if($match !== 'exact') {
-				$keyword 		= preg_replace('#\xE3\x80\x80#s', ' ', $keyword);
+			if ($match !== 'exact')
+			{
+				$keyword = preg_replace('#\xE3\x80\x80#s', ' ', $keyword);
 			}
 			$this->setState('keyword', $keyword);
 		}
 
-		if (isset($match)) {
+		if (isset($match))
+		{
 			$this->setState('match', $match);
 		}
 
-		if (isset($ordering)) {
+		if (isset($ordering))
+		{
 			$this->setState('ordering', $ordering);
 		}
 	}
@@ -118,9 +123,10 @@ class SearchModelSearch extends JModelLegacy
 	/**
 	 * Method to set the search areas
 	 *
-	 * @access	public
-	 * @param	array	Active areas
-	 * @param	array	Search areas
+	 * @access    public
+	 *
+	 * @param    array    Active areas
+	 * @param    array    Search areas
 	 */
 	function setAreas($active = array(), $search = array())
 	{
@@ -143,30 +149,38 @@ class SearchModelSearch extends JModelLegacy
 
 			JPluginHelper::importPlugin('search');
 			$dispatcher = JDispatcher::getInstance();
-			$results = $dispatcher->trigger('onContentSearch', array(
-				$this->getState('keyword'),
-				$this->getState('match'),
-				$this->getState('ordering'),
-				$areas['active'])
+			$results = $dispatcher->trigger(
+				'onContentSearch', array(
+					$this->getState('keyword'),
+					$this->getState('match'),
+					$this->getState('ordering'),
+					$areas['active']
+				)
 			);
 
 			$rows = array();
-			foreach ($results as $result) {
+			foreach ($results as $result)
+			{
 				$rows = array_merge((array) $rows, (array) $result);
 			}
 
-			$this->_total	= count($rows);
-			if ($this->getState('limit') > 0) {
-				$this->_data	= array_splice($rows, $this->getState('limitstart'), $this->getState('limit'));
-			} else {
+			$this->_total = count($rows);
+			if ($this->getState('limit') > 0)
+			{
+				$this->_data = array_splice($rows, $this->getState('limitstart'), $this->getState('limit'));
+			}
+			else
+			{
 				$this->_data = $rows;
 			}
 
 			/* >>> ADDED: Run content plugins over results */
 			$params = JFactory::getApplication()->getParams('com_content');
 			$params->set('nn_search', 1);
-			foreach ($this->_data as $item) {
-				if ($item->text != '') {
+			foreach ($this->_data as $item)
+			{
+				if ($item->text != '')
+				{
 					$results = $dispatcher->trigger('onContentPrepare', array('com_content.article', &$item, &$params, 0));
 					// strip html tags from title
 					$item->title = strip_tags($item->title);
@@ -223,8 +237,10 @@ class SearchModelSearch extends JModelLegacy
 			$dispatcher = JDispatcher::getInstance();
 			$searchareas = $dispatcher->trigger('onContentSearchAreas');
 
-			foreach ($searchareas as $area) {
-				if (is_array($area)) {
+			foreach ($searchareas as $area)
+			{
+				if (is_array($area))
+				{
 					$areas = array_merge($areas, $area);
 				}
 			}

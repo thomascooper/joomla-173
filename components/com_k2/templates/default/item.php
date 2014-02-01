@@ -662,7 +662,7 @@ defined('_JEXEC') or die('Restricted access');
   </div>
   <?php endif; ?>
 
-	<?php if(!JRequest::getCmd('print')): ?>
+	<?php if(!JRequest::getCmd('print') and $this->item->id != '6092'): ?>
 	<div class="itemBackToTop">
 		<a class="k2Anchor" href="<?php echo $this->item->link; ?>#startOfPageId<?php echo JRequest::getInt('id'); ?>">
 			<?php echo JText::_('K2_BACK_TO_TOP'); ?>
@@ -673,55 +673,6 @@ defined('_JEXEC') or die('Restricted access');
 	<div class="clr"></div>
 </div>
 <!-- End K2 Item Layout -->
-<h2 class="itemTitle">Trending This Week</h2>
-<script type='text/javascript'>
-
-var _CI = _CI || {};
-
-(function() {
-
-var script = document.createElement('script');
-
-ref = document.getElementsByTagName('script')[0];
-
-_CI.counter = (_CI.counter) ? _CI.counter + 1 : 1;
-
-document.write('<div id="_CI_widget_');
-
-document.write(_CI.counter+'"></div>');
-
-script.type = 'text/javascript';
-
-script.src = 'http://widget.crowdignite.com/widgets/2785?_ci_wid=_CI_widget_'+_CI.counter;
-
-script.async = true;
-
-ref.parentNode.insertBefore(script, ref);
-
-})(); </script>
-
-
-<style>
-
-#_ci_widget_div_2785 table{background:none repeat scroll 0 0 #FFF;border-spacing:0;width:620px;}
-
-#widget_table_2785 td{display:inline-block;padding-bottom:20px!important;position:relative;text-align:center;width:155px;}
-
-#widget_table_2785 a{color:#FFF!important;font-family:Arial;}
-
-#widget_table_2785 img{border:2px solid #000;}
-
-#widget_table_2785 div{background:none repeat scroll 0 0 #000!important;bottom:22px!important;display:inline-block!important;left:12px!important;opacity:0.7;padding:4px!important;position:absolute;width:123px!important;}
-
-</style>
-<h2 class="itemTitle">Hot This Month</h2>
-<!-- MANUAL::mkgid traffic start-->
-<div id="MarketGid2581" class="news-block-magick"><center>
-        <a href="http://mgid.com/" target="_blank">Loading...</a>
-</center></div>
-<script type="text/javascript">
-    var MarketGidDate = new Date();
-    document.write('<scr'+'ipt type="text/javascript" '
-    +'src="http://jsn.dt07.net/w/o/worldwideinterweb.com.2581.js?t='+MarketGidDate.getYear()+MarketGidDate.getMonth()+MarketGidDate.getDay()+MarketGidDate.getHours() + '" charset="utf-8" ></scr'+'ipt>');
-</script>
-<!-- MANUAL::mkgid traffic end-->
+{modulepos article-ad1}
+{modulepos article-ad2}
+{modulepos article-ad3}

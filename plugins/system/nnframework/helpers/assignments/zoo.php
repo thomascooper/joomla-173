@@ -3,7 +3,7 @@
  * NoNumber Framework Helper File: Assignments: ZOO
  *
  * @package         NoNumber Framework
- * @version         13.8.9
+ * @version         13.11.22
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -20,10 +20,12 @@ class NNFrameworkAssignmentsZOO
 {
 	function init(&$parent)
 	{
-		if (!$parent->params->view) {
+		if (!$parent->params->view)
+		{
 			$parent->params->view = $parent->params->task;
 		}
-		switch ($parent->params->view) {
+		switch ($parent->params->view)
+		{
 			case 'item':
 				$parent->params->idname = 'item_id';
 				break;
@@ -41,7 +43,8 @@ class NNFrameworkAssignmentsZOO
 
 	function passCategories(&$parent, &$params, $selection = array(), $assignment = 'all', $article = 0)
 	{
-		if ($parent->params->option != 'com_zoo') {
+		if ($parent->params->option != 'com_zoo')
+		{
 			return $parent->pass(0, $assignment);
 		}
 
@@ -51,52 +54,69 @@ class NNFrameworkAssignmentsZOO
 			|| ($params->inc_items && $parent->params->view == 'item')
 		);
 
-		if (!$pass) {
+		if (!$pass)
+		{
 			return $parent->pass(0, $assignment);
 		}
 
 		$cats = array();
-		if ($article && isset($article->catid)) {
+		if ($article && isset($article->catid))
+		{
 			$cats = $article->catid;
-		} else {
-			switch ($parent->params->view) {
+		}
+		else
+		{
+			switch ($parent->params->view)
+			{
 				case 'frontpage':
-					if ($parent->params->id) {
+					if ($parent->params->id)
+					{
 						$cats[] = $parent->params->id;
-					} else {
+					}
+					else
+					{
 						$menuparams = $parent->getMenuItemParams($parent->params->Itemid);
-						if (isset($menuparams->application)) {
+						if (isset($menuparams->application))
+						{
 							$cats[] = 'app' . $menuparams->application;
 						}
 					}
 					break;
 				case 'category':
-					if ($parent->params->id) {
+					if ($parent->params->id)
+					{
 						$cats[] = $parent->params->id;
-					} else {
+					}
+					else
+					{
 						$menuparams = $parent->getMenuItemParams($parent->params->Itemid);
-						if (isset($menuparams->category)) {
+						if (isset($menuparams->category))
+						{
 							$cats[] = $menuparams->category;
 						}
 					}
-					if ($cats['0']) {
+					if ($cats['0'])
+					{
 						$parent->q->clear()
 							->select('c.application_id')
 							->from('#__zoo_category AS c')
 							->where('c.id = ' . (int) $cats['0']);
 						$parent->db->setQuery($parent->q);
-						if ($parent->db->loadResult()) {
+						if ($parent->db->loadResult())
+						{
 							$cats[] = 'app' . $parent->db->loadResult();
 						}
 					}
 					break;
 				case 'item':
 					$id = $parent->params->id;
-					if (!$id) {
+					if (!$id)
+					{
 						$menuparams = $parent->getMenuItemParams($parent->params->Itemid);
 						$id = isset($menuparams->item_id) ? $menuparams->item_id : '';
 					}
-					if ($id) {
+					if ($id)
+					{
 						$parent->q->clear()
 							->select('c.category_id')
 							->from('#__zoo_category_item AS c')
@@ -123,10 +143,14 @@ class NNFrameworkAssignmentsZOO
 
 		$pass = $parent->passSimple($cats, $selection, 'include');
 
-		if ($pass && $params->inc_children == 2) {
+		if ($pass && $params->inc_children == 2)
+		{
 			return $parent->pass(0, $assignment);
-		} else if (!$pass && $params->inc_children) {
-			foreach ($cats as $cat) {
+		}
+		else if (!$pass && $params->inc_children)
+		{
+			foreach ($cats as $cat)
+			{
 				$cats = array_merge($cats, self::getCatParentIds($parent, $cat));
 			}
 		}
@@ -136,7 +160,8 @@ class NNFrameworkAssignmentsZOO
 
 	function passItems(&$parent, &$params, $selection = array(), $assignment = 'all')
 	{
-		if (!$parent->params->id || $parent->params->option != 'com_zoo' || $parent->params->view != 'item') {
+		if (!$parent->params->id || $parent->params->option != 'com_zoo' || $parent->params->view != 'item')
+		{
 			return $parent->pass(0, $assignment);
 		}
 
@@ -147,31 +172,40 @@ class NNFrameworkAssignmentsZOO
 	{
 		$parent_ids = array();
 
-		if (!$id) {
+		if (!$id)
+		{
 			return $parent_ids;
 		}
 
-		while ($id) {
-			if (substr($id, 0, 3) == 'app') {
+		while ($id)
+		{
+			if (substr($id, 0, 3) == 'app')
+			{
 				$parent_ids[] = $id;
 				break;
-			} else {
+			}
+			else
+			{
 				$parent->q->clear()
 					->select('c.parent')
 					->from('#__zoo_category AS c')
 					->where('c.id = ' . (int) $id);
 				$parent->db->setQuery($parent->q);
 				$pid = $parent->db->loadResult();
-				if ($pid) {
+				if ($pid)
+				{
 					$parent_ids[] = $pid;
-				} else {
+				}
+				else
+				{
 					$parent->q->clear()
 						->select('c.application_id')
 						->from('#__zoo_category AS c')
 						->where('c.id = ' . (int) $id);
 					$parent->db->setQuery($parent->q);
 					$app = $parent->db->loadResult();
-					if ($app) {
+					if ($app)
+					{
 						$parent_ids[] = 'app' . $app;
 					}
 					break;

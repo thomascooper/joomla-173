@@ -3,7 +3,7 @@
  * NoNumber Framework Helper File: Assignments: VirtueMart
  *
  * @package         NoNumber Framework
- * @version         13.8.9
+ * @version         13.11.22
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -32,7 +32,8 @@ class NNFrameworkAssignmentsVirtueMart
 
 	function passCategories(&$parent, &$params, $selection = array(), $assignment = 'all', $article = 0)
 	{
-		if ($parent->params->option != 'com_virtuemart') {
+		if ($parent->params->option != 'com_virtuemart')
+		{
 			return $parent->pass(0, $assignment);
 		}
 
@@ -40,21 +41,26 @@ class NNFrameworkAssignmentsVirtueMart
 			|| ($params->inc_items && $parent->params->view == 'productdetails')
 		);
 
-		if (!$pass) {
+		if (!$pass)
+		{
 			return $parent->pass(0, $assignment);
 		}
 
 		$cats = array();
-		if ($parent->params->view == 'productdetails' && $parent->params->item_id) {
+		if ($parent->params->view == 'productdetails' && $parent->params->item_id)
+		{
 			$parent->q->clear()
 				->select('x.virtuemart_category_id')
 				->from('#__virtuemart_product_categories AS x')
 				->where('x.virtuemart_product_id = ' . (int) $parent->params->item_id);
 			$parent->db->setQuery($parent->q);
 			$cats = $parent->db->loadColumn();
-		} else if ($parent->params->category_id) {
+		}
+		else if ($parent->params->category_id)
+		{
 			$cats = $parent->params->category_id;
-			if (!is_numeric($cats)) {
+			if (!is_numeric($cats))
+			{
 				$parent->q->clear()
 					->select('config')
 					->from('#__virtuemart_configs')
@@ -63,9 +69,12 @@ class NNFrameworkAssignmentsVirtueMart
 				$config = $parent->db->loadResult();
 				$lang = substr($config, strpos($config, 'vmlang='));
 				$lang = substr($lang, 0, strpos($lang, '|'));
-				if (preg_match('#"([^"]*_[^"]*)"#', $lang, $lang)) {
+				if (preg_match('#"([^"]*_[^"]*)"#', $lang, $lang))
+				{
 					$lang = $lang['1'];
-				} else {
+				}
+				else
+				{
 					$lang = 'en_gb';
 				}
 
@@ -82,10 +91,14 @@ class NNFrameworkAssignmentsVirtueMart
 
 		$pass = $parent->passSimple($cats, $selection, 'include');
 
-		if ($pass && $params->inc_children == 2) {
+		if ($pass && $params->inc_children == 2)
+		{
 			return $parent->pass(0, $assignment);
-		} else if (!$pass && $params->inc_children) {
-			foreach ($cats as $cat) {
+		}
+		else if (!$pass && $params->inc_children)
+		{
+			foreach ($cats as $cat)
+			{
 				$cats = array_merge($cats, self::getCatParentIds($parent, $cat));
 			}
 		}
@@ -95,7 +108,8 @@ class NNFrameworkAssignmentsVirtueMart
 
 	function passProducts(&$parent, &$params, $selection = array(), $assignment = 'all')
 	{
-		if (!$parent->params->id || $parent->params->option != 'com_virtuemart' || $parent->params->view != 'productdetails') {
+		if (!$parent->params->id || $parent->params->option != 'com_virtuemart' || $parent->params->view != 'productdetails')
+		{
 			return $parent->pass(0, $assignment);
 		}
 

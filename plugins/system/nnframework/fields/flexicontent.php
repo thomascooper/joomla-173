@@ -4,7 +4,7 @@
  * Displays a multiselectbox of available Flexicontent Tags / Types
  *
  * @package         NoNumber Framework
- * @version         13.8.9
+ * @version         13.11.22
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -20,31 +20,36 @@ require_once JPATH_PLUGINS . '/system/nnframework/helpers/text.php';
 class JFormFieldNN_FlexiContent extends JFormField
 {
 	public $type = 'FlexiContent';
+	private $params = null;
+	private $db = null;
 
 	protected function getInput()
 	{
-		$this->params = $this->element->attributes();
-
-		if (!NNFrameworkFunctions::extensionInstalled('flexicontent')) {
+		if (!NNFrameworkFunctions::extensionInstalled('flexicontent'))
+		{
 			return '<fieldset class="radio"><label class="nn_label nn_label_error">' . JText::_('ERROR') . ': ' . JText::sprintf('NN_FILES_NOT_FOUND', JText::_('NN_FLEXICONTENT')) . '</label></fieldset>';
 		}
 
-		$group = $this->def('group', 'categories');
-
+		$this->params = $this->element->attributes();
 		$this->db = JFactory::getDBO();
+
+		$group = $this->get('group', 'categories');
+
 		$tables = $this->db->getTableList();
-		if (!in_array($this->db->getPrefix() . 'flexicontent_' . $group, $tables)) {
+		if (!in_array($this->db->getPrefix() . 'flexicontent_' . $group, $tables))
+		{
 			return '<fieldset class="radio"><label class="nn_label nn_label_error">' . JText::_('ERROR') . ': ' . JText::sprintf('NN_TABLE_NOT_FOUND', JText::_('NN_FLEXICONTENT')) . '</label></fieldset>';
 		}
 
-		if (!is_array($this->value)) {
+		if (!is_array($this->value))
+		{
 			$this->value = explode(',', $this->value);
 		}
 
 		$options = $this->{'get' . $group}();
 
-		$size = (int) $this->def('size');
-		$multiple = $this->def('multiple');
+		$size = (int) $this->get('size');
+		$multiple = $this->get('multiple');
 
 		require_once JPATH_PLUGINS . '/system/nnframework/helpers/html.php';
 		return nnHtml::selectlist($options, $this->name, $this->value, $this->id, $size, $multiple);
@@ -80,14 +85,15 @@ class JFormFieldNN_FlexiContent extends JFormField
 	{
 		// assemble items to the array
 		$options = array();
-		foreach ($list as $item) {
+		foreach ($list as $item)
+		{
 			$options[] = JHtml::_('select.option', $item->id, $item->name, 'value', 'text', 0);
 		}
 
 		return $options;
 	}
 
-	private function def($val, $default = '')
+	private function get($val, $default = '')
 	{
 		return (isset($this->params[$val]) && (string) $this->params[$val] != '') ? (string) $this->params[$val] : $default;
 	}

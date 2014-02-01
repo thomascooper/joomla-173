@@ -4,7 +4,7 @@
  * Displays a list of components with check boxes
  *
  * @package         NoNumber Framework
- * @version         13.8.9
+ * @version         13.11.22
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -17,16 +17,20 @@ defined('_JEXEC') or die;
 class JFormFieldNN_Components extends JFormField
 {
 	public $type = 'Components';
+	private $params = null;
+	private $db = null;
 
 	protected function getInput()
 	{
 		$this->params = $this->element->attributes();
+		$this->db = JFactory::getDBO();
 
-		$frontend = $this->def('frontend', 1);
-		$admin = $this->def('admin', 1);
-		$size = (int) $this->def('size');
+		$frontend = $this->get('frontend', 1);
+		$admin = $this->get('admin', 1);
+		$size = (int) $this->get('size');
 
-		if (!$frontend && !$admin) {
+		if (!$frontend && !$admin)
+		{
 			return '';
 		}
 
@@ -34,7 +38,8 @@ class JFormFieldNN_Components extends JFormField
 
 		$options = array();
 
-		foreach ($components as $component) {
+		foreach ($components as $component)
+		{
 			$options[] = JHtml::_('select.option', $component->element, $component->name);
 		}
 
@@ -47,36 +52,39 @@ class JFormFieldNN_Components extends JFormField
 		jimport('joomla.filesystem.folder');
 		jimport('joomla.filesystem.file');
 
-		$db = JFactory::getDBO();
-		$query = $db->getQuery(true)
+		$query = $this->db->getQuery(true)
 			->select('e.name, e.element')
 			->from('#__extensions AS e')
-			->where('e.type = ' . $db->quote('component'))
+			->where('e.type = ' . $this->db->quote('component'))
 			->where('e.name != ""')
 			->where('e.element != ""')
 			->group('e.element')
 			->order('e.element, e.name');
-		$db->setQuery($query);
-		$components = $db->loadObjectList();
+		$this->db->setQuery($query);
+		$components = $this->db->loadObjectList();
 
 		$comps = array();
 		$lang = JFactory::getLanguage();
 
-		foreach ($components as $i => $component) {
+		foreach ($components as $i => $component)
+		{
 			// return if there is no main component folder
 			if (!($frontend && JFolder::exists(JPATH_SITE . '/components/' . $component->element))
 				&& !($admin && JFolder::exists(JPATH_ADMINISTRATOR . '/components/' . $component->element))
-			) {
+			)
+			{
 				continue;
 			}
 
 			// return if there is no views folder
 			if (!($frontend && JFolder::exists(JPATH_SITE . '/components/' . $component->element . '/views'))
 				&& !($admin && JFolder::exists(JPATH_ADMINISTRATOR . '/components/' . $component->element . '/views'))
-			) {
+			)
+			{
 				continue;
 			}
-			if (!empty($component->element)) {
+			if (!empty($component->element))
+			{
 				// Load the core file then
 				// Load extension-local file.
 				$lang->load($component->element . '.sys', JPATH_BASE, null, false, false)
@@ -92,7 +100,7 @@ class JFormFieldNN_Components extends JFormField
 		return $comps;
 	}
 
-	private function def($val, $default = '')
+	private function get($val, $default = '')
 	{
 		return (isset($this->params[$val]) && (string) $this->params[$val] != '') ? (string) $this->params[$val] : $default;
 	}

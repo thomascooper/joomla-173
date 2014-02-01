@@ -4,7 +4,7 @@
  * Displays a multiselectbox of geo locations
  *
  * @package         NoNumber Framework
- * @version         13.8.9
+ * @version         13.11.22
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -19,38 +19,46 @@ require_once JPATH_PLUGINS . '/system/nnframework/helpers/text.php';
 class JFormFieldNN_Geo extends JFormField
 {
 	public $type = 'Geo';
+	private $params = null;
+	private $db = null;
 
 	protected function getInput()
 	{
 		$this->params = $this->element->attributes();
-
 		$this->db = JFactory::getDbo();
 
-		if (!is_array($this->value)) {
+		if (!is_array($this->value))
+		{
 			$this->value = explode(',', $this->value);
 		}
 
-		$group = $this->def('group', 'countries');
+		$group = $this->get('group', 'countries');
 		$options = array();
-		foreach ($this->{$group} as $key => $val) {
-			if (!$val) {
+		foreach ($this->{$group} as $key => $val)
+		{
+			if (!$val)
+			{
 				$options[] = JHtml::_('select.option', '-', '&nbsp;', 'value', 'text', true);
-			} else if ($key['0'] == '-') {
+			}
+			else if ($key['0'] == '-')
+			{
 				$options[] = JHtml::_('select.option', '-', $val, 'value', 'text', true);
-			} else {
+			}
+			else
+			{
 				$val = NNText::prepareSelectItem($val);
 				$options[] = JHtml::_('select.option', $key, $val);
 			}
 		}
 
-		$size = (int) $this->def('size');
-		$multiple = $this->def('multiple');
+		$size = (int) $this->get('size');
+		$multiple = $this->get('multiple');
 
 		require_once JPATH_PLUGINS . '/system/nnframework/helpers/html.php';
 		return nnHtml::selectlist($options, $this->name, $this->value, $this->id, $size, $multiple);
 	}
 
-	private function def($val, $default = '')
+	private function get($val, $default = '')
 	{
 		return (isset($this->params[$val]) && (string) $this->params[$val] != '') ? (string) $this->params[$val] : $default;
 	}

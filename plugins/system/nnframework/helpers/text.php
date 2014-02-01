@@ -3,7 +3,7 @@
  * NoNumber Framework Helper File: Text
  *
  * @package         NoNumber Framework
- * @version         13.8.9
+ * @version         13.11.22
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -97,8 +97,10 @@ class NNText
 
 	public static function html_entity_decoder($given_html, $quote_style = ENT_QUOTES, $charset = 'UTF-8')
 	{
-		if (is_array($given_html)) {
-			foreach ($given_html as $i => $html) {
+		if (is_array($given_html))
+		{
+			foreach ($given_html as $i => $html)
+			{
 				$given_html[$i] = self::html_entity_decoder($html);
 			}
 			return $given_html;
@@ -111,7 +113,8 @@ class NNText
 		// remove comment tags
 		$str = preg_replace('#<\!--.*?-->#s', '', $str);
 
-		if ($striptags) {
+		if ($striptags)
+		{
 			// remove html tags
 			$str = preg_replace('#</?[a-z][^>]*>#usi', '', $str);
 		}
@@ -124,7 +127,8 @@ class NNText
 
 		$str = str_replace(array('&nbsp;', '&#160;'), ' ', $str);
 		$str = preg_replace('#- #', '  ', $str);
-		for ($i = 0; $remove_first > $i; $i++) {
+		for ($i = 0; $remove_first > $i; $i++)
+		{
 			$str = preg_replace('#^  #', '', $str);
 		}
 		preg_match('#^( *)(.*)$#', $str, $match);
@@ -134,12 +138,17 @@ class NNText
 		$pre = preg_replace('#(( ·  )*) ·  #', '\1 »  ', $pre);
 		$pre = str_replace('  ', ' &nbsp; ', $pre);
 
-		if ($type == 'separator') {
+		if ($type == 'separator')
+		{
 			$pre = '[[:font-weight:normal;font-style:italic;color:grey;:]]' . $pre;
-		} else if (!$published) {
+		}
+		else if (!$published)
+		{
 			$pre = '[[:font-style:italic;color:grey;:]]' . $pre;
 			$name = $name . ' [' . JText::_('JUNPUBLISHED') . ']';
-		} else if ($published == 2) {
+		}
+		else if ($published == 2)
+		{
 			$pre = '[[:font-style:italic;:]]' . $pre;
 			$name = $name . ' [' . JText::_('JARCHIVED') . ']';
 		}
@@ -161,11 +170,12 @@ class NNText
 		$uri = JURI::getInstance();
 		$uri = $uri->get('_uri');
 
-		if ($hash == '') {
+		if ($hash == '')
+		{
 			return $uri;
 		}
 
-		return preg_replace('#\#.*$#', '', $uri)  . '#' . $hash;
+		return preg_replace('#\#.*$#', '', $uri) . '#' . $hash;
 	}
 
 	/**
@@ -175,7 +185,8 @@ class NNText
 	{
 		// get attribute from string
 		$re = '#' . preg_quote($attrib, '#') . '="([^"]*)"#si';
-		if (preg_match($re, $str, $match)) {
+		if (preg_match($re, $str, $match))
+		{
 			return $match['1'];
 		}
 		return '';
@@ -218,20 +229,23 @@ class NNText
 	public static function createUrlMatches($titles = array())
 	{
 		$matches = array();
-		foreach ($titles as $title) {
+		foreach ($titles as $title)
+		{
 			$matches[] = $title;
 			$matches[] = JString::strtolower($title);
 		}
 
 		$matches = array_unique($matches);
 
-		foreach ($matches as $title) {
+		foreach ($matches as $title)
+		{
 			$matches[] = htmlspecialchars(html_entity_decode($title, ENT_COMPAT, 'UTF-8'));
 		}
 
 		$matches = array_unique($matches);
 
-		foreach ($matches as $title) {
+		foreach ($matches as $title)
+		{
 			$matches[] = urlencode($title);
 			$matches[] = utf8_decode($title);
 			$matches[] = str_replace(' ', '', $title);
@@ -241,12 +255,30 @@ class NNText
 
 		$matches = array_unique($matches);
 
-		foreach ($matches as $i => $title) {
+		foreach ($matches as $i => $title)
+		{
 			$matches[$i] = trim(str_replace('?', '', $title));
 		}
 
 		$matches = array_diff(array_unique($matches), array('', '-'));
 
 		return $matches;
+	}
+
+	static function getBody($html)
+	{
+		if (strpos($html, '<body') === false || strpos($html, '</body>') === false)
+		{
+			return array('', $html, '');
+		}
+
+		$html_split = explode('<body', $html, 2);
+		$pre = $html_split['0'];
+		$body = '<body' . $html_split['1'];
+		$body_split = explode('</body>', $body);
+		$post = array_pop($body_split);
+		$body = implode('</body>', $body_split) . '</body>';
+
+		return array($pre, $body, $post);
 	}
 }

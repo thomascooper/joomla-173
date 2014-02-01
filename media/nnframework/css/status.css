@@ -2,40 +2,13 @@
  * NoNumber Framework status bar stylesheet
  *
  * @package         NoNumber Framework
- * @version         13.8.9
+ * @version         13.11.22
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
  * @copyright       Copyright © 2013 NoNumber All Rights Reserved
  * @license         http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
-.clearfix {
-  *zoom: 1;
-}
-.clearfix:before,
-.clearfix:after {
-  display: table;
-  content: "";
-  line-height: 0;
-}
-.clearfix:after {
-  clear: both;
-}
-.hide-text {
-  font: 0/0 a;
-  color: transparent;
-  text-shadow: none;
-  background-color: transparent;
-  border: 0;
-}
-.input-block-level {
-  display: block;
-  width: 100%;
-  min-height: 30px;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-}
 /* fix for J1.7 tooltips */
 div.tip-wrap {
   z-index: 150;
@@ -107,6 +80,9 @@ span.nn_status div.nn_status_submenu {
   -moz-border-radius: 8px;
   border-radius: 8px;
   z-index: 49;
+}
+span.nn_status:hover div.nn_status_submenu {
+  display: block;
 }
 span.nn_status.no_icon div.nn_status_submenu,
 span.nn_status.no_text div.nn_status_submenu {

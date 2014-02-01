@@ -2,14 +2,13 @@
  * NoNumber Framework status bar stylesheet
  *
  * @package         NoNumber Framework
- * @version         13.8.9
+ * @version         13.11.22
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
  * @copyright       Copyright © 2013 NoNumber All Rights Reserved
  * @license         http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
-
 @import "init.less";
 
 /* fix for J1.7 tooltips */
@@ -26,21 +25,21 @@ span.nn_status,
 	margin-right: 10px;
 }
 #module-status span.nn_status {
-  [class^="nnicon-"],
-  [class*=" nnicon-"] {
-    width: 10px;
-    height: 10px;
-    line-height: 10px;
-    font-size: 12px;
-  }
+	[class^="nnicon-"],
+	[class*=" nnicon-"] {
+		width: 10px;
+		height: 10px;
+		line-height: 10px;
+		font-size: 12px;
+	}
 }
 #module-status span.nn_status a,
 #module-status span.nn_status a:hover {
-  text-decoration: none
+	text-decoration: none
 }
 #module-status span.nn_status a.nn_status_link {
-  padding: 0;
-  margin: 0;
+	padding: 0;
+	margin: 0;
 }
 span.nn_status a.nn_status_link span,
 #module-status span.nn_status a.nn_status_link span.nn_status_text {
@@ -75,7 +74,7 @@ span.nn_status.no_text a.nn_status_link span,
 /* submenu */
 span.nn_status div.nn_status_submenu {
 	position: absolute;
-  display: none;
+	display: none;
 	left: 12px;
 	top: 20px;
 	margin: 0;
@@ -85,6 +84,9 @@ span.nn_status div.nn_status_submenu {
 	overflow: hidden;
 	.border-radius(8px);
 	z-index: 49;
+}
+span.nn_status:hover div.nn_status_submenu {
+	display: block;
 }
 span.nn_status.no_icon div.nn_status_submenu,
 span.nn_status.no_text div.nn_status_submenu {
@@ -127,15 +129,15 @@ span.nn_status div.nn_status_submenu li > span,
 	.border-radius(0);
 }
 span.nn_status div.nn_status_submenu li:first-child > a,
-#module-status span.nn_status div.nn_status_submenu li:first-child > a  {
-  border-top: none;
-  .border-top-left-radius(8px);
-  .border-top-right-radius(8px);
+#module-status span.nn_status div.nn_status_submenu li:first-child > a {
+	border-top: none;
+	.border-top-left-radius(8px);
+	.border-top-right-radius(8px);
 }
 span.nn_status div.nn_status_submenu li:last-child > a,
 #module-status span.nn_status div.nn_status_submenu li:last-child > a {
-  .border-bottom-left-radius(8px);
-  .border-bottom-right-radius(8px);
+	.border-bottom-left-radius(8px);
+	.border-bottom-right-radius(8px);
 }
 span.nn_status div.nn_status_submenu li > a:hover {
 	background-color: #DDDDDD;
@@ -156,11 +158,11 @@ span.nn_status div.nn_status_submenu a.nn_status_textlink span {
 	margin: 0 !important;
 }
 span.nn_status div.nn_status_submenu a.nn_status_textlink {
-  padding: 2px !important;
+	padding: 2px !important;
 }
 span.nn_status div.nn_status_submenu .nn_status_listitem span {
-  float: none !important;
-  display: inline !important;
+	float: none !important;
+	display: inline !important;
 }
 
 /* APLite template */

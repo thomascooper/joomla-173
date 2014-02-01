@@ -4,7 +4,7 @@
  * Loads the English language file as fallback
  *
  * @package         NoNumber Framework
- * @version         13.8.9
+ * @version         13.11.22
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -17,6 +17,7 @@ defined('_JEXEC') or die;
 class JFormFieldNN_LoadLanguage extends JFormField
 {
 	public $type = 'LoadLanguage';
+	private $params = null;
 
 	protected function getLabel()
 	{
@@ -30,31 +31,22 @@ class JFormFieldNN_LoadLanguage extends JFormField
 		JHtml::_('behavior.mootools');
 		JHtml::script('nnframework/script.min.js', false, true);
 
-		$extension = $this->def('extension');
-		$admin = $this->def('admin', 1);
+		$extension = $this->get('extension');
+		$admin = $this->get('admin', 1);
 
-		$path = $admin ? JPATH_ADMINISTRATOR : JPATH_SITE;
-		// load the admin language file
-		$lang = JFactory::getLanguage();
-		if ($lang->getTag() != 'en-GB') {
-			// Loads English language file as fallback (for undefined stuff in other language file)
-			$lang->load($extension, $path, 'en-GB');
-		}
-		$lang->load($extension, $path, null, 1);
+		self::loadLanguage($extension, $admin);
 
 		return '';
 	}
 
 	function loadLanguage($extension, $admin = 1)
 	{
-		if ($extension) {
-			if ($admin) {
-				$path = JPATH_ADMINISTRATOR;
-			} else {
-				$path = JPATH_SITE;
-			}
+		if ($extension)
+		{
+			$path = $admin ? JPATH_ADMINISTRATOR : JPATH_SITE;
 			$lang = JFactory::getLanguage();
-			if ($lang->getTag() != 'en-GB') {
+			if ($lang->getTag() != 'en-GB')
+			{
 				// Loads English language file as fallback (for undefined stuff in other language file)
 				$lang->load($extension, $path, 'en-GB');
 			}
@@ -62,7 +54,7 @@ class JFormFieldNN_LoadLanguage extends JFormField
 		}
 	}
 
-	private function def($val, $default = '')
+	private function get($val, $default = '')
 	{
 		return (isset($this->params[$val]) && (string) $this->params[$val] != '') ? (string) $this->params[$val] : $default;
 	}

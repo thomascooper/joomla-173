@@ -4,7 +4,7 @@
  * Displays a custom key field (use in combination with customfieldvalue)
  *
  * @package         NoNumber Framework
- * @version         13.8.9
+ * @version         13.11.22
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -17,6 +17,7 @@ defined('_JEXEC') or die;
 class JFormFieldNN_CustomFieldKey extends JFormField
 {
 	public $type = 'CustomFieldKey';
+	private $params = null;
 
 	protected function getLabel()
 	{
@@ -27,8 +28,8 @@ class JFormFieldNN_CustomFieldKey extends JFormField
 	{
 		$this->params = $this->element->attributes();
 
-		$size = ($this->def('size') ? 'size="' . $this->def('size') . '"' : '');
-		$class = ($this->def('class') ? 'class="' . $this->def('class') . '"' : 'class="text_area"');
+		$size = ($this->get('size') ? 'size="' . $this->get('size') . '"' : '');
+		$class = ($this->get('class') ? 'class="' . $this->get('class') . '"' : 'class="text_area"');
 		$this->value = htmlspecialchars(html_entity_decode($this->value, ENT_QUOTES), ENT_QUOTES);
 
 		JHtml::_('behavior.mootools');
@@ -40,7 +41,7 @@ class JFormFieldNN_CustomFieldKey extends JFormField
 		return $html;
 	}
 
-	private function def($val, $default = '')
+	private function get($val, $default = '')
 	{
 		return (isset($this->params[$val]) && (string) $this->params[$val] != '') ? (string) $this->params[$val] : $default;
 	}

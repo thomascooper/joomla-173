@@ -4,7 +4,7 @@
  * Displays a multiselectbox of available Akeeba Subsriptons levels
  *
  * @package         NoNumber Framework
- * @version         13.8.9
+ * @version         13.11.22
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -21,37 +21,40 @@ require_once JPATH_PLUGINS . '/system/nnframework/helpers/text.php';
 class JFormFieldNN_AkeebaSubs extends JFormField
 {
 	public $type = 'AkeebaSubs';
+	private $params = null;
+	private $db = null;
 
 	protected function getInput()
 	{
-		if (!NNFrameworkFunctions::extensionInstalled('akeebasubs')) {
+		if (!NNFrameworkFunctions::extensionInstalled('akeebasubs'))
+		{
 			return '<fieldset class="radio"><label class="nn_label nn_label_error">' . JText::_('ERROR') . ': ' . JText::sprintf('NN_FILES_NOT_FOUND', JText::_('NN_AKEEBASUBS')) . '</label></fieldset>';
 		}
 
 		$this->params = $this->element->attributes();
-
-		$group = $this->def('group', 'categories');
-
 		$this->db = JFactory::getDBO();
+
+		$group = $this->get('group', 'categories');
+
 		$tables = $this->db->getTableList();
-		if (!in_array($this->db->getPrefix() . 'akeebasubs_' . $group, $tables)) {
+		if (!in_array($this->db->getPrefix() . 'akeebasubs_' . $group, $tables))
+		{
 			return '<fieldset class="radio"><label class="nn_label nn_label_error">' . JText::_('ERROR') . ': ' . JText::sprintf('NN_TABLE_NOT_FOUND', JText::_('NN_AKEEBASUBS')) . '</label></fieldset>';
 		}
-
-		$this->params = $this->element->attributes();
 
 		$parameters = NNParameters::getInstance();
 		$params = $parameters->getPluginParams('nnframework');
 		$this->max_list_count = $params->max_list_count;
 
-		if (!is_array($this->value)) {
+		if (!is_array($this->value))
+		{
 			$this->value = explode(',', $this->value);
 		}
 
 		$options = $this->{'get' . $group}();
 
-		$size = (int) $this->def('size');
-		$multiple = $this->def('multiple');
+		$size = (int) $this->get('size');
+		$multiple = $this->get('multiple');
 
 		require_once JPATH_PLUGINS . '/system/nnframework/helpers/html.php';
 		return nnHtml::selectlist($options, $this->name, $this->value, $this->id, $size, $multiple);
@@ -66,7 +69,8 @@ class JFormFieldNN_AkeebaSubs extends JFormField
 		$this->db->setQuery($query);
 		$total = $this->db->loadResult();
 
-		if ($total > $this->max_list_count) {
+		if ($total > $this->max_list_count)
+		{
 			return -1;
 		}
 
@@ -80,7 +84,8 @@ class JFormFieldNN_AkeebaSubs extends JFormField
 
 		// assemble items to the array
 		$options = array();
-		foreach ($list as $item) {
+		foreach ($list as $item)
+		{
 			$item->name = NNText::prepareSelectItem($item->name, $item->published);
 			$options[] = JHtml::_('select.option', $item->id, $item->name, 'value', 'text', 0);
 		}
@@ -88,7 +93,7 @@ class JFormFieldNN_AkeebaSubs extends JFormField
 		return $options;
 	}
 
-	private function def($val, $default = '')
+	private function get($val, $default = '')
 	{
 		return (isset($this->params[$val]) && (string) $this->params[$val] != '') ? (string) $this->params[$val] : $default;
 	}

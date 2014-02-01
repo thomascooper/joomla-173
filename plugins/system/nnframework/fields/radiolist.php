@@ -4,7 +4,7 @@
  * Displays a list of radio items with a break after each item
  *
  * @package         NoNumber Framework
- * @version         13.8.9
+ * @version         13.11.22
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -28,7 +28,8 @@ class JFormFieldNN_RadioList extends JFormField
 
 		$options = array();
 		$i = 0;
-		foreach ($this->element->children() as $option) {
+		foreach ($this->element->children() as $option)
+		{
 			$i++;
 			$checked = ((string) $option['value'] == (string) $this->value) ? ' checked="checked"' : '';
 			$html[] = '<input type="radio" id="' . $this->id . $i . '" name="' . $this->name . '"' .
@@ -43,7 +44,7 @@ class JFormFieldNN_RadioList extends JFormField
 		return implode('', $html);
 	}
 
-	private function def($val, $default = '')
+	private function get($val, $default = '')
 	{
 		return (isset($this->params[$val]) && (string) $this->params[$val] != '') ? (string) $this->params[$val] : $default;
 	}

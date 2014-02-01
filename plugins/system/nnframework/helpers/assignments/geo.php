@@ -3,7 +3,7 @@
  * NoNumber Framework Helper File: Assignments: Geo
  *
  * @package         NoNumber Framework
- * @version         13.8.9
+ * @version         13.11.22
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -28,7 +28,8 @@ class NNFrameworkAssignmentsGeo
 		$selection = $parent->makeArray($selection);
 
 		$geo = self::getGeo();
-		if (!$geo) {
+		if (!$geo)
+		{
 			return $parent->pass(0, $assignment);
 		}
 		$continent = $geo->geoplugin_continentCode;
@@ -44,7 +45,8 @@ class NNFrameworkAssignmentsGeo
 		$selection = $parent->makeArray($selection);
 
 		$geo = self::getGeo();
-		if (!$geo) {
+		if (!$geo)
+		{
 			return $parent->pass(0, $assignment);
 		}
 		$country = $geo->geoplugin_countryCode;
@@ -60,7 +62,8 @@ class NNFrameworkAssignmentsGeo
 		$selection = $parent->makeArray($selection);
 
 		$geo = self::getGeo();
-		if (!$geo) {
+		if (!$geo)
+		{
 			return $parent->pass(0, $assignment);
 		}
 		$region = $geo->geoplugin_countryCode . '-' . $geo->geoplugin_regionCode;
@@ -70,7 +73,8 @@ class NNFrameworkAssignmentsGeo
 
 	function getGeo()
 	{
-		if (!$this->geo) {
+		if (!$this->geo)
+		{
 			require_once JPATH_PLUGINS . '/system/nnframework/helpers/functions.php';
 			$func = new NNFrameworkFunctions;
 			$this->geo = json_decode($func->getContents('http://www.geoplugin.net/json.gp?ip=' . $_SERVER['REMOTE_ADDR']));

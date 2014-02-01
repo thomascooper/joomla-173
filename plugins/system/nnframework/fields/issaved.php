@@ -4,7 +4,7 @@
  * Displays a hidden value of 1
  *
  * @package         NoNumber Framework
- * @version         13.8.9
+ * @version         13.11.22
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -26,9 +26,11 @@ class JFormFieldNN_IsSaved extends JFormField
 	protected function getInput()
 	{
 		$html = '<input type="hidden" id="' . $this->id . '" name="' . $this->name . '" value="1" />';
-		if (!$this->value) {
+		if (!$this->value)
+		{
 			$label = $this->element['label'];
-			if ($label) {
+			if ($label)
+			{
 				$html .= '<div class="nn_panel"><div class="nn_block nn_title">' . JText::_($this->element['label']) . '</div></div>';
 			}
 		}

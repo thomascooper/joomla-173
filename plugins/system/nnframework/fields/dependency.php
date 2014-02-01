@@ -4,7 +4,7 @@
  * Displays an error if given file is not found
  *
  * @package         NoNumber Framework
- * @version         13.8.9
+ * @version         13.11.22
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -19,6 +19,7 @@ jimport('joomla.form.formfield');
 class JFormFieldNN_Dependency extends JFormField
 {
 	public $type = 'Dependency';
+	private $params = null;
 
 	protected function getLabel()
 	{
@@ -32,14 +33,16 @@ class JFormFieldNN_Dependency extends JFormField
 		JHtml::_('behavior.mootools');
 		JHtml::script('nnframework/script.min.js', false, true);
 
-		$file = $this->def('file');
-		if (!$file) {
-			$path = ($this->def('path') == 'site') ? '' : '/administrator';
-			$label = $this->def('label');
-			$file = $this->def('alias', $label);
+		$file = $this->get('file');
+		if (!$file)
+		{
+			$path = ($this->get('path') == 'site') ? '' : '/administrator';
+			$label = $this->get('label');
+			$file = $this->get('alias', $label);
 			$file = preg_replace('#[^a-z-]#', '', strtolower($file));
-			$extension = $this->def('extension');
-			switch ($extension) {
+			$extension = $this->get('extension');
+			switch ($extension)
+			{
 				case 'com';
 					$file = $path . '/components/com_' . $file . '/com_' . $file . '.xml';
 					break;
@@ -54,8 +57,10 @@ class JFormFieldNN_Dependency extends JFormField
 					break;
 			}
 			$label = JText::_($label) . ' (' . JText::_('NN_' . strtoupper($extension)) . ')';
-		} else {
-			$label = $this->def('label', 'the main extension');
+		}
+		else
+		{
+			$label = $this->get('label', 'the main extension');
 		}
 
 		nnFieldDependency::setMessage($file, $label);
@@ -63,7 +68,7 @@ class JFormFieldNN_Dependency extends JFormField
 		return '';
 	}
 
-	private function def($val, $default = '')
+	private function get($val, $default = '')
 	{
 		return (isset($this->params[$val]) && (string) $this->params[$val] != '') ? (string) $this->params[$val] : $default;
 	}
@@ -76,26 +81,33 @@ class nnFieldDependency
 		jimport('joomla.filesystem.file');
 
 		$file = str_replace('\\', '/', $file);
-		if (strpos($file, '/administrator') === 0) {
+		if (strpos($file, '/administrator') === 0)
+		{
 			$file = str_replace('/administrator', JPATH_ADMINISTRATOR, $file);
-		} else {
+		}
+		else
+		{
 			$file = JPATH_SITE . '/' . $file;
 		}
 		$file = str_replace('//', '/', $file);
 
 		$file_alt = preg_replace('#(com|mod)_([a-z-_]+\.)#', '\2', $file);
 
-		if (!JFile::exists($file) && !JFile::exists($file_alt)) {
+		if (!JFile::exists($file) && !JFile::exists($file_alt))
+		{
 			$msg = JText::sprintf('NN_THIS_EXTENSION_NEEDS_THE_MAIN_EXTENSION_TO_FUNCTION', JText::_($name));
 			$message_set = 0;
 			$messageQueue = JFactory::getApplication()->getMessageQueue();
-			foreach ($messageQueue as $queue_message) {
-				if ($queue_message['type'] == 'error' && $queue_message['message'] == $msg) {
+			foreach ($messageQueue as $queue_message)
+			{
+				if ($queue_message['type'] == 'error' && $queue_message['message'] == $msg)
+				{
 					$message_set = 1;
 					break;
 				}
 			}
-			if (!$message_set) {
+			if (!$message_set)
+			{
 				JFactory::getApplication()->enqueueMessage($msg, 'error');
 			}
 		}

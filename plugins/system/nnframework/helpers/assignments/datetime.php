@@ -3,7 +3,7 @@
  * NoNumber Framework Helper File: Assignments: DateTime
  *
  * @package         NoNumber Framework
- * @version         13.8.9
+ * @version         13.11.22
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -20,16 +20,21 @@ class NNFrameworkAssignmentsDateTime
 {
 	function passDate(&$parent, &$params, $selection = array(), $assignment = 'all')
 	{
-		if ($params->publish_up || $params->publish_down) {
+		if ($params->publish_up || $params->publish_down)
+		{
 			$now = strtotime($parent->date->format('Y-m-d H:i:s', 1));
-			if ((int) $params->publish_up) {
-				if (strtotime($params->publish_up) > $now) {
+			if ((int) $params->publish_up)
+			{
+				if (strtotime($params->publish_up) > $now)
+				{
 					// outside date range
 					return $parent->pass(0, $assignment);
 				}
 			}
-			if ((int) $params->publish_down) {
-				if (strtotime($params->publish_down) < $now) {
+			if ((int) $params->publish_down)
+			{
+				if (strtotime($params->publish_down) < $now)
+				{
 					// outside date range
 					return $parent->pass(0, $assignment);
 				}
@@ -65,20 +70,25 @@ class NNFrameworkAssignmentsDateTime
 		$publish_down = strtotime($params->publish_down);
 
 		$pass = 0;
-		if ($publish_up > $publish_down) {
+		if ($publish_up > $publish_down)
+		{
 			// publish up is after publish down (spans midnight)
 			// current time should be:
 			// - after publish up
 			// - OR before publish down
-			if ($date >= $publish_up || $date < $publish_down) {
+			if ($date >= $publish_up || $date < $publish_down)
+			{
 				$pass = 1;
 			}
-		} else {
+		}
+		else
+		{
 			// publish down is after publish up (simple time span)
 			// current time should be:
 			// - after publish up
 			// - AND before publish down
-			if ($date >= $publish_up && $date < $publish_down) {
+			if ($date >= $publish_up && $date < $publish_down)
+			{
 				$pass = 1;
 			}
 		}
@@ -98,18 +108,26 @@ class NNFrameworkAssignmentsDateTime
 		$season_names = array('winter', 'spring', 'summer', 'fall');
 
 		// Declare season date ranges
-		switch (strtolower($hemisphere)) {
+		switch (strtolower($hemisphere))
+		{
 			case 'southern':
 				if (
 					$date < strtotime($date_year . '-03-21')
 					|| $date >= strtotime($date_year . '-12-21')
-				) {
+				)
+				{
 					return $season_names['2']; // Must be in Summer
-				} else if ($date >= strtotime($date_year . '-09-23')) {
+				}
+				else if ($date >= strtotime($date_year . '-09-23'))
+				{
 					return $season_names['1']; // Must be in Spring
-				} else if ($date >= strtotime($date_year . '-06-21')) {
+				}
+				else if ($date >= strtotime($date_year . '-06-21'))
+				{
 					return $season_names['0']; // Must be in Winter
-				} else if ($date >= strtotime($date_year . '-03-21')) {
+				}
+				else if ($date >= strtotime($date_year . '-03-21'))
+				{
 					return $season_names['3']; // Must be in Fall
 				}
 				break;
@@ -117,13 +135,20 @@ class NNFrameworkAssignmentsDateTime
 				if (
 					$date < strtotime($date_year . '-03-01')
 					|| $date >= strtotime($date_year . '-12-01')
-				) {
+				)
+				{
 					return $season_names['2']; // Must be in Summer
-				} else if ($date >= strtotime($date_year . '-09-01')) {
+				}
+				else if ($date >= strtotime($date_year . '-09-01'))
+				{
 					return $season_names['1']; // Must be in Spring
-				} else if ($date >= strtotime($date_year . '-06-01')) {
+				}
+				else if ($date >= strtotime($date_year . '-06-01'))
+				{
 					return $season_names['0']; // Must be in Winter
-				} else if ($date >= strtotime($date_year . '-03-01')) {
+				}
+				else if ($date >= strtotime($date_year . '-03-01'))
+				{
 					return $season_names['3']; // Must be in Fall
 				}
 				break;
@@ -131,13 +156,20 @@ class NNFrameworkAssignmentsDateTime
 				if (
 					$date < strtotime($date_year . '-03-21')
 					|| $date >= strtotime($date_year . '-12-21')
-				) {
+				)
+				{
 					return $season_names['0']; // Must be in Winter
-				} else if ($date >= strtotime($date_year . '-09-23')) {
+				}
+				else if ($date >= strtotime($date_year . '-09-23'))
+				{
 					return $season_names['3']; // Must be in Fall
-				} else if ($date >= strtotime($date_year . '-06-21')) {
+				}
+				else if ($date >= strtotime($date_year . '-06-21'))
+				{
 					return $season_names['2']; // Must be in Summer
-				} else if ($date >= strtotime($date_year . '-03-21')) {
+				}
+				else if ($date >= strtotime($date_year . '-03-21'))
+				{
 					return $season_names['1']; // Must be in Spring
 				}
 				break;

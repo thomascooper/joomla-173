@@ -155,6 +155,7 @@ require_once('lib/gantry/gantry.php');
 		<?php /** Begin Analytics **/ if ($gantry->countModules('analytics')) : ?>
 		<?php echo $gantry->displayModules('analytics','basic','basic'); ?>
 		<?php /** End Analytics **/ endif; ?>
+<?php if (!strpos(JURI::current(),'bulimiathemusical')) :?>
 <!-- MANUAL::Start mkgid slider -->
 <div id="MarketGid2580" class="news-block-magick"><center>
         <a href="http://mgid.com/" target="_blank">Loading...</a>
@@ -166,6 +167,7 @@ require_once('lib/gantry/gantry.php');
 </script>
 <!-- MANUAL::End mkgid slider -->
 </div>
+<?php endif; ?>
 	</body>
 </html>
 <?php

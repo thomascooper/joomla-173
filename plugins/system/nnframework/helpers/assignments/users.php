@@ -3,7 +3,7 @@
  * NoNumber Framework Helper File: Assignments: Users
  *
  * @package         NoNumber Framework
- * @version         13.8.9
+ * @version         13.11.22
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -22,9 +22,12 @@ class NNFrameworkAssignmentsUsers
 	{
 		$user = JFactory::getUser();
 
-		if (isset($user->groups) && !empty($user->groups)) {
+		if (isset($user->groups) && !empty($user->groups))
+		{
 			$groups = array_values($user->groups);
-		} else {
+		}
+		else
+		{
 			$groups = $user->getAuthorisedGroups();
 		}
 

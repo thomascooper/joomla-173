@@ -3,7 +3,7 @@
  * Plugin Helper File
  *
  * @package         NoNumber Framework
- * @version         13.8.9
+ * @version         13.11.22
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -24,7 +24,8 @@ class plgSystemNNFrameworkHelper
 		require_once JPATH_PLUGINS . '/system/nnframework/helpers/functions.php';
 		$func = new NNFrameworkFunctions;
 
-		if ($url) {
+		if ($url)
+		{
 			echo $func->getByUrl($url);
 			die;
 		}
@@ -32,12 +33,14 @@ class plgSystemNNFrameworkHelper
 		$file = JFactory::getApplication()->input->getString('file', '');
 
 		// only allow files that have .inc.php in the file name
-		if (!$file || (strpos($file, '.inc.php') === false)) {
+		if (!$file || (strpos($file, '.inc.php') === false))
+		{
 			die;
 		}
 
 		$folder = JFactory::getApplication()->input->getString('folder', '');
-		if ($folder) {
+		if ($folder)
+		{
 			$file = implode('/', explode('.', $folder)) . '/' . $file;
 		}
 
@@ -53,13 +56,15 @@ class plgSystemNNFrameworkHelper
 			'plugins/editors-xtd/sourcerer/sourcerer.inc.php'
 		);
 
-		if (!$file || (in_array($file, $allowed) === false)) {
+		if (!$file || (in_array($file, $allowed) === false))
+		{
 			die;
 		}
 
 		jimport('joomla.filesystem.file');
 
-		if (JFactory::getApplication()->isSite() && !JFactory::getApplication()->input->get('usetemplate')) {
+		if (JFactory::getApplication()->isSite() && !JFactory::getApplication()->input->get('usetemplate'))
+		{
 			JFactory::getApplication()->setTemplate('../administrator/templates/bluestork');
 		}
 
@@ -73,7 +78,8 @@ class plgSystemNNFrameworkHelper
 		$file = JPATH_SITE . '/' . $file;
 
 		$html = '';
-		if (JFile::exists($file)) {
+		if (JFile::exists($file))
+		{
 			ob_start();
 			include $file;
 			$html = ob_get_contents();

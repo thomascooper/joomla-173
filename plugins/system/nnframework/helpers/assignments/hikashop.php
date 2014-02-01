@@ -3,7 +3,7 @@
  * NoNumber Framework Helper File: Assignments: HikaShop
  *
  * @package         NoNumber Framework
- * @version         13.8.9
+ * @version         13.11.22
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -20,7 +20,8 @@ class NNFrameworkAssignmentsHikaShop
 {
 	function passPageTypes(&$parent, &$params, $selection = array(), $assignment = 'all')
 	{
-		if ($parent->params->option != 'com_hikashop') {
+		if ($parent->params->option != 'com_hikashop')
+		{
 			return $parent->pass(0, $assignment);
 		}
 
@@ -28,7 +29,8 @@ class NNFrameworkAssignmentsHikaShop
 		if (
 			($type == 'product' && in_array($parent->params->layout, array('contact', 'show')))
 			|| ($type == 'user' && in_array($parent->params->layout, array('cpanel')))
-		) {
+		)
+		{
 			$type .= '_' . $parent->params->layout;
 		}
 
@@ -37,7 +39,8 @@ class NNFrameworkAssignmentsHikaShop
 
 	function passCategories(&$parent, &$params, $selection = array(), $assignment = 'all', $article = 0)
 	{
-		if ($parent->params->option != 'com_hikashop') {
+		if ($parent->params->option != 'com_hikashop')
+		{
 			return $parent->pass(0, $assignment);
 		}
 
@@ -48,14 +51,18 @@ class NNFrameworkAssignmentsHikaShop
 			|| ($params->inc_items && $parent->params->view == 'product')
 		);
 
-		if (!$pass) {
+		if (!$pass)
+		{
 			return $parent->pass(0, $assignment);
 		}
 
 		$cats = array();
-		if ($parent->params->view == 'category') {
+		if ($parent->params->view == 'category')
+		{
 			$cats = $parent->params->id;
-		} else if ($parent->params->id) {
+		}
+		else if ($parent->params->id)
+		{
 			$parent->q->clear()
 				->select('c.category_id')
 				->from('#__hikashop_product_category AS c')
@@ -68,10 +75,14 @@ class NNFrameworkAssignmentsHikaShop
 
 		$pass = $parent->passSimple($cats, $selection, 'include');
 
-		if ($pass && $params->inc_children == 2) {
+		if ($pass && $params->inc_children == 2)
+		{
 			return $parent->pass(0, $assignment);
-		} else if (!$pass && $params->inc_children) {
-			foreach ($cats as $cat) {
+		}
+		else if (!$pass && $params->inc_children)
+		{
+			foreach ($cats as $cat)
+			{
 				$cats = array_merge($cats, self::getCatParentIds($parent, $cat));
 			}
 		}
@@ -81,7 +92,8 @@ class NNFrameworkAssignmentsHikaShop
 
 	function passProducts(&$parent, &$params, $selection = array(), $assignment = 'all')
 	{
-		if (!$parent->params->id || $parent->params->option != 'com_hikashop' || $parent->params->view != 'product') {
+		if (!$parent->params->id || $parent->params->option != 'com_hikashop' || $parent->params->view != 'product')
+		{
 			return $parent->pass(0, $assignment);
 		}
 

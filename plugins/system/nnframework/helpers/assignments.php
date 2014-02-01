@@ -3,7 +3,7 @@
  * NoNumber Framework Helper File: Assignments
  *
  * @package         NoNumber Framework
- * @version         13.8.9
+ * @version         13.11.22
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -28,6 +28,7 @@ class NNFrameworkAssignmentsHelper
 	var $passes = array();
 	var $maintype = '';
 	var $subtype = '';
+	var $cache = array();
 
 	function __construct()
 	{
@@ -109,10 +110,12 @@ class NNFrameworkAssignmentsHelper
 	function setIdNames()
 	{
 		$this->names = array();
-		foreach ($this->types as $type) {
+		foreach ($this->types as $type)
+		{
 			$type = explode('_', $type, 2);
 			$this->names[strtolower($type['0'])] = $type['0'];
-			if (isset($type['1'])) {
+			if (isset($type['1']))
+			{
 				$this->names[strtolower($type['1'])] = $type['1'];
 			}
 		}
@@ -122,7 +125,8 @@ class NNFrameworkAssignmentsHelper
 
 	function initParams()
 	{
-		if ($this->init) {
+		if ($this->init)
+		{
 			return;
 		}
 
@@ -135,15 +139,18 @@ class NNFrameworkAssignmentsHelper
 		$this->params->id = JFactory::getApplication()->input->getInt('id', 0);
 		$this->params->Itemid = JFactory::getApplication()->input->getInt('Itemid', 0);
 
-		if ($this->params->option) {
-			switch ($this->params->option) {
+		if ($this->params->option)
+		{
+			switch ($this->params->option)
+			{
 				case 'com_categories':
 					$extension = JFactory::getApplication()->input->getCmd('extension');
 					$this->params->option = $extension ? $extension : 'com_content';
 					$this->params->view = 'category';
 					break;
 				case 'com_breezingforms':
-					if($this->params->view == 'article') {
+					if ($this->params->view == 'article')
+					{
 						$this->params->option = 'com_content';
 					}
 					break;
@@ -151,38 +158,50 @@ class NNFrameworkAssignmentsHelper
 		}
 
 		$option = strtolower(str_replace('com_', '', $this->params->option));
-		if (JFile::exists(__DIR__ . '/assignments/' . $option . '.php')) {
+		if (JFile::exists(__DIR__ . '/assignments/' . $option . '.php'))
+		{
 			require_once __DIR__ . '/assignments/' . $option . '.php';
 			$class = 'NNFrameworkAssignments' . $option;
-			if (class_exists($class)) {
+			if (class_exists($class))
+			{
 				$this->classes[$this->maintype] = new $class;
-				if (method_exists($class, 'init')) {
+				if (method_exists($class, 'init'))
+				{
 					$this->classes[$this->maintype]->init($this);
 				}
 			}
 		}
 
-		if (!$this->params->id) {
+		if (!$this->params->id)
+		{
 			$cid = JFactory::getApplication()->input->get('cid', array(0), 'array');
 			JArrayHelper::toInteger($cid);
 			$this->params->id = $cid['0'];
 		}
 
 		// if no id is found, check if menuitem exists to get view and id
-		if (!$this->params->option || !$this->params->id) {
-			if (JFactory::getApplication()->isSite()) {
-				if (empty($this->params->Itemid)) {
+		if (!$this->params->option || !$this->params->id)
+		{
+			if (JFactory::getApplication()->isSite())
+			{
+				if (empty($this->params->Itemid))
+				{
 					$menuItem = JFactory::getApplication()->getMenu('site')->getActive();
-				} else {
+				}
+				else
+				{
 					$menuItem = JFactory::getApplication()->getMenu('site')->getItem($this->params->Itemid);
 				}
-				if ($menuItem) {
-					if (!$this->params->option) {
+				if ($menuItem)
+				{
+					if (!$this->params->option)
+					{
 						$this->params->option = (empty($menuItem->query['option'])) ? null : $menuItem->query['option'];
 					}
 					$this->params->view = (empty($menuItem->query['view'])) ? null : $menuItem->query['view'];
 					$this->params->task = (empty($menuItem->query['task'])) ? null : $menuItem->query['task'];
-					if (!$this->params->id) {
+					if (!$this->params->id)
+					{
 						$this->params->id = (empty($menuItem->query[$this->params->idname])) ? $menuItem->params->get($this->params->idname) : $menuItem->query[$this->params->idname];
 					}
 				}
@@ -197,11 +216,14 @@ class NNFrameworkAssignmentsHelper
 	{
 		$this->getAssignmentState($params->assignment);
 		$params->id = $type;
-		if (!(strpos($type, '_') === false)) {
+		if (!(strpos($type, '_') === false))
+		{
 			$type = explode('_', $type, 2);
 			$params->maintype = $type['0'];
 			$params->subtype = $type['1'];
-		} else {
+		}
+		else
+		{
 			$params->maintype = $type;
 			$params->subtype = $type;
 		}
@@ -209,7 +231,8 @@ class NNFrameworkAssignmentsHelper
 
 	function passAll(&$assignments, $match_method = 'and', $article = 0)
 	{
-		if (empty($assignments)) {
+		if (empty($assignments))
+		{
 			return 1;
 		}
 
@@ -218,34 +241,51 @@ class NNFrameworkAssignmentsHelper
 		$aid = ($article && isset($article->id)) ? '[' . $article->id . ']' : '';
 		$id = md5($aid . json_encode($assignments));
 
-		if (isset($this->passes[$id])) {
+		if (isset($this->passes[$id]))
+		{
 			$pass = $this->passes[$id];
-		} else {
+		}
+		else
+		{
 			jimport('joomla.filesystem.file');
 			$pass = ($match_method == 'and') ? 1 : 0;
-			foreach ($this->types as $type) {
-				if (isset($assignments[$type])) {
+			foreach ($this->types as $type)
+			{
+				if (isset($assignments[$type]))
+				{
 					$this->initParamsByType($assignments[$type], $type);
-					if (($pass && $match_method == 'and') || (!$pass && $match_method == 'or')) {
+					if (($pass && $match_method == 'and') || (!$pass && $match_method == 'or'))
+					{
 						$tid = md5($type . $aid . ':' . json_encode($assignments[$type]));
-						if (isset($this->passes[$tid])) {
+						if (isset($this->passes[$tid]))
+						{
 							$pass = $this->passes[$tid];
-						} else {
-							if ($assignments[$type]->assignment == 'all') {
+						}
+						else
+						{
+							if ($assignments[$type]->assignment == 'all')
+							{
 								$pass = 1;
-							} else if ($assignments[$type]->assignment == 'none') {
+							}
+							else if ($assignments[$type]->assignment == 'none')
+							{
 								$pass = 0;
-							} else {
+							}
+							else
+							{
 								$c = $assignments[$type]->maintype;
 								$f = $assignments[$type]->subtype;
-								if (!isset($this->classes[$c]) && JFile::exists(__DIR__ . '/assignments/' . strtolower($c) . '.php')) {
+								if (!isset($this->classes[$c]) && JFile::exists(__DIR__ . '/assignments/' . strtolower($c) . '.php'))
+								{
 									require_once __DIR__ . '/assignments/' . strtolower($c) . '.php';
 									$class = 'NNFrameworkAssignments' . $c;
 									$this->classes[$c] = new $class;
 								}
-								if (isset($this->classes[$c])) {
+								if (isset($this->classes[$c]))
+								{
 									$method = 'pass' . $f;
-									if (method_exists('NNFrameworkAssignments' . $c, $method)) {
+									if (method_exists('NNFrameworkAssignments' . $c, $method))
+									{
 										self::fixAssignment($assignments[$type], $assignments[$type]->id);
 										$pass = $this->classes[$c]->$method($this, $assignments[$type]->params, $assignments[$type]->selection, $assignments[$type]->assignment, $article);
 									}
@@ -266,7 +306,8 @@ class NNFrameworkAssignmentsHelper
 	{
 		$a->params = isset($a->params) ? $a->params : new stdClass();
 		$a->assignment = isset($a->assignment) ? $a->assignment : '';
-		if (!in_array($type, $this->nonarray)) {
+		if (!in_array($type, $this->nonarray))
+		{
 			$a->selection = isset($a->selection) ? $this->makeArray($a->selection) : array();
 		}
 	}
@@ -282,14 +323,20 @@ class NNFrameworkAssignmentsHelper
 		$selection = $this->makeArray($selection);
 
 		$pass = 0;
-		foreach ($values as $value) {
-			if ($caseinsensitive) {
-				if (in_array(strtolower($value), array_map('strtolower', $selection))) {
+		foreach ($values as $value)
+		{
+			if ($caseinsensitive)
+			{
+				if (in_array(strtolower($value), array_map('strtolower', $selection)))
+				{
 					$pass = 1;
 					break;
 				}
-			} else {
-				if (in_array($value, $selection)) {
+			}
+			else
+			{
+				if (in_array($value, $selection))
+				{
 					$pass = 1;
 					break;
 				}
@@ -301,15 +348,20 @@ class NNFrameworkAssignmentsHelper
 
 	function passPageTypes($option, $selection = array(), $assignment = 'all', $add = 0)
 	{
-		if ($this->params->option != $option) {
+		if ($this->params->option != $option)
+		{
 			return $this->pass(0, $assignment);
 		}
 
 		$type = $this->params->view;
-		if ($this->params->layout && $this->params->layout != 'default') {
-			if ($add) {
+		if ($this->params->layout && $this->params->layout != 'default')
+		{
+			if ($add)
+			{
 				$type .= '_' . $this->params->layout;
-			} else {
+			}
+			else
+			{
 				$type = $this->params->layout;
 			}
 		}
@@ -319,7 +371,8 @@ class NNFrameworkAssignmentsHelper
 
 	function getAssignmentState(&$assignment)
 	{
-		switch ($assignment) {
+		switch ($assignment)
+		{
 			case 1:
 			case 'include':
 				$assignment = 'include';
@@ -341,55 +394,88 @@ class NNFrameworkAssignmentsHelper
 
 	function getMenuItemParams($id = 0)
 	{
-		$this->q->clear()
-			->select('m.params')
-			->from('#__menu AS m')
-			->where('m.id = ' . (int) $id);
-		$this->db->setQuery($this->q);
-		$params = $this->db->loadResult();
+		$hash = 'MenuItemParams_' . $id;
 
-		$parameters = NNParameters::getInstance();
-		return $parameters->getParams($params);
+		if (!isset($this->cache[$hash]))
+		{
+			$this->q->clear()
+				->select('m.params')
+				->from('#__menu AS m')
+				->where('m.id = ' . (int) $id);
+			$this->db->setQuery($this->q);
+			$params = $this->db->loadResult();
+
+			$parameters = NNParameters::getInstance();
+			$this->cache[$hash] = $parameters->getParams($params);
+		}
+
+		return $this->cache[$hash];
 	}
 
 	function getParentIds($id = 0, $table = 'menu', $parent = 'parent_id', $child = 'id')
 	{
+		if (!$id)
+		{
+			return array();
+		}
+
+		$hash = 'ParentIds_' . $id . '_' . $table . '_' . $parent . '_' . $child;
+
 		$parent_ids = array();
-
-		if (!$id) {
-			return $parent_ids;
-		}
-
-		while ($id) {
-			$this->q->clear()
-				->select('t.' . $parent)
-				->from('#__' . $table . ' as t')
-				->where('t.' . $child . ' = ' . (int) $id);
-			$this->db->setQuery($this->q);
-			$id = $this->db->loadResult();
-			if ($id) {
-				$parent_ids[] = $id;
+		if (!isset($this->cache[$hash]))
+		{
+			while ($id)
+			{
+				$this->q->clear()
+					->select('t.' . $parent)
+					->from('#__' . $table . ' as t')
+					->where('t.' . $child . ' = ' . (int) $id);
+				$this->db->setQuery($this->q);
+				$id = $this->db->loadResult();
+				if ($id)
+				{
+					$parent_ids[] = $id;
+				}
 			}
+			$this->cache[$hash] = $parent_ids;
 		}
-		return $parent_ids;
+
+		return $this->cache[$hash];
 	}
 
 	function makeArray($array = '', $onlycommas = 0, $trim = 1)
 	{
-		if (!is_array($array)) {
-			if (!$onlycommas && !(strpos($array, '|') === false)) {
+		if (!is_array($array))
+		{
+			if (!$onlycommas && !(strpos($array, '|') === false))
+			{
 				$array = explode('|', $array);
-			} else {
+			}
+			else
+			{
 				$array = explode(',', $array);
 			}
 		}
-		if ($trim) {
-			if ($trim && !empty($array)) {
-				foreach ($array as $key => $val) {
-					$array[$key] = trim($val);
+
+		if (isset($array['0']) && is_array($array['0']))
+		{
+			$array = $array['0'];
+		}
+
+		if ($trim)
+		{
+			if ($trim && !empty($array))
+			{
+				foreach ($array as $k => $v)
+				{
+					if (is_string($v))
+					{
+						$array[$k] = trim($v);
+					}
 				}
 			}
 		}
+
 		return $array;
 	}
 
@@ -400,7 +486,8 @@ class NNFrameworkAssignmentsHelper
 		$assignments = array();
 
 		list($id, $name) = $this->setAssignmentParams($assignments, $params, 'menuitems');
-		if ($id) {
+		if ($id)
+		{
 			$assignments[$name]->params->inc_children = $params->{'assignto_' . $id . '_inc_children'};
 			$assignments[$name]->params->inc_noItemid = $params->{'assignto_' . $id . '_inc_noitemid'};
 		}
@@ -408,18 +495,21 @@ class NNFrameworkAssignmentsHelper
 		$this->setAssignmentParams($assignments, $params, 'homepage');
 
 		list($id, $name) = $this->setAssignmentParams($assignments, $params, 'datetime', 'date');
-		if ($id) {
+		if ($id)
+		{
 			$assignments[$name]->params->publish_up = $params->{'assignto_' . $id . '_publish_up'};
 			$assignments[$name]->params->publish_down = $params->{'assignto_' . $id . '_publish_down'};
 		}
 		list($id, $name) = $this->setAssignmentParams($assignments, $params, 'datetime', 'seasons');
-		if ($id) {
+		if ($id)
+		{
 			$assignments[$name]->params->hemisphere = $params->{'assignto_' . $id . '_hemisphere'};
 		}
 		$this->setAssignmentParams($assignments, $params, 'datetime', 'months');
 		$this->setAssignmentParams($assignments, $params, 'datetime', 'days');
 		list($id, $name) = $this->setAssignmentParams($assignments, $params, 'datetime', 'time');
-		if ($id) {
+		if ($id)
+		{
 			$assignments[$name]->params->publish_up = $params->{'assignto_' . $id . '_publish_up'};
 			$assignments[$name]->params->publish_down = $params->{'assignto_' . $id . '_publish_down'};
 		}
@@ -438,9 +528,11 @@ class NNFrameworkAssignmentsHelper
 		$this->setAssignmentParams($assignments, $params, 'templates');
 
 		list($id, $name) = $this->setAssignmentParams($assignments, $params, 'urls');
-		if ($id) {
+		if ($id)
+		{
 			$assignments[$name]->selection = $params->{'assignto_' . $id . '_selection'};
-			if (isset($params->{'assignto_' . $id . '_selection_sef'})) {
+			if (isset($params->{'assignto_' . $id . '_selection_sef'}))
+			{
 				$assignments[$name]->selection .= "\n" . $params->{'assignto_' . $id . '_selection_sef'};
 			}
 			$assignments[$name]->selection = trim(str_replace("\r", '', $assignments[$name]->selection));
@@ -450,12 +542,15 @@ class NNFrameworkAssignmentsHelper
 
 		$this->setAssignmentParams($assignments, $params, 'agents', 'os');
 		list($id, $name) = $this->setAssignmentParams($assignments, $params, 'agents', 'browsers');
-		if ($id) {
+		if ($id)
+		{
 			$selection = $assignments[$name]->selection;
-			if (isset($params->assignto_mobile_selection) && !empty($params->assignto_mobile_selection)) {
+			if (isset($params->assignto_mobile_selection) && !empty($params->assignto_mobile_selection))
+			{
 				$selection = array_merge($selection, $this->makeArray($params->assignto_mobile_selection));
 			}
-			if (isset($params->assignto_searchbots_selection) && !empty($params->assignto_searchbots_selection)) {
+			if (isset($params->assignto_searchbots_selection) && !empty($params->assignto_searchbots_selection))
+			{
 				$selection = array_merge($selection, $this->makeArray($params->assignto_searchbots_selection));
 			}
 			$assignments[$name]->selection = $selection;
@@ -465,7 +560,8 @@ class NNFrameworkAssignmentsHelper
 
 		$this->setAssignmentParams($assignments, $params, 'content', 'pagetypes', 1);
 		list($id, $name) = $this->setAssignmentParams($assignments, $params, 'content', 'cats');
-		if ($id) {
+		if ($id)
+		{
 			$incs = $this->makeArray($params->{'assignto_' . $id . '_inc'});
 			$assignments[$name]->params->inc_categories = in_array('inc_cats', $incs);
 			$assignments[$name]->params->inc_articles = in_array('inc_arts', $incs);
@@ -473,15 +569,18 @@ class NNFrameworkAssignmentsHelper
 			$assignments[$name]->params->inc_children = $params->{'assignto_' . $id . '_inc_children'};
 		}
 		list($id, $name) = $this->setAssignmentParams($assignments, $params, 'content', 'articles');
-		if ($id) {
+		if ($id)
+		{
 			$assignments[$name]->params->keywords = $params->{'assignto_' . $id . '_keywords'};
 		}
 
-		if ($this->has['flexicontent']) {
+		if ($this->has['flexicontent'])
+		{
 			$this->setAssignmentParams($assignments, $params, 'flexicontent', 'pagetypes', 1);
 
 			list($id, $name) = $this->setAssignmentParams($assignments, $params, 'flexicontent', 'tags', 1);
-			if ($id) {
+			if ($id)
+			{
 				$incs = $this->makeArray($params->{'assignto_' . $id . '_inc'});
 				$assignments[$name]->params->inc_tags = in_array('inc_tags', $incs);
 				$assignments[$name]->params->inc_items = in_array('inc_items', $incs);
@@ -490,11 +589,13 @@ class NNFrameworkAssignmentsHelper
 			$this->setAssignmentParams($assignments, $params, 'flexicontent', 'types', 1);
 		}
 
-		if ($this->has['k2']) {
+		if ($this->has['k2'])
+		{
 			$this->setAssignmentParams($assignments, $params, 'k2', 'pagetypes', 1);
 
 			list($id, $name) = $this->setAssignmentParams($assignments, $params, 'k2', 'cats', 1);
-			if ($id) {
+			if ($id)
+			{
 				$assignments[$name]->params->inc_children = $params->{'assignto_' . $id . '_inc_children'};
 				$incs = $this->makeArray($params->{'assignto_' . $id . '_inc'});
 				$assignments[$name]->params->inc_categories = in_array('inc_cats', $incs);
@@ -502,7 +603,8 @@ class NNFrameworkAssignmentsHelper
 			}
 
 			list($id, $name) = $this->setAssignmentParams($assignments, $params, 'k2', 'tags', 1);
-			if ($id) {
+			if ($id)
+			{
 				$incs = $this->makeArray($params->{'assignto_' . $id . '_inc'});
 				$assignments[$name]->params->inc_tags = in_array('inc_tags', $incs);
 				$assignments[$name]->params->inc_items = in_array('inc_items', $incs);
@@ -511,11 +613,13 @@ class NNFrameworkAssignmentsHelper
 			$this->setAssignmentParams($assignments, $params, 'k2', 'items', 1);
 		}
 
-		if ($this->has['zoo']) {
+		if ($this->has['zoo'])
+		{
 			$this->setAssignmentParams($assignments, $params, 'zoo', 'pagetypes', 1);
 
 			list($id, $name) = $this->setAssignmentParams($assignments, $params, 'zoo', 'cats', 1);
-			if ($id) {
+			if ($id)
+			{
 				$assignments[$name]->params->inc_children = $params->{'assignto_' . $id . '_inc_children'};
 				$incs = $this->makeArray($params->{'assignto_' . $id . '_inc'});
 				$assignments[$name]->params->inc_apps = in_array('inc_apps', $incs);
@@ -526,16 +630,19 @@ class NNFrameworkAssignmentsHelper
 			$this->setAssignmentParams($assignments, $params, 'zoo', 'items', 1);
 		}
 
-		if ($this->has['akeebasubs']) {
+		if ($this->has['akeebasubs'])
+		{
 			$this->setAssignmentParams($assignments, $params, 'akeebasubs', 'pagetypes', 1);
 			$this->setAssignmentParams($assignments, $params, 'akeebasubs', 'levels', 1);
 		}
 
-		if ($this->has['hikashop']) {
+		if ($this->has['hikashop'])
+		{
 			$this->setAssignmentParams($assignments, $params, 'hikashop', 'pagetypes', 1);
 
 			list($id, $name) = $this->setAssignmentParams($assignments, $params, 'hikashop', 'cats', 1);
-			if ($id) {
+			if ($id)
+			{
 				$assignments[$name]->params->inc_children = $params->{'assignto_' . $id . '_inc_children'};
 				$incs = $this->makeArray($params->{'assignto_' . $id . '_inc'});
 				$assignments[$name]->params->inc_categories = in_array('inc_cats', $incs);
@@ -545,11 +652,13 @@ class NNFrameworkAssignmentsHelper
 			$this->setAssignmentParams($assignments, $params, 'hikashop', 'products', 1);
 		}
 
-		if ($this->has['mijoshop']) {
+		if ($this->has['mijoshop'])
+		{
 			$this->setAssignmentParams($assignments, $params, 'mijoshop', 'pagetypes', 1);
 
 			list($id, $name) = $this->setAssignmentParams($assignments, $params, 'mijoshop', 'cats', 1);
-			if ($id) {
+			if ($id)
+			{
 				$assignments[$name]->params->inc_children = $params->{'assignto_' . $id . '_inc_children'};
 				$incs = $this->makeArray($params->{'assignto_' . $id . '_inc'});
 				$assignments[$name]->params->inc_categories = in_array('inc_cats', $incs);
@@ -559,11 +668,13 @@ class NNFrameworkAssignmentsHelper
 			$this->setAssignmentParams($assignments, $params, 'mijoshop', 'products', 1);
 		}
 
-		if ($this->has['redshop']) {
+		if ($this->has['redshop'])
+		{
 			$this->setAssignmentParams($assignments, $params, 'redshop', 'pagetypes', 1);
 
 			list($id, $name) = $this->setAssignmentParams($assignments, $params, 'redshop', 'cats', 1);
-			if ($id) {
+			if ($id)
+			{
 				$assignments[$name]->params->inc_children = $params->{'assignto_' . $id . '_inc_children'};
 				$incs = $this->makeArray($params->{'assignto_' . $id . '_inc'});
 				$assignments[$name]->params->inc_categories = in_array('inc_cats', $incs);
@@ -573,11 +684,13 @@ class NNFrameworkAssignmentsHelper
 			$this->setAssignmentParams($assignments, $params, 'redshop', 'products', 1);
 		}
 
-		if ($this->has['virtuemart']) {
+		if ($this->has['virtuemart'])
+		{
 			$this->setAssignmentParams($assignments, $params, 'virtuemart', 'pagetypes', 1);
 
 			list($id, $name) = $this->setAssignmentParams($assignments, $params, 'virtuemart', 'cats', 1);
-			if ($id) {
+			if ($id)
+			{
 				$assignments[$name]->params->inc_children = $params->{'assignto_' . $id . '_inc_children'};
 				$incs = $this->makeArray($params->{'assignto_' . $id . '_inc'});
 				$assignments[$name]->params->inc_categories = in_array('inc_cats', $incs);
@@ -596,23 +709,31 @@ class NNFrameworkAssignmentsHelper
 	{
 		$id = $maintype;
 		$name = $this->names[$maintype];
-		if ($subtype) {
+		if ($subtype)
+		{
 			$name .= '_' . $this->names[$subtype];
-			if ($usemain) {
+			if ($usemain)
+			{
 				$id .= $subtype;
-			} else {
+			}
+			else
+			{
 				$id = $subtype;
 			}
 		}
-		if (isset($params->{'assignto_' . $id}) && $params->{'assignto_' . $id}) {
+		if (isset($params->{'assignto_' . $id}) && $params->{'assignto_' . $id})
+		{
 			$assignments[$name] = new stdClass;
 			$assignments[$name]->assignment = $params->{'assignto_' . $id};
 			$assignments[$name]->selection = array();
 			$assignments[$name]->params = new stdClass;
-			if (isset($params->{'assignto_' . $id . '_selection'}) && !empty($params->{'assignto_' . $id . '_selection'})) {
+			if (isset($params->{'assignto_' . $id . '_selection'}) && !empty($params->{'assignto_' . $id . '_selection'}))
+			{
 				$assignments[$name]->selection = $params->{'assignto_' . $id . '_selection'};
 			}
-		} else {
+		}
+		else
+		{
 			$id = '';
 		}
 

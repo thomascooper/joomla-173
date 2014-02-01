@@ -3,7 +3,7 @@
  * NoNumber Framework Helper File: Assignments: K2
  *
  * @package         NoNumber Framework
- * @version         13.8.9
+ * @version         13.11.22
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -25,7 +25,8 @@ class NNFrameworkAssignmentsK2
 
 	function passCategories(&$parent, &$params, $selection = array(), $assignment = 'all', $article = 0)
 	{
-		if ($parent->params->option != 'com_k2') {
+		if ($parent->params->option != 'com_k2')
+		{
 			return $parent->pass(0, $assignment);
 		}
 
@@ -38,14 +39,19 @@ class NNFrameworkAssignmentsK2
 			|| ($params->inc_items && $parent->params->view == 'item')
 		);
 
-		if (!$pass) {
+		if (!$pass)
+		{
 			return $parent->pass(0, $assignment);
 		}
 
-		if ($article && isset($article->catid)) {
+		if ($article && isset($article->catid))
+		{
 			$cats = $article->catid;
-		} else {
-			switch ($parent->params->view) {
+		}
+		else
+		{
+			switch ($parent->params->view)
+			{
 				case 'itemlist':
 					$cats = $parent->params->id;
 					break;
@@ -65,10 +71,14 @@ class NNFrameworkAssignmentsK2
 
 		$pass = $parent->passSimple($cats, $selection, 'include');
 
-		if ($pass && $params->inc_children == 2) {
+		if ($pass && $params->inc_children == 2)
+		{
 			return $parent->pass(0, $assignment);
-		} else if (!$pass && $params->inc_children) {
-			foreach ($cats as $cat) {
+		}
+		else if (!$pass && $params->inc_children)
+		{
+			foreach ($cats as $cat)
+			{
 				$cats = array_merge($cats, self::getCatParentIds($parent, $cat));
 			}
 		}
@@ -78,7 +88,8 @@ class NNFrameworkAssignmentsK2
 
 	function passTags(&$parent, &$params, $selection = array(), $assignment = 'all')
 	{
-		if ($parent->params->option != 'com_k2') {
+		if ($parent->params->option != 'com_k2')
+		{
 			return $parent->pass(0, $assignment);
 		}
 
@@ -88,13 +99,17 @@ class NNFrameworkAssignmentsK2
 			|| ($params->inc_items && $parent->params->view == 'item')
 		);
 
-		if (!$pass) {
+		if (!$pass)
+		{
 			return $parent->pass(0, $assignment);
 		}
 
-		if ($params->inc_tags && $tag != '') {
+		if ($params->inc_tags && $tag != '')
+		{
 			$tags = array(trim(JFactory::getApplication()->input->getString('tag', '')));
-		} else {
+		}
+		else
+		{
 			$parent->q->clear()
 				->select('t.name')
 				->from('#__k2_tags_xref AS x')
@@ -110,7 +125,8 @@ class NNFrameworkAssignmentsK2
 
 	function passItems(&$parent, &$params, $selection = array(), $assignment = 'all')
 	{
-		if (!$parent->params->id || $parent->params->option != 'com_k2' || $parent->params->view != 'item') {
+		if (!$parent->params->id || $parent->params->option != 'com_k2' || $parent->params->view != 'item')
+		{
 			return $parent->pass(0, $assignment);
 		}
 

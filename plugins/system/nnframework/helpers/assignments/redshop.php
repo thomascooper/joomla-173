@@ -3,7 +3,7 @@
  * NoNumber Framework Helper File: Assignments: RedShop
  *
  * @package         NoNumber Framework
- * @version         13.8.9
+ * @version         13.11.22
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -32,7 +32,8 @@ class NNFrameworkAssignmentsRedShop
 
 	function passCategories(&$parent, &$params, $selection = array(), $assignment = 'all', $article = 0)
 	{
-		if ($parent->params->option != 'com_redshop') {
+		if ($parent->params->option != 'com_redshop')
+		{
 			return $parent->pass(0, $assignment);
 		}
 
@@ -43,14 +44,18 @@ class NNFrameworkAssignmentsRedShop
 			|| ($params->inc_items && $parent->params->view == 'product')
 		);
 
-		if (!$pass) {
+		if (!$pass)
+		{
 			return $parent->pass(0, $assignment);
 		}
 
 		$cats = array();
-		if ($parent->params->category_id) {
+		if ($parent->params->category_id)
+		{
 			$cats = $parent->params->category_id;
-		} else if ($parent->params->item_id) {
+		}
+		else if ($parent->params->item_id)
+		{
 			$parent->q->clear()
 				->select('x.category_id')
 				->from('#__redshop_product_category_xref AS x')
@@ -63,10 +68,14 @@ class NNFrameworkAssignmentsRedShop
 
 		$pass = $parent->passSimple($cats, $selection, 'include');
 
-		if ($pass && $params->inc_children == 2) {
+		if ($pass && $params->inc_children == 2)
+		{
 			return $parent->pass(0, $assignment);
-		} else if (!$pass && $params->inc_children) {
-			foreach ($cats as $cat) {
+		}
+		else if (!$pass && $params->inc_children)
+		{
+			foreach ($cats as $cat)
+			{
 				$cats = array_merge($cats, self::getCatParentIds($parent, $cat));
 			}
 		}
@@ -76,7 +85,8 @@ class NNFrameworkAssignmentsRedShop
 
 	function passProducts(&$parent, &$params, $selection = array(), $assignment = 'all')
 	{
-		if (!$parent->params->id || $parent->params->option != 'com_redshop' || $parent->params->view != 'product') {
+		if (!$parent->params->id || $parent->params->option != 'com_redshop' || $parent->params->view != 'product')
+		{
 			return $parent->pass(0, $assignment);
 		}
 

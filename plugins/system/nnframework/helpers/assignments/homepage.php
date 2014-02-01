@@ -3,7 +3,7 @@
  * NoNumber Framework Helper File: Assignments: HomePage
  *
  * @package         NoNumber Framework
- * @version         13.8.9
+ * @version         13.11.22
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -23,26 +23,40 @@ class NNFrameworkAssignmentsHomePage
 		$home = JFactory::getApplication()->getMenu('site')->getDefault(JFactory::getLanguage()->getTag());
 
 		// return if option or other set values do not match the homepage menu item values
-		if ($parent->params->option) {
+		if ($parent->params->option)
+		{
 			// check if option is different to home menu
-			if (!$home || !isset($home->query['option']) || $home->query['option'] != $parent->params->option) {
+			if (!$home || !isset($home->query['option']) || $home->query['option'] != $parent->params->option)
+			{
 				return $parent->pass(0, $assignment);
 			}
 
+			if (!$parent->params->option)
+			{
+				// set the view/task/layout in the menu item to empty if not set
+				$home->query['view'] = isset($home->query['view']) ? $home->query['view'] : '';
+				$home->query['task'] = isset($home->query['task']) ? $home->query['task'] : '';
+				$home->query['layout'] = isset($home->query['layout']) ? $home->query['layout'] : '';
+			}
+
 			// check set values against home menu query items
-			foreach ($home->query as $k => $v) {
+			foreach ($home->query as $k => $v)
+			{
 				if ((isset($parent->params->{$k}) && $parent->params->{$k} != $v)
 					|| (!isset($parent->params->{$k}) && JFactory::getApplication()->input->get($k) != $v)
-				) {
+				)
+				{
 					return $parent->pass(0, $assignment);
 				}
 			}
 
 			// check post values against home menu params
-			foreach ($home->params->toObject() as $k => $v) {
+			foreach ($home->params->toObject() as $k => $v)
+			{
 				if (($v && isset($_POST[$k]) && $_POST[$k] != $v)
 					|| (!$v && isset($_POST[$k]) && $_POST[$k])
-				) {
+				)
+				{
 					return $parent->pass(0, $assignment);
 				}
 			}
@@ -50,7 +64,8 @@ class NNFrameworkAssignmentsHomePage
 
 		$pass = $this->checkPass($home);
 
-		if (!$pass) {
+		if (!$pass)
+		{
 			$pass = $this->checkPass($home, 1);
 		}
 
@@ -63,27 +78,34 @@ class NNFrameworkAssignmentsHomePage
 
 		$uri = JURI::getInstance();
 
-		if ($addlang) {
+		if ($addlang)
+		{
 			$sef = $uri->getVar('lang');
-			if (empty($sef)) {
+			if (empty($sef))
+			{
 				$langs = array_keys(JLanguageHelper::getLanguages('sef'));
 				$path = JString::substr($uri->toString(array('scheme', 'user', 'pass', 'host', 'port', 'path')), JString::strlen($uri->base()));
 				$path = preg_replace('#^index\.php/?#', '', $path);
 				$parts = explode('/', $path);
 				$part = reset($parts);
-				if (in_array($part, $langs)) {
+				if (in_array($part, $langs))
+				{
 					$sef = $part;
 				}
 			}
-			if (empty($sef)) {
+			if (empty($sef))
+			{
 				return 0;
 			}
 		}
 
 		$query = $uri->toString(array('query'));
-		if (strpos($query, 'option=') === false && strpos($query, 'Itemid=') === false) {
+		if (strpos($query, 'option=') === false && strpos($query, 'Itemid=') === false)
+		{
 			$url = $uri->toString(array('host', 'path'));
-		} else {
+		}
+		else
+		{
 			$url = $uri->toString(array('host', 'path', 'query'));
 		}
 
@@ -113,11 +135,13 @@ class NNFrameworkAssignmentsHomePage
 		// remove trailing /
 		$root = trim(preg_replace('#/$#', '', $root));
 
-		if ($addlang) {
+		if ($addlang)
+		{
 			$root .= '/' . $sef;
 		}
 
-		if (!$pass) {
+		if (!$pass)
+		{
 			/* Pass urls:
 			 * [root]
 			 */
@@ -125,7 +149,8 @@ class NNFrameworkAssignmentsHomePage
 			$pass = preg_match($regex, $url);
 		}
 
-		if (!$pass) {
+		if (!$pass)
+		{
 			/* Pass urls:
 			 * [root]?Itemid=[menu-id]
 			 * [root]/?Itemid=[menu-id]
