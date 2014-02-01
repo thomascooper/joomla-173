@@ -3,7 +3,7 @@
  * NoNumber Framework Helper File: Assignments: AkeebaSubs
  *
  * @package         NoNumber Framework
- * @version         13.8.9
+ * @version         13.11.22
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -20,9 +20,11 @@ class NNFrameworkAssignmentsAkeebaSubs
 {
 	function init(&$parent)
 	{
-		if (!$parent->params->id && $parent->params->view == 'level') {
+		if (!$parent->params->id && $parent->params->view == 'level')
+		{
 			$slug = JFactory::getApplication()->input->getString('slug', '');
-			if ($slug) {
+			if ($slug)
+			{
 				$parent->q->clear()
 					->select('l.akeebasubs_level_id')
 					->from('#__akeebasubs_levels AS l')
@@ -40,7 +42,8 @@ class NNFrameworkAssignmentsAkeebaSubs
 
 	function passLevels(&$parent, &$params, $selection = array(), $assignment = 'all')
 	{
-		if (!$parent->params->id || $parent->params->option != 'com_akeebasubs' || $parent->params->view != 'level') {
+		if (!$parent->params->id || $parent->params->option != 'com_akeebasubs' || $parent->params->view != 'level')
+		{
 			return $parent->pass(0, $assignment);
 		}
 

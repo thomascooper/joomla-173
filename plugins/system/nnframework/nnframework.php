@@ -4,7 +4,7 @@
  * Does all the magic!
  *
  * @package         NoNumber Framework
- * @version         13.8.9
+ * @version         13.11.22
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -14,19 +14,23 @@
 
 defined('_JEXEC') or die;
 
-if (JFactory::getApplication()->isAdmin()) {
+if (JFactory::getApplication()->isAdmin())
+{
 	// load the NoNumber Framework language file
 	$lang = JFactory::getLanguage();
-	if ($lang->getTag() != 'en-GB') {
+	if ($lang->getTag() != 'en-GB')
+	{
 		// Loads English language file as fallback (for undefined stuff in other language file)
 		$lang->load('plg_system_nnframework', JPATH_ADMINISTRATOR, 'en-GB');
 	}
 	$lang->load('plg_system_nnframework', JPATH_ADMINISTRATOR, null, 1);
 }
 
-if (JFactory::getApplication()->isSite() && JFactory::getApplication()->input->get('option') == 'com_search') {
+if (JFactory::getApplication()->isSite() && JFactory::getApplication()->input->get('option') == 'com_search')
+{
 	$classes = get_declared_classes();
-	if (!in_array('SearchModelSearch', $classes) && !in_array('SearchModelSearch', $classes)) {
+	if (!in_array('SearchModelSearch', $classes) && !in_array('SearchModelSearch', $classes))
+	{
 		require_once JPATH_PLUGINS . '/system/nnframework/helpers/search.php';
 	}
 }
@@ -40,12 +44,14 @@ class plgSystemNNFramework extends JPlugin
 	{
 		parent::__construct($subject, $config);
 
-		if (JFactory::getApplication()->isSite()) {
+		if (JFactory::getApplication()->isSite())
+		{
 			return;
 		}
 
 		$template = JFactory::getApplication()->getTemplate();
-		if ($template == 'adminpraise3') {
+		if ($template == 'adminpraise3')
+		{
 			JHtml::stylesheet('nnframework/ap3.min.css', false, true);
 		}
 		if (in_array(
@@ -58,14 +64,16 @@ class plgSystemNNFramework extends JPlugin
 				'com_snippets',
 			)
 		)
-		) {
+		)
+		{
 			JFactory::getDocument()->addScriptDeclaration('var is_nn = 1;');
 		}
 	}
 
 	function onAfterRoute()
 	{
-		if (!JFactory::getApplication()->input->getInt('nn_qp', 0)) {
+		if (!JFactory::getApplication()->input->getInt('nn_qp', 0))
+		{
 			return;
 		}
 

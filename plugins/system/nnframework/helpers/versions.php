@@ -3,7 +3,7 @@
  * NoNumber Framework Helper File: VersionCheck
  *
  * @package         NoNumber Framework
- * @version         13.8.9
+ * @version         13.11.22
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -19,7 +19,8 @@ class NNVersions
 
 	public static function getInstance()
 	{
-		if (!self::$instance) {
+		if (!self::$instance)
+		{
 			self::$instance = new NoNumberVersions;
 		}
 
@@ -37,24 +38,29 @@ class NoNumberVersions
 {
 	function getMessage($element = '', $xml = '', $version = '', $type = 'system', $admin = 1)
 	{
-		if (!$element) {
+		if (!$element)
+		{
 			return '';
 		}
 
 		$alias = preg_replace('#[^a-z]#', '', strtolower($element));
 
-		if ($xml) {
+		if ($xml)
+		{
 			$xml = JApplicationHelper::parseXMLInstallFile(JPATH_SITE . '/' . $xml);
-			if ($xml && isset($xml['version'])) {
+			if ($xml && isset($xml['version']))
+			{
 				$version = $xml['version'];
 			}
 		}
 
-		if (!$version) {
+		if (!$version)
+		{
 			$version = self::getXMLVersion($element, $type, $admin);
 		}
 
-		if (!$version) {
+		if (!$version)
+		{
 			return '';
 		}
 
@@ -81,16 +87,15 @@ class NoNumberVersions
 
 		$version = str_replace(array('FREE', 'PRO'), '', $version);
 
-		$has_nnem = 0;
-		if (JFile::exists(JPATH_ADMINISTRATOR . '/components/com_' . $alias . '/' . $alias . '.xml')
-			|| JFile::exists(JPATH_ADMINISTRATOR . '/components/com_' . $alias . '/com_' . $alias . '.xml')
-		) {
-			$has_nnem = 1;
+		if (JFile::exists(JPATH_ADMINISTRATOR . '/components/com_nonumbermanager/nonumbermanager.xml')
+			|| JFile::exists(JPATH_ADMINISTRATOR . '/components/com_nonumbermanager/com_nonumbermanager.xml')
+		)
+		{
+			$url = 'index.php?option=com_nonumbermanager';
 		}
-
-		$url = 'http://www.nonumber.nl/' . $alias . '#download';
-		if ($has_nnem) {
-			$url = 'index.php?component=nonumbermanager';
+		else
+		{
+			$url = 'http://www.nonumber.nl/' . $alias . '#download';
 		}
 
 		$msg = '<strong>'
@@ -103,11 +108,9 @@ class NoNumberVersions
 			. JText::_('NN_ONLY_VISIBLE_TO_ADMIN')
 			. ')</em>';
 
-		$msg = '<div id="nonumber_version_' . $alias . '" style="display: none;border:3px solid #F0DC7E;background-color:#EFE7B8;color:#CC0000;margin:10px 0;padding: 2px 5px;">'
-			. html_entity_decode($msg, ENT_COMPAT, 'UTF-8')
-			. '</div>';
-
-		return $msg;
+		return '<div id="nonumber_version_' . $alias . '" style="display: none;border:3px solid #F0DC7E;background-color:#EFE7B8;color:#CC0000;margin:10px 0;padding: 2px 5px;">'
+		. html_entity_decode($msg, ENT_COMPAT, 'UTF-8')
+		. '</div>';
 	}
 
 	function getCopyright($name, $version, $jedid = 0, $element = 'nnframework', $type = 'system', $copyright = 1, $admin = 1)
@@ -116,23 +119,30 @@ class NoNumberVersions
 		$html[] = '<p style="text-align:center;">';
 		$html[] = JText::_($name);
 
-		if (!$version) {
+		if (!$version)
+		{
 			$version = self::getXMLVersion($element, $type, $admin);
 		}
 
-		if ($version) {
-			if (!(strpos($version, 'PRO') === false)) {
+		if ($version)
+		{
+			if (!(strpos($version, 'PRO') === false))
+			{
 				$version = str_replace('PRO', '', $version);
 				$version .= ' <small>[PRO]</small>';
-			} else if (!(strpos($version, 'FREE') === false)) {
+			}
+			else if (!(strpos($version, 'FREE') === false))
+			{
 				$version = str_replace('FREE', '', $version);
 				$version .= ' <small>[FREE]</small>';
 			}
 			$html[] = ' v' . $version;
 		}
-		if ($copyright) {
+		if ($copyright)
+		{
 			$html[] = '<br />' . JText::_('COPYRIGHT') . ' &copy; ' . date('Y') . ' NoNumber ' . JText::_('ALL_RIGHTS_RESERVED');
-			if ($jedid) {
+			if ($jedid)
+			{
 				$html[] = '<br />' . html_entity_decode(JText::sprintf('NN_RATE', $jedid));
 			}
 		}
@@ -143,25 +153,32 @@ class NoNumberVersions
 
 	static function getXMLVersion($element = 'nnframework', $type = 'system', $admin = 1, $urlformat = 0)
 	{
-		if (!$element) {
+		if (!$element)
+		{
 			$element = 'nnframework';
 		}
-		if (!$type) {
+		if (!$type)
+		{
 			$type = 'system';
 		}
-		if (!strlen($admin)) {
+		if (!strlen($admin))
+		{
 			$admin = 1;
 		}
 
-		switch ($type) {
+		switch ($type)
+		{
 			case 'component':
 			case 'components':
 			case 'module':
 			case 'modules':
 				$type .= in_array($type, array('component', 'module')) ? 's' : '';
-				if ($admin) {
+				if ($admin)
+				{
 					$path = JPATH_ADMINISTRATOR;
-				} else {
+				}
+				else
+				{
 					$path = JPATH_SITE;
 				}
 				$path .= '/' . $type . '/' . ($type == 'modules' ? 'mod_' : 'com_') . $element . '/' . ($type == 'modules' ? 'mod_' : '') . $element . '.xml';
@@ -173,9 +190,11 @@ class NoNumberVersions
 
 		$version = '';
 		$xml = JApplicationHelper::parseXMLInstallFile($path);
-		if ($xml && isset($xml['version'])) {
+		if ($xml && isset($xml['version']))
+		{
 			$version = trim($xml['version']);
-			if ($urlformat) {
+			if ($urlformat)
+			{
 				$version = '?v=' . strtolower(str_replace(array('FREE', 'PRO'), array('f', 'p'), $version));
 			}
 		}
@@ -186,14 +205,17 @@ class NoNumberVersions
 	// old, no longer used
 	function getVersion($name, $xml)
 	{
-		if (!$name || !$xml) {
+		if (!$name || !$xml)
+		{
 			return '';
 		}
 
 		$version = '';
-		if ($xml) {
+		if ($xml)
+		{
 			$xml = JApplicationHelper::parseXMLInstallFile(JPATH_SITE . '/' . $xml);
-			if ($xml && isset($xml['version'])) {
+			if ($xml && isset($xml['version']))
+			{
 				$version = $xml['version'];
 			}
 		}

@@ -4,7 +4,7 @@
  * Displays a multiselectbox of available MijoShop categories / products
  *
  * @package         NoNumber Framework
- * @version         13.8.9
+ * @version         13.11.22
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -21,26 +21,29 @@ require_once JPATH_PLUGINS . '/system/nnframework/helpers/text.php';
 class JFormFieldNN_MijoShop extends JFormField
 {
 	public $type = 'MijoShop';
+	private $params = null;
+	private $db = null;
 	public $store_id = 0;
 	public $language_id = 1;
+	private $max_list_count = 0;
 
 	protected function getInput()
 	{
-		if (!NNFrameworkFunctions::extensionInstalled('mijoshop')) {
+		if (!NNFrameworkFunctions::extensionInstalled('mijoshop'))
+		{
 			return '<fieldset class="radio"><label class="nn_label nn_label_error">' . JText::_('ERROR') . ': ' . JText::sprintf('NN_FILES_NOT_FOUND', JText::_('NN_MIJOSHOP')) . '</label></fieldset>';
 		}
 
 		$this->params = $this->element->attributes();
-
-		$group = $this->def('group', 'categories');
-
 		$this->db = JFactory::getDBO();
+
+		$group = $this->get('group', 'categories');
+
 		$tables = $this->db->getTableList();
-		if (!in_array($this->db->getPrefix() . 'mijoshop_' . ($group == 'products' ? 'product' : 'category'), $tables)) {
+		if (!in_array($this->db->getPrefix() . 'mijoshop_' . ($group == 'products' ? 'product' : 'category'), $tables))
+		{
 			return '<fieldset class="radio"><label class="nn_label nn_label_error">' . JText::_('ERROR') . ': ' . JText::sprintf('NN_TABLE_NOT_FOUND', JText::_('NN_MIJOSHOP')) . '</label></fieldset>';
 		}
-
-		$this->params = $this->element->attributes();
 
 		$parameters = NNParameters::getInstance();
 		$params = $parameters->getPluginParams('nnframework');
@@ -50,14 +53,15 @@ class JFormFieldNN_MijoShop extends JFormField
 		$this->store_id = (int) MijoShop::get('opencart')->get('config')->get('config_store_id');
 		$this->language_id = (int) MijoShop::get('opencart')->get('config')->get('config_language_id');
 
-		if (!is_array($this->value)) {
+		if (!is_array($this->value))
+		{
 			$this->value = explode(',', $this->value);
 		}
 
 		$options = $this->{'get' . $group}();
 
-		$size = (int) $this->def('size');
-		$multiple = $this->def('multiple');
+		$size = (int) $this->get('size');
+		$multiple = $this->get('multiple');
 
 		require_once JPATH_PLUGINS . '/system/nnframework/helpers/html.php';
 		return nnHtml::selectlist($options, $this->name, $this->value, $this->id, $size, $multiple);
@@ -76,11 +80,12 @@ class JFormFieldNN_MijoShop extends JFormField
 		$this->db->setQuery($query);
 		$total = $this->db->loadResult();
 
-		if ($total > $this->max_list_count) {
+		if ($total > $this->max_list_count)
+		{
 			return -1;
 		}
 
-		$show_ignore = $this->def('show_ignore');
+		$show_ignore = $this->get('show_ignore');
 
 		$query->clear()
 			->select('c.category_id AS id, c.parent_id, cd.name AS title, c.status AS published')
@@ -99,7 +104,8 @@ class JFormFieldNN_MijoShop extends JFormField
 		$children = array();
 
 		// first pass - collect children
-		foreach ($items as $v) {
+		foreach ($items as $v)
+		{
 			$pt = $v->parent_id;
 			$list = @$children[$pt] ? $children[$pt] : array();
 			array_push($list, $v);
@@ -111,14 +117,17 @@ class JFormFieldNN_MijoShop extends JFormField
 
 		// assemble items to the array
 		$options = array();
-		if ($show_ignore) {
-			if (in_array('-1', $this->value)) {
+		if ($show_ignore)
+		{
+			if (in_array('-1', $this->value))
+			{
 				$this->value = array('-1');
 			}
 			$options[] = JHtml::_('select.option', '-1', '- ' . JText::_('NN_IGNORE') . ' -', 'value', 'text', 0);
 			$options[] = JHtml::_('select.option', '-', '&nbsp;', 'value', 'text', 1);
 		}
-		foreach ($list as $item) {
+		foreach ($list as $item)
+		{
 			$item->treename = NNText::prepareSelectItem($item->treename, $item->published, '', 1);
 			$options[] = JHtml::_('select.option', $item->id, $item->treename, 'value', 'text', 0);
 		}
@@ -136,7 +145,8 @@ class JFormFieldNN_MijoShop extends JFormField
 		$this->db->setQuery($query);
 		$total = $this->db->loadResult();
 
-		if ($total > $this->max_list_count) {
+		if ($total > $this->max_list_count)
+		{
 			return -1;
 		}
 
@@ -160,7 +170,8 @@ class JFormFieldNN_MijoShop extends JFormField
 
 		// assemble items to the array
 		$options = array();
-		foreach ($list as $item) {
+		foreach ($list as $item)
+		{
 			$item->name = $item->name . ' [' . $item->id . ']' . ($item->cat ? ' [' . $item->cat . ']' : '');
 			$item->name = NNText::prepareSelectItem($item->name, $item->published);
 			$options[] = JHtml::_('select.option', $item->id, $item->name, 'value', 'text', 0);
@@ -169,7 +180,7 @@ class JFormFieldNN_MijoShop extends JFormField
 		return $options;
 	}
 
-	private function def($val, $default = '')
+	private function get($val, $default = '')
 	{
 		return (isset($this->params[$val]) && (string) $this->params[$val] != '') ? (string) $this->params[$val] : $default;
 	}

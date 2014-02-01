@@ -3,7 +3,7 @@
  * NoNumber Framework Helper File: Licenses
  *
  * @package         NoNumber Framework
- * @version         13.8.9
+ * @version         13.11.22
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -19,7 +19,8 @@ class NNLicenses
 
 	public static function getInstance()
 	{
-		if (!self::$instance) {
+		if (!self::$instance)
+		{
 			self::$instance = new NoNumberLicenses;
 		}
 
@@ -37,19 +38,22 @@ class NoNumberLicenses
 {
 	function getMessage($name = '')
 	{
-		if (!$name) {
+		if (!$name)
+		{
 			return '';
 		}
 
 		$alias = preg_replace('#[^a-z]#', '', strtolower($name));
 		$type = $this->getVersionType($alias);
 
-		if ($type == 'pro') {
+		if ($type == 'pro')
+		{
 			return '';
 		}
 
 		$text = html_entity_decode(JText::sprintf('NN_USING_FREE_VERSION', JText::_($name)), ENT_COMPAT, 'UTF-8');
-		if (!(strpos($text, '. ') === false)) {
+		if (!(strpos($text, '. ') === false))
+		{
 			$text = explode('. ', $text);
 			$text = '<span style="white-space:nowrap;">' . implode('.</span> <span style="white-space:nowrap;">', $text) . '</span>';
 		}
@@ -75,7 +79,8 @@ class NoNumberLicenses
 	{
 		jimport('joomla.filesystem.file');
 
-		switch ($element) {
+		switch ($element)
+		{
 			case 'advancedmodulemanager':
 				$element = 'advancedmodules';
 				break;
@@ -90,67 +95,100 @@ class NoNumberLicenses
 		$xml = '';
 
 		// Components
-		if (!$file) {
-			if (JFile::exists(JPATH_ADMINISTRATOR . '/components/com_' . $element . '/' . $element . '.xml')) {
+		if (!$file)
+		{
+			if (JFile::exists(JPATH_ADMINISTRATOR . '/components/com_' . $element . '/' . $element . '.xml'))
+			{
 				$xml = JPATH_ADMINISTRATOR . '/components/com_' . $element . '/' . $element . '.xml';
-			} else if (JFile::exists(JPATH_SITE . '/components/com_' . $element . '/' . $element . '.xml')) {
+			}
+			else if (JFile::exists(JPATH_SITE . '/components/com_' . $element . '/' . $element . '.xml'))
+			{
 				$xml = JPATH_SITE . '/components/com_' . $element . '/' . $element . '.xml';
-			} else if (JFile::exists(JPATH_ADMINISTRATOR . '/components/com_' . $element . '/com_' . $element . '.xml')) {
+			}
+			else if (JFile::exists(JPATH_ADMINISTRATOR . '/components/com_' . $element . '/com_' . $element . '.xml'))
+			{
 				$xml = JPATH_ADMINISTRATOR . '/components/com_' . $element . '/com_' . $element . '.xml';
-			} else if (JFile::exists(JPATH_SITE . '/components/com_' . $element . '/com_' . $element . '.xml')) {
+			}
+			else if (JFile::exists(JPATH_SITE . '/components/com_' . $element . '/com_' . $element . '.xml'))
+			{
 				$xml = JPATH_SITE . '/components/com_' . $element . '/com_' . $element . '.xml';
 			}
-			if ($xml) {
+			if ($xml)
+			{
 				$file = $xml;
 			}
 		}
 
 		// System Plugins
-		if (!$file) {
-			if (JFile::exists(JPATH_PLUGINS . '/system/' . $element . '/' . $element . '.xml')) {
+		if (!$file)
+		{
+			if (JFile::exists(JPATH_PLUGINS . '/system/' . $element . '/' . $element . '.xml'))
+			{
 				$xml = JPATH_PLUGINS . '/system/' . $element . '/' . $element . '.xml';
-			} else if (JFile::exists(JPATH_PLUGINS . '/system/' . $element . '.xml')) {
+			}
+			else if (JFile::exists(JPATH_PLUGINS . '/system/' . $element . '.xml'))
+			{
 				$xml = JPATH_PLUGINS . '/system/' . $element . '.xml';
 			}
-			if ($xml) {
+			if ($xml)
+			{
 				$file = $xml;
 			}
 		}
 
 		// Editor Button Plugins
-		if (!$file) {
-			if (JFile::exists(JPATH_PLUGINS . '/editors-xtd/' . $element . '/' . $element . '.xml')) {
+		if (!$file)
+		{
+			if (JFile::exists(JPATH_PLUGINS . '/editors-xtd/' . $element . '/' . $element . '.xml'))
+			{
 				$xml = JPATH_PLUGINS . '/editors-xtd/' . $element . '/' . $element . '.xml';
-			} else if (JFile::exists(JPATH_PLUGINS . '/editors-xtd/' . $element . '.xml')) {
+			}
+			else if (JFile::exists(JPATH_PLUGINS . '/editors-xtd/' . $element . '.xml'))
+			{
 				$xml = JPATH_PLUGINS . '/editors-xtd/' . $element . '.xml';
 			}
-			if ($xml) {
+			if ($xml)
+			{
 				$file = $xml;
 			}
 		}
 		// Modules
-		if (!$file) {
-			if (JFile::exists(JPATH_ADMINISTRATOR . '/modules/mod_' . $element . '/' . $element . '.xml')) {
+		if (!$file)
+		{
+			if (JFile::exists(JPATH_ADMINISTRATOR . '/modules/mod_' . $element . '/' . $element . '.xml'))
+			{
 				$xml = JPATH_ADMINISTRATOR . '/modules/mod_' . $element . '/' . $element . '.xml';
-			} else if (JFile::exists(JPATH_SITE . '/modules/mod_' . $element . '/' . $element . '.xml')) {
+			}
+			else if (JFile::exists(JPATH_SITE . '/modules/mod_' . $element . '/' . $element . '.xml'))
+			{
 				$xml = JPATH_SITE . '/modules/mod_' . $element . '/' . $element . '.xml';
-			} else if (JFile::exists(JPATH_ADMINISTRATOR . '/modules/mod_' . $element . '/mod_' . $element . '.xml')) {
+			}
+			else if (JFile::exists(JPATH_ADMINISTRATOR . '/modules/mod_' . $element . '/mod_' . $element . '.xml'))
+			{
 				$xml = JPATH_ADMINISTRATOR . '/modules/mod_' . $element . '/mod_' . $element . '.xml';
-			} else if (JFile::exists(JPATH_SITE . '/modules/mod_' . $element . '/mod_' . $element . '.xml')) {
+			}
+			else if (JFile::exists(JPATH_SITE . '/modules/mod_' . $element . '/mod_' . $element . '.xml'))
+			{
 				$xml = JPATH_SITE . '/modules/mod_' . $element . '/mod_' . $element . '.xml';
 			}
-			if ($xml) {
+			if ($xml)
+			{
 				$file = $xml;
 			}
 		}
 
 		$type = 'old';
-		if ($file) {
+		if ($file)
+		{
 			$xml = JApplicationHelper::parseXMLInstallFile($file);
-			if ($xml && isset($xml['version'])) {
-				if (!(stripos($xml['version'], 'FREE') === false)) {
+			if ($xml && isset($xml['version']))
+			{
+				if (!(stripos($xml['version'], 'FREE') === false))
+				{
 					$type = 'free';
-				} else if (!(stripos($xml['version'], 'PRO') === false)) {
+				}
+				else if (!(stripos($xml['version'], 'PRO') === false))
+				{
 					$type = 'pro';
 				}
 			}

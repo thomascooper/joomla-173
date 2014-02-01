@@ -2,7 +2,7 @@
  * Main JavaScript file
  *
  * @package         NoNumber Framework
- * @version         13.8.9
+ * @version         13.11.22
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -542,8 +542,8 @@ if (typeof( window['nnScripts'] ) == "undefined") {
 
 	function NNFrameworkChangeView(val)
 	{
-		document.getElementById('jform_view_state' + val).click();
-		document.getElementById('view_state_div').removeClass('view_state_0').removeClass('view_state_1').removeClass('view_state_2').addClass('view_state_' + val);
+		document.getElement('#jform_view_state' + val).click();
+		document.getElement('#view_state_div').removeClass('view_state_0').removeClass('view_state_1').removeClass('view_state_2').addClass('view_state_' + val);
 	}
 
 	function NNFrameworkCheckAll(checkbox, classname)

@@ -3,7 +3,7 @@
  * NoNumber Framework Helper File: Assignments: MijoShop
  *
  * @package         NoNumber Framework
- * @version         13.8.9
+ * @version         13.11.22
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -23,7 +23,8 @@ class NNFrameworkAssignmentsMijoShop
 		$input = JFactory::getApplication()->input;
 
 		$category_id = $input->getCmd('path', 0);
-		if (strpos($category_id, '_')) {
+		if (strpos($category_id, '_'))
+		{
 			$category_id = end(explode('_', $category_id));
 		}
 
@@ -32,9 +33,11 @@ class NNFrameworkAssignmentsMijoShop
 		$parent->params->id = ($parent->params->item_id) ? $parent->params->item_id : $parent->params->category_id;
 
 		$view = $input->getCmd('view', '');
-		if (empty($view)) {
+		if (empty($view))
+		{
 			$mijoshop = JPATH_ROOT . '/components/com_mijoshop/mijoshop/mijoshop.php';
-			if (!file_exists($mijoshop)) {
+			if (!file_exists($mijoshop))
+			{
 				return;
 			}
 
@@ -54,7 +57,8 @@ class NNFrameworkAssignmentsMijoShop
 
 	function passCategories(&$parent, &$params, $selection = array(), $assignment = 'all', $article = 0)
 	{
-		if ($parent->params->option != 'com_mijoshop') {
+		if ($parent->params->option != 'com_mijoshop')
+		{
 			return $parent->pass(0, $assignment);
 		}
 
@@ -65,14 +69,18 @@ class NNFrameworkAssignmentsMijoShop
 			|| ($params->inc_items && $parent->params->view == 'product')
 		);
 
-		if (!$pass) {
+		if (!$pass)
+		{
 			return $parent->pass(0, $assignment);
 		}
 
 		$cats = array();
-		if ($parent->params->category_id) {
+		if ($parent->params->category_id)
+		{
 			$cats = $parent->params->category_id;
-		} else if ($parent->params->item_id) {
+		}
+		else if ($parent->params->item_id)
+		{
 			$parent->q->clear()
 				->select('c.category_id')
 				->from('#__mijoshop_product_to_category AS c')
@@ -85,10 +93,14 @@ class NNFrameworkAssignmentsMijoShop
 
 		$pass = $parent->passSimple($cats, $selection, 'include');
 
-		if ($pass && $params->inc_children == 2) {
+		if ($pass && $params->inc_children == 2)
+		{
 			return $parent->pass(0, $assignment);
-		} else if (!$pass && $params->inc_children) {
-			foreach ($cats as $cat) {
+		}
+		else if (!$pass && $params->inc_children)
+		{
+			foreach ($cats as $cat)
+			{
 				$cats = array_merge($cats, self::getCatParentIds($parent, $cat));
 			}
 		}
@@ -98,7 +110,8 @@ class NNFrameworkAssignmentsMijoShop
 
 	function passProducts(&$parent, &$params, $selection = array(), $assignment = 'all')
 	{
-		if (!$parent->params->id || $parent->params->option != 'com_mijoshop' || $parent->params->view != 'product') {
+		if (!$parent->params->id || $parent->params->option != 'com_mijoshop' || $parent->params->view != 'product')
+		{
 			return $parent->pass(0, $assignment);
 		}
 

@@ -3,7 +3,7 @@
  * NoNumber Framework Helper File: Assignments: Content
  *
  * @package         NoNumber Framework
- * @version         13.8.9
+ * @version         13.11.22
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -21,12 +21,16 @@ class NNFrameworkAssignmentsContent
 	function passPageTypes(&$parent, &$params, $selection = array(), $assignment = 'all')
 	{
 		$components = array('com_content', 'com_contentsubmit');
-		if (!in_array($parent->params->option, $components)) {
+		if (!in_array($parent->params->option, $components))
+		{
 			return $parent->pass(0, $assignment);
 		}
-		if ($parent->params->view == 'category' && $parent->params->layout == 'blog') {
+		if ($parent->params->view == 'category' && $parent->params->layout == 'blog')
+		{
 			$view = 'categoryblog';
-		} else {
+		}
+		else
+		{
 			$view = $parent->params->view;
 		}
 
@@ -37,13 +41,15 @@ class NNFrameworkAssignmentsContent
 	{
 		// components that use the com_content secs/cats
 		$components = array('com_content', 'com_flexicontent', 'com_contentsubmit');
-		if (!in_array($parent->params->option, $components)) {
+		if (!in_array($parent->params->option, $components))
+		{
 			return $parent->pass(0, $assignment);
 		}
 
 		$selection = $parent->makeArray($selection);
 
-		if (empty($selection)) {
+		if (empty($selection))
+		{
 			return $parent->pass(0, $assignment);
 		}
 
@@ -60,23 +66,34 @@ class NNFrameworkAssignmentsContent
 			|| ($params->inc_others && !($is_content && ($is_category || $is_item)))
 		);
 
-		if ($inc) {
-			if ($parent->params->option == 'com_contentsubmit') {
+		if ($inc)
+		{
+			if ($parent->params->option == 'com_contentsubmit')
+			{
 				// Content Submit
 				$contentsubmit_params = new ContentsubmitModelArticle;
-				if (in_array($contentsubmit_params->_id, $selection)) {
+				if (in_array($contentsubmit_params->_id, $selection))
+				{
 					$pass = 1;
 				}
-			} else {
-				if ($params->inc_others && !($is_content && ($is_category || $is_item))) {
-					if ($article) {
-						if (!isset($article->id)) {
-							if (isset($article->slug)) {
+			}
+			else
+			{
+				if ($params->inc_others && !($is_content && ($is_category || $is_item)))
+				{
+					if ($article)
+					{
+						if (!isset($article->id))
+						{
+							if (isset($article->slug))
+							{
 								$article->id = (int) $article->slug;
 							}
 						}
-						if (!isset($article->catid)) {
-							if (isset($article->catslug)) {
+						if (!isset($article->catid))
+						{
+							if (isset($article->catslug))
+							{
 								$article->catid = (int) $article->catslug;
 							}
 						}
@@ -85,34 +102,49 @@ class NNFrameworkAssignmentsContent
 					}
 				}
 
-				if ($is_category) {
+				if ($is_category)
+				{
 					$catid = $parent->params->id;
-				} else {
-					if (!$article && $parent->params->id) {
+				}
+				else
+				{
+					if (!$article && $parent->params->id)
+					{
 						$article = JTable::getInstance('content');
 						$article->load($parent->params->id);
 					}
 					$catid = JFactory::getApplication()->input->getInt('catid', JFactory::getApplication()->getUserState('com_content.articles.filter.category_id'));
-					if ($article && $article->catid) {
+					if ($article && $article->catid)
+					{
 						$catid = $article->catid;
-					} else if ($parent->params->view == 'featured') {
+					}
+					else if ($parent->params->view == 'featured')
+					{
 						$menuparams = $parent->getMenuItemParams($parent->params->Itemid);
-						if (isset($menuparams->featured_categories)) {
+						if (isset($menuparams->featured_categories))
+						{
 							$catid = $menuparams->featured_categories;
 						}
 					}
 				}
 				$catids = is_array($catid) ? $catid : array($catid);
-				foreach($catids as $catid) {
-					if ($catid) {
+				foreach ($catids as $catid)
+				{
+					if ($catid)
+					{
 						$pass = in_array($catid, $selection);
-						if ($pass && $params->inc_children == 2) {
+						if ($pass && $params->inc_children == 2)
+						{
 							$pass = 0;
-						} else if (!$pass && $params->inc_children) {
+						}
+						else if (!$pass && $params->inc_children)
+						{
 							$parentids = self::getParentIds($parent, $catid);
 							$parentids = array_diff($parentids, array('1'));
-							foreach ($parentids as $id) {
-								if (in_array($id, $selection)) {
+							foreach ($parentids as $id)
+							{
+								if (in_array($id, $selection))
+								{
 									$pass = 1;
 									break;
 								}
@@ -133,45 +165,60 @@ class NNFrameworkAssignmentsContent
 			|| !(($parent->params->option == 'com_content' && $parent->params->view == 'article')
 				|| ($parent->params->option == 'com_flexicontent' && $parent->params->view == 'item')
 			)
-		) {
+		)
+		{
 			return $parent->pass(0, $assignment);
 		}
 
 		$pass = 0;
 
-		if ($selection && !is_array($selection)) {
-			if (!(strpos($selection, '|') === false)) {
+		if ($selection && !is_array($selection))
+		{
+			if (!(strpos($selection, '|') === false))
+			{
 				$selection = explode('|', $selection);
-			} else {
+			}
+			else
+			{
 				$selection = explode(',', $selection);
 			}
 		}
-		if (!empty($selection)) {
+		if (!empty($selection))
+		{
 			$pass = in_array($parent->params->id, $selection);
 		}
 
-		if ($params->keywords && !is_array($params->keywords)) {
+		if ($params->keywords && !is_array($params->keywords))
+		{
 			$params->keywords = explode(',', $params->keywords);
 		}
-		if (!empty($params->keywords)) {
+		if (!empty($params->keywords))
+		{
 			$pass = 0;
-			if (!$article) {
+			if (!$article)
+			{
 				require_once JPATH_SITE . '/components/com_content/models/article.php';
 				$model = JModel::getInstance('article', 'contentModel');
 				$article = $model->getItem($parent->params->id);
 			}
-			if (isset($article->metakey) && $article->metakey) {
+			if (isset($article->metakey) && $article->metakey)
+			{
 				$keywords = explode(',', $article->metakey);
-				foreach ($keywords as $keyword) {
-					if ($keyword && in_array(trim($keyword), $params->keywords)) {
+				foreach ($keywords as $keyword)
+				{
+					if ($keyword && in_array(trim($keyword), $params->keywords))
+					{
 						$pass = 1;
 						break;
 					}
 				}
-				if (!$pass) {
+				if (!$pass)
+				{
 					$keywords = explode(',', str_replace(' ', ',', $article->metakey));
-					foreach ($keywords as $keyword) {
-						if ($keyword && in_array(trim($keyword), $params->keywords)) {
+					foreach ($keywords as $keyword)
+					{
+						if ($keyword && in_array(trim($keyword), $params->keywords))
+						{
 							$pass = 1;
 							break;
 						}

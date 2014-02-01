@@ -4,7 +4,7 @@
  * Displays plain text as element
  *
  * @package         NoNumber Framework
- * @version         13.8.9
+ * @version         13.11.22
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -22,45 +22,49 @@ require_once JPATH_PLUGINS . '/system/nnframework/helpers/text.php';
 class JFormFieldNN_PlainText extends JFormField
 {
 	public $type = 'PlainText';
+	private $params = null;
 
 	protected function getLabel()
 	{
 		JHtml::stylesheet('nnframework/style.min.css', false, true);
 
 		$this->params = $this->element->attributes();
-		$label = $this->prepareText($this->def('label'));
+		$label = $this->prepareText($this->get('label'));
 
-		$description = (trim($this->value) != '') ? trim($this->value) : $this->def('description');
+		$description = (trim($this->value) != '') ? trim($this->value) : $this->get('description');
 		$description = $this->prepareText($description);
 
 		$div = '';
-		if (!$label && !$description) {
+		if (!$label && !$description)
+		{
 			return '';
 		}
 
-		if (!$label) {
+		if (!$label)
+		{
 			return '<label class="nn_label">' . $description . '</label>';
 		}
 
-		if (!$description) {
+		if (!$description)
+		{
 			return '<label class="nn_label">' . $label . '</label>';
 		}
 
-		$description = $this->prepareText($this->def('description'));
+		$description = $this->prepareText($this->get('description'));
 
 		return '<label class="hasTip" title="' . $label . '::' . str_replace('"', '&quot;', $description) . '">'
-			. $label . '</label>';
+		. $label . '</label>';
 	}
 
 	protected function getInput()
 	{
-		$this->params = $this->element->attributes();
-		$label = $this->prepareText($this->def('label'));
+		$label = $this->prepareText($this->get('label'));
 
-		$description = (trim($this->value) != '') ? trim($this->value) : $this->def('description');
+		$description = (trim($this->value) != '') ? trim($this->value) : $this->get('description');
 		$description = $this->prepareText($description);
 
-		if (!$label || !$description) {
+		if (!$label || !$description)
+		{
 			return '';
 		}
 
@@ -69,16 +73,17 @@ class JFormFieldNN_PlainText extends JFormField
 
 	private function prepareText($str = '')
 	{
-		if ($str == '') {
+		if ($str == '')
+		{
 			return '';
 		}
 
 		// variables
-		$v1 = JText::_($this->def('var1'));
-		$v2 = JText::_($this->def('var2'));
-		$v3 = JText::_($this->def('var3'));
-		$v4 = JText::_($this->def('var4'));
-		$v5 = JText::_($this->def('var5'));
+		$v1 = JText::_($this->get('var1'));
+		$v2 = JText::_($this->get('var2'));
+		$v3 = JText::_($this->get('var3'));
+		$v4 = JText::_($this->get('var4'));
+		$v5 = JText::_($this->get('var5'));
 
 		$str = JText::sprintf(JText::_($str), $v1, $v2, $v3, $v4, $v5);
 		$str = trim(NNText::html_entity_decoder($str));
@@ -88,7 +93,7 @@ class JFormFieldNN_PlainText extends JFormField
 		return $str;
 	}
 
-	private function def($val, $default = '')
+	private function get($val, $default = '')
 	{
 		return (isset($this->params[$val]) && (string) $this->params[$val] != '') ? (string) $this->params[$val] : $default;
 	}

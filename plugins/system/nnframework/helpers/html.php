@@ -4,7 +4,7 @@
  * extra JHTML functions
  *
  * @package         NoNumber Framework
- * @version         13.8.9
+ * @version         13.11.22
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -36,46 +36,59 @@ class nnHtml
 		$parameters = NNParameters::getInstance();
 		$params = $parameters->getPluginParams('nnframework');
 
-		if ($options == -1 || count($options) > $params->max_list_count) {
-			if (is_array($value)) {
+		if ($options == -1 || count($options) > $params->max_list_count)
+		{
+			if (is_array($value))
+			{
 				$value = implode(',', $value);
 			}
-			if (!$value) {
+			if (!$value)
+			{
 				$input = '<textarea name="' . $name . '" id="' . $id . '" cols="40" rows="5" />' . $value . '</textarea>';
-			} else {
+			}
+			else
+			{
 				$input = '<input type="text" name="' . $name . '" id="' . $id . '" value="' . $value . '" size="60" />';
 			}
 			return '<fieldset class="radio"><label class="nn_label nn_label_error"><label for="' . $id . '">' . JText::_('NN_ITEM_IDS') . ':</label>' . $input . '</label></fieldset>';
 		}
 
-		if (empty($options)) {
+		if (empty($options))
+		{
 			return '<fieldset class="radio"><label class="nn_label nn_label_error">' . JText::_('NN_NO_ITEMS_FOUND') . '</label></fieldset>';
 		}
 
-		if (!$size) {
+		if (!$size)
+		{
 			$size = ((count($options) > 10) ? 10 : count($options));
 		}
 		$attribs .= ' size="' . $size . '"';
-		if ($multiple) {
-			if (!is_array($value)) {
+		if ($multiple)
+		{
+			if (!is_array($value))
+			{
 				$value = explode(',', $value);
 			}
 			$attribs .= ' multiple="multiple"';
-			if (substr($name, -2) != '[]') {
+			if (substr($name, -2) != '[]')
+			{
 				$name .= '[]';
 			}
 		}
 
-		foreach ($options as $i => $option) {
+		foreach ($options as $i => $option)
+		{
 			$option = (object) $option;
-			if (isset($option->text)) {
+			if (isset($option->text))
+			{
 				$option->text = str_replace(array('&nbsp;', '&#160;'), '___', $option->text);
 				$options[$i] = $option;
 			}
 		}
 
 		$class = 'inputbox';
-		if ($multiple) {
+		if ($multiple)
+		{
 			$class .= ' nn_multiselect';
 		}
 
@@ -83,16 +96,20 @@ class nnHtml
 		$html = str_replace('___', '&nbsp;', $html);
 
 		$links = array();
-		if ($multiple) {
+		if ($multiple)
+		{
 			JHtml::stylesheet('nnframework/multiselect.min.css', false, true);
 			JHtml::script('nnframework/multiselect.min.js', false, true);
-		} else if ($size && count($options) > $size) {
+		}
+		else if ($size && count($options) > $size)
+		{
 			$links[] = '<a href="javascript://" onclick="nnScripts.toggleSelectListSize(\'' . $id . '\');" id="toggle_' . $id . '">'
 				. '<span class="show">' . JText::_('NN_MAXIMIZE') . '</span>'
 				. '<span class="hide" style="display:none;">' . JText::_('NN_MINIMIZE') . '</span>'
 				. '</a>';
 		}
-		if (!empty($links)) {
+		if (!empty($links))
+		{
 			JHtml::_('behavior.mootools');
 			JHtml::script('nnframework/script.min.js', false, true);
 			$html = implode(' - ', $links) . '<br />' . $html;

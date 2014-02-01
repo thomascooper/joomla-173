@@ -4,7 +4,7 @@
  * Displays options as checkboxes
  *
  * @package         NoNumber Framework
- * @version         13.8.9
+ * @version         13.11.22
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -17,6 +17,7 @@ defined('_JEXEC') or die;
 class JFormFieldNN_Checkbox extends JFormField
 {
 	public $type = 'Checkbox';
+	private $params = null;
 
 	protected function getInput()
 	{
@@ -24,40 +25,50 @@ class JFormFieldNN_Checkbox extends JFormField
 
 		JHtml::stylesheet('nnframework/style.min.css', false, true);
 
-		$newlines = $this->def('newlines', 0);
-		$showcheckall = $this->def('showcheckall', 0);
+		$newlines = $this->get('newlines', 0);
+		$showcheckall = $this->get('showcheckall', 0);
 
 		$checkall = ($this->value == '*');
 
-		if (!$checkall) {
-			if (!is_array($this->value)) {
+		if (!$checkall)
+		{
+			if (!is_array($this->value))
+			{
 				$this->value = explode(',', $this->value);
 			}
 		}
 
 		$options = array();
-		foreach ($this->element->children() as $option) {
-			if ($option->getName() != 'option') {
+		foreach ($this->element->children() as $option)
+		{
+			if ($option->getName() != 'option')
+			{
 				continue;
 			}
 
 			$text = trim((string) $option);
 			$hasval = 0;
-			if (isset($option['value'])) {
+			if (isset($option['value']))
+			{
 				$val = (string) $option['value'];
 				$disabled = (int) $option['disabled'];
 				$hasval = 1;
 			}
-			if ($hasval) {
+			if ($hasval)
+			{
 				$option = '<input type="checkbox" class="nn_' . $this->id . '" id="' . $this->id . $val . '" name="' . $this->name . '[]" value="' . $val . '"';
-				if ($checkall || in_array($val, $this->value)) {
+				if ($checkall || in_array($val, $this->value))
+				{
 					$option .= ' checked="checked"';
 				}
-				if ($disabled) {
+				if ($disabled)
+				{
 					$option .= ' disabled="disabled"';
 				}
 				$option .= ' /> <label for="' . $this->id . $val . '" class="checkboxes">' . JText::_($text) . '</label>';
-			} else {
+			}
+			else
+			{
 				$option = '<label style="clear:both;"><strong>' . JText::_($text) . '</strong></label>';
 			}
 			$options[] = $option;
@@ -65,9 +76,11 @@ class JFormFieldNN_Checkbox extends JFormField
 
 		$options = implode('', $options);
 
-		if ($showcheckall) {
+		if ($showcheckall)
+		{
 			$checkers = array();
-			if ($showcheckall) {
+			if ($showcheckall)
+			{
 				$checkers[] = '<input id="nn_checkall_' . $this->id . '" type="checkbox" onclick="NNFrameworkCheckAll( this, \'nn_' . $this->id . '\' );" /> ' . JText::_('JALL');
 
 				$js = "
@@ -88,7 +101,7 @@ class JFormFieldNN_Checkbox extends JFormField
 		return implode('', $html);
 	}
 
-	private function def($val, $default = '')
+	private function get($val, $default = '')
 	{
 		return (isset($this->params[$val]) && (string) $this->params[$val] != '') ? (string) $this->params[$val] : $default;
 	}

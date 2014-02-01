@@ -4,7 +4,7 @@
  * Adds slide in and out functionality to framework based on an framework value
  *
  * @package         NoNumber Framework
- * @version         13.8.9
+ * @version         13.11.22
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
  * @copyright       Copyright © 2013 NoNumber All Rights Reserved
@@ -26,6 +26,7 @@ defined('_JEXEC') or die;
 class JFormFieldNN_Toggler extends JFormField
 {
 	public $type = 'Toggler';
+	private $params = null;
 
 	protected function getLabel()
 	{
@@ -48,16 +49,17 @@ class nnFieldToggler
 		$option = JFactory::getApplication()->input->get('option');
 
 		// do not place toggler stuff on JoomFish pages
-		if ($option == 'com_joomfish') {
+		if ($option == 'com_joomfish')
+		{
 			return '';
 		}
 
-		$param = $this->def('param');
-		$value = $this->def('value');
-		$nofx = $this->def('nofx');
-		$horz = $this->def('horizontal');
-		$method = $this->def('method');
-		$div = $this->def('div', 0);
+		$param = $this->get('param');
+		$value = $this->get('value');
+		$nofx = $this->get('nofx');
+		$horz = $this->get('horizontal');
+		$method = $this->get('method');
+		$div = $this->get('div', 0);
 
 		JHtml::_('behavior.mootools');
 		JHtml::stylesheet('nnframework/style.min.css', false, true);
@@ -68,44 +70,56 @@ class nnFieldToggler
 		$param = preg_replace('#\s*\|\s*#', '|', $param);
 
 		$html = array();
-		if ($param != '') {
+		if ($param != '')
+		{
 			$param = preg_replace('#[^a-z0-9-\.\|\@]#', '_', $param);
 			$param = str_replace('@', '_', $param);
 			$set_groups = explode('|', $param);
 			$set_values = explode('|', $value);
 			$ids = array();
-			foreach ($set_groups as $i => $group) {
+			foreach ($set_groups as $i => $group)
+			{
 				$count = $i;
-				if ($count >= count($set_values)) {
+				if ($count >= count($set_values))
+				{
 					$count = 0;
 				}
 				$value = explode(',', $set_values[$count]);
-				foreach ($value as $val) {
+				foreach ($value as $val)
+				{
 					$ids[] = $group . '.' . $val;
 				}
 			}
 
-			if (!$div) {
+			if (!$div)
+			{
 				$html[] = '</li><li style="clear: both;padding: 0;">';
 			}
 
 			$html[] = '<div id="' . rand(1000000, 9999999) . '___' . implode('___', $ids) . '" class="nntoggler';
-			if ($nofx) {
+			if ($nofx)
+			{
 				$html[] = ' nntoggler_nofx';
 			}
-			if ($horz) {
+			if ($horz)
+			{
 				$html[] = ' nntoggler_horizontal';
 			}
-			if ($method == 'and') {
+			if ($method == 'and')
+			{
 				$html[] = ' nntoggler_and';
 			}
 			$html[] = '">';
 
-			if (!$div) {
+			if (!$div)
+			{
 				$html[] = '<ul><li>';
 			}
-		} else {
-			if (!$div) {
+		}
+		else
+		{
+			if (!$div)
+			{
 				$html[] = "\n" . '</li></ul>';
 				$html[] = '<div style="clear: both;"></div>';
 			}
@@ -115,7 +129,7 @@ class nnFieldToggler
 		return implode('', $html);
 	}
 
-	private function def($val, $default = '')
+	private function get($val, $default = '')
 	{
 		return (isset($this->params[$val]) && (string) $this->params[$val] != '') ? (string) $this->params[$val] : $default;
 	}

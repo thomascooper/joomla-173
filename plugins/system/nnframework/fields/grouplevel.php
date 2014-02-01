@@ -4,7 +4,7 @@
  * Displays a select box of backend group levels
  *
  * @package         NoNumber Framework
- * @version         13.8.9
+ * @version         13.11.22
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -19,21 +19,24 @@ require_once JPATH_PLUGINS . '/system/nnframework/helpers/text.php';
 class JFormFieldNN_GroupLevel extends JFormField
 {
 	public $type = 'GroupLevel';
+	private $params = null;
+	private $db = null;
 
 	protected function getInput()
 	{
 		$this->params = $this->element->attributes();
+		$this->db = JFactory::getDBO();
 
-		$root = $this->def('root', 'USERS');
-		$size = (int) $this->def('size');
-		$multiple = $this->def('multiple');
-		$show_all = $this->def('show_all');
+		$size = (int) $this->get('size');
+		$multiple = $this->get('multiple');
+		$show_all = $this->get('show_all');
 
 		$attribs = 'class="inputbox"';
 
 		$groups = $this->getUserGroups();
 		$options = array();
-		if ($show_all) {
+		if ($show_all)
+		{
 			$option = new stdClass;
 			$option->value = -1;
 			$option->text = '- ' . JText::_('JALL') . ' -';
@@ -41,7 +44,8 @@ class JFormFieldNN_GroupLevel extends JFormField
 			$options[] = $option;
 		}
 
-		foreach ($groups as $group) {
+		foreach ($groups as $group)
+		{
 			$option = new stdClass;
 			$option->value = $group->value;
 			$option->text = $group->text;
@@ -60,22 +64,20 @@ class JFormFieldNN_GroupLevel extends JFormField
 
 	protected function getUserGroups()
 	{
-		$db = JFactory::getDBO();
-
 		// Get the user groups from the database.
-		$query = $db->getQuery(true)
+		$query = $this->db->getQuery(true)
 			->select('a.id as value, a.title as text, a.parent_id AS parent')
 			->from('#__usergroups AS a')
 			->select('COUNT(DISTINCT b.id) AS level')
 			->join('LEFT', '#__usergroups AS b ON a.lft > b.lft AND a.rgt < b.rgt')
 			->group('a.id')
 			->order('a.lft ASC');
-		$db->setQuery($query);
+		$this->db->setQuery($query);
 
-		return $db->loadObjectList();
+		return $this->db->loadObjectList();
 	}
 
-	private function def($val, $default = '')
+	private function get($val, $default = '')
 	{
 		return (isset($this->params[$val]) && (string) $this->params[$val] != '') ? (string) $this->params[$val] : $default;
 	}

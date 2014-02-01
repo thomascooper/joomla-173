@@ -4,7 +4,7 @@
  * Displays a multiselectbox of available ZOO categories
  *
  * @package         NoNumber Framework
- * @version         13.8.9
+ * @version         13.11.22
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -21,37 +21,41 @@ require_once JPATH_PLUGINS . '/system/nnframework/helpers/text.php';
 class JFormFieldNN_ZOO extends JFormField
 {
 	public $type = 'ZOO';
+	private $params = null;
+	private $db = null;
+	private $max_list_count = 0;
 
 	protected function getInput()
 	{
-		if (!NNFrameworkFunctions::extensionInstalled('zoo')) {
+		if (!NNFrameworkFunctions::extensionInstalled('zoo'))
+		{
 			return '<fieldset class="radio"><label class="nn_label nn_label_error">' . JText::_('ERROR') . ': ' . JText::sprintf('NN_FILES_NOT_FOUND', JText::_('NN_ZOO')) . '</label></fieldset>';
 		}
 
 		$this->params = $this->element->attributes();
-
-		$group = $this->def('group', 'categories');
-
 		$this->db = JFactory::getDBO();
+
+		$group = $this->get('group', 'categories');
+
 		$tables = $this->db->getTableList();
-		if (!in_array($this->db->getPrefix() . 'zoo_' . ($group == 'applications' ? 'application' : 'category'), $tables)) {
+		if (!in_array($this->db->getPrefix() . 'zoo_' . ($group == 'applications' ? 'application' : 'category'), $tables))
+		{
 			return '<fieldset class="radio"><label class="nn_label nn_label_error">' . JText::_('ERROR') . ': ' . JText::sprintf('NN_TABLE_NOT_FOUND', JText::_('NN_ZOO')) . '</label></fieldset>';
 		}
-
-		$this->params = $this->element->attributes();
 
 		$parameters = NNParameters::getInstance();
 		$params = $parameters->getPluginParams('nnframework');
 		$this->max_list_count = $params->max_list_count;
 
-		if (!is_array($this->value)) {
+		if (!is_array($this->value))
+		{
 			$this->value = explode(',', $this->value);
 		}
 
 		$options = $this->{'get' . $group}();
 
-		$size = (int) $this->def('size');
-		$multiple = $this->def('multiple');
+		$size = (int) $this->get('size');
+		$multiple = $this->get('multiple');
 
 		require_once JPATH_PLUGINS . '/system/nnframework/helpers/html.php';
 		return nnHtml::selectlist($options, $this->name, $this->value, $this->id, $size, $multiple);
@@ -66,15 +70,18 @@ class JFormFieldNN_ZOO extends JFormField
 		$this->db->setQuery($query);
 		$total = $this->db->loadResult();
 
-		if ($total > $this->max_list_count) {
+		if ($total > $this->max_list_count)
+		{
 			return -1;
 		}
 
-		$show_ignore = $this->def('show_ignore');
+		$show_ignore = $this->get('show_ignore');
 
 		$options = array();
-		if ($show_ignore) {
-			if (in_array('-1', $this->value)) {
+		if ($show_ignore)
+		{
+			if (in_array('-1', $this->value))
+			{
 				$this->value = array('-1');
 			}
 			$options[] = JHtml::_('select.option', '-1', '- ' . JText::_('NN_IGNORE') . ' -', 'value', 'text', 0);
@@ -88,7 +95,8 @@ class JFormFieldNN_ZOO extends JFormField
 		$this->db->setQuery($query);
 		$apps = $this->db->loadObjectList();
 
-		foreach ($apps as $i => $app) {
+		foreach ($apps as $i => $app)
+		{
 			$query->clear()
 				->select('c.id, c.parent AS parent_id, c.name AS title, c.published')
 				->from('#__zoo_category AS c')
@@ -98,7 +106,8 @@ class JFormFieldNN_ZOO extends JFormField
 			$this->db->setQuery($query);
 			$items = $this->db->loadObjectList();
 
-			if ($i) {
+			if ($i)
+			{
 				$options[] = JHtml::_('select.option', '-', '&nbsp;', 'value', 'text', 1);
 			}
 
@@ -106,9 +115,11 @@ class JFormFieldNN_ZOO extends JFormField
 			// TODO: use node model
 			$children = array();
 
-			if ($items) {
+			if ($items)
+			{
 				// first pass - collect children
-				foreach ($items as $v) {
+				foreach ($items as $v)
+				{
 					$pt = $v->parent_id;
 					$list = @$children[$pt] ? $children[$pt] : array();
 					array_push($list, $v);
@@ -121,7 +132,8 @@ class JFormFieldNN_ZOO extends JFormField
 
 			// assemble items to the array
 			$options[] = JHtml::_('select.option', 'app' . $app->id, '[' . $app->name . ']', 'value', 'text', 0);
-			foreach ($list as $item) {
+			foreach ($list as $item)
+			{
 				$item->treename = '  ' . str_replace('&#160;&#160;- ', '  ', $item->treename);
 				$item->treename = NNText::prepareSelectItem($item->treename, $item->published);
 				$options[] = JHtml::_('select.option', $item->id, $item->treename, 'value', 'text', 0);
@@ -140,7 +152,8 @@ class JFormFieldNN_ZOO extends JFormField
 		$this->db->setQuery($query);
 		$total = $this->db->loadResult();
 
-		if ($total > $this->max_list_count) {
+		if ($total > $this->max_list_count)
+		{
 			return -1;
 		}
 
@@ -155,7 +168,8 @@ class JFormFieldNN_ZOO extends JFormField
 
 		// assemble items to the array
 		$options = array();
-		foreach ($list as $item) {
+		foreach ($list as $item)
+		{
 			$item->name = $item->name . ' [' . $item->id . '] [' . $item->app . ']';
 			$item->name = NNText::prepareSelectItem($item->name, $item->published);
 			$options[] = JHtml::_('select.option', $item->id, $item->name, 'value', 'text', 0);
@@ -164,7 +178,7 @@ class JFormFieldNN_ZOO extends JFormField
 		return $options;
 	}
 
-	private function def($val, $default = '')
+	private function get($val, $default = '')
 	{
 		return (isset($this->params[$val]) && (string) $this->params[$val] != '') ? (string) $this->params[$val] : $default;
 	}

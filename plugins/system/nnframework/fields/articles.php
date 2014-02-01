@@ -4,7 +4,7 @@
  * Displays an article id field with a button
  *
  * @package         NoNumber Framework
- * @version         13.8.9
+ * @version         13.11.22
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -24,8 +24,8 @@ class JFormFieldNN_Articles extends JFormField
 
 		JHtml::_('behavior.modal', 'a.modal');
 
-		$_size = $this->def('size');
-		$_multiple = $this->def('multiple', 1);
+		$_size = $this->get('size');
+		$_multiple = $this->get('multiple', 1);
 
 		$_doc = JFactory::getDocument();
 
@@ -64,9 +64,11 @@ class JFormFieldNN_Articles extends JFormField
 		$_link = 'index.php?option=com_content&amp;view=articles&amp;layout=modal&amp;tmpl=component&amp;function=nnSelectArticle_' . $this->id;
 
 		$html = "\n" . '<div style="float: left;">';
-		if (!$_multiple) {
+		if (!$_multiple)
+		{
 			$val_name = $this->value;
-			if ($this->value) {
+			if ($this->value)
+			{
 				$db = JFactory::getDBO();
 				$query = $db->getQuery(true)
 					->select('c.title')
@@ -78,7 +80,9 @@ class JFormFieldNN_Articles extends JFormField
 			}
 			$html .= '<input type="text" id="' . $this->id . '_name" value="' . $val_name . '" class="inputbox" size="' . $_size . '" disabled="disabled" />';
 			$html .= '<input type="hidden" name="' . $this->name . '" id="' . $this->id . '_id" value="' . $this->value . '" />';
-		} else {
+		}
+		else
+		{
 			$html .= '<input type="text" name="' . $this->name . '" id="' . $this->id . '_id" value="' . $this->value . '" class="inputbox" size="' . $_size . '" />';
 		}
 		$html .= '</div>';
@@ -87,7 +91,7 @@ class JFormFieldNN_Articles extends JFormField
 		return $html;
 	}
 
-	private function def($val, $default = '')
+	private function get($val, $default = '')
 	{
 		return (isset($this->params[$val]) && (string) $this->params[$val] != '') ? (string) $this->params[$val] : $default;
 	}

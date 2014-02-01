@@ -4,7 +4,7 @@
  * Displays a block with optionally a title and description
  *
  * @package         NoNumber Framework
- * @version         13.8.9
+ * @version         13.11.22
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -19,6 +19,7 @@ require_once JPATH_PLUGINS . '/system/nnframework/helpers/text.php';
 class JFormFieldNN_Block extends JFormField
 {
 	public $type = 'Block';
+	private $params = null;
 
 	protected function getLabel()
 	{
@@ -31,11 +32,11 @@ class JFormFieldNN_Block extends JFormField
 
 		JHtml::stylesheet('nnframework/style.min.css', false, true);
 
-		$title = $this->def('label');
-		$description = $this->def('description');
+		$title = $this->get('label');
+		$description = $this->get('description');
 
-		$start = $this->def('start', 0);
-		$end = $this->def('end', 0);
+		$start = $this->get('start', 0);
+		$end = $this->get('end', 0);
 
 		$hastitle = ($title || $description);
 
@@ -43,20 +44,26 @@ class JFormFieldNN_Block extends JFormField
 
 		$html = array();
 
-		if ($start || !$end) {
+		if ($start || !$end)
+		{
 			$html[] = $this->getTitleBlock($title, $description, $start);
-			if ($start || !$hastitle) {
+			if ($start || !$hastitle)
+			{
 				$html[] = '<div class="nn_panel"><div class="nn_block' . (!$hastitle ? ' nn_block_notitle' : '') . '">';
 			}
-			if ($start) {
+			if ($start)
+			{
 				$html[] = '<ul class="adminformlist"><li>';
 			}
 		}
-		if ($end || !$start) {
-			if ($end) {
+		if ($end || !$start)
+		{
+			if ($end)
+			{
 				$html[] = '<div style="clear: both;"></div></li></ul>';
 			}
-			if ($end || !$hastitle) {
+			if ($end || !$hastitle)
+			{
 				$html[] = '<div style="clear: both;"></div>';
 				$html[] = '</div></div>';
 			}
@@ -67,19 +74,21 @@ class JFormFieldNN_Block extends JFormField
 
 	private function getTitleBlock($title = '', $description = '', $start = 0)
 	{
-		$nostyle = $this->def('nostyle', 0);
+		$nostyle = $this->get('nostyle', 0);
 
-		if ($title) {
+		if ($title)
+		{
 			$title = NNText::html_entity_decoder(JText::_($title));
 		}
 
-		if ($description) {
+		if ($description)
+		{
 			// variables
-			$v1 = JText::_($this->def('var1'));
-			$v2 = JText::_($this->def('var2'));
-			$v3 = JText::_($this->def('var3'));
-			$v4 = JText::_($this->def('var4'));
-			$v5 = JText::_($this->def('var5'));
+			$v1 = JText::_($this->get('var1'));
+			$v2 = JText::_($this->get('var2'));
+			$v3 = JText::_($this->get('var3'));
+			$v4 = JText::_($this->get('var4'));
+			$v5 = JText::_($this->get('var5'));
 
 			$description = NNText::html_entity_decoder(trim(JText::sprintf($description, $v1, $v2, $v3, $v4, $v5)));
 			$description = str_replace('span style="font-family:monospace;"', 'span class="nn_code"', $description);
@@ -87,12 +96,17 @@ class JFormFieldNN_Block extends JFormField
 
 		$html = array();
 
-		if ($title) {
-			if ($nostyle) {
+		if ($title)
+		{
+			if ($nostyle)
+			{
 				$html[] = '<div style="clear:both;"><div>';
-			} else {
+			}
+			else
+			{
 				$class = 'nn_panel nn_panel_title';
-				if ($start || $description) {
+				if ($start || $description)
+				{
 					$class .= ' nn_panel_top';
 				}
 				$html[] = '<div class="' . $class . '"><div class="nn_block nn_title">';
@@ -102,15 +116,21 @@ class JFormFieldNN_Block extends JFormField
 			$html[] = '</div></div>';
 		}
 
-		if ($description) {
-			if ($nostyle) {
+		if ($description)
+		{
+			if ($nostyle)
+			{
 				$html[] = '<div style="clear:both;"><div>';
-			} else {
+			}
+			else
+			{
 				$class = 'nn_panel nn_panel_description';
-				if ($start) {
+				if ($start)
+				{
 					$class .= ' nn_panel_top';
 				}
-				if ($title) {
+				if ($title)
+				{
 					$class .= ' nn_panel_hastitle';
 				}
 				$html[] = '<div class="' . $class . '"><div class="nn_block nn_title">';
@@ -124,7 +144,7 @@ class JFormFieldNN_Block extends JFormField
 		return implode('', $html);
 	}
 
-	private function def($val, $default = '')
+	private function get($val, $default = '')
 	{
 		return (isset($this->params[$val]) && (string) $this->params[$val] != '') ? (string) $this->params[$val] : $default;
 	}

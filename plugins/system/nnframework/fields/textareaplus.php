@@ -4,7 +4,7 @@
  * Displays a text area with extra options
  *
  * @package         NoNumber Framework
- * @version         13.8.9
+ * @version         13.11.22
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -19,17 +19,21 @@ require_once JPATH_PLUGINS . '/system/nnframework/helpers/text.php';
 class JFormFieldNN_TextAreaPlus extends JFormField
 {
 	public $type = 'TextAreaPlus';
+	private $params = null;
 
 	protected function getLabel()
 	{
 		$this->params = $this->element->attributes();
 
-		$label = NNText::html_entity_decoder(JText::_($this->def('label')));
+		$label = NNText::html_entity_decoder(JText::_($this->get('label')));
 
 		$html = '<label id="' . $this->id . '-lbl" for="' . $this->id . '"';
-		if ($this->description) {
+		if ($this->description)
+		{
 			$html .= ' class="hasTip" title="' . $label . '::' . JText::_($this->description) . '">';
-		} else {
+		}
+		else
+		{
 			$html .= '>';
 		}
 		$html .= $label . '</label>';
@@ -39,16 +43,19 @@ class JFormFieldNN_TextAreaPlus extends JFormField
 
 	protected function getInput()
 	{
-		$width = $this->def('width', 600);
-		$height = $this->def('height', 80);
-		$class = trim('nn_textarea ' . $this->def('class'));
+		$width = $this->get('width', 600);
+		$height = $this->get('height', 80);
+		$class = trim('nn_textarea ' . $this->get('class'));
 		$class = 'class="' . $class . '"';
-		$type = $this->def('texttype');
+		$type = $this->get('texttype');
 
-		if ($type == 'html') {
+		if ($type == 'html')
+		{
 			// Convert <br /> tags so they are not visible when editing
 			$this->value = str_replace('<br />', "\n", $this->value);
-		} else if ($type == 'regex') {
+		}
+		else if ($type == 'regex')
+		{
 			// Protects the special characters
 			$this->value = str_replace('[:REGEX_ENTER:]', '\n', $this->value);
 		}
@@ -58,7 +65,7 @@ class JFormFieldNN_TextAreaPlus extends JFormField
 		return '<textarea name="' . $this->name . '" cols="' . (round($width / 7.5)) . '" rows="' . (round($height / 15)) . '" style="width:' . (($width == '600') ? '100%' : $width . 'px') . ';height:' . $height . 'px" ' . $class . ' id="' . $this->id . '" >' . $this->value . '</textarea>';
 	}
 
-	private function def($val, $default = '')
+	private function get($val, $default = '')
 	{
 		return (isset($this->params[$val]) && (string) $this->params[$val] != '') ? (string) $this->params[$val] : $default;
 	}

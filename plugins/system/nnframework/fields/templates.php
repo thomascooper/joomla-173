@@ -4,7 +4,7 @@
  * Displays a select box of templates
  *
  * @package         NoNumber Framework
- * @version         13.8.9
+ * @version         13.11.22
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -17,63 +17,87 @@ defined('_JEXEC') or die;
 class JFormFieldNN_Templates extends JFormField
 {
 	public $type = 'Templates';
+	private $params = null;
 
 	protected function getInput()
 	{
 		$this->params = $this->element->attributes();
 
-		$size = (int) $this->def('size');
-		$multiple = $this->def('multiple');
-		$subtemplates = $this->def('subtemplates', 1);
-		$show_system = $this->def('show_system', 1);
+		$size = (int) $this->get('size');
+		$multiple = $this->get('multiple');
+		$attribs = 'class="inputbox"';
 
-		require_once JPATH_ADMINISTRATOR . '/components/com_templates/helpers/templates.php';
-		$rows = TemplatesHelper::getTemplateOptions('0');
-		$options = $this->createList($rows, JPATH_ROOT . '/templates', $subtemplates, $show_system);
+		$options = array();
+
+		$templates = $this->getTemplates();
+
+		foreach ($templates as $styles)
+		{
+			$level = 0;
+			foreach ($styles as $style)
+			{
+				$style->level = $level;
+				$options[] = $style;
+				if(count($styles) <= 2 ) {
+					$level = 0;
+					break;
+				}
+				$level = 1;
+			}
+		}
 
 		require_once JPATH_PLUGINS . '/system/nnframework/helpers/html.php';
-		return nnHtml::selectlist($options, $this->name, $this->value, $this->id, $size, $multiple);
+		return nnHtml::selectlist($options, $this->name, $this->value, $this->id, $size, $multiple, $attribs);
 	}
 
-	function createList($rows, $templateBaseDir, $subtemplates = 1, $show_system = 1)
+	protected function getTemplates()
 	{
-		$options = array();
+		$groups = array();
+		$lang = JFactory::getLanguage();
 
-		if ($show_system) {
-			$options[] = JHtml::_('select.option', 'system:component', JText::_('None') . ' (System - component)');
-		}
+		// Get the database object and a new query object.
+		$db = JFactory::getDbo();
+		$query = $db->getQuery(true)
+			->select('s.id, s.title, e.name as name, s.template')
+			->from('#__template_styles as s')
+			->where('s.client_id = 0')
+			->join('LEFT', '#__extensions as e on e.element=s.template')
+			->where('e.enabled=1')
+			->where($db->quoteName('e.type') . '=' . $db->quote('template'))
+			->order('s.template')
+			->order('s.title');
 
-		foreach ($rows as $option) {
-			$options[] = $option;
+		// Set the query and load the styles.
+		$db->setQuery($query);
+		$styles = $db->loadObjectList();
 
-			if ($subtemplates) {
-				$options_sub = $this->getSubTemplates($option, $templateBaseDir);
-				$options = array_merge($options, $options_sub);
-			}
-		}
-		return $options;
-	}
+		// Build the grouped list array.
+		if ($styles)
+		{
+			foreach ($styles as $style)
+			{
+				$template = $style->template;
+				$lang->load('tpl_' . $template . '.sys', JPATH_SITE, null, false, false)
+				|| $lang->load('tpl_' . $template . '.sys', JPATH_SITE . '/templates/' . $template, null, false, false)
+				|| $lang->load('tpl_' . $template . '.sys', JPATH_SITE, $lang->getDefault(), false, false)
+				|| $lang->load('tpl_' . $template . '.sys', JPATH_SITE . '/templates/' . $template, $lang->getDefault(), false, false);
+				$name = JText::_($style->name);
 
-	function getSubTemplates($option, $templateBaseDir)
-	{
-		$options = array();
-		$templateDir = dir($templateBaseDir . '/' . $option->value);
-		while (false !== ($file = $templateDir->read())) {
-			if (is_file($templateDir->path . '/' . $file)) {
-				if (!(strpos($file, '.php') === false) && $file != 'index.php') {
-					$file_name = str_replace('.php', '', $file);
-					if ($file_name != 'index' && $file_name != 'editor' && $file_name != 'error') {
-						$options[] = JHtml::_('select.option', $option->value . ':' . $file_name, '&nbsp;&nbsp;' . $file_name);
-					}
+				// Initialize the group if necessary.
+				if (!isset($groups[$template]))
+				{
+					$groups[$template] = array();
+					$groups[$template][] = JHtml::_('select.option', $template, $name);
 				}
+
+				$groups[$template][] = JHtml::_('select.option', $template . '::' . $style->id, $style->title);
 			}
 		}
-		$templateDir->close();
 
-		return $options;
+		return $groups;
 	}
 
-	private function def($val, $default = '')
+	private function get($val, $default = '')
 	{
 		return (isset($this->params[$val]) && (string) $this->params[$val] != '') ? (string) $this->params[$val] : $default;
 	}

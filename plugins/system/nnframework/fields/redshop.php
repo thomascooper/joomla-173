@@ -4,7 +4,7 @@
  * Displays a multiselectbox of available RedShop categories / products
  *
  * @package         NoNumber Framework
- * @version         13.8.9
+ * @version         13.11.22
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -21,37 +21,41 @@ require_once JPATH_PLUGINS . '/system/nnframework/helpers/text.php';
 class JFormFieldNN_RedShop extends JFormField
 {
 	public $type = 'RedShop';
+	private $params = null;
+	private $db = null;
+	private $max_list_count = 0;
 
 	protected function getInput()
 	{
-		if (!NNFrameworkFunctions::extensionInstalled('redshop')) {
+		if (!NNFrameworkFunctions::extensionInstalled('redshop'))
+		{
 			return '<fieldset class="radio"><label class="nn_label nn_label_error">' . JText::_('ERROR') . ': ' . JText::sprintf('NN_FILES_NOT_FOUND', JText::_('NN_REDSHOP')) . '</label></fieldset>';
 		}
 
 		$this->params = $this->element->attributes();
-
-		$group = $this->def('group', 'categories');
-
 		$this->db = JFactory::getDBO();
+
+		$group = $this->get('group', 'categories');
+
 		$tables = $this->db->getTableList();
-		if (!in_array($this->db->getPrefix() . 'redshop_' . ($group == 'products' ? 'product' : 'category'), $tables)) {
+		if (!in_array($this->db->getPrefix() . 'redshop_' . ($group == 'products' ? 'product' : 'category'), $tables))
+		{
 			return '<fieldset class="radio"><label class="nn_label nn_label_error">' . JText::_('ERROR') . ': ' . JText::sprintf('NN_TABLE_NOT_FOUND', JText::_('NN_REDSHOP')) . '</label></fieldset>';
 		}
-
-		$this->params = $this->element->attributes();
 
 		$parameters = NNParameters::getInstance();
 		$params = $parameters->getPluginParams('nnframework');
 		$this->max_list_count = $params->max_list_count;
 
-		if (!is_array($this->value)) {
+		if (!is_array($this->value))
+		{
 			$this->value = explode(',', $this->value);
 		}
 
 		$options = $this->{'get' . $group}();
 
-		$size = (int) $this->def('size');
-		$multiple = $this->def('multiple');
+		$size = (int) $this->get('size');
+		$multiple = $this->get('multiple');
 
 		require_once JPATH_PLUGINS . '/system/nnframework/helpers/html.php';
 		return nnHtml::selectlist($options, $this->name, $this->value, $this->id, $size, $multiple);
@@ -66,11 +70,12 @@ class JFormFieldNN_RedShop extends JFormField
 		$this->db->setQuery($query);
 		$total = $this->db->loadResult();
 
-		if ($total > $this->max_list_count) {
+		if ($total > $this->max_list_count)
+		{
 			return -1;
 		}
 
-		$show_ignore = $this->def('show_ignore');
+		$show_ignore = $this->get('show_ignore');
 
 		$query->clear()
 			->select('c.category_id as id, x.category_parent_id AS parent_id, c.category_name AS title, c.published')
@@ -85,9 +90,11 @@ class JFormFieldNN_RedShop extends JFormField
 		// TODO: use node model
 		$children = array();
 
-		if ($items) {
+		if ($items)
+		{
 			// first pass - collect children
-			foreach ($items as $v) {
+			foreach ($items as $v)
+			{
 				$pt = $v->parent_id;
 				$list = @$children[$pt] ? $children[$pt] : array();
 				array_push($list, $v);
@@ -100,14 +107,17 @@ class JFormFieldNN_RedShop extends JFormField
 
 		// assemble items to the array
 		$options = array();
-		if ($show_ignore) {
-			if (in_array('-1', $this->value)) {
+		if ($show_ignore)
+		{
+			if (in_array('-1', $this->value))
+			{
 				$this->value = array('-1');
 			}
 			$options[] = JHtml::_('select.option', '-1', '- ' . JText::_('NN_IGNORE') . ' -', 'value', 'text', 0);
 			$options[] = JHtml::_('select.option', '-', '&nbsp;', 'value', 'text', 1);
 		}
-		foreach ($list as $item) {
+		foreach ($list as $item)
+		{
 			$item->treename = NNText::prepareSelectItem($item->treename, $item->published, '', 1);
 			$options[] = JHtml::_('select.option', $item->id, $item->treename, 'value', 'text', 0);
 		}
@@ -124,7 +134,8 @@ class JFormFieldNN_RedShop extends JFormField
 		$this->db->setQuery($query);
 		$total = $this->db->loadResult();
 
-		if ($total > $this->max_list_count) {
+		if ($total > $this->max_list_count)
+		{
 			return -1;
 		}
 
@@ -140,7 +151,8 @@ class JFormFieldNN_RedShop extends JFormField
 
 		// assemble items to the array
 		$options = array();
-		foreach ($list as $item) {
+		foreach ($list as $item)
+		{
 			$item->name = $item->name . ' [' . $item->number . ']' . ($item->cat ? ' [' . $item->cat . ']' : '');
 			$item->name = NNText::prepareSelectItem($item->name, $item->published);
 			$options[] = JHtml::_('select.option', $item->id, $item->name, 'value', 'text', 0);
@@ -149,7 +161,7 @@ class JFormFieldNN_RedShop extends JFormField
 		return $options;
 	}
 
-	private function def($val, $default = '')
+	private function get($val, $default = '')
 	{
 		return (isset($this->params[$val]) && (string) $this->params[$val] != '') ? (string) $this->params[$val] : $default;
 	}

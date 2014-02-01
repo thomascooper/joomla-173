@@ -4,7 +4,7 @@
  * Display a menuitem field with a button
  *
  * @package         NoNumber Framework
- * @version         13.8.9
+ * @version         13.11.22
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -19,6 +19,7 @@ require_once JPATH_PLUGINS . '/system/nnframework/helpers/text.php';
 class JFormFieldNN_MenuItems extends JFormField
 {
 	public $type = 'MenuItems';
+	private $params = null;
 
 	protected function getInput()
 	{
@@ -26,11 +27,11 @@ class JFormFieldNN_MenuItems extends JFormField
 
 		JHtml::_('behavior.modal', 'a.modal');
 
-		$size = (int) $this->def('size');
-		$multiple = $this->def('multiple', 1);
-		$showinput = $this->def('showinput');
-		$parents = (int) $this->def('parents', 1);
-		$disable_types = $this->def('disable');
+		$size = (int) $this->get('size');
+		$multiple = $this->get('multiple', 1);
+		$showinput = $this->get('showinput');
+		$parents = (int) $this->get('parents', 1);
+		$disable_types = $this->get('disable');
 
 		$db = JFactory::getDBO();
 
@@ -44,7 +45,7 @@ class JFormFieldNN_MenuItems extends JFormField
 
 		// load the list of menu items
 		$query->clear()
-			->select('m.id, m.parent_id, m.title, m.alias, m.menutype, m.type, m.published, m.home')
+			->select('m.id, m.parent_id, m.title, m.alias, m.menutype, m.type, m.published, m.home, m.language')
 			->select('m.title AS name')
 			->from('#__menu AS m')
 			->where('m.published != -2')
@@ -55,12 +56,21 @@ class JFormFieldNN_MenuItems extends JFormField
 		// establish the hierarchy of the menu
 		$children = array();
 
-		if ($items) {
+		if ($items)
+		{
 			// first pass - collect children
-			foreach ($items as $v) {
-				if ($v->type != 'separator') {
-					if (preg_replace('#[^a-z0-9]#', '', strtolower($v->title)) !== preg_replace('#[^a-z0-9]#', '', $v->alias)) {
+			foreach ($items as $v)
+			{
+				if ($v->type != 'separator')
+				{
+					if (preg_replace('#[^a-z0-9]#', '', strtolower($v->title)) !== preg_replace('#[^a-z0-9]#', '', $v->alias))
+					{
 						$v->title .= ' [' . $v->alias . ']';
+					}
+
+					if ($v->language && $v->language != '*')
+					{
+						$v->title .= ' (' . $v->language . ')';
 					}
 				}
 				$pt = $v->parent_id;
@@ -75,7 +85,8 @@ class JFormFieldNN_MenuItems extends JFormField
 
 		// assemble into menutype groups
 		$groupedList = array();
-		foreach ($list as $k => $v) {
+		foreach ($list as $k => $v)
+		{
 			$groupedList[$v->menutype][] =& $list[$k];
 		}
 
@@ -83,39 +94,50 @@ class JFormFieldNN_MenuItems extends JFormField
 		$options = array();
 
 		$count = 0;
-		foreach ($menuTypes as $type) {
-			if (isset($groupedList[$type->menutype])) {
-				if ($count > 0) {
+		foreach ($menuTypes as $type)
+		{
+			if (isset($groupedList[$type->menutype]))
+			{
+				if ($count > 0)
+				{
 					$options[] = JHtml::_('select.option', '-', '&nbsp;', 'value', 'text', true);
 				}
 				$count++;
 				$options[] = JHtml::_('select.option', 'type.' . $type->menutype, '[ ' . $type->title . ' ]', 'value', 'text', !$parents);
 				$n = count($groupedList[$type->menutype]);
-				for ($i = 0; $i < $n; $i++) {
+				for ($i = 0; $i < $n; $i++)
+				{
 					$item =& $groupedList[$type->menutype][$i];
 
 					//If menutype is changed but item is not saved yet, use the new type in the list
-					if (JFactory::getApplication()->input->getString('option', '') == 'com_menus') {
+					if (JFactory::getApplication()->input->getString('option', '') == 'com_menus')
+					{
 						$cid = JFactory::getApplication()->input->get('cid', array(0), 'array');
 						JArrayHelper::toInteger($cid);
 						$currentItemId = $cid['0'];
 						$currentItemType = JFactory::getApplication()->input->getString('type', $item->type);
-						if ($currentItemId == $item->id && $currentItemType != $item->type) {
+						if ($currentItemId == $item->id && $currentItemType != $item->type)
+						{
 							$item->type = $currentItemType;
 						}
 					}
 
-					if ($showinput) {
+					if ($showinput)
+					{
 						$item->treename .= ' [' . $item->id . ']';
 					}
-					if ($item->home) {
+					if ($item->home)
+					{
 						$item->treename .= ' [' . JText::_('JDEFAULT') . ']';
 					}
 					$item->treename = NNText::prepareSelectItem($item->treename, $item->published, $item->type, ($parents ? 1 : 2));
 
-					if ($type == 'separator' && !$item->children) {
+					if ($type == 'separator' && !$item->children)
+					{
 						$disable = 1;
-					} else {
+					}
+					else
+					{
 						$disable = ($disable_types && !(strpos($disable_types, $item->type) === false));
 					}
 
@@ -124,23 +146,31 @@ class JFormFieldNN_MenuItems extends JFormField
 			}
 		}
 
-		if ($showinput) {
+		if ($showinput)
+		{
 			array_unshift($options, JHtml::_('select.option', '-', '&nbsp;', 'value', 'text', true));
 			array_unshift($options, JHtml::_('select.option', '-', '- ' . JText::_('Select Item') . ' -'));
 
-			if ($multiple) {
+			if ($multiple)
+			{
 				$onchange = 'if ( this.value ) { if ( ' . $this->id . '.value ) { ' . $this->id . '.value+=\',\'; } ' . $this->id . '.value+=this.value; } this.value=\'\';';
-			} else {
+			}
+			else
+			{
 				$onchange = 'if ( this.value ) { ' . $this->id . '.value=this.value;' . $this->id . '_text.value=this.options[this.selectedIndex].innerHTML.replace( /^((&|&amp;|&#160;)nbsp;|-)*/gm, \'\' ).trim(); } this.value=\'\';';
 			}
 			$attribs = 'class="inputbox" onchange="' . $onchange . '"';
 
 			$html = '<table cellpadding="0" cellspacing="0"><tr><td style="padding: 0px;">' . "\n";
-			if (!$multiple) {
+			if (!$multiple)
+			{
 				$val_name = $this->value;
-				if ($this->value) {
-					foreach ($items as $item) {
-						if ($item->id == $this->value) {
+				if ($this->value)
+				{
+					foreach ($items as $item)
+					{
+						if ($item->id == $this->value)
+						{
 							$val_name = $item->name . ' [' . $this->value . ']';;
 							break;
 						}
@@ -148,20 +178,24 @@ class JFormFieldNN_MenuItems extends JFormField
 				}
 				$html .= '<input type="text" id="' . $this->id . '_text" value="' . $val_name . '" class="inputbox" size="' . $size . '" disabled="disabled" />';
 				$html .= '<input type="hidden" name="' . $this->name . '" id="' . $this->id . '" value="' . $this->value . '" />';
-			} else {
+			}
+			else
+			{
 				$html .= '<input type="text" name="' . $this->name . '" id="' . $this->id . '" value="' . $this->value . '" class="inputbox" size="' . $size . '" />';
 			}
 			$html .= '</td><td style="padding: 0px;"padding-left: 5px;>' . "\n";
 			$html .= JHtml::_('select.genericlist', $options, '', $attribs, 'value', 'text', '', '');
 			$html .= '</td></tr></table>' . "\n";
 			return $html;
-		} else {
+		}
+		else
+		{
 			require_once JPATH_PLUGINS . '/system/nnframework/helpers/html.php';
 			return nnHtml::selectlist($options, $this->name, $this->value, $this->id, $size, $multiple);
 		}
 	}
 
-	private function def($val, $default = '')
+	private function get($val, $default = '')
 	{
 		return (isset($this->params[$val]) && (string) $this->params[$val] != '') ? (string) $this->params[$val] : $default;
 	}

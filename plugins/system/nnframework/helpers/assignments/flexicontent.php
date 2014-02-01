@@ -3,7 +3,7 @@
  * NoNumber Framework Helper File: Assignments: FlexiContent
  *
  * @package         NoNumber Framework
- * @version         13.8.9
+ * @version         13.11.22
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -25,7 +25,8 @@ class NNFrameworkAssignmentsFlexiContent
 
 	function passTags(&$parent, &$params, $selection = array(), $assignment = 'all')
 	{
-		if ($parent->params->option != 'com_flexicontent') {
+		if ($parent->params->option != 'com_flexicontent')
+		{
 			return $parent->pass(0, $assignment);
 		}
 
@@ -34,11 +35,13 @@ class NNFrameworkAssignmentsFlexiContent
 			|| ($params->inc_items && in_array($parent->params->view, array('item', 'items')))
 		);
 
-		if (!$pass) {
+		if (!$pass)
+		{
 			return $parent->pass(0, $assignment);
 		}
 
-		if ($params->inc_tags && $parent->params->view == 'tags') {
+		if ($params->inc_tags && $parent->params->view == 'tags')
+		{
 			$parent->q->clear()
 				->select('t.name')
 				->from('#__flexicontent_tags AS t')
@@ -47,7 +50,9 @@ class NNFrameworkAssignmentsFlexiContent
 			$parent->db->setQuery($parent->q);
 			$tag = $parent->db->loadResult();
 			$tags = array($tag);
-		} else {
+		}
+		else
+		{
 			$parent->q->clear()
 				->select('t.name')
 				->from('#__flexicontent_tags_item_relations AS x')
@@ -63,13 +68,15 @@ class NNFrameworkAssignmentsFlexiContent
 
 	function passTypes(&$parent, &$params, $selection = array(), $assignment = 'all')
 	{
-		if ($parent->params->option != 'com_flexicontent') {
+		if ($parent->params->option != 'com_flexicontent')
+		{
 			return $parent->pass(0, $assignment);
 		}
 
 		$pass = in_array($parent->params->view, array('item', 'items'));
 
-		if (!$pass) {
+		if (!$pass)
+		{
 			return $parent->pass(0, $assignment);
 		}
 

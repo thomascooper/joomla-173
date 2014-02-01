@@ -4,7 +4,7 @@
  * Displays the version check
  *
  * @package         NoNumber Framework
- * @version         13.8.9
+ * @version         13.11.22
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -17,6 +17,7 @@ defined('_JEXEC') or die;
 class JFormFieldNN_Version extends JFormField
 {
 	public $type = 'Version';
+	private $params = null;
 
 	protected function getLabel()
 	{
@@ -27,14 +28,16 @@ class JFormFieldNN_Version extends JFormField
 	{
 		$this->params = $this->element->attributes();
 
-		$extension = $this->def('extension');
-		$xml = $this->def('xml');
-		if (!strlen($extension) || !strlen($xml)) {
+		$extension = $this->get('extension');
+		$xml = $this->get('xml');
+		if (!strlen($extension) || !strlen($xml))
+		{
 			return '';
 		}
 
 		$authorise = JFactory::getUser()->authorise('core.manage', 'com_installer');
-		if (!$authorise) {
+		if (!$authorise)
+		{
 			return '';
 		}
 
@@ -45,7 +48,7 @@ class JFormFieldNN_Version extends JFormField
 		return $versions->getMessage($extension, $xml);
 	}
 
-	private function def($val, $default = '')
+	private function get($val, $default = '')
 	{
 		return (isset($this->params[$val]) && (string) $this->params[$val] != '') ? (string) $this->params[$val] : $default;
 	}

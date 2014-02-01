@@ -3,7 +3,7 @@
  * NoNumber Framework Helper File: Functions
  *
  * @package         NoNumber Framework
- * @version         13.8.9
+ * @version         13.11.22
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -19,34 +19,39 @@ defined('_JEXEC') or die;
 
 class NNFrameworkFunctions
 {
-	var $_version = '13.8.9';
+	var $_version = '13.11.22';
 
 	public function getByUrl($url, $options = array())
 	{
 		// only allow url calls from administrator
-		if (!JFactory::getApplication()->isAdmin()) {
+		if (!JFactory::getApplication()->isAdmin())
+		{
 			die;
 		}
 
 		// only allow when logged in
 		$user = JFactory::getUser();
-		if (!$user->id) {
+		if (!$user->id)
+		{
 			die;
 		}
 
-		if (substr($url, 0, 4) != 'http') {
+		if (substr($url, 0, 4) != 'http')
+		{
 			$url = 'http://' . $url;
 		}
 
 		// only allow url calls to nonumber.nl domain
-		if (!(preg_match('#^https?://([^/]+\.)?nonumber\.nl/#', $url))) {
+		if (!(preg_match('#^https?://([^/]+\.)?nonumber\.nl/#', $url)))
+		{
 			die;
 		}
 
 		// only allow url calls to certain files
 		if (
 			strpos($url, 'download.nonumber.nl/extensions.php') === false
-		) {
+		)
+		{
 			die;
 		}
 
@@ -62,13 +67,18 @@ class NNFrameworkFunctions
 	public function getContents($url, $fopen = 0)
 	{
 		$html = '';
-		if (!$fopen && function_exists('curl_init') && function_exists('curl_exec')) {
+		if (!$fopen && function_exists('curl_init') && function_exists('curl_exec'))
+		{
 			$html = $this->curl($url);
-		} else {
+		}
+		else
+		{
 			$file = @fopen($url, 'r');
-			if ($file) {
+			if ($file)
+			{
 				$html = array();
-				while (!feof($file)) {
+				while (!feof($file))
+				{
 					$html[] = fgets($file, 1024);
 				}
 				$html = implode('', $html);
@@ -92,17 +102,21 @@ class NNFrameworkFunctions
 		curl_setopt($ch, CURLOPT_TIMEOUT, $timeout);
 
 		$config = JComponentHelper::getParams('com_nonumbermanager');
-		if ($config && $config->get('use_proxy', 0) && $config->get('proxy_host')) {
+		if ($config && $config->get('use_proxy', 0) && $config->get('proxy_host'))
+		{
 			curl_setopt($ch, CURLOPT_PROXY, $config->get('proxy_host') . ':' . $config->get('proxy_port'));
 			curl_setopt($ch, CURLOPT_PROXYUSERPWD, $config->get('proxy_login') . ':' . $config->get('proxy_password'));
 			curl_setopt($ch, CURLOPT_TIMEOUT, 30);
 		}
 
 		//follow on location problems
-		if (ini_get('open_basedir') == '' && ini_get('safe_mode') != '1' && ini_get('safe_mode') != 'On') {
+		if (ini_get('open_basedir') == '' && ini_get('safe_mode') != '1' && ini_get('safe_mode') != 'On')
+		{
 			curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
 			$html = curl_exec($ch);
-		} else {
+		}
+		else
+		{
 			$html = $this->curl_redir_exec($ch);
 		}
 		curl_close($ch);
@@ -114,7 +128,8 @@ class NNFrameworkFunctions
 		static $curl_loops = 0;
 		static $curl_max_loops = 20;
 
-		if ($curl_loops++ >= $curl_max_loops) {
+		if ($curl_loops++ >= $curl_max_loops)
+		{
 			$curl_loops = 0;
 			return false;
 		}
@@ -125,29 +140,36 @@ class NNFrameworkFunctions
 		list($header, $data) = explode("\n\n", str_replace("\r", '', $data), 2);
 		$http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
-		if ($http_code == 301 || $http_code == 302) {
+		if ($http_code == 301 || $http_code == 302)
+		{
 			$matches = array();
 			preg_match('/Location:(.*?)\n/', $header, $matches);
 			$url = @parse_url(trim(array_pop($matches)));
-			if (!$url) {
+			if (!$url)
+			{
 				//couldn't process the url to redirect to
 				$curl_loops = 0;
 				return $data;
 			}
 			$last_url = parse_url(curl_getinfo($ch, CURLINFO_EFFECTIVE_URL));
-			if (!$url['scheme']) {
+			if (!$url['scheme'])
+			{
 				$url['scheme'] = $last_url['scheme'];
 			}
-			if (!$url['host']) {
+			if (!$url['host'])
+			{
 				$url['host'] = $last_url['host'];
 			}
-			if (!$url['path']) {
+			if (!$url['path'])
+			{
 				$url['path'] = $last_url['path'];
 			}
 			$new_url = $url['scheme'] . '://' . $url['host'] . $url['path'] . ($url['query'] ? '?' . $url['query'] : '');
 			curl_setopt($ch, CURLOPT_URL, $new_url);
 			return $this->curl_redir_exec($ch);
-		} else {
+		}
+		else
+		{
 			$curl_loops = 0;
 			return $data;
 		}
@@ -155,17 +177,20 @@ class NNFrameworkFunctions
 
 	static function extensionInstalled($extension, $type = 'component', $folder = 'system')
 	{
-		switch ($type) {
+		switch ($type)
+		{
 			case 'component':
 				if (JFile::exists(JPATH_ADMINISTRATOR . '/components/com_' . $extension . '/' . $extension . '.php')
 					|| JFile::exists(JPATH_ADMINISTRATOR . '/components/com_' . $extension . '/admin.' . $extension . '.php')
 					|| JFile::exists(JPATH_SITE . '/components/com_' . $extension . '/' . $extension . '.php')
-				) {
+				)
+				{
 					return 1;
 				}
 				break;
 			case 'plugin':
-				if (JFile::exists(JPATH_PLUGINS . '/' . $folder . '/' . $extension . '/' . $extension . '.php')) {
+				if (JFile::exists(JPATH_PLUGINS . '/' . $folder . '/' . $extension . '/' . $extension . '.php'))
+				{
 					return 1;
 				}
 				break;
@@ -174,7 +199,8 @@ class NNFrameworkFunctions
 					|| JFile::exists(JPATH_ADMINISTRATOR . '/modules/mod_' . $extension . '/mod_' . $extension . '.php')
 					|| JFile::exists(JPATH_SITE . '/modules/mod_' . $extension . '/' . $extension . '.php')
 					|| JFile::exists(JPATH_SITE . '/modules/mod_' . $extension . '/mod_' . $extension . '.php')
-				) {
+				)
+				{
 					return 1;
 				}
 				break;
@@ -184,10 +210,22 @@ class NNFrameworkFunctions
 
 	static function xmlToObject($url, $root)
 	{
-		$xml = new JXMLElement(JFile::read($url));
+		if (!JFile::exists($url))
+		{
+			return new stdClass;
+		}
 
-		if ($root) {
-			if (!isset($xml->$root)) {
+		$xml = @new SimpleXMLElement($url, LIBXML_NONET, 1);
+
+		if (!@count($xml))
+		{
+			return new stdClass;
+		}
+
+		if ($root)
+		{
+			if (!isset($xml->$root))
+			{
 				return new stdClass;
 			}
 			$xml = $xml->$root;
@@ -198,9 +236,11 @@ class NNFrameworkFunctions
 
 	static function convertXmlElement($el)
 	{
-		switch (gettype($el)) {
+		switch (gettype($el))
+		{
 			case 'object':
-				if (empty($el)) {
+				if (empty($el))
+				{
 					return '';
 				}
 				$el = (object) (array) $el;
@@ -212,14 +252,17 @@ class NNFrameworkFunctions
 		}
 
 		$obj = array();
-		foreach ($el as $key => $val) {
-			if ('comment' == (string) $key) {
+		foreach ($el as $key => $val)
+		{
+			if ('comment' == (string) $key)
+			{
 				continue;
 			}
 			$obj[$key] = self::convertXmlElement($val);
 		}
 
-		if ('object' == gettype($el)) {
+		if ('object' == gettype($el))
+		{
 			$obj = (object) $obj;
 		}
 

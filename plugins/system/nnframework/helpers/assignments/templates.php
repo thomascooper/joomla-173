@@ -3,7 +3,7 @@
  * NoNumber Framework Helper File: Assignments: Templates
  *
  * @package         NoNumber Framework
- * @version         13.8.9
+ * @version         13.11.22
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -21,6 +21,11 @@ class NNFrameworkAssignmentsTemplates
 	function passTemplates(&$parent, &$params, $selection = array(), $assignment = 'all')
 	{
 		$template = JFactory::getApplication()->getTemplate();
+		$template = JFactory::getApplication()->getTemplate($template);
+
+		// Put template name and name + style id into array
+		$template = array($template->template, $template->template . '::' . $template->id);
+
 		return $parent->passSimple($template, $selection, $assignment, 1);
 	}
 }

@@ -4,7 +4,7 @@
  * Displays Assignment Selection radio options
  *
  * @package         NoNumber Framework
- * @version         13.8.9
+ * @version         13.11.22
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -19,6 +19,7 @@ require_once JPATH_PLUGINS . '/system/nnframework/helpers/text.php';
 class JFormFieldNN_AssignmentSelection extends JFormField
 {
 	public $type = 'AssignmentSelection';
+	private $params = null;
 
 	protected function getLabel()
 	{
@@ -35,29 +36,35 @@ class JFormFieldNN_AssignmentSelection extends JFormField
 		$toggler = new nnFieldToggler;
 
 		$this->value = (int) $this->value;
-		$label = $this->def('label');
-		$param_name = $this->def('name');
-		$noshow = $this->def('noshow', 0);
-		$showclose = $this->def('showclose', 0);
+		$label = $this->get('label');
+		$param_name = $this->get('name');
+		$noshow = $this->get('noshow', 0);
+		$showclose = $this->get('showclose', 0);
 
 		$html = array();
 
-		if ($label) {
+		if ($label)
+		{
 			$label = NNText::html_entity_decoder(JText::_($label));
 
 			$html[] = '<div style="clear: both;"></div>';
-			if (!$noshow) {
+			if (!$noshow)
+			{
 				$html[] = $toggler->getInput(array('div' => 1, 'param' => 'show_assignments|' . $param_name, 'value' => '1|1,2'));
 			}
 
 			$class = 'nn_panel nn_panel_title nn_panel_toggle';
-			if ($this->value === 1) {
+			if ($this->value === 1)
+			{
 				$class .= ' nn_panel_include';
-			} else if ($this->value === 2) {
+			}
+			else if ($this->value === 2)
+			{
 				$class .= ' nn_panel_exclude';
 			}
 			$html[] = '<div class="' . $class . '">';
-			if ($showclose && JFactory::getUser()->authorise('core.admin')) {
+			if ($showclose && JFactory::getUser()->authorise('core.admin'))
+			{
 				$html[] = '<button type="button" class="nn_close nn_remove_assignment">&times;</button>';
 			}
 			$html[] = '<label class="nn_block nn_title" for="cb_' . $param_name . '">';
@@ -91,14 +98,17 @@ class JFormFieldNN_AssignmentSelection extends JFormField
 			$html[] = '<label for="' . $this->id . '2">' . JText::_('NN_EXCLUDE') . '</label>';
 
 			$html[] = '</fieldset>';
-		} else {
+		}
+		else
+		{
 			$html[] = '<div style="clear: both;"></div>';
 			$html[] = '</li></ul>';
 
 			$html[] = '<div style="clear: both;"></div>';
 			$html[] = '</div></div>';
 
-			if (!$noshow) {
+			if (!$noshow)
+			{
 				$html[] = $toggler->getInput(array('div' => 1));
 			}
 			$html[] = $toggler->getInput(array('div' => 1));
@@ -107,7 +117,7 @@ class JFormFieldNN_AssignmentSelection extends JFormField
 		return implode($html);
 	}
 
-	private function def($val, $default = '')
+	private function get($val, $default = '')
 	{
 		return (isset($this->params[$val]) && (string) $this->params[$val] != '') ? (string) $this->params[$val] : $default;
 	}

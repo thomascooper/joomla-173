@@ -4,7 +4,7 @@
  * Displays a select box of languages
  *
  * @package         NoNumber Framework
- * @version         13.8.9
+ * @version         13.11.22
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -17,20 +17,23 @@ defined('_JEXEC') or die;
 class JFormFieldNN_Languages extends JFormField
 {
 	public $type = 'Languages';
+	private $params = null;
 
 	protected function getInput()
 	{
 		$this->params = $this->element->attributes();
 
-		$size = (int) $this->def('size');
-		$multiple = $this->def('multiple');
-		$client = $this->def('client', 'SITE');
+		$size = (int) $this->get('size');
+		$multiple = $this->get('multiple');
+		$client = $this->get('client', 'SITE');
 
 		jimport('joomla.language.helper');
 		$langs = JLanguageHelper::createLanguageList($this->value, constant('JPATH_' . strtoupper($client)), true);
 		$options = array();
-		foreach ($langs as $lang) {
-			if ($lang['value']) {
+		foreach ($langs as $lang)
+		{
+			if ($lang['value'])
+			{
 				$option = new stdClass;
 				$option->value = $lang['value'];
 				$option->text = $lang['text'] . ' [' . $lang['value'] . ']';
@@ -42,7 +45,7 @@ class JFormFieldNN_Languages extends JFormField
 		return nnHtml::selectlist($options, $this->name, $this->value, $this->id, $size, $multiple);
 	}
 
-	private function def($val, $default = '')
+	private function get($val, $default = '')
 	{
 		return (isset($this->params[$val]) && (string) $this->params[$val] != '') ? (string) $this->params[$val] : $default;
 	}

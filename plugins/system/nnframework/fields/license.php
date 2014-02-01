@@ -4,7 +4,7 @@
  * Displays the License state
  *
  * @package         NoNumber Framework
- * @version         13.8.9
+ * @version         13.11.22
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -17,6 +17,7 @@ defined('_JEXEC') or die;
 class JFormFieldNN_License extends JFormField
 {
 	public $type = 'License';
+	private $params = null;
 
 	protected function getLabel()
 	{
@@ -27,9 +28,10 @@ class JFormFieldNN_License extends JFormField
 	{
 		$this->params = $this->element->attributes();
 
-		$extension = $this->def('extension');
+		$extension = $this->get('extension');
 
-		if (!strlen($extension)) {
+		if (!strlen($extension))
+		{
 			return '';
 		}
 
@@ -40,14 +42,15 @@ class JFormFieldNN_License extends JFormField
 		return $licenses->getMessage($extension);
 	}
 
-	private function def($val, $default = '')
+	private function get($val, $default = '')
 	{
 		return (isset($this->params[$val]) && (string) $this->params[$val] != '') ? (string) $this->params[$val] : $default;
 	}
 }
 
 /* For backward compatibility */
-if (!function_exists('NoNumber_License_outputState')) {
+if (!function_exists('NoNumber_License_outputState'))
+{
 	function NoNumber_License_outputState($extension)
 	{
 		require_once JPATH_PLUGINS . '/system/nnframework/helpers/licenses.php';
@@ -56,7 +59,8 @@ if (!function_exists('NoNumber_License_outputState')) {
 		return $licenses->getMessage($extension);
 	}
 }
-if (!function_exists('NoNumber_License_getState')) {
+if (!function_exists('NoNumber_License_getState'))
+{
 	function NoNumber_License_getState($extension)
 	{
 		require_once JPATH_PLUGINS . '/system/nnframework/helpers/licenses.php';

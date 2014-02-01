@@ -4,7 +4,7 @@
  * Displays a multiselectbox
  *
  * @package         NoNumber Framework
- * @version         13.8.9
+ * @version         13.11.22
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -20,29 +20,32 @@ defined('_JEXEC') or die;
 class JFormFieldNN_MultiSelect extends JFormField
 {
 	public $type = 'MultiSelect';
+	private $params = null;
 
 	protected function getInput()
 	{
 		$this->params = $this->element->attributes();
 
-		if (!is_array($this->value)) {
+		if (!is_array($this->value))
+		{
 			$this->value = explode(',', $this->value);
 		}
 
-		foreach ($this->element->children() as $item) {
+		foreach ($this->element->children() as $item)
+		{
 			$item_value = (string) $item['value'];
 			$item_name = JText::_(trim((string) $item));
 			$item_disabled = (int) $item['disabled'];
 			$options[] = JHtml::_('select.option', $item_value, $item_name, 'value', 'text', $item_disabled);
 		}
 
-		$size = (int) $this->def('size');
+		$size = (int) $this->get('size');
 
 		require_once JPATH_PLUGINS . '/system/nnframework/helpers/html.php';
 		return nnHtml::selectlist($options, $this->name, $this->value, $this->id, $size, 1);
 	}
 
-	private function def($val, $default = '')
+	private function get($val, $default = '')
 	{
 		return (isset($this->params[$val]) && (string) $this->params[$val] != '') ? (string) $this->params[$val] : $default;
 	}

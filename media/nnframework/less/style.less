@@ -2,14 +2,13 @@
  * Main stylesheet
  *
  * @package         NoNumber Framework
- * @version         13.8.9
+ * @version         13.11.22
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
  * @copyright       Copyright © 2013 NoNumber All Rights Reserved
  * @license         http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
-
 @import "init.less";
 
 input[type="checkbox"],
@@ -84,12 +83,12 @@ label.nn_title {
 
 fieldset.panelform,
 fieldset.adminform {
-  label.nn_label {
-    max-width: none;
-    &.nn_label_error {
-      background-color: lighten(@btnDangerBackground, 20%);
-    }
-  }
+	label.nn_label {
+		max-width: none;
+		&.nn_label_error {
+			background-color: lighten(@btnDangerBackground, 20%);
+		}
+	}
 }
 
 .nntoggler ul {
