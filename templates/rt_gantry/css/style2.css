@@ -258,18 +258,23 @@ div.bul_contents {
 }
 .bul_video {
 	width:800px;
-	height:460px;
+	height:450px;
 	background-color:black;	
 	top:312px;
 	position: relative;
-	margin-left: 80px;
+	margin-left: 72px;
 	display: table;
-	padding-top:10px;
+	border: 8px solid #99cccc;
 }
 .bul_ad {
 	position: relative;
-	left: 116px;
+	left: 114px;
 	top:340px;
+	width: 728px;
+	height: 90px;
+	margin-bottom:30px;
+	border: 2px solid #99cccc;
+	background-color: #D3D3D3;
 }
 .bul_ad div#blank1BM {
 	width: 100%;
@@ -287,4 +292,7 @@ div.bul_contents {
     float: left;
     height: 0;
     overflow: hidden;
+}
+.blank_container {
+    display: none;
 }
