@@ -14,6 +14,7 @@ body {
 
 #rt-footer .rt-container {
 	background:url('/templates/rt_gantry/images/header/header_bg.gif') !important;
+	padding-bottom: 30px;
 }
 
 /* Header - General */
