@@ -16,6 +16,7 @@ a:hover {color: #000;}
 
 #rt-footer .rt-container {
 	background:url('/templates/rt_gantry/images/header/header_bg.gif') !important;
+	padding-bottom:30px;
 }
 #rt-sidebar-a {background-color: transparent;
 top:-129px;
