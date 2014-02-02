@@ -872,6 +872,49 @@ margin-left:10px;
 div#sbox-window {
 	padding:0px;
 }
+
+/* top drawer layout */
+#rt-drawer {
+	width: 100%;
+	background-color: #ffffff;
+}
+#rt-drawer .rt-container,
+#rt-drawer .rt-grid-12 {
+	width: 960px;
+	margin: 0px auto;
+	padding: 0px;
+	display: table;
+} 
+#rt-drawer .rt-block {
+	padding: 0px;
+	margin: 0px;
+}
+#rt-drawer .rt-grid-12 div {
+	height: 35px;
+	display: table-cell;
+	vertical-align: middle;
+}
+
+/* status bar */
+.top_status {
+	float:left;
+}
+
+/* social links */
+.top_social {
+	float: right;
+	padding-right: 10px;
+}
+
+/* search box */
+.top_search {
+	width: 200px;
+	float: right;
+}
+.inputboxtop_search {
+	margin: 0px;
+	width: 97%;
+}
 .pad_top {
 	margin-top:350px;
 }
