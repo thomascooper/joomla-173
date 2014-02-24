@@ -798,8 +798,9 @@ div.catItemAuthorImg {
 	position: relative;
 	float: right;
 	height: 34px;
-	width: 366px;
+	width: 28px;
 	margin-right: 10px;
+	margin-top: 14px;
 }
 div.catItemAuthorImg img {
 	position: absolute;
@@ -813,14 +814,8 @@ div.catItemBody span.catItemAuthor {
 	margin-right: 10px;
 	    color:#bbbbbb;
     font-size:90%;
-
+	margin-top: 33px;
 }
-
-/*
-	float: right;
-	position: relative;
-	bottom: 100px;
-}*/
 div.catItemBody span.catItemDateCreated {
 	padding-left: 2px;
 	color:#bbbbbb;

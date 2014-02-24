@@ -119,7 +119,21 @@ K2HelperUtilities::setDefaultImage($this->item, 'itemlist', $this->params);
 
 		<?php if($this->item->params->get('catItemAuthor')): ?>
 		<!-- Item Author -->
-<div class='catItemAuthorImg'><img src='<?php echo $this->item->author->avatar; ?>' /></div>
+<?
+$user = strip_tags($this->item->author);
+        $db= JFactory::getDBO();
+        $sql= "
+SELECT u.name, u.username, c.avatar FROM #__users as u 
+left join #__comprofiler as c
+on c.user_id = u.id
+where u.username = '$user'
+		
+		";
+        $db->setQuery($sql);
+        $results = $db->loadObjectList(); 
+$image = 'images/comprofiler/'.$results['0']->avatar;
+?>
+<div class='catItemAuthorImg'><img src='<?php echo $image; ?>' /></div>
 		<span class="catItemAuthor">
 			<?php echo K2HelperUtilities::writtenBy($this->item->author->profile->gender); ?> <a rel="author" href="<?php echo $this->item->author->link; ?>"><?php echo $this->item->author->name; ?></a>
 		</span>
