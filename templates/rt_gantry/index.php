@@ -35,7 +35,7 @@ require_once('lib/gantry/gantry.php');
 <?php
 	$mainframe = JFactory::getApplication();
 	$jdb = $mainframe->getCfg('db');
-	echo "$jdb<br/>";
+	if ($jdb !== 'joomla_db') {echo "$jdb<br/>";}
 ?>
         <?php /** Begin Drawer **/ if ($gantry->countModules('drawer')) : ?>
         <div id="rt-drawer">

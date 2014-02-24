@@ -446,7 +446,7 @@ span.itemImage img {
 }
 
 #fb_container {
-	width: 550px;
+	width: 330px;
 	margin: 0 auto;
 }
 
@@ -455,8 +455,9 @@ span.itemImage img {
 	margin-top: 7px;
 	color: white;
 }
- #fb-like {
-	float: right;
+.fb-like {
+	/*float: right;*/
+	padding-top:7px;
 }
  #bottom_status {
 	height:33px;
