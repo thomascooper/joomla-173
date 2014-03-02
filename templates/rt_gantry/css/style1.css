@@ -756,11 +756,9 @@ div.catItemImageBlock {
 }
 div.catItemIntroText {
 	position: relative;
-	top: 0px;
-	width: 365px;
-	height: 78px;
+	width: 97.00%;
 	display: block;
-	margin-left:220px;
+	margin-left:10px;
         font:16px Verdana;
         color:gray;
 
