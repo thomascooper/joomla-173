@@ -748,6 +748,7 @@ div.itemContainer {
 
 div div.catItemView {
 	padding: 7px 4px 4px 4px;
+	height: 100.00%;
 }
 div.catItemImageBlock {
 	width:220px;
@@ -778,49 +779,52 @@ div div.catItemHeader h3.catItemTitle a {
 	color: #264040;
 }
 div div.catItemBody {
-	padding: 8px 0px 0px 0px;
-	height:150px;
+	height: 429px;
 	width: 612px;
 }
 div div.catItemImageBlock {
 	margin: 0px;
-	padding: 0px 8px 0px 8px;
-	height: 150px;
+	padding: 0px 8px 0px 0px;
+	width: 100.00%;
+	height: 327px;
 }
 div span.catItemImage {
-	margin: 0px;
-	height: 128px;
+	position: relative;
+	width: 327px;
 }
 div span.catItemImage a img {
-	height: 110px !important;
+	height: 327px !important;
+	width: 594px !important;
 }
 div.catItemAuthorImg {
 	position: relative;
 	float: right;
 	height: 34px;
 	width: 28px;
-	margin-right: 10px;
-	margin-top: 14px;
+	margin-right: 13px;
+	top: -12px;
 }
 div.catItemAuthorImg img {
-	position: absolute;
 	right: 0px;
-	bottom: 0px;
 	width: 33px;
 }
-div.catItemBody span.catItemAuthor {
+div.catItemFooter span.catItemAuthor {
 	display:block;
 	float: right;
-	margin-right: 10px;
-	    color:#bbbbbb;
-    font-size:90%;
-	margin-top: 33px;
-}
-div.catItemBody span.catItemDateCreated {
-	padding-left: 2px;
+	margin-right: 5px;
 	color:#bbbbbb;
-    	font-size:90%;
-
+	width: 65px;
+	line-height: normal;
+	text-align: right;
+	position: relative;
+	top: 5px;
+}
+div.catItemFooter span.catItemDateCreated {
+	padding-left: 10px;
+	color:#bbbbbb;
+	font-size: 110%;
+	position: relative;
+	top: 12px;
 }
 
 div.bottomBoard {

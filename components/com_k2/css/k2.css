@@ -145,7 +145,7 @@ span.itemEditLink {float:right;display:block;padding:4px 0;margin:0;width:120px;
 span.itemEditLink a {padding:2px 12px;border:1px solid #ccc;background:#eee;text-decoration:none;font-size:11px;font-weight:normal;font-family:Arial, Helvetica, sans-serif;}
 span.itemEditLink a:hover {background:#ffffcc;}
 
-div.itemHeader {}
+div.itemHeader {position:absolute;}
 	div.itemHeader span.itemDateCreated {color:#999;font-size:11px;}
 	div.itemHeader h2.itemTitle {font-family:Georgia, "Times New Roman", Times, serif;font-size:36px;font-weight:normal;line-height:110%;padding:10px 0 4px 0;margin:0;}
 	div.itemHeader h2.itemTitle span {}
@@ -385,7 +385,11 @@ div.itemList {}
 	div#itemListSecondary {}
 	div#itemListLinks {background:#f7fafe;border:1px solid #ddd;margin:8px 0;padding:8px;}
 
-		div.itemContainer {float:left;}
+	div.itemContainer {
+		float:left;
+		width:100.00%;
+		min-height:499px;
+	}
 		div.itemContainerLast {} /* this class is appended to the last container on each row of items (useful when you want to set 0 padding/margin to the last container) */
 
 /* --- Item block for each item group --- */
@@ -403,7 +407,7 @@ span.catItemEditLink {float:right;display:block;padding:4px 0;margin:0;width:120
 span.catItemEditLink a {padding:2px 12px;border:1px solid #ccc;background:#eee;text-decoration:none;font-size:11px;font-weight:normal;font-family:Arial, Helvetica, sans-serif;}
 span.catItemEditLink a:hover {background:#ffffcc;}
 
-div.catItemHeader {}
+div.catItemHeader {padding-bottom:5px;}
 	div.catItemHeader span.catItemDateCreated {color:#999;font-size:11px;}
 	div.catItemHeader h3.catItemTitle {font-family:Georgia, "Times New Roman", Times, serif;font-size:24px;font-weight:normal;line-height:110%;padding:10px 0 4px 0;margin:0;}
 	div.catItemHeader h3.catItemTitle span {}
@@ -415,11 +419,11 @@ div.catItemHeader {}
 div.catItemRatingBlock {padding:8px 0;}
 	div.catItemRatingBlock span {display:block;float:left;font-style:normal;padding:0 4px 0 0;margin:0;color:#999;}
 
-div.catItemBody {padding:8px 0;margin:0;}
+div.catItemBody {padding:0; margin:0;}
 
 div.catItemImageBlock {padding:8px;margin:0 0 16px 0;}
 	span.catItemImage {display:block;text-align:center;margin:0 0 8px 0;}
-	span.catItemImage img {border:1px solid #ccc;padding:8px;}
+	span.catItemImage img {border:0px solid #ccc;padding:8px;}
 
 div.catItemIntroText {font-size:inherit;font-weight:normal;line-height:inherit;padding:4px 0 12px 0;}
 	div.catItemIntroText img {}

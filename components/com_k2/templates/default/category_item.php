@@ -92,6 +92,14 @@ K2HelperUtilities::setDefaultImage($this->item, 'itemlist', $this->params);
 
 	  <!-- K2 Plugins: K2BeforeDisplayContent -->
 	  <?php echo $this->item->event->K2BeforeDisplayContent; ?>
+	
+	
+	  <?php if($this->item->params->get('catItemIntroText')): ?>
+	  <!-- Item introtext -->
+	  <div class="catItemIntroText">
+	  	<?php echo $this->item->introtext; ?>
+	  </div>
+	  <?php endif; ?>
 
 	  <?php if($this->item->params->get('catItemImage') && !empty($this->item->image)): ?>
 	  <!-- Item Image -->
@@ -101,44 +109,8 @@ K2HelperUtilities::setDefaultImage($this->item, 'itemlist', $this->params);
 		    	<img src="<?php echo $this->item->image; ?>" alt="<?php if(!empty($this->item->image_caption)) echo K2HelperUtilities::cleanHtml($this->item->image_caption); else echo K2HelperUtilities::cleanHtml($this->item->title); ?>" style="width:<?php echo $this->item->imageWidth; ?>px; height:auto;" />
 		    </a>
 		  </span>
-		  <div class="clr"></div>
-		<?php if($this->item->params->get('catItemDateCreated')): ?>
-		<!-- Date created -->
-		<span class="catItemDateCreated">
-			<?php echo 'Added ' . JHTML::_('date', $this->item->created , JText::_('K2_DATE_FORMAT_LC2')); ?>
-		</span>
-		<?php endif; ?>
 	  </div>
 	  <?php endif; ?>
-	  <?php if($this->item->params->get('catItemIntroText')): ?>
-	  <!-- Item introtext -->
-	  <div class="catItemIntroText">
-	  	<?php echo $this->item->introtext; ?>
-	  </div>
-	  <?php endif; ?>
-
-		<?php if($this->item->params->get('catItemAuthor')): ?>
-		<!-- Item Author -->
-<?
-$user = strip_tags($this->item->author);
-        $db= JFactory::getDBO();
-        $sql= "
-SELECT u.name, u.username, c.avatar FROM #__users as u 
-left join #__comprofiler as c
-on c.user_id = u.id
-where u.username = '$user'
-		
-		";
-        $db->setQuery($sql);
-        $results = $db->loadObjectList(); 
-$image = 'images/comprofiler/'.$results['0']->avatar;
-?>
-<div class='catItemAuthorImg'><img src='<?php echo $image; ?>' /></div>
-		<span class="catItemAuthor">
-			<?php echo K2HelperUtilities::writtenBy($this->item->author->profile->gender); ?> <a rel="author" href="<?php echo $this->item->author->link; ?>"><?php echo $this->item->author->name; ?></a>
-		</span>
-		<?php endif; ?>
-		<div class="clr"></div>
 
 	  <?php if($this->item->params->get('catItemExtraFields') && count($this->item->extra_fields)): ?>
 	  <!-- Item extra fields -->
@@ -167,6 +139,38 @@ $image = 'images/comprofiler/'.$results['0']->avatar;
 	  <div class="clr"></div>
   </div>
 
+<div class="catItemFooter">
+
+<?php if($this->item->params->get('catItemDateCreated')): ?>
+<!-- Date created -->
+<span class="catItemDateCreated">
+	<?php echo 'Added ' . JHTML::_('date', $this->item->created , JText::_('K2_DATE_FORMAT_LC2')); ?>
+</span>
+<?php endif; ?>
+
+<?php if($this->item->params->get('catItemAuthor')): ?>
+		<!-- Item Author -->
+<?
+$user = strip_tags($this->item->author);
+        $db= JFactory::getDBO();
+        $sql= "
+SELECT u.name, u.username, c.avatar FROM #__users as u 
+left join #__comprofiler as c
+on c.user_id = u.id
+where u.username = '$user'
+		
+		";
+        $db->setQuery($sql);
+        $results = $db->loadObjectList(); 
+$image = 'images/comprofiler/'.$results['0']->avatar;
+$authName = $results['0']->name;
+?>
+<div class='catItemAuthorImg'><img src='<?php echo $image; ?>' /></div>
+		<span class="catItemAuthor">
+			<?php echo K2HelperUtilities::writtenBy($this->item->author->profile->gender); ?> <a rel="author" href="<?php echo $this->item->author->link; ?>"><?php echo "\n$authName"; ?></a>
+		</span>
+		<?php endif; ?>
+</div>
   <?php if(
   $this->item->params->get('catItemHits') ||
   $this->item->params->get('catItemCategory') ||
