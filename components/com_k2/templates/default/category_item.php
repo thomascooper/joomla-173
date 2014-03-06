@@ -131,10 +131,10 @@ K2HelperUtilities::setDefaultImage($this->item, 'itemlist', $this->params);
 	  <?php endif; ?>
 
 	  <!-- Plugins: AfterDisplayContent -->
-	  <?php echo $this->item->event->AfterDisplayContent; ?>
+	  <?php //echo $this->item->event->AfterDisplayContent; ?>
 
 	  <!-- K2 Plugins: K2AfterDisplayContent -->
-	  <?php echo $this->item->event->K2AfterDisplayContent; ?>
+	  <?php //echo $this->item->event->K2AfterDisplayContent; ?>
 
 	  <div class="clr"></div>
   </div>
@@ -166,9 +166,12 @@ $image = 'images/comprofiler/'.$results['0']->avatar;
 $authName = $results['0']->name;
 ?>
 <div class='catItemAuthorImg'><img src='<?php echo $image; ?>' /></div>
-		<span class="catItemAuthor">
-			<?php echo K2HelperUtilities::writtenBy($this->item->author->profile->gender); ?> <a rel="author" href="<?php echo $this->item->author->link; ?>"><?php echo "\n$authName"; ?></a>
-		</span>
+		<div class="catItemPostText">
+			<?php echo K2HelperUtilities::writtenBy($this->item->author->profile->gender); ?> 
+		</div>
+		<div class="catItemAuthorName">
+			<a rel="author" href="<?php echo $this->item->author->link; ?>"><?php echo "\n$authName"; ?></a>
+		</div>
 		<?php endif; ?>
 </div>
   <?php if(

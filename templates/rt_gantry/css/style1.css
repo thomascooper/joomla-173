@@ -402,7 +402,7 @@ div.k2ItemsBlock ul li span.moduleItemDateCreated {
 	font-family: Verdana, Verdana, Geneva, sans-serif !important;
 	font-weight: bold !important;
 	font-size: 20px !important;
-	padding: 5px 0px 5px 7px  !important;
+	padding: 5px 7px 5px 7px  !important;
 	color: white;
 	height:auto;
 	border: 2px solid gray;
@@ -435,6 +435,7 @@ span.itemImage img {
 }
 .itemImageBlock {
 	padding-top: 0px !important;
+	margin-top: 73px !important;
 }
 .itemRatingBlock {
         padding-bottom: 0px !important;
@@ -747,20 +748,23 @@ div.itemContainer {
 }
 
 div div.catItemView {
-	padding: 7px 4px 4px 4px;
 	height: 100.00%;
 }
 div.catItemImageBlock {
 	width:220px;
 	float: left;
+	position: relative;
+	top: -17px;
+	padding: 8px 8px 0px 8px !important;
+	margin: 0px !important;
 }
 div.catItemIntroText {
 	position: relative;
 	width: 97.00%;
 	display: block;
-	margin-left:10px;
         font:16px Verdana;
         color:gray;
+	left: 9px;
 
 }
 div div.catItemHeader h3.catItemTitle {
@@ -769,60 +773,68 @@ div div.catItemHeader h3.catItemTitle {
     font-size: 20px;
     font-weight: bold;
     line-height: 20px;
-    margin: 0 10px;
-    padding: 0;
     text-transform: uppercase;
+	position:relative;
+	left: 8px;
+	width: 98%;
 }
 div div.catItemHeader h3.catItemTitle a {
 	color: #264040;
 }
 div div.catItemBody {
-	height: 429px;
 	width: 612px;
 }
 div div.catItemImageBlock {
-	margin: 0px;
-	padding: 0px 8px 0px 0px;
 	width: 100.00%;
-	height: 327px;
 }
 div span.catItemImage {
 	position: relative;
-	width: 327px;
+	right: 9px;
+	margin: 0px !important;
 }
 div span.catItemImage a img {
-	height: 327px !important;
 	width: 594px !important;
 }
 div.catItemAuthorImg {
 	position: relative;
 	float: right;
-	height: 34px;
-	width: 28px;
-	margin-right: 13px;
-	top: -12px;
+	right: 7px;
+	bottom: 6px;
 }
 div.catItemAuthorImg img {
 	right: 0px;
 	width: 33px;
 }
-div.catItemFooter span.catItemAuthor {
-	display:block;
+div.catItemFooter {
+position: relative;
+width: 100.00%;
+height: 40px;
+left: -1px;
+}
+div.catItemFooter div.catItemPostText {
+	color:#bbbbbb;
+	width: 65px;
+	text-align: right;
+	position: absolute;
+	bottom: 12px;
+	right: 45px;
+}
+div.catItemFooter div.catItemAuthorName {
 	float: right;
-	margin-right: 5px;
 	color:#bbbbbb;
 	width: 65px;
 	line-height: normal;
 	text-align: right;
-	position: relative;
-	top: 5px;
+	position: absolute;
+	bottom: 3px;
+	right:45px;
 }
 div.catItemFooter span.catItemDateCreated {
-	padding-left: 10px;
 	color:#bbbbbb;
 	font-size: 110%;
 	position: relative;
-	top: 12px;
+	bottom: -18px;
+	left:9px;
 }
 
 div.bottomBoard {
