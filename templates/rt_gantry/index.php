@@ -26,6 +26,7 @@ require_once('lib/gantry/gantry.php');
             $gantry->displayHead();
             $gantry->addStyles(array('template.css','joomla.css','style.css'));
         ?>
+<script type="text/javascript" src="/templates/rt_gantry/js/bulimia.js" charset="utf-8" ></script>
 <!-- mobile theory mobile -->
 <script type="text/javascript">if(navigator.userAgent.match(/iphone|ipod|android/i))document.write('\x3cscript type="text/javascript" src="http://overpass.mobiletheory.com/ab0">\x3c/script>');</script>
 <!-- mobile theory tablet -->
