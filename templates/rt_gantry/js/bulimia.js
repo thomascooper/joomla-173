@@ -20,7 +20,7 @@ function changeVid(id, vidName) {
 		break;
 	case "bul_trail":
 jQuery("#bul_Player").hide();
-		x = "https://www.youtube.com/embed/raPd5tVtyaA";
+		x = "https://www.youtube.com/embed/31-9XBt1R7s";
 	//	document.getElementById("filmLink").style.border="0px red solid";
 		document.getElementById("trailerLink").style.border="2px red solid";
 		document.getElementById("behindLink").style.border="0px red solid";
@@ -31,7 +31,7 @@ jQuery("#bul_Player").hide();
 		break;
 	case "bul_bts":
 jQuery("#bul_Player").hide();
-		x = "https://www.youtube.com/embed/vYZCY2svCPo";
+		x = "https://www.youtube.com/embed/LYmR0l_l5yk";
 	//	document.getElementById("filmLink").style.border="0px red solid";
 		document.getElementById("trailerLink").style.border="0px red solid";
 		document.getElementById("behindLink").style.border="2px red solid";
