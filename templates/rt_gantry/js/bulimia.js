@@ -21,7 +21,7 @@ jQuery("#bul_Player").hide();
 		break;
 	case "bul_trail":
 jQuery("#bul_Player").hide();
-		x = "https://www.youtube.com/embed/31-9XBt1R7s";
+		x = "https://www.youtube.com/embed/zmfAfaimF68";
 		document.getElementById("filmLink").style.border="0px red solid";
 		document.getElementById("trailerLink").style.border="2px red solid";
 		document.getElementById("behindLink").style.border="0px red solid";
