@@ -18,7 +18,28 @@ defined('_JEXEC') or die('Restricted access');
 	<span><?php echo JText::_('K2_PRINT_THIS_PAGE'); ?></span>
 </a>
 <?php endif; ?>
+<?php
+	$document = &JFactory::getDocument();
+	$opengraph_meta = '
+	<meta property="og:title" content="'.$document->title.'"/>
+	<meta property="og:type" content="blog"/>
+	<meta property="og:url" content="'.$document->base.'"/>
+	<meta property="og:description" content="'.$document->description.'"/>
+ 
+	<meta property="og:site_name" content="World Wide Interweb"/>
+	<meta property="fb:admins" content="507773944"/>
+	<meta property="fb:admins" content="1191701683"/>
+	';
+	if (!empty($document->_metaTags['standard']['image'])) {
+	    $imageUrl = preg_replace('/_XS/','_L',$document->_metaTags['standard']['image']);
+	    $opengraph_meta .= '<meta property="og:image" content="'.$imageUrl.'"/>';
+	}
+	else {
+	    $opengraph_meta .= '<meta property="og:image" content="http://www.worldwideinterweb.com/images/logo/logo.png"/>';
+	}
+	$document->addCustomTag( $opengraph_meta );
 
+?>
 <!-- Start K2 Item Layout -->
 <span id="startOfPageId<?php echo JRequest::getInt('id'); ?>"></span>
 
