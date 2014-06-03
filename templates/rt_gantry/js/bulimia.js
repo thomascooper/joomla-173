@@ -32,7 +32,7 @@ jQuery("#bul_Player").hide();
 		break;
 	case "bul_bts":
 jQuery("#bul_Player").hide();
-		x = "https://www.youtube.com/embed/LYmR0l_l5yk";
+		x = "https://www.youtube.com/embed/rlrbocpXqdw";
 		document.getElementById("filmLink").style.border="0px red solid";
 		document.getElementById("trailerLink").style.border="0px red solid";
 		document.getElementById("behindLink").style.border="2px red solid";
