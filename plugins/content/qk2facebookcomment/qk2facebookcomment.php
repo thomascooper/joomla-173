@@ -44,13 +44,12 @@ class plgContentqk2facebookcomment extends K2Plugin
 			$jURI =& JURI::getInstance();
 			$link = $jURI->toString();
 		}
-		preg_match_all('/src="([^"]+)"/i', $item->text, $matches);
-		if(!empty($matches[1][0])) {
-			$imageUrl = JURI::root() . $matches[1][0]; 
-			$document->addCustomTag( '<meta property="og:image" content="'.$imageUrl.'" />' );
-		}else{
-			$document->addCustomTag( '<meta property="og:image" content="'.$item->imageMedium.'" />' );
+		if (strpos($item->imageLarge,'http') !== FALSE) {
+			$imageUrl = $item->imageLarge;
+		} else {
+			$imageUrl = JURI::root() . $item->imageLarge; 
 		}
+		$document->addCustomTag( '<meta property="og:image" content="'.$imageUrl.'" />' );
 		$fbcomment = '<div id="fb-root"></div>';
 		$fbcomment .= '
 			<script>(function(d, s, id) {
@@ -160,6 +159,8 @@ class plgContentqk2facebookcomment extends K2Plugin
 				 	preg_match_all('/src="([^"]+)"/i', $catitem->introtext.$catitem->fulltext, $matches);
 					if(!empty($matches[1][0])) {
 						$imageUrl = JURI::root() . $matches[1][0]; 
+						$imageUrl = preg_replace('/_XS/','_L',$imageUrl);
+						$imageUrl = preg_replace('/_M/','_L',$imageUrl);
 						$document->addCustomTag( '<meta property="og:image" content="'.$imageUrl.'" />' );
 					}
 			 		if($categories){
