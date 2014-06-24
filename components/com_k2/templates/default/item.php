@@ -20,8 +20,18 @@ defined('_JEXEC') or die('Restricted access');
 <?php endif; ?>
 <?php
 	$document = &JFactory::getDocument();
+	$saveTitle = $document->getTitle();
+
+	if(!empty($this->item->extra_fields)) {
+	$extra_fields = json_decode($this->item->extra_fields);
+	$custom_title = $extra_fields[0]->value;
+//	var_dump($custom_title);die();
+	}
+
+	$newTitle = (!empty($custom_title) && $custom_title !== '')?$custom_title:$saveTitle;
+	$document->setTitle($newTitle);
 	$opengraph_meta = '
-	<meta property="og:title" content="'.$document->title.'"/>
+	<meta property="og:title" content="'.$saveTitle.'"/>
 	<meta property="og:type" content="blog"/>
 	<meta property="og:url" content="'.$document->base.'"/>
 	<meta property="og:description" content="'.$document->description.'"/>
