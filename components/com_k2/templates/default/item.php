@@ -21,11 +21,12 @@ defined('_JEXEC') or die('Restricted access');
 <?php
 	$document = &JFactory::getDocument();
 	$saveTitle = $document->getTitle();
+	$title_h = 'h2';
 
 	if(!empty($this->item->extra_fields)) {
-	$extra_fields = json_decode($this->item->extra_fields);
-	$custom_title = $extra_fields[0]->value;
-//	var_dump($custom_title);die();
+	    $extra_fields = json_decode($this->item->extra_fields);
+	    $custom_title = $extra_fields[0]->value;
+	    $title_h = ($extra_fields[1]->value === '2') ? 'h1' : 'h2' ;
 	}
 
 	$newTitle = (!empty($custom_title) && $custom_title !== '')?$custom_title:$saveTitle;
@@ -71,7 +72,7 @@ defined('_JEXEC') or die('Restricted access');
 
 	  <?php if($this->item->params->get('itemTitle')): ?>
 	  <!-- Item title -->
-	  <h2 class="itemTitle">
+	  <?php echo '<'.$title_h . ' class="itemTitle">';?>
 			<?php if(isset($this->item->editLink)): ?>
 			<!-- Item edit link -->
 			<span class="itemEditLink">
@@ -91,8 +92,7 @@ defined('_JEXEC') or die('Restricted access');
 		  	</sup>
 	  	</span>
 	  	<?php endif; ?>
-
-	  </h2>
+	  <?php echo '</'.$title_h.'>';?>
 	  <?php endif; ?>
 
 		<?php if($this->item->params->get('itemAuthor')): ?>
