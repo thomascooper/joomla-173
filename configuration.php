@@ -41,7 +41,7 @@ class JConfig {
 	public $cache_handler = 'apc';
 	public $cachetime = '15';
 	public $MetaDesc = 'World Wide Interweb. It\'s basically the internet and stuff. You know... funny original videos, photo galleries based on some sort of like super cool themes. That sort of thing.';
-	public $MetaKeys = 'funny, comedy, videos, photos, galleries, original, parody, celebrities, compilation, sports, gaming, lists, humor';
+	public $MetaKeys = '';
 	public $MetaAuthor = '1';
 	public $sef = '1';
 	public $sef_rewrite = '1';
@@ -60,7 +60,6 @@ class JConfig {
 	public $cookie_path = '';
 	public $memcache_persist = '1';
 	public $memcache_compress = '0';
-	//public $memcache_server_host = '127.O.0.1';
 	public $memcache_server_host = '10.1.1.36';
 	public $memcache_server_port = '11211';
 	public $captcha = 'recaptcha';
