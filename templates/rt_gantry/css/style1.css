@@ -842,6 +842,10 @@ div.bottomBoard {
 	padding: 0px !important;
 	height: 120px;
 }
+div.bottomBoard .rt-block {
+	margin: 0 auto;
+	width: 728px;
+}
 div#k2Container {
 	padding:0px !important;
 }
