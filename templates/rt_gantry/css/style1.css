@@ -409,6 +409,7 @@ div.k2ItemsBlock ul li span.moduleItemDateCreated {
 	text-transform: uppercase;
         background:url('/templates/rt_gantry/images/body/title_bg.gif');
 	letter-spacing: 0.1px;	
+	margin: 0;
 }
 .linkbar_top8 .module-title h2 {
 	border: none;
@@ -836,7 +837,64 @@ div.catItemFooter span.catItemDateCreated {
 	bottom: -18px;
 	left:9px;
 }
-
+span.itemDateCreated {
+	color:#bbbbbb;
+	font-size: 110%;
+	position: relative;
+	bottom: 4px;
+	left:117px;
+}
+div.itemAuthBlock {
+	width:100%;
+	float: left;
+	margin: 15px 0 0px;
+}
+div.itemAuthorImg {
+	position: relative;
+	float: left;
+}
+div.itemAuthorImg img {
+	right: 0px;
+	width: 33px;
+}
+div.itemPostText {
+	color:#bbbbbb;
+	width: 65px;
+	text-align: right;
+	position: absolute;
+	bottom: 12px;
+	right: 45px;
+}
+div.itemAuthorText {
+	color:#bbbbbb;
+	width: 135px;
+	line-height: normal;
+	position: relative;
+	top: 13px;
+	left: 10px;
+}
+div.itemHeader {
+	position: relative !important;
+	padding-top: 37px;
+}
+div.itemBody div.catItemPostText {
+	color:#bbbbbb;
+	width: 65px;
+	text-align: right;
+	position: absolute;
+	bottom: 12px;
+	right: 45px;
+}
+div.itemBody div.catItemAuthorName {
+	float: right;
+	color:#bbbbbb;
+	width: 65px;
+	line-height: normal;
+	text-align: right;
+	position: absolute;
+	bottom: 3px;
+	right:45px;
+}
 div.bottomBoard {
 	margin: 0px !important;
 	padding: 0px !important;
@@ -844,6 +902,7 @@ div.bottomBoard {
 }
 div#k2Container {
 	padding:0px !important;
+	margin: -35px 0 24px !important;
 }
 div div.facebook_button_bg {
 	float: left;
