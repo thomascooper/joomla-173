@@ -62,14 +62,6 @@ defined('_JEXEC') or die('Restricted access');
 	<!-- K2 Plugins: K2BeforeDisplay -->
 	<?php echo $this->item->event->K2BeforeDisplay; ?>
 	<div class="itemHeader">
-
-		<?php if($this->item->params->get('itemDateCreated')): ?>
-		<!-- Date created -->
-		<span class="itemDateCreated">
-			<?php echo JHTML::_('date', $this->item->created , JText::_('K2_DATE_FORMAT_LC2')); ?>
-		</span>
-		<?php endif; ?>
-
 	  <?php if($this->item->params->get('itemTitle')): ?>
 	  <!-- Item title -->
 	  <?php echo '<'.$title_h . ' class="itemTitle">';?>
@@ -94,20 +86,7 @@ defined('_JEXEC') or die('Restricted access');
 	  	<?php endif; ?>
 	  <?php echo '</'.$title_h.'>';?>
 	  <?php endif; ?>
-
-		<?php if($this->item->params->get('itemAuthor')): ?>
-		<!-- Item Author -->
-		<span class="itemAuthor">
-			<?php echo K2HelperUtilities::writtenBy($this->item->author->profile->gender); ?>&nbsp;
-			<?php if(empty($this->item->created_by_alias)): ?>
-			<a rel="author" href="<?php echo $this->item->author->link; ?>"><?php echo $this->item->author->name; ?></a>
-			<?php else: ?>
-			<?php echo $this->item->author->name; ?>
-			<?php endif; ?>
-		</span>
-		<?php endif; ?>
-
-  </div>
+ </div>
 
   <!-- Plugins: AfterDisplayTitle -->
   <?php echo $this->item->event->AfterDisplayTitle; ?>
