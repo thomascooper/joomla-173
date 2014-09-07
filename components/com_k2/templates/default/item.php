@@ -9,7 +9,6 @@
 
 // no direct access
 defined('_JEXEC') or die('Restricted access');
-
 ?>
 
 <?php if(JRequest::getInt('print')==1): ?>
@@ -62,14 +61,6 @@ defined('_JEXEC') or die('Restricted access');
 	<!-- K2 Plugins: K2BeforeDisplay -->
 	<?php echo $this->item->event->K2BeforeDisplay; ?>
 	<div class="itemHeader">
-
-		<?php if($this->item->params->get('itemDateCreated')): ?>
-		<!-- Date created -->
-		<span class="itemDateCreated">
-			<?php echo JHTML::_('date', $this->item->created , JText::_('K2_DATE_FORMAT_LC2')); ?>
-		</span>
-		<?php endif; ?>
-
 	  <?php if($this->item->params->get('itemTitle')): ?>
 	  <!-- Item title -->
 	  <?php echo '<'.$title_h . ' class="itemTitle">';?>
@@ -94,20 +85,7 @@ defined('_JEXEC') or die('Restricted access');
 	  	<?php endif; ?>
 	  <?php echo '</'.$title_h.'>';?>
 	  <?php endif; ?>
-
-		<?php if($this->item->params->get('itemAuthor')): ?>
-		<!-- Item Author -->
-		<span class="itemAuthor">
-			<?php echo K2HelperUtilities::writtenBy($this->item->author->profile->gender); ?>&nbsp;
-			<?php if(empty($this->item->created_by_alias)): ?>
-			<a rel="author" href="<?php echo $this->item->author->link; ?>"><?php echo $this->item->author->name; ?></a>
-			<?php else: ?>
-			<?php echo $this->item->author->name; ?>
-			<?php endif; ?>
-		</span>
-		<?php endif; ?>
-
-  </div>
+ </div>
 
   <!-- Plugins: AfterDisplayTitle -->
   <?php echo $this->item->event->AfterDisplayTitle; ?>
@@ -224,6 +202,54 @@ defined('_JEXEC') or die('Restricted access');
 	</div>
 	<?php endif; ?>
 
+	  <div class="itemAuthBlock">
+		<?php if($this->item->params->get('itemAuthor')): ?>
+        	        <!-- Item Author -->
+		<?
+		$user = strip_tags($this->item->author);
+        	$db= JFactory::getDBO();
+		        $sql= "
+		SELECT u.name, u.username, c.avatar FROM #__users as u 
+		left join #__comprofiler as c
+		on c.user_id = u.id
+		where u.username = '$user'                
+	                ";
+	        $db->setQuery($sql);
+	        $results = $db->loadObjectList();?>
+		<!-- End gather User Info -->
+		
+		<!-- Gather Author  Google+ url -->
+		<?
+		
+		$dbG= JFactory::getDBO();
+                        $sql= "
+                SELECT ku.url, ku.description FROM #__k2_users as ku 
+                where ku.userName = '" . $results['0']->name . "'                
+                        ";
+                $dbG->setQuery($sql);
+                $resultsG = $dbG->loadObjectList();
+		?>
+		<!-- End Gather G+ Url -->
+		<?
+		$image = '/images/comprofiler/'.$results['0']->avatar;
+		$authName = $results['0']->name;
+		$gLink = $resultsG['0']->url;
+		?>
+		<div class='itemAuthorImg'><img src='<?php echo $image; ?>' /></div>
+        	       	<div class="itemAuthorText">
+        	       	        <?php echo "Posted by ";//trim(K2HelperUtilities::writtenBy($this->item->author->profile->gender)); ?>
+        	       	        <a rel="author" href="https://plus.google.com/<?php echo $gLink; ?>"><?php echo "$authName"; ?></a>
+        	       	</div>
+        	<?php endif; ?>
+
+		<?php if($this->item->params->get('itemDateCreated')): ?>
+		<!-- Date created -->
+		<span class="itemDateCreated">
+			<?php echo JHTML::_('date', $this->item->created , JText::_('K2_DATE_FORMAT_LC2')); ?>
+		</span>
+		<?php endif; ?>
+	  </div>
+
   <div class="itemBody">
 
 <div class="sharepoint">
@@ -265,6 +291,7 @@ defined('_JEXEC') or die('Restricted access');
 	  	<?php echo $this->item->introtext; ?>
 	  </div>
 	  <?php endif; ?>
+
 	  <?php if($this->item->params->get('itemFullText')): ?>
 	  <!-- Item fulltext -->
 	  <div class="itemFullText">
