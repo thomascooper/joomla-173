@@ -209,7 +209,7 @@ defined('_JEXEC') or die('Restricted access');
 		$user = strip_tags($this->item->author);
         	$db= JFactory::getDBO();
 		        $sql= "
-		SELECT u.name, u.username, c.avatar FROM #__users as u 
+		SELECT u.name, u.username, c.avatar, c.cb_googleplusid FROM #__users as u 
 		left join #__comprofiler as c
 		on c.user_id = u.id
 		where u.username = '$user'                
@@ -221,24 +221,18 @@ defined('_JEXEC') or die('Restricted access');
 		<!-- Gather Author  Google+ url -->
 		<?
 		
-		$dbG= JFactory::getDBO();
-                        $sql= "
-                SELECT ku.url, ku.description FROM #__k2_users as ku 
-                where ku.userName = '" . $results['0']->name . "'                
-                        ";
-                $dbG->setQuery($sql);
-                $resultsG = $dbG->loadObjectList();
+		//Create query to gather GooglePlusID from userNotes
+		$gpID = $results['0']->cb_googleplusid;
 		?>
 		<!-- End Gather G+ Url -->
 		<?
 		$image = '/images/comprofiler/'.$results['0']->avatar;
 		$authName = $results['0']->name;
-		$gLink = $resultsG['0']->url;
 		?>
 		<div class='itemAuthorImg'><img src='<?php echo $image; ?>' /></div>
         	       	<div class="itemAuthorText">
         	       	        <?php echo "Posted by ";//trim(K2HelperUtilities::writtenBy($this->item->author->profile->gender)); ?>
-        	       	        <a rel="author" href="https://plus.google.com/<?php echo $gLink; ?>"><?php echo "$authName"; ?></a>
+        	       	        <a rel="author" href="https://plus.google.com/<?php echo $gpID; ?>"><?php echo "$authName"; ?></a>
         	       	</div>
         	<?php endif; ?>
 
