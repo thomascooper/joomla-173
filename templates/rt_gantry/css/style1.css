@@ -943,6 +943,14 @@ div#sbox-window {
 	margin: 0px;
 	width: 97%;
 }
-.pad_top {
+.pad_top .rt-block {
 	margin-top:175px;
+}
+.nopadding_160 {
+	padding: 0px;
+	width: 100%;
+}
+.nopadding_160 {
+	width: 160px;
+	margin: 0 auto;
 }
