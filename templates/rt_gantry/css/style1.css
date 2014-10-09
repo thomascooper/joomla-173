@@ -232,7 +232,7 @@ a#linkbar_top8_link {
 
 /* Features */
 #rt-feature .rt-container {
-	height:525px;
+	height:375px;
 }
 #rt-feature .rt-grid-4 {
 	margin:0px;
@@ -900,6 +900,10 @@ div.bottomBoard {
 	padding: 0px !important;
 	height: 120px;
 }
+div.bottomBoard .rt-block {
+	margin: 0 auto;
+	width: 728px;
+}
 div#k2Container {
 	padding:0px !important;
 	margin: -35px 0 24px !important;
@@ -998,6 +1002,14 @@ div#sbox-window {
 	margin: 0px;
 	width: 97%;
 }
-.pad_top {
+.pad_top .rt-block {
 	margin-top:175px;
+}
+.nopadding_160 {
+	padding: 0px;
+	width: 100%;
+}
+.nopadding_160 {
+	width: 160px;
+	margin: 0 auto;
 }
