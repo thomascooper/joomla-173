@@ -41,6 +41,7 @@ class xmap_com_k2
     static $maxAccess = 0;
     static $suppressDups = false;
     static $suppressSub = false;
+    static $full_node_list = NULL;
 
     /** Get the content tree for this kind of content */
     static function getTree( &$xmap, &$parent, &$params )

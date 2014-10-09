@@ -66,8 +66,28 @@ class XmapHelper
                 return array();
             }
 
+            foreach ($tmpList as $id => $item) {
+		if ($item->title === 'Home') {
+		    $moved = $tmpList[$id];
+		    unset($tmpList[$id]);
+		    array_push($tmpList,$moved);
+		    break;
+		}
+	    }
+
             // Set some values to make nested HTML rendering easier.
             foreach ($tmpList as $id => $item) {
+		if ($item->title === 'Home' && $has_moved === FALSE) {
+		    $moved = $tmpList[$id];
+		    unset($tmpList[$id]);
+		    array_push($tmpList,$moved);
+		    $has_moved = TRUE;
+		    continue;
+		}
+		if (strtolower($item->title) === 'noads') {
+		    unset($tmpList[$id]);
+		    continue;
+		}
                 $item->items = array();
 
                 $params = new JRegistry($item->params);
