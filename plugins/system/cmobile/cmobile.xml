@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="2.5" type="plugin" group="system" method="upgrade">
+	<name>PLG_SYSTEM_CMOBILE</name>
+	<author>Conflate - Joomla Specialist</author>
+	<creationDate>July 2012</creationDate>
+	<copyright>(C) 2012 Conflate. All rights reserved.</copyright>
+	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
+	<authorEmail>info@conflate.nl</authorEmail>
+	<authorUrl>http://www.joomla-specialist.net</authorUrl>
+	<supportUrl>http://www.joomla-specialist.net/forum/support/simple-mobile-detection.html</supportUrl>
+	<extensionUrl>http://www.joomla-specialist.net/joomla-extensions/joomla-simple-mobile-detection.html</extensionUrl>
+	<image>http://www.joomla-specialist.net/images/conflate/extensions/cmobile/icon-128-cmobile.png</image>
+	<version>2.0.5</version>
+	<description>PLG_SYSTEM_CMOBILE_XML_DESCRIPTION</description>
+	<files>
+		<filename plugin="cmobile">cmobile.php</filename>
+		<filename>index.html</filename>
+		<folder>fields</folder>
+		<folder>ds</folder>
+	</files>
+	<languages folder="administrator/language/en-GB">
+		<language tag="en-GB">en-GB.plg_system_cmobile.ini</language>
+		<language tag="en-GB">en-GB.plg_system_cmobile.sys.ini</language>
+	</languages>
+	<config>
+		<fields name="params" addfieldpath="plugins/system/cmobile/fields">
+			<fieldset name="basic">
+				<field type="versioninfo" name="versioninfo" />
+				<field name="allandroid" class="btn-group btn-group-yesno" label="PLG_SYSTEM_CMOBILE_ALL_ANDROID" type="radio" default="0" description="PLG_SYSTEM_CMOBILE_ALL_ANDROID_DESC">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+				<field name="redirectmobile" class="btn-group btn-group-yesno" label="PLG_SYSTEM_CMOBILE_REDIRECT_MOBILE" type="radio" default="0" description="PLG_SYSTEM_CMOBILE_REDIRECT_MOBILE_DESC">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+				<field name="mobiledomain" label="PLG_SYSTEM_CMOBILE_REDIRECT_MOBILE_URL" type="text" default="" description="PLG_SYSTEM_CMOBILE_REDIRECT_MOBILE_URL_DESC" />
+				<field name="redirectpage" class="btn-group btn-group-yesno" label="PLG_SYSTEM_CMOBILE_REDIRECT_PAGE" type="radio" default="0" description="PLG_SYSTEM_CMOBILE_REDIRECT_PAGE_DESC">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+				<field name="redirectonce" class="btn-group btn-group-yesno" label="PLG_SYSTEM_CMOBILE_REDIRECT_ONCE" type="radio" default="0" description="PLG_SYSTEM_CMOBILE_REDIRECT_ONCE_DESC">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+				<field name="settemplate" class="btn-group btn-group-yesno" label="PLG_SYSTEM_CMOBILE_SET_TEMPLATE" type="radio" default="0" description="PLG_SYSTEM_CMOBILE_SET_TEMPLATE_DESC">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+				<field name="template" type="templatestyle" default="" label="PLG_SYSTEM_CMOBILE_TEMPLATE" description="PLG_SYSTEM_CMOBILE_TEMPLATE_DESC">
+					<option value="0">JOPTION_USE_DEFAULT</option>
+				</field>
+				<field name="setviewport" class="btn-group btn-group-yesno" label="PLG_SYSTEM_CMOBILE_SET_VIEWPORT" type="radio" default="0" description="PLG_SYSTEM_CMOBILE_SET_VIEWPORT_DESC">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+				<field name="viewport_content" type="text" default="width=device-width, initial-scale=1" label="PLG_SYSTEM_CMOBILE_VIEWPORT_CONTENT" description="PLG_SYSTEM_CMOBILE_VIEWPORT_CONTENT_DESC" />
+				<field name="devmode" class="btn-group" label="PLG_SYSTEM_CMOBILE_DEVELOPMENT_MODE" type="radio" default="0" description="PLG_SYSTEM_CMOBILE_DEVELOPMENT_MODE_DESC">
+					<option value="0">PLG_SYSTEM_CMOBILE_OFF</option>
+					<option value="1">PLG_SYSTEM_CMOBILE_ON</option>
+				</field>
+				
+				<field name="devmodetype" type="list" default="0" label="PLG_SYSTEM_CMOBILE_DEVELOPMENT_MODE_TYPE" description="PLG_SYSTEM_CMOBILE_DEVELOPMENT_MODE_TYPE_DESC">
+					<option value="always">PLG_SYSTEM_CMOBILE_DEVELOPMENT_MODE_TYPE_ALWAYS</option>
+					<option value="ip">PLG_SYSTEM_CMOBILE_DEVELOPMENT_MODE_TYPE_IP</option>
+				</field>
+				<field name="devmodeip" type="textarea" default="" label="PLG_SYSTEM_CMOBILE_DEVELOPMENT_MODE_IP" description="PLG_SYSTEM_CMOBILE_DEVELOPMENT_MODE_IP_DESC" />
+			</fieldset>
+			<fieldset name="content_switch" label="PLG_SYSTEM_CMOBILE_FIELDSET_CONTENT_SWITCH" description="PLG_SYSTEM_CMOBILE_FIELDSET_CONTENT_SWITCH_DESC">
+				<field name="en_contentswitch" class="btn-group btn-group-yesno" label="PLG_SYSTEM_CMOBILE_ENABLE_CONTENT_SWITCH" type="radio" default="0" description="PLG_SYSTEM_CMOBILE_ENABLE_CONTENT_SWITCH_DESC">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+			</fieldset>
+			<fieldset name="ipad" label="PLG_SYSTEM_CMOBILE_FIELDSET_IPAD" description="PLG_SYSTEM_CMOBILE_FIELDSET_IPAD_DESC">
+				<field name="ipad_exclude" class="btn-group btn-group-yesno" label="PLG_SYSTEM_CMOBILE_EXCLUDE_IPAD" type="radio" default="0" description="PLG_SYSTEM_CMOBILE_EXCLUDE_IPAD_DESC">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+				<field name="ipad_usespecific" class="btn-group btn-group-yesno" label="PLG_SYSTEM_CMOBILE_USE_SPECIFIC" type="radio" default="0" description="PLG_SYSTEM_CMOBILE_USE_SPECIFIC_DESC">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+				<field type="spacer" name="PLG_SYSTEM_CMOBILE_SPECIFIC_OPTIONS" />
+				<field name="ipad_redirectmobile" class="btn-group btn-group-yesno" label="PLG_SYSTEM_CMOBILE_REDIRECT_MOBILE" type="radio" default="0" description="PLG_SYSTEM_CMOBILE_REDIRECT_MOBILE_DESC">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+				<field name="ipad_mobiledomain" label="PLG_SYSTEM_CMOBILE_REDIRECT_MOBILE_URL" type="text" default="" description="PLG_SYSTEM_CMOBILE_REDIRECT_MOBILE_URL_DESC" />
+				<field name="ipad_redirectpage" class="btn-group btn-group-yesno" label="PLG_SYSTEM_CMOBILE_REDIRECT_PAGE" type="radio" default="0" description="PLG_SYSTEM_CMOBILE_REDIRECT_PAGE_DESC">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+				<field name="ipad_redirectonce" class="btn-group btn-group-yesno" label="PLG_SYSTEM_CMOBILE_REDIRECT_ONCE" type="radio" default="0" description="PLG_SYSTEM_CMOBILE_REDIRECT_ONCE_DESC">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+				<field name="ipad_settemplate" class="btn-group btn-group-yesno" label="PLG_SYSTEM_CMOBILE_SET_TEMPLATE" type="radio" default="0" description="PLG_SYSTEM_CMOBILE_SET_TEMPLATE_DESC">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+				<field name="ipad_template" type="templatestyle" default="" label="PLG_SYSTEM_CMOBILE_TEMPLATE" description="PLG_SYSTEM_CMOBILE_TEMPLATE_DESC">
+					<option value="0">JOPTION_USE_DEFAULT</option>
+				</field>
+			</fieldset>
+			<fieldset name="iphone" label="PLG_SYSTEM_CMOBILE_FIELDSET_IPHONE" description="PLG_SYSTEM_CMOBILE_FIELDSET_IPHONE_DESC">
+				<field name="iphone_usespecific" class="btn-group btn-group-yesno" label="PLG_SYSTEM_CMOBILE_USE_SPECIFIC" type="radio" default="0" description="PLG_SYSTEM_CMOBILE_USE_SPECIFIC_DESC">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+				<field type="spacer" name="PLG_SYSTEM_CMOBILE_SPECIFIC_OPTIONS" />
+				<field name="iphone_redirectmobile" class="btn-group btn-group-yesno" label="PLG_SYSTEM_CMOBILE_REDIRECT_MOBILE" type="radio" default="0" description="PLG_SYSTEM_CMOBILE_REDIRECT_MOBILE_DESC">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+				<field name="iphone_mobiledomain" label="PLG_SYSTEM_CMOBILE_REDIRECT_MOBILE_URL" type="text" default="" description="PLG_SYSTEM_CMOBILE_REDIRECT_MOBILE_URL_DESC" />
+				<field name="iphone_redirectpage" class="btn-group btn-group-yesno" label="PLG_SYSTEM_CMOBILE_REDIRECT_PAGE" type="radio" default="0" description="PLG_SYSTEM_CMOBILE_REDIRECT_PAGE_DESC">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+				<field name="iphone_redirectonce" class="btn-group btn-group-yesno" label="PLG_SYSTEM_CMOBILE_REDIRECT_ONCE" type="radio" default="0" description="PLG_SYSTEM_CMOBILE_REDIRECT_ONCE_DESC">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+				<field name="iphone_settemplate" class="btn-group btn-group-yesno" label="PLG_SYSTEM_CMOBILE_SET_TEMPLATE" type="radio" default="0" description="PLG_SYSTEM_CMOBILE_SET_TEMPLATE_DESC">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+				<field name="iphone_template" type="templatestyle" default="" label="PLG_SYSTEM_CMOBILE_TEMPLATE" description="PLG_SYSTEM_CMOBILE_TEMPLATE_DESC">
+					<option value="0">JOPTION_USE_DEFAULT</option>
+				</field>
+			</fieldset>
+			<fieldset name="ipod" label="PLG_SYSTEM_CMOBILE_FIELDSET_IPOD" description="PLG_SYSTEM_CMOBILE_FIELDSET_IPOD_DESC">
+				<field name="ipod_usespecific" class="btn-group btn-group-yesno" label="PLG_SYSTEM_CMOBILE_USE_SPECIFIC" type="radio" default="0" description="PLG_SYSTEM_CMOBILE_USE_SPECIFIC_DESC">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+				<field type="spacer" name="PLG_SYSTEM_CMOBILE_SPECIFIC_OPTIONS" />
+				<field name="ipod_redirectmobile" class="btn-group btn-group-yesno" label="PLG_SYSTEM_CMOBILE_REDIRECT_MOBILE" type="radio" default="0" description="PLG_SYSTEM_CMOBILE_REDIRECT_MOBILE_DESC">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+				<field name="ipod_mobiledomain" label="PLG_SYSTEM_CMOBILE_REDIRECT_MOBILE_URL" type="text" default="" description="PLG_SYSTEM_CMOBILE_REDIRECT_MOBILE_URL_DESC" />
+				<field name="ipod_redirectpage" class="btn-group btn-group-yesno" label="PLG_SYSTEM_CMOBILE_REDIRECT_PAGE" type="radio" default="0" description="PLG_SYSTEM_CMOBILE_REDIRECT_PAGE_DESC">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+				<field name="ipod_redirectonce" class="btn-group btn-group-yesno" label="PLG_SYSTEM_CMOBILE_REDIRECT_ONCE" type="radio" default="0" description="PLG_SYSTEM_CMOBILE_REDIRECT_ONCE_DESC">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+				<field name="ipod_settemplate" class="btn-group btn-group-yesno" label="PLG_SYSTEM_CMOBILE_SET_TEMPLATE" type="radio" default="0" description="PLG_SYSTEM_CMOBILE_SET_TEMPLATE_DESC">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+				<field name="ipod_template" type="templatestyle" default="" label="PLG_SYSTEM_CMOBILE_TEMPLATE" description="PLG_SYSTEM_CMOBILE_TEMPLATE_DESC">
+					<option value="0">JOPTION_USE_DEFAULT</option>
+				</field>
+			</fieldset>
+			<fieldset name="android" label="PLG_SYSTEM_CMOBILE_FIELDSET_ANDROID" description="PLG_SYSTEM_CMOBILE_FIELDSET_ANDROID_DESC">
+				<field name="android_usespecific" class="btn-group btn-group-yesno" label="PLG_SYSTEM_CMOBILE_USE_SPECIFIC" type="radio" default="0" description="PLG_SYSTEM_CMOBILE_USE_SPECIFIC_DESC">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+				<field type="spacer" name="PLG_SYSTEM_CMOBILE_SPECIFIC_OPTIONS" />
+				<field name="android_redirectmobile" class="btn-group btn-group-yesno" label="PLG_SYSTEM_CMOBILE_REDIRECT_MOBILE" type="radio" default="0" description="PLG_SYSTEM_CMOBILE_REDIRECT_MOBILE_DESC">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+				<field name="android_mobiledomain" label="PLG_SYSTEM_CMOBILE_REDIRECT_MOBILE_URL" type="text" default="" description="PLG_SYSTEM_CMOBILE_REDIRECT_MOBILE_URL_DESC" />
+				<field name="android_redirectpage" class="btn-group btn-group-yesno" label="PLG_SYSTEM_CMOBILE_REDIRECT_PAGE" type="radio" default="0" description="PLG_SYSTEM_CMOBILE_REDIRECT_PAGE_DESC">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+				<field name="android_redirectonce" class="btn-group btn-group-yesno" label="PLG_SYSTEM_CMOBILE_REDIRECT_ONCE" type="radio" default="0" description="PLG_SYSTEM_CMOBILE_REDIRECT_ONCE_DESC">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+				<field name="android_settemplate" class="btn-group btn-group-yesno" label="PLG_SYSTEM_CMOBILE_SET_TEMPLATE" type="radio" default="0" description="PLG_SYSTEM_CMOBILE_SET_TEMPLATE_DESC">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+				<field name="android_template" type="templatestyle" default="" label="PLG_SYSTEM_CMOBILE_TEMPLATE" description="PLG_SYSTEM_CMOBILE_TEMPLATE_DESC">
+					<option value="0">JOPTION_USE_DEFAULT</option>
+				</field>
+			</fieldset>
+			<fieldset name="ds" label="PLG_SYSTEM_CMOBILE_FIELDSET_DETECTION_SYSTEM" description="PLG_SYSTEM_CMOBILE_FIELDSET_DETECTION_SYSTEM_DESC">
+				<field name="detection_system" type="list" default="0" label="PLG_SYSTEM_CMOBILE_LOAD_DETECTION_SYSTEM" description="PLG_SYSTEM_CMOBILE_LOAD_DETECTION_SYSTEM_DESC">
+					<option value="0">PLG_SYSTEM_CMOBILE_LOAD_DETECTION_SYSTEM_DEFAULT</option>
+					<option value="md">PLG_SYSTEM_CMOBILE_LOAD_DETECTION_SYSTEM_MOBILE_DETECT</option>
+					<option value="esp">PLG_SYSTEM_CMOBILE_LOAD_DETECTION_SYSTEM_MOBILE_ESP</option>
+					<!--<option value="wurfl" disabled="true">PLG_SYSTEM_CMOBILE_DETECTION_SYSTEM_WURFL</option>-->
+				</field>
+			</fieldset>
+		</fields>
+	</config>
+	<updateservers>
+        <server type="collection" priority="1" name="Conflate Extension Updates">http://www.conflate.nl/extensions/updates/conflate.xml</server>
+    </updateservers>
+</extension>
