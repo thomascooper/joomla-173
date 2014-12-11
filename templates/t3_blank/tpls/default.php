@@ -22,6 +22,11 @@ defined('_JEXEC') or die;
   <head>
     <jdoc:include type="head" />
     <?php $this->loadBlock ('head') ?>
+    <script type="text/javascript">
+    function refresh() {
+    	console.log('working');
+   }
+   </script>
   </head>
 
   <body>

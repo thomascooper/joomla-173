@@ -6,6 +6,7 @@
     position: relative;
     overflow: hidden;
     background: #000;
+    border: 1px solid black !important;
 }
 .galleria-container img {
     -moz-user-select: none;
@@ -68,8 +69,9 @@
     position: absolute;
 }
 .galleria-info-text {
-    background-color: #000;
-    padding: 12px;
+    border-bottom: 1px solid black;
+  background: #aaaaaa !important;
+    padding: 3px 3px 3px 17px !important;
     display: none;
     /* IE7 */ zoom:1;
 }
@@ -209,4 +211,168 @@
 .galleria-image-nav-right {
     background-image: url(classic-map.png);
     background-repeat: no-repeat;
+ margin-top: 163px;
+}
+ 
+.galleria-image-nav-right:after {
+ background: red;
+    color: #fff !important;
+    content: "Next >>";
+    display: block;
+    font-size: 23px !important;
+    font-weight: bold;
+    margin-top: 6%;
+    text-transform: uppercase;
+	width: 135px;
+}
+.galleria-image-nav-right {
+    border-top: 1px solid black;
+background-color: #999;
+    height: 50px;
+    width: 24.9% !important;
+}
+.galleria-image-nav-left {      
+    border-top: 1px solid black;
+  width:75.9% !important;
+background-color: #999;       
+height: 50px;   
+ 
+ 
+}
+.galleria-image-nav {
+top: 68% !important;
+}
+.galleria-image-nav-left:after {
+     background: red;
+    color: #fff !important;
+    content: "<< Prev";
+    display: block;
+    float: right;
+    font-size: 23px !important;
+    font-weight: bold;
+    margin-right: 30px;
+    margin-top: 2%;
+    text-transform: uppercase;
+	width: 135px;
+	}
+.galleria-stage {
+position: absolute;
+  top: 0px !important;  
+  left:  0px !important;   
+  right: 0px !important;  
+overflow: hidden;   
+}    
+ 
+ #jsn-themeclassic-jsgallery-qGCiP .galleria-info .galleria-info-text .galleria-info-title{color: #ffff4a;
+ font-weight:regular !important;
+ font-size: 18px !important;}
+ 
+
+@media (min-width: 320px) and (max-width: 480px) {
+  div.catItemHeader {  
+    padding-bottom: 5px;
+  }
+  div div.catItemHeader h3.catItemTitle {
+    width: 100% !important;   font-size: 15px !important;
+  }
+  .galleria-container.notouch {
+    height: 459px !important;
+    width: 288px !important;
+  }
+  .galleria-image-nav-left:after {
+
+    font-size: 15px !important; 
+    margin-right: 14px !important;
+    margin-top: 11px !important ;
+    padding: 3px;
+  }
+  .galleria-image-nav-left { 
+    width: 70% !important;
+  }
+  .galleria-image-nav-right:after {  
+    font-size: 15px !important;
+    margin-top: 11px;
+    padding: 3px;
+  }
+  .galleria-image-nav-left:after {
+    width: 70px
+  }
+  .galleria-info-text {
+  }
+  .galleria-image-nav-right:after {
+    width: 70px;
+  }
+  .galleria-image-nav-right {    
+    width: 30.3% !important;
+  }
+  .galleria-counter {
+    bottom: 10px;  
+    font: bold 21px/1 arial,sans-serif;
+    left: 15px !important;
+  }
+  div.catItemIntroText img {   
+    top: 0 !important;
+  }
+  #jsn-themeclassic-jsgallery-XahKjrbt > div {
+    max-width: 30%;
+    width: 100%;
+  }
+  #jsn-themeclassic-jsgallery-wawbpQrx > div {
+    max-width: 30%;
+    width: 100%;
+  }
+  .sharepoint {
+    float: right;   
+    margin-top: 2px;
+    text-align: left !important;
+    width: 82% !important;
+}
+div.itemIntroText img {
+    height: 417px !important;
+    top: 0 !important;
+}
+div.itemHeader h2.itemTitle{
+font-size: 10px !important;
+     
+    max-width: 47%;}
+	.jsn-gallery {
+    
+    max-width: 30%;
+    outline: medium none;
+    width: 100%;
+}
+span.itemDateCreated {
+    bottom: 4px;
+    color: #bbbbbb;
+    font-size: 10px !important;
+    left: 108px;
+    position: relative;
+}
+div.itemAuthorText {
+  
+    left: 4px !important;}
+	.galleria-stage{ width: 337px !important;}
+	.galleria-container.touch {
+width: 337px !important;
+ height: 304px !important;
+}
+.galleria-image-nav {
+top: 51% !important;
+}.galleria-image img {
+width: 100% !important;
+ 
+left: 1px !important;
+}.galleria-info-title {
+ 
+font-size: 13px !important;
+ 
+}
+}
+
+#jsn-themeclassic-jsgallery-Re1f01JE .galleria-info .galleria-info-text .galleria-info-description {
+font-family: Arial;
+font-size: 18px ! important;
+font-weight: normal;
+text-align: left;
+color: #ffff4a ! important;
 }
