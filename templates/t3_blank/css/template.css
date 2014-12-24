@@ -640,6 +640,9 @@ h1 small,h2 small,h3 small,h4 small,h5 small,h6 small {
 }
 
 h1 {
+	margin: 0px;
+	margin-bottom: 34px !important;
+	margin-top:10px !important;
     font-size: 35px;
     line-height: 40px;
 }
@@ -3296,7 +3299,7 @@ div.catItemFooter div.catItemPostText {
     width: 65px;
     text-align: right;
     position: absolute;
-    bottom: 12px;
+    bottom: 18px;
     right: 45px;
 }
 
@@ -3321,17 +3324,29 @@ div.catItemFooter span.catItemDateCreated {
 
 h3.catItemTitle {
     font-family: Verdana, Verdana, Geneva, sans-serif !important;
-    font-size: 17px !important;
+    font-size: 16px !important;
     font-weight: bold !important;
+    text-transform: uppercase;
 }
 
 div.catItemIntroText {
     color: #A2A2A2 !important;
     font-size: 12px !important;
+    padding: 0px 0px 12px 0px;
+}
+
+div .jsn-gallery {
+	padding-top: 8px !important;
 }
 
 div.itemContainer {
     background: #fffff0;
+	padding: 0px !important;
+	min-height: 0px !important;
+}
+
+div.catItemView {
+	padding: 0px;
 }
 
 body {
@@ -3343,8 +3358,12 @@ body {
 }
 
 div #itemListLeading {
-    width: 96%;
-    padding-left: 5px;
+   /* width: 96%;
+    padding-left: 5px;*/
+}
+
+div .catItemImageBlock {
+	padding: 0px;
 }
 
 span.itemDateCreated {
@@ -3384,11 +3403,12 @@ div.itemAuthorText {
     text-align: right;
     position: relative;
     top: -13px;
-    left: 70%;
+    left: 68%;
 }
 
 div.itemHeader {
     background-color: #FFFFF0 !important;
+    text-transform: uppercase;
 }
 
 div.itemBody {
@@ -3430,6 +3450,28 @@ div.componentheading, div.k2FeedIcon {
 }
 body {
 padding: 0 !important;
+width:100%;
+}
+#t3-header {
+max-width: 100%;
+padding: 0 10px !important;
+background-color: #0B2626 !important;
+}
+#t3-mainbody {
+max-width: 100%;
+padding: 0 10px !important;
+background-color: #FFFFF0 !important;
+}
+#t3-footer {
+max-width: 100%;
+padding: 0 10px !important;
+background-color: #FFFFF0 !important;
+}
+.modal {
+    position: relative !important;
+}
+.itemView h1 {
+	text-transform: uppercase;
 }
 .ad_unit div div {
 	margin: 0 auto;
