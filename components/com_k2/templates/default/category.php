@@ -171,7 +171,7 @@ $mobile = $app->getUserState('cmobile.ismobile', false);
 
 			<div class="<?php echo ($key%2) ? "odd" : "even"; ?> ad_unit itemContainer<?php echo $lastContainer; ?>"<?php echo (count($this->leading)==1) ? '' : ' style="width:'.number_format(100/$this->params->get('num_leading_columns'), 1).'%;"'; ?>>
 			{modulepos inline-ad<?php echo "$ad_unit"; ?>}
-			<?php $ad_unit++; echo "ad unit: $ad_unit"; ?>
+			<?php $ad_unit++; ?>
 			</div>
 			<div class="clr"></div>
 			
