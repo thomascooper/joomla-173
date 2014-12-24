@@ -813,8 +813,15 @@ class T3Template extends ObjectExtendable
 			$this->addCss('frontend-edit');
 		}
 
+		// Clear current css to put bootstrap css on top
+		$_stylesheets = $this->_styleSheets;
+		$this->_styleSheets = array();
+
 		// BOOTSTRAP CSS
 		$this->addCss('bootstrap', false);
+
+		// Append current css to bootstrap
+		$this->_styleSheets = array_merge($this->_styleSheets, $_stylesheets);
 
 		// TEMPLATE CSS
 		$this->addCss('template', false);
@@ -901,9 +908,9 @@ class T3Template extends ObjectExtendable
 			$this->addPageClass('mm-hover');
 		}
 
-		if($navtrigger == 'hover' || $this->responcls){
+		//if($navtrigger == 'hover' || $this->responcls){
 			$this->addScript(T3_URL . '/js/menu.js');
-		}
+		//}
 
 		//reponsive script
 		if ($responsive && !$this->responcls) {
@@ -933,11 +940,14 @@ class T3Template extends ObjectExtendable
 		$theme      = $this->getParam('theme', '');
 		$minify     = $this->getParam('minify', 0);
 		$minifyjs   = $this->getParam('minify_js', 0);
-
+		// detect RTL
+		$doc = JFactory::getDocument();
+		$dir    = $doc->direction;
+		$is_rtl = ($dir == 'rtl');
+    
 		// As Joomla 3.0 bootstrap is buggy, we will not use it
 		// We also prevent both Joomla bootstrap and T3 bootsrap are loaded
 		// And upgrade jquery as our Framework require jquery 1.7+ if we are loading jquery from google
-		$doc = JFactory::getDocument();
 		$scripts = array();
 
 		if (version_compare(JVERSION, '3.0', 'ge')) {
@@ -997,48 +1007,62 @@ class T3Template extends ObjectExtendable
 		$doc->_scripts = $scripts;
 		// end update javascript
 
-		// detect RTL
-		$dir    = $doc->direction;
-		$is_rtl = ($dir == 'rtl');
-
 		//Update css/less based on devmode and themermode
 		$root        = JURI::root(true);
 		$current     = JURI::current();
-		$regex       = '@' . preg_quote(T3_TEMPLATE_REL) . '/css/(rtl/)?(.*)\.css((\?|\#).*)?$@i';
+		// $regex       = '@' . preg_quote(T3_TEMPLATE_REL) . '/css/(rtl/)?(.*)\.css((\?|\#).*)?$@i';
+		$regex       = '@' . preg_quote(T3_TEMPLATE_REL) . '/(.*)\.css((\?|\#).*)?$@i';
 		$stylesheets = array();
 		foreach ($doc->_styleSheets as $url => $css) {
 			// detect if this css in template css
 			if (preg_match($regex, $url, $match)) {
-				$fname = $match[2];
+				$fname = $match[1];
 
-				if (($devmode || $themermode) && is_file(T3_TEMPLATE_PATH . '/less/' . $fname . '.less')) {
-					if ($themermode) {
-						$newurl = T3_TEMPLATE_URL . '/less/' . $fname . '.less';
-						$css['mime'] = 'text/less';
-					} else {
-						T3::import('core/less');
-						$newurl = T3Less::buildCss(T3Path::cleanPath('templates/'.T3_TEMPLATE.'/less/'.$fname.'.less'), true);
-					}
-					$stylesheets[$newurl] = $css;
-				} else {
-					$uri = null;
-					// detect css available base on direction & theme
-					if ($is_rtl && $theme) {
-						$uri = T3Path::getUrl ('css/rtl/themes' . $theme . '/' . $fname . '.css');
-					}
-					if (!$uri && $is_rtl) {
-						$uri = T3Path::getUrl ('css/rtl/' . $fname . '.css');
-					}
-					if (!$uri && $theme) {
-						$uri = T3Path::getUrl ('css/themes/' . $theme . '/' . $fname . '.css');
-					}
-					if (!$uri) {
-						$uri = T3Path::getUrl ('css/' . $fname . '.css');
-					}
+				// remove rtl
+				$fname = preg_replace ('@(^|/)rtl/@mi', '\1', $fname);
 
-					if ($uri) {
-						$stylesheets[$uri] = $css;
+				// if (($devmode || $themermode) && is_file(T3_TEMPLATE_PATH . '/less/' . $fname . '.less')) {
+				if (($devmode || $themermode)) {
+					// less file
+					$lfname = preg_replace ('@(^|/)css/@mi', '\1less/', $fname);
+
+					if (is_file(T3_TEMPLATE_PATH . '/' . $lfname . '.less')) {
+						if ($themermode) {
+							$newurl = T3_TEMPLATE_URL . '/' . $lfname . '.less';
+							$css['mime'] = 'text/less';
+						} else {
+							T3::import('core/less');
+							$newurl = T3Less::buildCss(T3Path::cleanPath(T3_TEMPLATE_REL . '/' . $lfname . '.less'), true);
+						}
+						$stylesheets[$newurl] = $css;
+						continue;
 					}
+				}
+
+				$uri = null;
+				// detect css available base on direction & theme
+				if ($is_rtl && $theme) {
+					// rtl css file
+					$altfname = preg_replace ('@(^|/)css/@mi', '\1css/rtl/' . $theme . '/', $fname);
+					$uri = T3Path::getUrl ($altfname . '.css');
+				}
+
+				if (!$uri && $is_rtl) {
+					$altfname = preg_replace ('@(^|/)css/@mi', '\1css/rtl/', $fname);
+					$uri = T3Path::getUrl ($altfname . '.css');
+				}
+
+				if (!$uri && $theme) {
+					$altfname = preg_replace ('@(^|/)css/@mi', '\1css/themes/' . $theme . '/', $fname);
+					$uri = T3Path::getUrl ($altfname . '.css');
+				}
+
+				if (!$uri) {
+					$uri = T3Path::getUrl ($fname . '.css');
+				}
+
+				if ($uri) {
+					$stylesheets[$uri] = $css;
 				}
 				continue;
 			}

@@ -29,9 +29,9 @@ class T3Path extends JObject
 	/**
 	 * Get path in tpls folder. If found in template, use the path, else try in plugin t3
 	 */
-	public static function getPath($file, $default = '', $relative = false, $include_custom = true)
+	public static function getPath($file, $default = '', $relative = false, $include_local = true)
 	{
-		if (!defined('T3_LOCAL_DISABLED') && $include_custom && file_exists (T3_LOCAL_PATH . '/' . $file)) return ($relative ? T3_LOCAL_REL : T3_LOCAL_PATH) . '/' . $file;
+		if (!defined('T3_LOCAL_DISABLED') && $include_local && file_exists (T3_LOCAL_PATH . '/' . $file)) return ($relative ? T3_LOCAL_REL : T3_LOCAL_PATH) . '/' . $file;
 		if (file_exists (T3_TEMPLATE_PATH . '/' . $file)) return ($relative ? T3_TEMPLATE_REL : T3_TEMPLATE_PATH) . '/' . $file;
 		if (file_exists (T3_PATH . '/' . $file)) return ($relative ? T3_REL : T3_PATH) . '/' . $file;
 		if ($default) return self::getPath($default);
@@ -41,9 +41,9 @@ class T3Path extends JObject
 	/**
 	 * Get path in tpls folder. If found in template, use the path, else try in plugin t3
 	 */
-	public static function getUrl($file, $default = '', $relative = false, $include_custom = true)
+	public static function getUrl($file, $default = '', $relative = false, $include_local = true)
 	{
-		if (!defined('T3_LOCAL_DISABLED') && $include_custom && file_exists (T3_LOCAL_PATH . '/' . $file)) return ($relative ? T3_LOCAL_REL : T3_LOCAL_URL) . '/' . $file;
+		if (!defined('T3_LOCAL_DISABLED') && $include_local && file_exists (T3_LOCAL_PATH . '/' . $file)) return ($relative ? T3_LOCAL_REL : T3_LOCAL_URL) . '/' . $file;
 		if (file_exists (T3_TEMPLATE_PATH . '/' . $file)) return ($relative ? T3_TEMPLATE_REL : T3_TEMPLATE_URL) . '/' . $file;
 		if (file_exists (T3_PATH . '/' . $file)) return ($relative ? T3_REL : T3_URL) . '/' . $file;
 		if ($default) return self::getUrl($default);
@@ -53,24 +53,24 @@ class T3Path extends JObject
 	/**
 	 * Get path in tpls folder. If found in template, use the path, else try in plugin t3
 	 */
-	public static function getAllPath($file, $relative = false, $include_custom = true)
+	public static function getAllPath($file, $relative = false, $include_local = true)
 	{
 		$return = array();
 		if (file_exists (T3_PATH . '/' . $file)) $return[] = ($relative ? T3_REL : T3_PATH) . '/' . $file;
 		if (file_exists (T3_TEMPLATE_PATH . '/' . $file)) $return[] = ($relative ? T3_TEMPLATE_REL : T3_TEMPLATE_PATH) . '/' . $file;
-		if (!defined('T3_LOCAL_DISABLED') && $include_custom && file_exists (T3_LOCAL_PATH . '/' . $file)) $return[] = ($relative ? T3_LOCAL_REL : T3_LOCAL_PATH) . '/' . $file;
+		if (!defined('T3_LOCAL_DISABLED') && $include_local && file_exists (T3_LOCAL_PATH . '/' . $file)) $return[] = ($relative ? T3_LOCAL_REL : T3_LOCAL_PATH) . '/' . $file;
 		return $return;
 	}
 
 	/**
 	 * Get path in tpls folder. If found in template, use the path, else try in plugin t3
 	 */
-	public static function getAllUrl($file, $relative = false, $include_custom = true)
+	public static function getAllUrl($file, $relative = false, $include_local = true)
 	{
 		$return = array();
 		if (file_exists (T3_PATH . '/' . $file)) $return[] = ($relative ? T3_REL : T3_URL) . '/' . $file;
 		if (file_exists (T3_TEMPLATE_PATH . '/' . $file)) $return[] = ($relative ? T3_TEMPLATE_REL : T3_TEMPLATE_URL) . '/' . $file;
-		if (!defined('T3_LOCAL_DISABLED') && $include_custom && file_exists (T3_LOCAL_PATH . '/' . $file)) $return[] = ($relative ? T3_LOCAL_REL : T3_LOCAL_URL) . '/' . $file;
+		if (!defined('T3_LOCAL_DISABLED') && $include_local && file_exists (T3_LOCAL_PATH . '/' . $file)) $return[] = ($relative ? T3_LOCAL_REL : T3_LOCAL_URL) . '/' . $file;
 		return $return;
 	}
 
@@ -165,7 +165,10 @@ class T3Path extends JObject
 		$path = '';
 		for ($i = 0; $i < min($size1, $size2); $i++) {
 			if ($arr1[$i] == $arr2[$i]) continue;
-			else $path = '../' . $path . $arr2[$i] . '/';
+			else break;
+		}
+		for ($j=$i; $j<min($size1, $size2); $j++) {
+			$path = '../' . $path . $arr2[$j] . '/';
 		}
 		if ($size1 > $size2)
 			for ($i = $size2; $i < $size1; $i++)
