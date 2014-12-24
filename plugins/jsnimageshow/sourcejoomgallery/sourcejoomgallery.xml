@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="1.6" type="plugin" group="jsnimageshow" method="upgrade">
+	<name>Source Joomgallery</name>
+	<version>1.0.4</version>
+	<creationDate>09/24/2014</creationDate>
+	<copyright>Copyright (c) 2008 - 2013 - JoomlaShine.com</copyright>
+	<license>GNU/GPL v2 http://www.gnu.org/licenses/gpl-2.0.html</license>
+	<author>JoomlaShine.com</author>
+	<authorEmail>admin@joomlashine.com</authorEmail>
+	<authorUrl>http://www.joomlashine.com</authorUrl>
+	<description>JSN IMAGESHOW IMAGE SOURCE JOOMGA</description>
+	<files>
+		<filename plugin="sourcejoomgallery">sourcejoomgallery.php</filename>
+		<filename plugin="sourcejoomgallery">define.php</filename>
+		<folder>sources</folder>
+		<folder>assets</folder>
+	</files>
+</extension>
