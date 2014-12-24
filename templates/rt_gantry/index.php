@@ -161,6 +161,14 @@ require_once('lib/gantry/gantry.php');
 {modulepos body-bottom-ad1}
 {modulepos body-bottom-ad2}
 <?php endif; ?>
+<script>
+Galleria.on('image', function(e) {
+googletag.cmd.push(function() { googletag.display('div-gpt-ad-1363980467445-0'); });
+googletag.cmd.push(function() { googletag.display('div-gpt-ad-1363980467445-1'); });
+googletag.cmd.push(function() { googletag.display('div-gpt-ad-1363980467445-2'); });
+    Galleria.log('ads refreshed'); // the currently active IMG element
+});
+</script>
 	</body>
 </html>
 <?php

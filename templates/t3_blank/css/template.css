@@ -3431,3 +3431,6 @@ div.componentheading, div.k2FeedIcon {
 body {
 padding: 0 !important;
 }
+.ad_unit div div {
+	margin: 0 auto;
+}
