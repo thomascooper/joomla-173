@@ -37,7 +37,7 @@ $mobile = $app->getUserState('cmobile.ismobile', false);
 	$document->setTitle($newTitle);
 	$opengraph_meta = '
 	<meta property="og:title" content="'.$saveTitle.'"/>
-	<meta property="og:type" content="blog"/>
+	<meta property="og:type" content="article"/>
 	<meta property="og:url" content="'.$document->base.'"/>
 	<meta property="og:description" content="'.$document->description.'"/>
  
