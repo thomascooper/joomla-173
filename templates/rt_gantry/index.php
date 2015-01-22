@@ -163,9 +163,11 @@ require_once('lib/gantry/gantry.php');
 <?php endif; ?>
 <script>
 Galleria.on('image', function(e) {
-googletag.cmd.push(function() { googletag.display('div-gpt-ad-1363980467445-0'); });
-googletag.cmd.push(function() { googletag.display('div-gpt-ad-1363980467445-1'); });
-googletag.cmd.push(function() { googletag.display('div-gpt-ad-1363980467445-2'); });
+googletag.cmd.push(function() { googletag.display('div-gpt-ad-1408504440613-0'); });
+googletag.cmd.push(function() { googletag.display('div-gpt-ad-1408504440613-1'); });
+googletag.cmd.push(function() { googletag.display('div-gpt-ad-1408504440613-2'); });
+googletag.cmd.push(function() { googletag.display('div-gpt-ad-1408504440613-4'); });
+googletag.cmd.push(function() { googletag.display('div-gpt-ad-1408504440613-5'); });
     Galleria.log('ads refreshed'); // the currently active IMG element
 });
 </script>
