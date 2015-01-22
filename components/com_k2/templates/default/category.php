@@ -15,7 +15,9 @@ $mobile = $app->getUserState('cmobile.ismobile', false);
 ?>
 
 <!-- Start K2 Category Layout -->
-{modulepos mobile-leaderboard}
+<?php if ($mobile) { 
+echo "{modulepos mobile-leaderboard}";
+} ?>
 <div id="k2Container" class="itemListView<?php if($this->params->get('pageclass_sfx')) echo ' '.$this->params->get('pageclass_sfx'); ?>">
 
 	<?php if($this->params->get('show_page_title')): ?>
@@ -280,3 +282,6 @@ $mobile = $app->getUserState('cmobile.ismobile', false);
 	<?php endif; ?>
 </div>
 <!-- End K2 Category Layout -->
+<?php if ($mobile) { 
+echo "{modulepos mobile-bottomboard}";
+} ?>
