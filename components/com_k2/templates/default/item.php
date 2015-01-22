@@ -55,6 +55,12 @@ $mobile = $app->getUserState('cmobile.ismobile', false);
 	$document->addCustomTag( $opengraph_meta );
 
 ?>
+<?php 
+if ($mobile) {
+echo "{modulepos mobile-leaderboard}";
+}
+?>
+
 <!-- Start K2 Item Layout --> 
 <span id="startOfPageId<?php echo JRequest::getInt('id'); ?>"></span>
 
@@ -646,6 +652,14 @@ $authName = $results['0']->name;
   <div class="clr"></div>
 </div>
 <!-- End K2 Item Layout --> 
+<?php
+if ($mobile) {
+	echo "{modulepos inline-ad0}";
+}
+?>
 {modulepos article-ad1}
 {modulepos article-ad2}
 {modulepos article-ad3}
+<?php if($mobile): ?>
+{modulepos mobile-bottomboard}
+<?php endif; ?>
