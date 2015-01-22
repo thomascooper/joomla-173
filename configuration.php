@@ -61,7 +61,7 @@ class JConfig {
 	public $memcache_persist = '1';
 	public $memcache_compress = '0';
 	public $memcache_server_host = '10.1.1.36';
-	public $memcache_server_port = '11211';
+	public $memcache_server_port = '11210';
 	public $captcha = 'recaptcha';
 	public $robots = '';
 	public $MetaVersion = '0';
