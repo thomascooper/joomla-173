@@ -3475,4 +3475,11 @@ background-color: #FFFFF0 !important;
 }
 .ad_unit div div {
 	margin: 0 auto;
+	padding: 10px;
+}
+.ad_unit_leader {
+	margin: 0 auto;
+	width: 320px;
+	height: 50px;
+	padding: 10px;
 }
