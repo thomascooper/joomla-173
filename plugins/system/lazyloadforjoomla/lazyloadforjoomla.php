@@ -26,12 +26,14 @@ jimport('joomla.plugin.plugin');
 class plgSystemLazyLoadForJoomla extends JPlugin
 {
     protected $_execute;
+    protected $_mobile;
 
     function __construct(&$subject, $config)
     {
         $app = JFactory::getApplication();
+	$this->_mobile = $app->getUserState('cmobile.ismobile', false);
 
-        if($app->isAdmin())
+        if($app->isAdmin() || $this->_mobile)
         {
             return;
         }
@@ -66,7 +68,7 @@ class plgSystemLazyLoadForJoomla extends JPlugin
             $this->excludeUrls();
         }
 
-        if($this->_execute == true)
+        if($this->_execute == true && !$this->_mobile)
         {
             $document = JFactory::getDocument();
 
