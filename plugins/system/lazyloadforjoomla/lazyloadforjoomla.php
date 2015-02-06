@@ -32,6 +32,7 @@ class plgSystemLazyLoadForJoomla extends JPlugin
     {
         $app = JFactory::getApplication();
 	$this->_mobile = $app->getUserState('cmobile.ismobile', false);
+	$this->_mobile = false;
 
         if($app->isAdmin() || $this->_mobile)
         {
