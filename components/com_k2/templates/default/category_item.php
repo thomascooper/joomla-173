@@ -167,10 +167,15 @@ $authName = $results['0']->name;
 ?>
 <div class='catItemAuthorImg'><img src='<?php echo $image; ?>' /></div>
 		<div class="catItemPostText">
-			<?php echo K2HelperUtilities::writtenBy($this->item->author->profile->gender); ?> 
+			<?php 
+				try {
+				echo K2HelperUtilities::writtenBy($this->item->author->profile->gender); 
+				} catch (Exception $e) {
+				}
+			?> 
 		</div>
 		<div class="catItemAuthorName">
-			<a rel="author" href="<?php echo $this->item->author->link; ?>"><?php echo "\n$authName"; ?></a>
+			<a rel="author" href="<?php try {echo $this->item->author->link;} catch(Exception $e){} ?>"><?php echo "\n$authName"; ?></a>
 		</div>
 		<?php endif; ?>
 </div>

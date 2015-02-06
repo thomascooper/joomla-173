@@ -734,3 +734,13 @@ body.bd {
 .modal-footer .btn-group .btn + .btn {
   margin-left: -1px;
 }
+
+/* Fix not hide element in admin when adding hidden class */
+#t3-admin-mm-container .hidden-xs,
+#t3-admin-mm-container .hidden-sm,
+#t3-admin-mm-container .hidden-md,
+#t3-admin-mm-container .hidden-lg,
+#t3-admin-mm-container .hidden-desktop,
+#t3-admin-mm-container .hidden-phone {
+  display: block !important;
+}

@@ -52,7 +52,7 @@ class K2ViewItem extends JView {
 
 		// User K2 plugins
 		$item->event->K2UserDisplay = '';
-		if (isset($item->author) && is_object($item->author->profile) && isset($item->author->profile->id)) {
+		if (isset($item->author) && property_exists($item->author, 'profile') && isset($item->author->profile->id)) {
 			$dispatcher = &JDispatcher::getInstance();
 			JPluginHelper::importPlugin('k2');
 			$results = $dispatcher->trigger('onK2UserDisplay', array(&$item->author->profile, &$params, $limitstart));

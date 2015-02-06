@@ -436,7 +436,7 @@ span.itemImage img {
 }
 .itemImageBlock {
 	padding-top: 0px !important;
-	margin-top: 73px !important;
+	margin-top: -20px !important;
 }
 .itemRatingBlock {
         padding-bottom: 0px !important;
@@ -875,7 +875,6 @@ div.itemAuthorText {
 }
 div.itemHeader {
 	position: relative !important;
-	padding-top: 37px;
 }
 div.itemBody div.catItemPostText {
 	color:#bbbbbb;
@@ -906,7 +905,6 @@ div.bottomBoard .rt-block {
 }
 div#k2Container {
 	padding:0px !important;
-	margin: -35px 0 24px !important;
 }
 div div.facebook_button_bg {
 	float: left;

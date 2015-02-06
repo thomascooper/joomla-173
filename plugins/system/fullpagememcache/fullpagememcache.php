@@ -28,8 +28,10 @@ class  plgSystemFullPageMemcache extends JPlugin
 				$m = new Memcached();
 				$m->setOption(Memcached::OPT_BINARY_PROTOCOL, true);
 				$m->setOption(Memcached::OPT_COMPRESSION, $mainframe->getCfg('gzip'));
+				$port = $mainframe->getCfg('memcache_server_port');
+				$port = '11211';
 				$m->addServers(array(
-					array($mainframe->getCfg('memcache_server_host'), $mainframe->getCfg('memcache_server_port'), 20)
+					array($mainframe->getCfg('memcache_server_host'), $port, 20)
 				));
 
 				$namespace = '__ns__'.$_SERVER['HTTP_HOST'];

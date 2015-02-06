@@ -84,6 +84,11 @@
 					});
 				}
 
+                // click on caret, no action on link
+                $item.find ('a > .caret').on ('click tap', function(e) {
+                    item.clickable = false;
+                });
+
                 if (options.hover) {
                     $item.on('mouseover', function (e) {
                         if ($item.hasClass('group')) return ;
@@ -122,6 +127,13 @@
 				clearTimeout(self.timer);
 				self.timer = setTimeout($.proxy(self.hide_alls, self), e.type == 'tap' ? 500 : self.options.hidedelay);
 			});
+
+            // ignore click on direct child
+            $menu.find('.mega-dropdown-menu').on('tap hideall.t3menu', function(e) {
+                e.stopPropagation();
+                e.preventDefault();
+                return false;
+            });
 		},
 
 		show: function (item) {
@@ -432,7 +444,7 @@
 		}
 
 		//get ready
-		$('.nav').has('.dropdown-menu').t3menu({
+		$('ul.nav').has('.dropdown-menu').t3menu({
 			duration: mm_duration,
 			timeout: mm_timeout,
 			rtl: mm_rtl,
@@ -444,7 +456,7 @@
 		$(window).load(function(){
 			
 			//check we miss any nav
-			$('.nav').has('.dropdown-menu').t3menu({
+			$('ul.nav').has('.dropdown-menu').t3menu({
 				duration: mm_duration,
 				timeout: mm_timeout,
 				rtl: mm_rtl,

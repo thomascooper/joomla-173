@@ -161,6 +161,16 @@ require_once('lib/gantry/gantry.php');
 {modulepos body-bottom-ad1}
 {modulepos body-bottom-ad2}
 <?php endif; ?>
+<script>
+Galleria.on('image', function(e) {
+googletag.cmd.push(function() { googletag.display('div-gpt-ad-1408504440613-0'); });
+googletag.cmd.push(function() { googletag.display('div-gpt-ad-1408504440613-1'); });
+googletag.cmd.push(function() { googletag.display('div-gpt-ad-1408504440613-2'); });
+googletag.cmd.push(function() { googletag.display('div-gpt-ad-1408504440613-4'); });
+googletag.cmd.push(function() { googletag.display('div-gpt-ad-1408504440613-5'); });
+    Galleria.log('ads refreshed'); // the currently active IMG element
+});
+</script>
 	</body>
 </html>
 <?php

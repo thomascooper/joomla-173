@@ -9,10 +9,15 @@
 
 // no direct access
 defined('_JEXEC') or die('Restricted access');
+$app = JFactory::getApplication();
+$mobile = $app->getUserState('cmobile.ismobile', false);
 
 ?>
 
 <!-- Start K2 Category Layout -->
+<?php if ($mobile) { 
+echo "{modulepos mobile-leaderboard}";
+} ?>
 <div id="k2Container" class="itemListView<?php if($this->params->get('pageclass_sfx')) echo ' '.$this->params->get('pageclass_sfx'); ?>">
 
 	<?php if($this->params->get('show_page_title')): ?>
@@ -138,9 +143,15 @@ defined('_JEXEC') or die('Restricted access');
 		<?php if(isset($this->leading) && count($this->leading)): ?>
 		<!-- Leading items -->
 		<div id="itemListLeading">
+			<?php
+				$count = 0;
+				$ad_unit = 0;
+			?>
 			<?php foreach($this->leading as $key=>$item): ?>
 
 			<?php
+			$count++;
+			$mod = $count % 3;
 			// Define a CSS class for the last container on each row
 			if( (($key+1)%($this->params->get('num_leading_columns'))==0) || count($this->leading)<$this->params->get('num_leading_columns') )
 				$lastContainer= ' itemContainerLast';
@@ -157,6 +168,15 @@ defined('_JEXEC') or die('Restricted access');
 			</div>
 			<?php if(($key+1)%($this->params->get('num_leading_columns'))==0): ?>
 			<div class="clr"></div>
+			<?php endif; ?>
+			<?php if ($mod === 0 && $mobile): ?>
+
+			<div class="<?php echo ($key%2) ? "odd" : "even"; ?> ad_unit itemContainer<?php echo $lastContainer; ?>"<?php echo (count($this->leading)==1) ? '' : ' style="width:'.number_format(100/$this->params->get('num_leading_columns'), 1).'%;"'; ?>>
+			{modulepos inline-ad<?php echo "$ad_unit"; ?>}
+			<?php $ad_unit++; ?>
+			</div>
+			<div class="clr"></div>
+			
 			<?php endif; ?>
 			<?php endforeach; ?>
 			<div class="clr"></div>
@@ -262,3 +282,6 @@ defined('_JEXEC') or die('Restricted access');
 	<?php endif; ?>
 </div>
 <!-- End K2 Category Layout -->
+<?php if ($mobile) { 
+echo "{modulepos mobile-bottomboard}";
+} ?>
