@@ -3432,6 +3432,7 @@ div.itemBackToTop {
 
 div.itemView {
     background-color: #FFFFF0 !important;
+	padding: 6px !important;
 }
 
 span.catItemImage img {
@@ -3515,4 +3516,7 @@ div.catItemView div.clr {
 }
 .pagination-list li {
 	padding: 0 5px;
+}
+.catItemPostText {
+	padding-top: 10px;
 }
