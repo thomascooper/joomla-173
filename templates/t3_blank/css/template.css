@@ -3323,16 +3323,18 @@ div.catItemFooter span.catItemDateCreated {
 }
 
 h3.catItemTitle {
-    font-family: Verdana, Verdana, Geneva, sans-serif !important;
+	font-family: 'Roboto', sans-serif !important;
     font-size: 16px !important;
     font-weight: bold !important;
     text-transform: uppercase;
 }
 
 div.catItemIntroText {
+	font-family: 'Roboto', sans-serif;
     color: #A2A2A2 !important;
     font-size: 12px !important;
-    padding: 0px 0px 12px 0px;
+    padding: 0px 0px 5px 0px;
+	line-height: 14px;
 }
 
 div .jsn-gallery {
@@ -3350,7 +3352,7 @@ div.catItemView {
 }
 
 body {
-    background: #ebebeb;
+    background: lightgray;
 }
 
 .clr {
@@ -3459,8 +3461,7 @@ background-color: #0B2626 !important;
 }
 #t3-mainbody {
 max-width: 100%;
-padding: 0 10px !important;
-background-color: #FFFFF0 !important;
+background-color: lightgray !important;
 }
 #t3-footer {
 max-width: 100%;
@@ -3482,4 +3483,27 @@ background-color: #FFFFF0 !important;
 	width: 320px;
 	height: 50px;
 	padding: 10px;
+}
+
+.even,.odd {
+	border-bottom: none !important;
+}
+.t3-mainbody {
+	width:98% !important;
+	margin: 0 auto;
+	padding-top: 4px;
+}
+.itemContainer {
+	border-left: 6px solid #FFFFF0;
+	border-right: 6px solid #FFFFF0;
+	width: 355px !important;
+}
+.catItemTitle {
+	padding-top: 5px !important;
+}
+div.catItemHeader {
+	padding-bottom: 0px !important;
+}
+div.catItemView div.clr {
+	height: 1px;
 }
