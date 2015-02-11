@@ -3507,3 +3507,12 @@ div.catItemHeader {
 div.catItemView div.clr {
 	height: 1px;
 }
+.t3-copyright {
+	display: none;
+}
+.pagination-list {
+	margin: 0 !important;
+}
+.pagination-list li {
+	padding: 0 5px;
+}
