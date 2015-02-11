@@ -3482,7 +3482,7 @@ background-color: #FFFFF0 !important;
 	margin: 0 auto;
 	width: 320px;
 	height: 50px;
-	padding: 10px;
+	padding-bottom: 4px;
 }
 
 .even,.odd {
