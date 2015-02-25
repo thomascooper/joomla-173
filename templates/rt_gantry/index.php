@@ -161,7 +161,33 @@ require_once('lib/gantry/gantry.php');
 {modulepos body-bottom-ad1}
 {modulepos body-bottom-ad2}
 <?php endif; ?>
-<script>
+<script type='text/javascript'>
+if (typeof startTime === 'undefined') {
+    var startTime = new Date();
+    console.log('[adserver]: setting new ad pull time');
+}
+if (typeof Galleria !== 'undefined') {
+    Galleria.on('image', function (e) {
+        if (e.index !== 0) {
+            refreshAds();
+        }
+    });
+}
+
+function refreshAds() {
+    var runTime = new Date();
+    var timeDiff = runTime - startTime;
+    timeDiff = timeDiff / 1000;
+    var seconds = Math.round(timeDiff % 60);
+    if (seconds > 3) {
+        console.log('[adserver]: 3 seconds passed updating');
+        startTime = new Date();
+        googletag.pubads().refresh();
+    }
+}
+</script>
+
+<!--
 Galleria.on('image', function(e) {
 googletag.cmd.push(function() { googletag.display('div-gpt-ad-1408504440613-0'); });
 googletag.cmd.push(function() { googletag.display('div-gpt-ad-1408504440613-1'); });
@@ -170,7 +196,7 @@ googletag.cmd.push(function() { googletag.display('div-gpt-ad-1408504440613-4');
 googletag.cmd.push(function() { googletag.display('div-gpt-ad-1408504440613-5'); });
     Galleria.log('ads refreshed'); // the currently active IMG element
 });
-</script>
+-->
 	</body>
 </html>
 <?php
