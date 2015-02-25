@@ -2539,7 +2539,7 @@ Galleria.prototype = {
 
         Utils.hide( this.$( 'counter' ).append(
             this.get( 'current' ),
-            doc.createTextNode(' / '),
+            doc.createTextNode(' of '),
             this.get( 'total' )
         ) );
 
