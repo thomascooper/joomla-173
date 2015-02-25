@@ -2526,9 +2526,9 @@ Galleria.prototype = {
             'info' :
                 ['info-text'],
             'image-nav' :
-                ['image-nav-right', 'image-nav-left'],
+                ['counter', 'image-nav-left', 'image-nav-right'],
             'stage' :
-                ['images', 'loader', 'counter', 'image-nav'],
+                ['images', 'loader', 'image-nav'],
             'thumbnails-list' :
                 ['thumbnails'],
             'thumbnails-container' :

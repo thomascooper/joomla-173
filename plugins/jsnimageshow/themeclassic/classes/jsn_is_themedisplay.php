@@ -664,8 +664,16 @@ class JSNISThemeDisplay extends JObject
 			$desc  = $this->_wordLimiter(htmlspecialchars($image->description), $informationPanelDescriptionLenghtLimit);
 			$html .= '<a href="'.$image->image.'"><img title="'.htmlspecialchars($image->title).'" alt="'.$alt.'" shortdesc="'.$desc.'" src="'.$image->thumbnail.'" longdesc="'.$image->link.'" /></a>'."\n";
 		}
-		$html .= '</div></div>'.$pluginCloseTagDiv."\n";
+		$html .= '</div><div id="jsn-main-nav-'.$args->random_number.'" class="main-nav-container"></div></div>'.$pluginCloseTagDiv."\n";
 		$html .= '<script type="text/javascript">jsnThemeClassicjQuery(function() {jsnThemeClassicjQuery("#jsn-themeclassic-galleria-'.$args->random_number.'").galleria({'.$jsWidth.$jsAutoPlay.$jsShowThumbnail.$jsToolBarpanelPresentation.$jsPauseOnInteraction.$jsInformationPanelPresentation.$jsInformationPanelShowTitle.$jsInformationPanelShowDescription.$jsPopupLinks.$jsImagePanelImageClickAction.$jsInformationPanelImageShowLink.$jsSlideshowLooping.$jsThumbnailHeight.$jsThumbnailPosition.$jsImagePanelDefaultPresentationMode.$jsInformationPanelClickAction.$jsInformationpanelPopupLinks.'height:'.$args->height.', initialTransition: "fade", transition: "slide", thumbCrop: false, thumbFit: false, thumbQuality: false, showCounter: false, imageTimeout: 300000});});</script>';
+		$html .= '<script type="text/javascript">
+jsnThemeClassicjQuery( document ).ready(function( $ ) {
+	var element = $("div#jsn-themeclassic-galleria-'.$args->random_number.'").find("div.galleria-image-nav");
+	element.detach();
+	$("#jsn-main-nav-'.$args->random_number.'").append(element);
+});
+</script>';
+
 
 		return $html;
 	}
