@@ -1,14 +1,16 @@
 /* Galleria Classic Theme 2012-08-07 | https://raw.github.com/aino/galleria/master/LICENSE | (c) Aino */
 
 #galleria-loader{height:1px!important}
-
+.itemIntroText {
+	font-size:.8em !important;
+}
 .jsn-container {
-	padding-bottom: 0.8em;
+	padding: 0.8em 0;
 }
 .galleria-container {
     position: relative;
     overflow: hidden;
-    background: #000;
+    background: rgba(0, 0, 0, 0.2) !important;
     border: 0.1em solid black !important;
 }
 .galleria-container img {
@@ -25,15 +27,6 @@
     height: 100%;
     overflow:hidden;
 }
-.galleria-counter {
-    position: absolute;
-    bottom: 10px;
-    left: 10px;
-    text-align: right;
-    color: #fff;
-    font: normal 11px/1 arial,sans-serif;
-    z-index: 1;
-}
 .galleria-loader {
     background: #000;
     width: 20px;
@@ -46,11 +39,11 @@
     background: url(classic-loader.gif) no-repeat 2px 2px;
 }
 .galleria-info {
-    height: 7% !important;
+	top: auto !important;
+	bottom:0 !important;
 }
 .galleria-info-text {
-    border-bottom: 1px solid black;
-    background: #aaaaaa !important;
+	background:rgba(0, 0, 0, 0.39) !important;
     padding: 0.4em 0.8em 0.4em 0.8em !important;
     display: table !important;
 	width: 100%;
@@ -92,64 +85,61 @@
     background-color: #000;
 }
 .galleria-image-nav {
-    display: inline-block;
-    width: 100%;
-    height: 14% !important;
-    left: 0;
-	bottom: 1px !important;
-	top: auto !important;
-	margin: 0px !important;
-    background-color: #999;
+    background-color: #999;       
+	display: inline-block;
+    height: 3em !important;
+	width: 100%;
+	box-sizing:border-box;
+	-moz-box-sizing:border-box;
+	-webkit-box-sizing:border-box;
+	border: 1px solid black;
+	border-top: none !important;
+}
+.galleria-counter {
+	position: relative !important;
+	left: 0 !important;
+	opacity: 1 !important;
+	width: 46%;
+	line-height:1.7em;
+	color: #000;
+	font-size: 1.7em;
+	font-weight: bolder;
+	display:inline-block;
+	float:left;
+}
+.galleria-current,
+.galleria-total {
+	opacity:0.5;
+	font-size:1.2em;
+	color: #fff;
 }
 .galleria-image-nav-left,
 .galleria-image-nav-right {
+	display: inline-block;
     cursor: pointer;
-    position: absolute;
-    z-index: 2;
+	width: 27%;
+	line-height: 3em;
 }
 .galleria-image-nav-right {
-    right: 0px !important;
-    border-top: 1px solid black;
-    background-color: #999;
-    height: 100%;
-    width: 31% !important;
+	float:right;
 }
 .galleria-image-nav-left {      
-    border-top: 1px solid black;
-    background-color: #999;       
-    height: 100%;   
-    left: 0px !important;
-    width: 71% !important;
+	float:left;
 }
-.galleria-image-nav-left:after {
-    background: red;
-    color: #fff !important;
-    content: "<< Prev";
-    display: block;
-    float: right;
-    font-size: 1.2em !important;
-    font-weight: bold;
-    margin-right: 5%;
-    margin-top: 3%;
-    text-transform: uppercase;
-    width: 6em;
-	padding-top: 1%;
-	height: 1.4em;
-}
-
+.galleria-image-nav-left:after,
 .galleria-image-nav-right:after {
     background: red;
     color: #fff !important;
-    content: "Next >>";
-    display: block;
-    font-size: 1.2em !important;
-    font-weight: bold;
-    margin-left: 5%;
-    margin-top: 7%;
     text-transform: uppercase;
-    width: 6em;
-	padding-top: 1%;
-	height: 1.55em;
+	padding: 0.2em .9em;
+	font-size: 1.2em;
+	font-weight: bolder;
+}
+.galleria-image-nav-left:after {
+    content: "<< Prev";
+}
+.galleria-image-nav-right:after {
+    content: "Next >>";
 }
 .galleria-stage {
     top: 0px !important;  
@@ -161,10 +151,3 @@
     font-weight:regular !important;
     font-size: 18px !important;
 }
-
-    .galleria-counter {
-        bottom: 10px;  
-        font: bold 21px/1 arial,sans-serif;
-        left: 15px !important;
-		content: " of ";
-    }
