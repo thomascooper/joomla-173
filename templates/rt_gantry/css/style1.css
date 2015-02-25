@@ -1004,10 +1004,7 @@ div#sbox-window {
 	margin-top:175px;
 }
 .nopadding_160 {
-	padding: 0px;
-	width: 100%;
-}
-.nopadding_160 {
-	width: 160px;
+	width: 200px;
 	margin: 0 auto;
+	padding: 0px;
 }
