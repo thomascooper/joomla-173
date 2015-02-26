@@ -657,9 +657,12 @@ if ($mobile) {
 	echo "{modulepos inline-ad0}";
 }
 ?>
+<?php if($mobile): ?>
+{modulepos mobile-article-ad1}
+{modulepos mobile-article-ad2}
+{modulepos mobile-bottomboard}
+<?php else: ?>
 {modulepos article-ad1}
 {modulepos article-ad2}
 {modulepos article-ad3}
-<?php if($mobile): ?>
-{modulepos mobile-bottomboard}
 <?php endif; ?>
