@@ -1,9 +1,6 @@
 /* Galleria Classic Theme 2012-08-07 | https://raw.github.com/aino/galleria/master/LICENSE | (c) Aino */
 
 #galleria-loader{height:1px!important}
-.itemIntroText {
-	font-size:.8em !important;
-}
 .jsn-container {
 	padding: 0.8em 0;
 }
@@ -43,8 +40,7 @@
 	bottom:0 !important;
 }
 .galleria-info-text {
-	background:rgba(0, 0, 0, 0.39) !important;
-    padding: 0.4em 0.8em 0.4em 0.8em !important;
+	background: none !important;
     display: table !important;
 	width: 100%;
     height: 100% !important;
@@ -52,6 +48,7 @@
 	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
 	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
 	box-sizing: border-box;         /* Opera/IE 8+ */
+	padding:0px !important;
 }
 .galleria-info-title {
     margin: 0;
@@ -59,6 +56,8 @@
     margin-bottom: 7px;
 }
 .galleria-info-description {
+	background:rgba(0, 0, 0, 0.39) !important;
+    padding: 0.4em 0.8em 0.4em 0.8em !important;
     margin: 0;
     color: yellow !important;
 	font-size: 1.1em !important;

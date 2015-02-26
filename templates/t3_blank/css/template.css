@@ -3516,3 +3516,6 @@ div.catItemView div.clr {
 .catItemPostText {
 	padding-top: 10px;
 }
+.itemIntroText {
+	font-size:.8em !important;
+}
