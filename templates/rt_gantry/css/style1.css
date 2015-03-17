@@ -962,8 +962,8 @@ div#sbox-window {
 #rt-drawer {
 	width: 100%;
 	background-color: #ffffff;
-	position: fixed;
-	z-index: 101;
+/*	position: fixed;
+	z-index: 101;*/
 }
 #rt-drawer .rt-container,
 #rt-drawer .rt-grid-12 {
