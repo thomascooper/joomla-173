@@ -3519,3 +3519,7 @@ div.catItemView div.clr {
 .itemIntroText {
 	font-size:.8em !important;
 }
+.ci_row ul {
+	margin: 0px !important;
+	padding: 0px !important;
+}
