@@ -659,6 +659,7 @@ if ($mobile) {
 ?>
 <?php if($mobile): ?>
 {modulepos mobile-article-ad1}
+{modulepos inline-ad1}
 {modulepos mobile-article-ad2}
 {modulepos mobile-bottomboard}
 <?php else: ?>
