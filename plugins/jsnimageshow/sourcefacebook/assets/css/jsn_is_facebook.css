@@ -1,0 +1,13 @@
+#loadingConnect {
+	display: block;
+	width: 156px;
+	padding-left: 20px;
+	margin: auto;
+}
+#loginButton {
+	display: none;
+	text-align: center;
+}
+#facebookNotMatch,#facebookWarningText {
+	display:none;
+}
