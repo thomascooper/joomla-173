@@ -3442,7 +3442,7 @@ span.itemImage img {
 }
 
 div.itemFullText {
-    font-size: 18px;
+    font-size: .8em;
 }
 div.componentheading, div.k2FeedIcon {
     display:none !important;
