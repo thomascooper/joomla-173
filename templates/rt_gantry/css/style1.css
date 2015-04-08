@@ -69,8 +69,9 @@ position:relative;
 
 /* Header - Search */
 .search {float:right;margin-top:0px;}
-.search .button {position:absolute;
-height: 19px;
+.search .button {
+position:absolute;
+height: 22px;
 }
 #mod-search-searchword{margin:0px}
 
