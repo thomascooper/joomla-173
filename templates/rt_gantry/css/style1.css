@@ -68,7 +68,7 @@ position:relative;
 	#rt-header .rt-container {width: 959px !important;}}
 
 /* Header - Search */
-.search {float:right;margin-top:-24px;}
+.search {float:right;margin-top:0px;}
 .search .button {position:absolute;
 height: 19px;
 }
