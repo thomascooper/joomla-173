@@ -535,6 +535,7 @@ hr.hr-condensed {
 }
 
 p {
+    font-family: 'Roboto', sans-serif !important;
     margin: 0 0 10px;
 }
 
@@ -626,6 +627,7 @@ a.text-success:hover,a.text-success:focus {
 
 h1,h2,h3,h4,h5,h6 {
     margin: 10px 0;
+    font-family: 'Roboto', sans-serif !important;
     font-family: sans-serif;
     font-weight: bold;
     line-height: 1;
@@ -3261,7 +3263,7 @@ table.adminlist th a {
 
 div.itemHeader h2.itemTitle {
 /*    font-family: Georgia,"Times New Roman",Times,serif !important; */
-    font-family: Verdana, Verdana, Geneva, sans-serif !important;
+    font-family: 'Roboto', sans-serif !important;
     font-size: 20px !important;
     font-weight: bold !important;
     line-height: 110% !important;
@@ -3306,7 +3308,7 @@ div.catItemFooter div.catItemPostText {
 div.catItemFooter div.catItemAuthorName {
     float: right;
     color: #bbbbbb;
-    width: 65px;
+    width: 75px;
     line-height: normal;
     text-align: right;
     position: absolute;
@@ -3419,6 +3421,7 @@ div.itemLinks {
 }
 
 div.itemTitle {
+    font-family: 'Roboto', sans-serif !important;
     background-color: #FFFFF0 !important;
 }
 
@@ -3522,4 +3525,7 @@ div.catItemView div.clr {
 .ci_row ul {
 	margin: 0px !important;
 	padding: 0px !important;
+}
+.resp300x250 {
+	margin: 0 auto;
 }

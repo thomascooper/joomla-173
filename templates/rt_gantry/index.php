@@ -179,8 +179,8 @@ function refreshAds() {
     var timeDiff = runTime - startTime;
     timeDiff = timeDiff / 1000;
     var seconds = Math.round(timeDiff % 60);
-    if (seconds > 3) {
-        console.log('[adserver]: 3 seconds passed updating');
+    if (seconds > 8) {
+        console.log('[adserver]: 8 seconds passed updating');
         startTime = new Date();
         googletag.pubads().refresh();
     }
