@@ -536,8 +536,12 @@ hr.hr-condensed {
 
 p {
     /* font-family: 'Roboto', sans-serif !important; */
-	font-family: 'Helvetica','Arial','FreeSans',sans-serif !important;
+	font-family: 'Verdana','Helvetica','Arial','FreeSans',sans-serif !important;
+	font-size: 18px;
     margin: 0 0 10px;
+	color: gray;
+	left: 5px;
+	font-weight: normal;
 }
 
 p small,p .small {
@@ -3521,14 +3525,20 @@ div.catItemView div.clr {
 	padding-top: 10px;
 }
 .itemIntroText {
-	/* font-size:.8em !important; */
+	font-size:.8em !important;
 }
 div.itemView h1 {
+	color: #264040;
 	font-family: Verdana,Verdana,Geneva,sans-serif !important;
-	font-weight: bold !important;
-	text-transofrm: upercase;
 	font-size: 20px;
+	font-weight: bold !important;
+	line-height: 20px;
+	text-transform: uppercase;
+	position: relative;
+	left: 8px;
+	width: 98%;
 }
+
 .ci_row ul {
 	margin: 0px !important;
 	padding: 0px !important;
