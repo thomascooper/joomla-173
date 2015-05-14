@@ -140,7 +140,7 @@ $authName = $results['0']->name;
                 <div style="float:right; width:40%">
                 <div>
                 <span style="float:right;"><img src='<?php echo "../"."../".$image; ?>' width="33px"/></span>
-                    <span style="display:inline-block; float:right; line-height:15px; margin-right:5px">Posted by
+                    <span style="display:inline-block; float:right; line-height:15px; margin-right:5px; text-align:right;">Posted by
                     <a rel="author" href="https://plus.google.com/<?php echo $gpID; ?>" style="display:block; text-align:right;"><?php echo "\n$authName"; ?></a></span>
                     </div>
                 </div>
