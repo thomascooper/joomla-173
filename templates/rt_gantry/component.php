@@ -27,6 +27,7 @@ require_once('lib/gantry/gantry.php');
 			?>
 		</head>
 		<body <?php echo $gantry->displayBodyTag(); ?>>
+			
 			<div id="rt-main">
 				<div class="rt-container">
 					<div class="rt-block">

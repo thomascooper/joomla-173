@@ -3,7 +3,7 @@ class JConfig {
 	public $offline = '0';
 	public $offline_message = 'This site is down for maintenance.<br /> Please check back again soon.';
 	public $display_offline_message = '1';
-	public $sitename = 'WorldWide Interweb';
+	public $sitename = 'DEV - WorldWide Interweb';
 	public $editor = 'jce';
 	public $list_limit = '20';
 	public $access = '1';
@@ -13,7 +13,7 @@ class JConfig {
 	public $host = '10.1.1.35';
 	public $user = 'joomla_user';
 	public $password = 'CHu=ukaW?a_w';
-	public $db = 'joomla_db';
+	public $db = 'joomla_25';
 	public $dbprefix = 'jom17_';
 	public $live_site = '';
 	public $secret = 'DvcJbwEPm3X3ccI8';
@@ -41,14 +41,14 @@ class JConfig {
 	public $cache_handler = 'apc';
 	public $cachetime = '15';
 	public $MetaDesc = 'World Wide Interweb. It\'s basically the internet and stuff. You know... funny original videos, photo galleries based on some sort of like super cool themes. That sort of thing.';
-	public $MetaKeys = '';
+	public $MetaKeys = 'funny, comedy, videos, photos, galleries, original, parody, celebrities, compilation, sports, gaming, lists, humor';
 	public $MetaAuthor = '1';
 	public $sef = '1';
 	public $sef_rewrite = '1';
 	public $sef_suffix = '1';
 	public $unicodeslugs = '0';
 	public $feed_limit = '10';
-	public $log_path = '/var/logs/httpd';
+	public $log_path = '/home/nginx/domains/worldwideinterweb.com/log';
 	public $tmp_path = '/tmp';
 	public $lifetime = '75';
 	public $session_handler = 'memcache';
@@ -60,10 +60,10 @@ class JConfig {
 	public $cookie_path = '';
 	public $memcache_persist = '1';
 	public $memcache_compress = '0';
-	public $memcache_server_host = '10.1.1.36';
-	public $memcache_server_port = '11210';
+	public $memcache_server_host = '127.0.0.1';
+	public $memcache_server_port = '11211';
 	public $captcha = 'recaptcha';
-	public $robots = '';
+	public $robots = 'noindex, nofollow';
 	public $MetaVersion = '0';
 	public $error_reporting = 'default';
 	public $offline_image = '';

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="2.5" type="component" method="upgrade">
+    <name>Joomailer Mailchimp Signup</name>
+    <author>freakedout</author>
+    <authorEmail>contact@freakedout.de</authorEmail>
+    <authorUrl>www.freakedout.de</authorUrl>
+    <copyright>Copyright (C) 2015 freakedout - All rights reserved.</copyright>
+    <creationDate>2015-03-03</creationDate>
+    <license>http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL</license>
+    <version>2.2</version>
+    <description>Used to signup registrants to MailChimp during Core, Community Builder and JomSocial registration process</description>
+
+    <scriptfile>installation.script.php</scriptfile>
+
+    <files folder="site">
+        <filename>index.html</filename>
+        <filename>joomailermailchimpsignup.php</filename>
+        <filename>controller.php</filename>
+        <folder>controllers</folder>
+        <folder>libraries</folder>
+        <folder>models</folder>
+        <folder>tables</folder>
+        <folder>templates</folder>
+    </files>
+
+    <administration>
+        <files folder="admin">
+            <filename>index.html</filename>
+            <filename>joomailermailchimpsignup.php</filename>
+            <filename>controller.php</filename>
+            <folder>models</folder>
+        </files>
+    </administration>
+</extension>
