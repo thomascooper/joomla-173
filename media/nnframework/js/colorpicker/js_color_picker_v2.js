@@ -275,8 +275,7 @@ function showHideColorOptions(e, inputObj)
 				subDiv.className = 'colorPickerTab_inactive';
 				if (activeColorDiv) {
 					subDiv.style.zIndex = initZIndex-counter;
-				}
-				else {
+				} else {
 					subDiv.style.zIndex = counter;
 				}
 				contentDiv.style.display = 'none';

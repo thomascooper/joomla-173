@@ -4,11 +4,11 @@
  * Displays a list of components with check boxes
  *
  * @package         NoNumber Framework
- * @version         13.11.22
+ * @version         15.4.3
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
- * @copyright       Copyright © 2013 NoNumber All Rights Reserved
+ * @copyright       Copyright © 2015 NoNumber All Rights Reserved
  * @license         http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 
@@ -44,6 +44,7 @@ class JFormFieldNN_Components extends JFormField
 		}
 
 		require_once JPATH_PLUGINS . '/system/nnframework/helpers/html.php';
+
 		return nnHtml::selectlist($options, $this->name, $this->value, $this->id, $size, 1);
 	}
 

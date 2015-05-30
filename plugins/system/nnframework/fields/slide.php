@@ -4,11 +4,11 @@
  * Element to create a new slide pane
  *
  * @package         NoNumber Framework
- * @version         13.11.22
+ * @version         15.4.3
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
- * @copyright       Copyright © 2013 NoNumber All Rights Reserved
+ * @copyright       Copyright © 2015 NoNumber All Rights Reserved
  * @license         http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 
@@ -32,7 +32,7 @@ class JFormFieldNN_Slide extends JFormField
 
 		JHtml::stylesheet('nnframework/style.min.css', false, true);
 
-		$label = NNText::html_entity_decoder(JText::_($this->get('label')));
+		$label = nnText::html_entity_decoder(JText::_($this->get('label')));
 		$description = $this->get('description');
 		$lang_file = $this->get('language_file');
 		$show_apply = $this->get('show_apply');
@@ -52,7 +52,7 @@ class JFormFieldNN_Slide extends JFormField
 			$v4 = $this->get('var4');
 			$v5 = $this->get('var5');
 
-			$description = NNText::html_entity_decoder(trim(JText::sprintf($description, $v1, $v2, $v3, $v4, $v5)));
+			$description = nnText::html_entity_decoder(trim(JText::sprintf($description, $v1, $v2, $v3, $v4, $v5)));
 		}
 
 		if ($lang_file)

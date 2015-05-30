@@ -3,26 +3,34 @@
  * NoNumber Framework Helper File: Functions
  *
  * @package         NoNumber Framework
- * @version         13.11.22
+ * @version         15.4.3
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
- * @copyright       Copyright © 2013 NoNumber All Rights Reserved
+ * @copyright       Copyright © 2015 NoNumber All Rights Reserved
  * @license         http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 
 defined('_JEXEC') or die;
 
+require_once __DIR__ . '/cache.php';
+
 /**
  * Framework Functions
  */
-
-class NNFrameworkFunctions
+class nnFrameworkFunctions
 {
-	var $_version = '13.11.22';
+	var $_version = '15.4.3';
 
-	public function getByUrl($url, $options = array())
+	public function getByUrl($url)
 	{
+		$hash = md5('getByUrl_' . $url);
+
+		if (nnCache::has($hash))
+		{
+			return nnCache::get($hash);
+		}
+
 		// only allow url calls from administrator
 		if (!JFactory::getApplication()->isAdmin())
 		{
@@ -61,35 +69,57 @@ class NNFrameworkFunctions
 		header("Cache-Control: public");
 		header("Content-type: text/xml");
 
-		return self::getContents($url);
+		return nnCache::set($hash,
+			self::getContents($url)
+		);
 	}
 
 	public function getContents($url, $fopen = 0)
 	{
-		$html = '';
-		if (!$fopen && function_exists('curl_init') && function_exists('curl_exec'))
+		$hash = md5('getByUrl_' . $url . '_' . $fopen);
+
+		if (nnCache::has($hash))
 		{
-			$html = $this->curl($url);
-		}
-		else
-		{
-			$file = @fopen($url, 'r');
-			if ($file)
-			{
-				$html = array();
-				while (!feof($file))
-				{
-					$html[] = fgets($file, 1024);
-				}
-				$html = implode('', $html);
-			}
+			return nnCache::get($hash);
 		}
 
-		return $html;
+		if ((!$fopen || !ini_get('allow_url_fopen')) && function_exists('curl_init') && function_exists('curl_exec'))
+		{
+			return nnCache::set($hash,
+				$this->curl($url)
+			);
+		}
+
+		if (!ini_get('allow_url_fopen'))
+		{
+			return '';
+		}
+
+		if (!$file = @fopen($url, 'r'))
+		{
+			return '';
+		}
+
+		$html = array();
+		while (!feof($file))
+		{
+			$html[] = fgets($file, 1024);
+		}
+
+		return nnCache::set($hash,
+			implode('', $html)
+		);
 	}
 
 	protected function curl($url)
 	{
+		$hash = md5('curl_' . $url);
+
+		if (nnCache::has($hash))
+		{
+			return nnCache::get($hash);
+		}
+
 		$timeout = JFactory::getApplication()->input->getInt('timeout', 3);
 		$timeout = min(array(30, max(array(3, $timeout))));
 
@@ -100,17 +130,22 @@ class NNFrameworkFunctions
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($ch, CURLOPT_USERAGENT, 'NoNumber/' . $this->_version);
 		curl_setopt($ch, CURLOPT_TIMEOUT, $timeout);
+		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
 
-		$config = JComponentHelper::getParams('com_nonumbermanager');
-		if ($config && $config->get('use_proxy', 0) && $config->get('proxy_host'))
+		jimport('joomla.filesystem.file');
+		if (JFile::exists(JPATH_ADMINISTRATOR . '/components/com_nonumbermanager/nonumbermanager.php'))
 		{
-			curl_setopt($ch, CURLOPT_PROXY, $config->get('proxy_host') . ':' . $config->get('proxy_port'));
-			curl_setopt($ch, CURLOPT_PROXYUSERPWD, $config->get('proxy_login') . ':' . $config->get('proxy_password'));
-			curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+			$config = JComponentHelper::getParams('com_nonumbermanager');
+			if ($config && $config->get('use_proxy', 0) && $config->get('proxy_host'))
+			{
+				curl_setopt($ch, CURLOPT_PROXY, $config->get('proxy_host') . ':' . $config->get('proxy_port'));
+				curl_setopt($ch, CURLOPT_PROXYUSERPWD, $config->get('proxy_login') . ':' . $config->get('proxy_password'));
+				curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+			}
 		}
 
 		//follow on location problems
-		if (ini_get('open_basedir') == '' && ini_get('safe_mode') != '1' && ini_get('safe_mode') != 'On')
+		if (!ini_get('safe_mode') && !ini_get('open_basedir'))
 		{
 			curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
 			$html = curl_exec($ch);
@@ -120,10 +155,13 @@ class NNFrameworkFunctions
 			$html = $this->curl_redir_exec($ch);
 		}
 		curl_close($ch);
-		return $html;
+
+		return nnCache::set($hash,
+			$html
+		);
 	}
 
-	protected function curl_redir_exec($ch)
+	public function curl_redir_exec($ch)
 	{
 		static $curl_loops = 0;
 		static $curl_max_loops = 20;
@@ -131,6 +169,7 @@ class NNFrameworkFunctions
 		if ($curl_loops++ >= $curl_max_loops)
 		{
 			$curl_loops = 0;
+
 			return false;
 		}
 
@@ -149,6 +188,7 @@ class NNFrameworkFunctions
 			{
 				//couldn't process the url to redirect to
 				$curl_loops = 0;
+
 				return $data;
 			}
 			$last_url = parse_url(curl_getinfo($ch, CURLINFO_EFFECTIVE_URL));
@@ -166,11 +206,13 @@ class NNFrameworkFunctions
 			}
 			$new_url = $url['scheme'] . '://' . $url['host'] . $url['path'] . ($url['query'] ? '?' . $url['query'] : '');
 			curl_setopt($ch, CURLOPT_URL, $new_url);
-			return $this->curl_redir_exec($ch);
+
+			return self::curl_redir_exec($ch);
 		}
 		else
 		{
 			$curl_loops = 0;
+
 			return $data;
 		}
 	}
@@ -185,6 +227,18 @@ class NNFrameworkFunctions
 					|| JFile::exists(JPATH_SITE . '/components/com_' . $extension . '/' . $extension . '.php')
 				)
 				{
+					if ($extension == 'cookieconfirm')
+					{
+						// Only Cookie Confirm 2.0.0.rc1 and above is supported, because
+						// previous versions don't have isCookiesAllowed()
+						require_once JPATH_ADMINISTRATOR . '/components/com_cookieconfirm/version.php';
+
+						if (version_compare(COOKIECONFIRM_VERSION, '2.2.0.rc1', '<'))
+						{
+							return 0;
+						}
+					}
+
 					return 1;
 				}
 				break;
@@ -205,122 +259,243 @@ class NNFrameworkFunctions
 				}
 				break;
 		}
+
 		return 0;
+	}
+
+	static function loadLanguage($extension = 'joomla', $basePath = JPATH_ADMINISTRATOR)
+	{
+		$lang = JFactory::getLanguage();
+		if ($lang->getTag() != 'en-GB')
+		{
+			// Loads English language file as fallback (for undefined stuff in other language file)
+			$lang->load($extension, $basePath, 'en-GB');
+		}
+		$lang->load($extension, $basePath, null, 1);
 	}
 
 	static function xmlToObject($url, $root)
 	{
-		if (!JFile::exists($url))
+		$hash = md5('curl_' . $url . '_' . $root);
+
+		if (nnCache::has($hash))
 		{
-			return new stdClass;
+			return nnCache::get($hash);
 		}
 
-		$xml = @new SimpleXMLElement($url, LIBXML_NONET, 1);
+		if (JFile::exists($url))
+		{
+			$xml = @new SimpleXMLElement($url, LIBXML_NONET | LIBXML_NOCDATA, 1);
+		}
+		else
+		{
+			$xml = simplexml_load_string($url, "SimpleXMLElement", LIBXML_NONET | LIBXML_NOCDATA);
+		}
 
 		if (!@count($xml))
 		{
-			return new stdClass;
+			return nnCache::set($hash,
+				new stdClass
+			);
 		}
 
 		if ($root)
 		{
 			if (!isset($xml->$root))
 			{
-				return new stdClass;
+				return nnCache::set($hash,
+					new stdClass
+				);
 			}
+
 			$xml = $xml->$root;
 		}
 
-		return self::convertXmlElement($xml);
+		$xml = self::xmlToArray($xml);
+
+		if ($root && isset($xml->$root))
+		{
+			$xml = $xml->$root;
+		}
+
+		return nnCache::set($hash,
+			$xml
+		);
 	}
 
-	static function convertXmlElement($el)
+	static function xmlToArray($xml, $options = array())
 	{
-		switch (gettype($el))
-		{
-			case 'object':
-				if (empty($el))
-				{
-					return '';
-				}
-				$el = (object) (array) $el;
-				break;
-			case 'array':
-				break;
-			default:
-				return $el;
-		}
+		$defaults = array(
+			'namespaceSeparator' => ':', //you may want this to be something other than a colon
+			'attributePrefix'    => '', //to distinguish between attributes and nodes with the same name
+			'alwaysArray'        => array(), //array of xml tag names which should always become arrays
+			'autoArray'          => true, //only create arrays for tags which appear more than once
+			'textContent'        => 'value', //key used for the text content of elements
+			'autoText'           => true, //skip textContent key if node has no attributes or child nodes
+			'keySearch'          => false, //optional search and replace on tag and attribute names
+			'keyReplace'         => false //replace values for above search values (as passed to str_replace())
+		);
+		$options = array_merge($defaults, $options);
+		$namespaces = $xml->getDocNamespaces();
+		$namespaces[''] = null; //add base (empty) namespace
 
-		$obj = array();
-		foreach ($el as $key => $val)
+		//get attributes from all namespaces
+		$attributesArray = array();
+		foreach ($namespaces as $prefix => $namespace)
 		{
-			if ('comment' == (string) $key)
+			foreach ($xml->attributes($namespace) as $attributeName => $attribute)
 			{
-				continue;
+				//replace characters in attribute name
+				if ($options['keySearch'])
+				{
+					$attributeName = str_replace($options['keySearch'], $options['keyReplace'], $attributeName);
+				}
+				$attributeKey = $options['attributePrefix']
+					. ($prefix ? $prefix . $options['namespaceSeparator'] : '')
+					. $attributeName;
+				$attributesArray[$attributeKey] = (string) $attribute;
 			}
-			$obj[$key] = self::convertXmlElement($val);
 		}
 
-		if ('object' == gettype($el))
+		//get child nodes from all namespaces
+		$tagsArray = array();
+		foreach ($namespaces as $prefix => $namespace)
 		{
-			$obj = (object) $obj;
+			foreach ($xml->children($namespace) as $childXml)
+			{
+				//recurse into child nodes
+				$childArray = self::xmlToArray($childXml, $options);
+				list($childTagName, $childProperties) = each($childArray);
+
+				//replace characters in tag name
+				if ($options['keySearch'])
+				{
+					$childTagName =
+						str_replace($options['keySearch'], $options['keyReplace'], $childTagName);
+				}
+				//add namespace prefix, if any
+				if ($prefix)
+				{
+					$childTagName = $prefix . $options['namespaceSeparator'] . $childTagName;
+				}
+
+				if (!isset($tagsArray[$childTagName]))
+				{
+					//only entry with this key
+					//test if tags of this type should always be arrays, no matter the element count
+					$tagsArray[$childTagName] =
+						in_array($childTagName, $options['alwaysArray']) || !$options['autoArray']
+							? array($childProperties) : $childProperties;
+				}
+				elseif (
+					is_array($tagsArray[$childTagName])
+					&& array_keys($tagsArray[$childTagName]) === range(0, count($tagsArray[$childTagName]) - 1)
+				)
+				{
+					//key already exists and is integer indexed array
+					$tagsArray[$childTagName][] = $childProperties;
+				}
+				else
+				{
+					//key exists so convert to integer indexed array with previous value in position 0
+					$tagsArray[$childTagName] = array($tagsArray[$childTagName], $childProperties);
+				}
+			}
 		}
 
-		return $obj;
+		//get text content of node
+		$textContentArray = array();
+		$plainText = trim((string) $xml);
+		if ($plainText !== '')
+		{
+			$textContentArray[$options['textContent']] = $plainText;
+		}
+
+		//stick it all together
+		$propertiesArray = !$options['autoText'] || $attributesArray || $tagsArray || ($plainText === '')
+			? array_merge($attributesArray, $tagsArray, $textContentArray) : $plainText;
+
+		if (is_array($propertiesArray) && isset($propertiesArray['name']) && isset($propertiesArray['value']))
+		{
+			return array(
+				$propertiesArray['name'] => $propertiesArray['value']
+			);
+		}
+
+		if (empty($propertiesArray))
+		{
+			$propertiesArray = '';
+		}
+		else if (is_array($propertiesArray))
+		{
+			$propertiesArray = (object) $propertiesArray;
+		}
+
+		//return node as array
+		return (object) array(
+			$xml->getName() => $propertiesArray
+		);
 	}
 
 	/* Backwards compatibility */
 	static function setSurroundingTags($pre, $post, $tags = 0)
 	{
 		require_once __DIR__ . '/tags.php';
-		return NNTags::setSurroundingTags($pre, $post, $tags);
+
+		return nnTags::setSurroundingTags($pre, $post, $tags);
 	}
 
 	static function dateToDateFormat($dateFormat)
 	{
 		require_once __DIR__ . '/text.php';
-		return NNText::dateToDateFormat($dateFormat);
+
+		return nnText::dateToDateFormat($dateFormat);
 	}
 
 	static function dateToStrftimeFormat($dateFormat)
 	{
 		require_once __DIR__ . '/text.php';
-		return NNText::dateToStrftimeFormat($dateFormat);
+
+		return nnText::dateToStrftimeFormat($dateFormat);
 	}
 
 	static function html_entity_decoder($given_html, $quote_style = ENT_QUOTES, $charset = 'UTF-8')
 	{
 		require_once __DIR__ . '/text.php';
-		return NNText::html_entity_decoder($given_html, $quote_style, $charset);
+
+		return nnText::html_entity_decoder($given_html, $quote_style, $charset);
 	}
 
-	static function cleanTitle($str, $striptags = 0)
+	static function cleanTitle($string, $striptags = 0)
 	{
 		require_once __DIR__ . '/text.php';
-		return NNText::cleanTitle($str, $striptags);
+
+		return nnText::cleanTitle($string, $striptags);
 	}
 
 	static function isEditPage()
 	{
 		require_once __DIR__ . '/protect.php';
-		return NNProtect::isEditPage();
+
+		return nnProtect::isEditPage();
 	}
 
 	static function getFormRegex($regex_format = 0)
 	{
 		require_once __DIR__ . '/protect.php';
-		return NNProtect::getFormRegex($regex_format);
+
+		return nnProtect::getFormRegex($regex_format);
 	}
 
 	static function protectForm(&$string, $tags = array(), $protected = array())
 	{
 		require_once __DIR__ . '/protect.php';
-		NNProtect::protectForm($string, $tags, $protected);
+		nnProtect::protectForm($string, $tags, $protected);
 	}
 
 	static function unprotectForm(&$string, $tags = array(), $protected = array())
 	{
 		require_once __DIR__ . '/protect.php';
-		NNProtect::unprotectForm($string, $tags, $protected);
+		nnProtect::unprotectForm($string, $tags, $protected);
 	}
 }

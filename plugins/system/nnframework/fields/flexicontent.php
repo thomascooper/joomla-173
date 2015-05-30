@@ -4,11 +4,11 @@
  * Displays a multiselectbox of available Flexicontent Tags / Types
  *
  * @package         NoNumber Framework
- * @version         13.11.22
+ * @version         15.4.3
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
- * @copyright       Copyright © 2013 NoNumber All Rights Reserved
+ * @copyright       Copyright © 2015 NoNumber All Rights Reserved
  * @license         http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 
@@ -25,7 +25,7 @@ class JFormFieldNN_FlexiContent extends JFormField
 
 	protected function getInput()
 	{
-		if (!NNFrameworkFunctions::extensionInstalled('flexicontent'))
+		if (!nnFrameworkFunctions::extensionInstalled('flexicontent'))
 		{
 			return '<fieldset class="radio"><label class="nn_label nn_label_error">' . JText::_('ERROR') . ': ' . JText::sprintf('NN_FILES_NOT_FOUND', JText::_('NN_FLEXICONTENT')) . '</label></fieldset>';
 		}
@@ -52,6 +52,7 @@ class JFormFieldNN_FlexiContent extends JFormField
 		$multiple = $this->get('multiple');
 
 		require_once JPATH_PLUGINS . '/system/nnframework/helpers/html.php';
+
 		return nnHtml::selectlist($options, $this->name, $this->value, $this->id, $size, $multiple);
 	}
 

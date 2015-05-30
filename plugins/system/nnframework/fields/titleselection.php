@@ -4,11 +4,11 @@
  * Displays Title with checkbox
  *
  * @package         NoNumber Framework
- * @version         13.11.22
+ * @version         15.4.3
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
- * @copyright       Copyright © 2013 NoNumber All Rights Reserved
+ * @copyright       Copyright © 2015 NoNumber All Rights Reserved
  * @license         http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 
@@ -40,7 +40,7 @@ class JFormFieldNN_TitleSelection extends JFormField
 
 		if ($label)
 		{
-			$label = NNText::html_entity_decoder(JText::_($label));
+			$label = nnText::html_entity_decoder(JText::_($label));
 
 			$html[] = '<div style="clear: both;"></div>';
 

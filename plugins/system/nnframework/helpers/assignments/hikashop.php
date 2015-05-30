@@ -3,11 +3,11 @@
  * NoNumber Framework Helper File: Assignments: HikaShop
  *
  * @package         NoNumber Framework
- * @version         13.11.22
+ * @version         15.4.3
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
- * @copyright       Copyright © 2013 NoNumber All Rights Reserved
+ * @copyright       Copyright © 2015 NoNumber All Rights Reserved
  * @license         http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 
@@ -16,7 +16,7 @@ defined('_JEXEC') or die;
 /**
  * Assignments: HikaShop
  */
-class NNFrameworkAssignmentsHikaShop
+class nnFrameworkAssignmentsHikaShop
 {
 	function passPageTypes(&$parent, &$params, $selection = array(), $assignment = 'all')
 	{
@@ -56,22 +56,7 @@ class NNFrameworkAssignmentsHikaShop
 			return $parent->pass(0, $assignment);
 		}
 
-		$cats = array();
-		if ($parent->params->view == 'category')
-		{
-			$cats = $parent->params->id;
-		}
-		else if ($parent->params->id)
-		{
-			$parent->q->clear()
-				->select('c.category_id')
-				->from('#__hikashop_product_category AS c')
-				->where('c.product_id = ' . (int) $parent->params->id);
-			$parent->db->setQuery($parent->q);
-			$cats = $parent->db->loadColumn();
-		}
-
-		$cats = $parent->makeArray($cats);
+		$cats = $this->getCategories($parent);
 
 		$pass = $parent->passSimple($cats, $selection, 'include');
 
@@ -98,6 +83,35 @@ class NNFrameworkAssignmentsHikaShop
 		}
 
 		return $parent->passSimple($parent->params->id, $selection, $assignment);
+	}
+
+	function getCategories(&$parent)
+	{
+		switch (true)
+		{
+			case ($parent->params->view == 'category' && $parent->params->id):
+				return array($parent->params->id);
+
+			case ($parent->params->view == 'category'):
+				include_once JPATH_ADMINISTRATOR . '/components/com_hikashop/helpers/helper.php';
+				$menuClass = hikashop_get('class.menus');
+				$menuData = $menuClass->get($parent->params->Itemid);
+
+				return $parent->makeArray($menuData->hikashop_params['selectparentlisting']);
+
+			case ($parent->params->id):
+				$parent->q->clear()
+					->select('c.category_id')
+					->from('#__hikashop_product_category AS c')
+					->where('c.product_id = ' . (int) $parent->params->id);
+				$parent->db->setQuery($parent->q);
+				$cats = $parent->db->loadColumn();
+
+				return $parent->makeArray($cats);
+
+			default:
+				return array();
+		}
 	}
 
 	function getCatParentIds(&$parent, $id = 0)

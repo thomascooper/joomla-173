@@ -4,11 +4,11 @@
  * Display a menuitem field with a button
  *
  * @package         NoNumber Framework
- * @version         13.11.22
+ * @version         15.4.3
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
- * @copyright       Copyright © 2013 NoNumber All Rights Reserved
+ * @copyright       Copyright © 2015 NoNumber All Rights Reserved
  * @license         http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 
@@ -130,7 +130,7 @@ class JFormFieldNN_MenuItems extends JFormField
 					{
 						$item->treename .= ' [' . JText::_('JDEFAULT') . ']';
 					}
-					$item->treename = NNText::prepareSelectItem($item->treename, $item->published, $item->type, ($parents ? 1 : 2));
+					$item->treename = nnText::prepareSelectItem($item->treename, $item->published, $item->type, ($parents ? 1 : 2));
 
 					if ($type == 'separator' && !$item->children)
 					{
@@ -138,7 +138,7 @@ class JFormFieldNN_MenuItems extends JFormField
 					}
 					else
 					{
-						$disable = ($disable_types && !(strpos($disable_types, $item->type) === false));
+						$disable = ($disable_types && strpos($disable_types, $item->type) !== false);
 					}
 
 					$options[] = JHtml::_('select.option', $item->id, $item->treename, 'value', 'text', $disable);
@@ -186,11 +186,13 @@ class JFormFieldNN_MenuItems extends JFormField
 			$html .= '</td><td style="padding: 0px;"padding-left: 5px;>' . "\n";
 			$html .= JHtml::_('select.genericlist', $options, '', $attribs, 'value', 'text', '', '');
 			$html .= '</td></tr></table>' . "\n";
+
 			return $html;
 		}
 		else
 		{
 			require_once JPATH_PLUGINS . '/system/nnframework/helpers/html.php';
+
 			return nnHtml::selectlist($options, $this->name, $this->value, $this->id, $size, $multiple);
 		}
 	}

@@ -3,11 +3,11 @@
  * NoNumber Framework Helper File: Assignments: K2
  *
  * @package         NoNumber Framework
- * @version         13.11.22
+ * @version         15.4.3
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
- * @copyright       Copyright © 2013 NoNumber All Rights Reserved
+ * @copyright       Copyright © 2015 NoNumber All Rights Reserved
  * @license         http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 
@@ -16,7 +16,7 @@ defined('_JEXEC') or die;
 /**
  * Assignments: K2
  */
-class NNFrameworkAssignmentsK2
+class nnFrameworkAssignmentsK2
 {
 	function passPageTypes(&$parent, &$params, $selection = array(), $assignment = 'all')
 	{
@@ -44,30 +44,9 @@ class NNFrameworkAssignmentsK2
 			return $parent->pass(0, $assignment);
 		}
 
-		if ($article && isset($article->catid))
-		{
-			$cats = $article->catid;
-		}
-		else
-		{
-			switch ($parent->params->view)
-			{
-				case 'itemlist':
-					$cats = $parent->params->id;
-					break;
-				case 'item':
-				default:
-					$parent->q->clear()
-						->select('i.catid')
-						->from('#__k2_items AS i')
-						->where('i.id = ' . (int) $parent->params->id);
-					$parent->db->setQuery($parent->q);
-					$cats = $parent->db->loadResult();
-					break;
-			}
-		}
-
-		$cats = $parent->makeArray($cats, 1);
+		$cats = $parent->makeArray(
+			$this->getCategories($parent, $article), 1
+		);
 
 		$pass = $parent->passSimple($cats, $selection, 'include');
 
@@ -84,6 +63,44 @@ class NNFrameworkAssignmentsK2
 		}
 
 		return $parent->passSimple($cats, $selection, $assignment);
+	}
+
+	private function getCategories(&$parent, &$item)
+	{
+		switch ($parent->params->view)
+		{
+			case 'item' :
+				return $this->getCategoryIDFromItem($parent, $item);
+				break;
+
+			case 'itemlist' :
+				return $this->getCategoryID($parent);
+				break;
+
+			default:
+				return '';
+		}
+	}
+
+	private function getCategoryID(&$parent)
+	{
+		return $parent->params->id ?: JFactory::getApplication()->getUserStateFromRequest('com_k2itemsfilter_category', 'catid', 0, 'int');
+	}
+
+	private function getCategoryIDFromItem(&$parent, &$item)
+	{
+		if ($item && isset($item->catid))
+		{
+			return $item->catid;
+		}
+
+		$parent->q->clear()
+			->select('i.catid')
+			->from('#__k2_items AS i')
+			->where('i.id = ' . (int) $parent->params->id);
+		$parent->db->setQuery($parent->q);
+
+		return $parent->db->loadResult();
 	}
 
 	function passTags(&$parent, &$params, $selection = array(), $assignment = 'all')

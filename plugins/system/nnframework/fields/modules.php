@@ -4,11 +4,11 @@
  * Displays an article id field with a button
  *
  * @package         NoNumber Framework
- * @version         13.11.22
+ * @version         15.4.3
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
- * @copyright       Copyright © 2013 NoNumber All Rights Reserved
+ * @copyright       Copyright © 2015 NoNumber All Rights Reserved
  * @license         http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 
@@ -75,7 +75,7 @@ class JFormFieldNN_Modules extends JFormField
 			{
 				$item->title .= ' (' . $item->language . ')';
 			}
-			$item->title = NNText::prepareSelectItem($item->title, $item->published);
+			$item->title = nnText::prepareSelectItem($item->title, $item->published);
 
 			$options[] = JHtml::_('select.option', $item->id, $item->title);
 		}
@@ -125,11 +125,13 @@ class JFormFieldNN_Modules extends JFormField
 			$html .= '</td><td style="padding: 0px;"padding-left: 5px;>' . "\n";
 			$html .= JHtml::_('select.genericlist', $options, '', $attribs, 'value', 'text', '', '');
 			$html .= '</td></tr></table>' . "\n";
+
 			return preg_replace('#>\[\[\:(.*?)\:\]\]#si', ' style="\1">', $html);
 		}
 		else
 		{
 			require_once JPATH_PLUGINS . '/system/nnframework/helpers/html.php';
+
 			return nnHtml::selectlist($options, $this->name, $this->value, $this->id, $size, $multiple, 'style="max-width:360px"');
 		}
 	}

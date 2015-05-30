@@ -4,11 +4,11 @@
  * Displays options as checkboxes
  *
  * @package         NoNumber Framework
- * @version         13.11.22
+ * @version         15.4.3
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
- * @copyright       Copyright © 2013 NoNumber All Rights Reserved
+ * @copyright       Copyright © 2015 NoNumber All Rights Reserved
  * @license         http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 
@@ -81,11 +81,11 @@ class JFormFieldNN_Checkbox extends JFormField
 			$checkers = array();
 			if ($showcheckall)
 			{
-				$checkers[] = '<input id="nn_checkall_' . $this->id . '" type="checkbox" onclick="NNFrameworkCheckAll( this, \'nn_' . $this->id . '\' );" /> ' . JText::_('JALL');
+				$checkers[] = '<input id="nn_checkall_' . $this->id . '" type="checkbox" onclick="nnFrameworkCheckAll( this, \'nn_' . $this->id . '\' );" /> ' . JText::_('JALL');
 
 				$js = "
 					window.addEvent('domready', function() {
-						$('nn_checkall_" . $this->id . "').checked = NNFrameworkAllChecked( 'nn_" . $this->id . "' );
+						$('nn_checkall_" . $this->id . "').checked = nnFrameworkAllChecked( 'nn_" . $this->id . "' );
 					});
 				";
 				JFactory::getDocument()->addScriptDeclaration($js);
@@ -98,6 +98,7 @@ class JFormFieldNN_Checkbox extends JFormField
 		$html[] = '<fieldset id="' . $this->id . '" class="' . ($newlines ? 'checkboxes' : 'radio') . '">';
 		$html[] = $options;
 		$html[] = '</fieldset>';
+
 		return implode('', $html);
 	}
 

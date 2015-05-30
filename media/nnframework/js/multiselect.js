@@ -57,16 +57,14 @@
 
  */
 
-if (typeof( window['NNMultiSelect'] ) == "undefined") {
-	window.addEvent('domready', function()
-	{
-		$$('.nn_multiselect').each(function(multiselect)
-		{
-			new NNMultiSelect({'datasrc': multiselect});
+if (typeof( window['nnMultiSelect'] ) == "undefined") {
+	window.addEvent('domready', function() {
+		$$('.nn_multiselect').each(function(multiselect) {
+			new nnMultiSelect({'datasrc': multiselect});
 		});
 	});
 
-	var NNMultiSelect = new Class({
+	var nnMultiSelect = new Class({
 
 		Implements: [Options],
 
@@ -75,19 +73,16 @@ if (typeof( window['NNMultiSelect'] ) == "undefined") {
 			'datasrc': null  // a select multiple dom object
 		},
 
-		handleDisplayEvent: function()
-		{
+		handleDisplayEvent: function() {
 			this.filterform.update();
 		},
 
-		handleFilterEvent: function(list)
-		{
+		handleFilterEvent: function(list) {
 			this.curlist = list;
 			this.displaylist.build(list);
 		},
 
-		initialize: function(options)
-		{
+		initialize: function(options) {
 			this.setOptions(options);
 			// Hide the original data source and create a new div for the widget
 			// and inect this new widget into the Dom.
@@ -129,13 +124,11 @@ if (typeof( window['NNMultiSelect'] ) == "undefined") {
 			view: null // A parent or wrapper dom element where this element lives
 		},
 
-		initialize: function(options)
-		{
+		initialize: function(options) {
 			this.setOptions(options);
 		},
 
-		build: function(opts)
-		{
+		build: function(opts) {
 
 			// If there's already an ol, remove it.
 			var old = this.options.view.getElement('ol');
@@ -147,8 +140,7 @@ if (typeof( window['NNMultiSelect'] ) == "undefined") {
 			list = new Element('ol', {'id': 'nnms_ol_' + this.options.datasrc.id });
 			this.options.view.grab(list, this.options.inputpos);
 
-			opts.each(function(item)
-			{
+			opts.each(function(item) {
 				var li = new Element('li', {
 					'class': item.disabled ? this.options.disabledcls : ( item.selected ? this.options.selectedcls : null ),
 					'text': item.get('text'),
@@ -158,8 +150,7 @@ if (typeof( window['NNMultiSelect'] ) == "undefined") {
 				li.store('select', item);
 				list.grab(li);
 				if (!item.disabled) {
-					li.addEvent('click', function(evt)
-					{
+					li.addEvent('click', function(evt) {
 						evt.target.toggleClass('selected');
 						evt.target.retrieve('select').selected = evt.target.hasClass('selected');
 						this.fireEvent('rebuild');
@@ -187,14 +178,12 @@ if (typeof( window['NNMultiSelect'] ) == "undefined") {
 			}
 		},
 
-		initialize: function(options)
-		{
+		initialize: function(options) {
 			this.setOptions(options);
 			this.updatetotals();
 		},
 
-		build: function()
-		{
+		build: function() {
 			// infofilter bar is made out of a u list
 			var ul = new Element('ul', {'class': 'nnms_filtercontrols'});
 			this.options.view.grab(ul, this.options.inputpos);
@@ -233,8 +222,7 @@ if (typeof( window['NNMultiSelect'] ) == "undefined") {
 			filterbox_container = new Element('div', {'class': 'nnms_filterbox'});
 			this.filterbox = new Element('input', {
 				'events': {
-					'keyup': function(evt)
-					{
+					'keyup': function(evt) {
 						if (this.options.case_sensitive) {
 							filter_by_text = function(item) { return item.text.contains(evt.target.value)};
 						} else {
@@ -256,8 +244,7 @@ if (typeof( window['NNMultiSelect'] ) == "undefined") {
 		 counts here.)
 
 		 */
-		makebtn: function(label, func, prefix)
-		{
+		makebtn: function(label, func, prefix) {
 			var li = new Element('li');
 			var btn = new Element('a', {
 				'html': label,
@@ -275,41 +262,33 @@ if (typeof( window['NNMultiSelect'] ) == "undefined") {
 			return li;
 		},
 
-		showtotal: function()
-		{
+		showtotal: function() {
 			// return true for every item in the datasrc
 			this.filter(this.options.datasrc.getChildren(),
-				function(item)
-				{
+				function(item) {
 					return true;
 				}
 			);
 		},
-		showselected: function()
-		{
+		showselected: function() {
 			// return true for every selected item in the datasrc
 			this.filter(this.options.datasrc.getChildren(),
-				function(item)
-				{
+				function(item) {
 					return (item.disabled || item.selected === true);
 				}
 			);
 		},
-		showunselected: function()
-		{
+		showunselected: function() {
 			// return true for every non-selected item in the datasrc
 			this.filter(this.options.datasrc.getChildren(),
-				function(item)
-				{
+				function(item) {
 					return (item.disabled || item.selected !== true);
 				}
 			);
 		},
-		selectall: function()
-		{
+		selectall: function() {
 			// select all
-			this.options.view.getElement('ol').getChildren().each(function(el)
-			{
+			this.options.view.getElement('ol').getChildren().each(function(el) {
 				item = el.retrieve('select');
 				if (!item.disabled) {
 					el.addClass('selected');
@@ -318,11 +297,9 @@ if (typeof( window['NNMultiSelect'] ) == "undefined") {
 			});
 			this.update();
 		},
-		unselectall: function()
-		{
+		unselectall: function() {
 			// select all
-			this.options.view.getElement('ol').getChildren().each(function(el)
-			{
+			this.options.view.getElement('ol').getChildren().each(function(el) {
 				item = el.retrieve('select');
 				if (!item.disabled) {
 					el.removeClass('selected');
@@ -331,8 +308,7 @@ if (typeof( window['NNMultiSelect'] ) == "undefined") {
 			});
 			this.update();
 		},
-		toggle: function()
-		{
+		toggle: function() {
 			el = this.options.view.getElement('ol');
 			if (el.getStyle('max-height').toInt() == 200) {
 				el.setStyle('max-height', 500);
@@ -344,10 +320,8 @@ if (typeof( window['NNMultiSelect'] ) == "undefined") {
 		},
 		// list is the list of option dom framework from the select elem
 		// test is a function that gets used in the filter
-		filter: function(list, test, reset)
-		{
-			results = list.filter(function(item, index)
-			{
+		filter: function(list, test, reset) {
+			results = list.filter(function(item, index) {
 				return test(item);
 			});
 
@@ -356,21 +330,18 @@ if (typeof( window['NNMultiSelect'] ) == "undefined") {
 			}
 			this.fireEvent('rebuild', [results]);
 		},
-		update: function()
-		{
+		update: function() {
 			this.updatetotals();
 			this.totalbtn.getElement('span').set('text', this.total);
 			this.selectedbtn.getElement('span').set('text', this.numselected);
 			this.unselectedbtn.getElement('span').set('text', this.total - this.numselected);
 		},
 
-		updatetotals: function()
-		{
+		updatetotals: function() {
 			var self = this;
 			this.total = 0;
 			this.numselected = 0;
-			this.options.datasrc.getChildren().each(function(item)
-			{
+			this.options.datasrc.getChildren().each(function(item) {
 				if (!item.disabled) {
 					self.total++;
 					if (item.selected) {
@@ -383,8 +354,7 @@ if (typeof( window['NNMultiSelect'] ) == "undefined") {
 
 	Element.Events.rebuild = {
 		'base': 'change',
-		'condition': function(evt)
-		{
+		'condition': function(evt) {
 			return;
 		}
 	};

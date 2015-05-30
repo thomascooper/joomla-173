@@ -3,43 +3,87 @@
  * NoNumber Framework Helper File: Protect
  *
  * @package         NoNumber Framework
- * @version         13.11.22
+ * @version         15.4.3
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
- * @copyright       Copyright © 2013 NoNumber All Rights Reserved
+ * @copyright       Copyright © 2015 NoNumber All Rights Reserved
  * @license         http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 
 defined('_JEXEC') or die;
 
-/**
- * Functions
- */
-class NNProtect
+require_once __DIR__ . '/cache.php';
+
+class nnProtect
 {
-	static $protect_a = '<!-- >> NN_PROTECTED >> -->';
-	static $protect_b = '<!-- << NN_PROTECTED << -->';
-	static $sourcerer_tag = '';
+	static $protect_a = '<!-- >> NN_PROTECTED >>';
+	static $protect_b = ' << NN_PROTECTED << -->';
+	static $protect_tags_a = '<!-- >> NN_PROTECTED_TAGS >>';
+	static $protect_tags_b = ' << NN_PROTECTED_TAGS << -->';
+	static $sourcerer_tag = null;
 
 	/**
 	 * check if page should be protected for certain extensions
 	 */
-	public static function isProtectedPage($ext = '', $hastags = 0)
+	public static function isProtectedPage($extension_alias = '', $hastags = 0, $exclude_formats = array('pdf'))
 	{
 		// return if disabled via url
-		// return if current page is raw format
+		if (($extension_alias && JFactory::getApplication()->input->get('disable_' . $extension_alias)))
+		{
+			return true;
+		}
+
+		$hash = md5('isProtectedPage_' . $hastags . '_' . json_encode($exclude_formats));
+
+		if (nnCache::has($hash))
+		{
+			return nnCache::get($hash);
+		}
+
+		// return if current page is pdf format
+		// return if current page is an image
 		// return if current page is NoNumber QuickPage
 		// return if current page is a JoomFish or Josetta page
-		return (
-			($ext && JFactory::getApplication()->input->get('disable_' . $ext))
-			|| JFactory::getApplication()->input->get('format') == 'raw'
+		$isprotected = (
+			in_array(JFactory::getApplication()->input->get('format'), $exclude_formats)
+			|| in_array(JFactory::getApplication()->input->get('view'), array('image', 'img'))
+			|| in_array(JFactory::getApplication()->input->get('type'), array('image', 'img'))
 			|| ($hastags
 				&& (
 					JFactory::getApplication()->input->getInt('nn_qp', 0)
 					|| in_array(JFactory::getApplication()->input->get('option'), array('com_joomfishplus', 'com_josetta'))
-				))
+				)
+			)
+			|| (JFactory::getApplication()->isAdmin()
+				&& in_array(JFactory::getApplication()->input->get('option'), array('com_jdownloads'))
+			)
 		);
+
+		return nnCache::set($hash,
+			$isprotected
+		);
+	}
+
+	/**
+	 * check if this is a Joomla 3 setup
+	 * used in Joomla 2.5 code to show error after upgrade to Joomla 3
+	 */
+	public static function isJoomla3($extension_name = '')
+	{
+		if (version_compare(JVERSION, '3.0', '<'))
+		{
+			return false;
+		}
+
+		if ($extension_name)
+		{
+			nnProtect::throwError(
+				JText::sprintf('NN_JOOMLA2_VERSION_ON_JOOMLA3', JText::_($extension_name))
+			);
+		}
+
+		return true;
 	}
 
 	/**
@@ -47,15 +91,9 @@ class NNProtect
 	 */
 	public static function isAdmin($block_login = 0)
 	{
-		$options = array('com_acymailing');
-		if ($block_login)
-		{
-			$options[] = 'com_login';
-		}
-
 		return (
 			JFactory::getApplication()->isAdmin()
-			&& !in_array(JFactory::getApplication()->input->get('option'), $options)
+			&& (!$block_login || JFactory::getApplication()->input->get('option') != 'com_login')
 			&& JFactory::getApplication()->input->get('task') != 'preview'
 		);
 	}
@@ -65,34 +103,72 @@ class NNProtect
 	 */
 	public static function isEditPage()
 	{
+		$hash = md5('isEditPage');
+
+		if (nnCache::has($hash))
+		{
+			return nnCache::get($hash);
+		}
+
 		$option = JFactory::getApplication()->input->get('option');
 		// always return false for these components
 		if (in_array($option, array('com_rsevents', 'com_rseventspro')))
 		{
-			return 0;
+			return nnCache::set($hash,
+				false
+			);
 		}
 
 		$task = JFactory::getApplication()->input->get('task');
-		$view = JFactory::getApplication()->input->get('view');
-		if (!(strpos($task, '.') === false))
+		if (strpos($task, '.') !== false)
 		{
 			$task = explode('.', $task);
 			$task = array_pop($task);
 		}
-		if (!(strpos($view, '.') === false))
+
+		$view = JFactory::getApplication()->input->get('view');
+		if (strpos($view, '.') !== false)
 		{
 			$view = explode('.', $view);
 			$view = array_pop($view);
 		}
 
-		return (
+		$isedit = (
 			in_array($task, array('edit', 'form', 'submission'))
 			|| in_array($view, array('edit', 'form'))
 			|| in_array(JFactory::getApplication()->input->get('do'), array('edit', 'form'))
 			|| in_array(JFactory::getApplication()->input->get('layout'), array('edit', 'form', 'write'))
 			|| in_array(JFactory::getApplication()->input->get('option'), array('com_contentsubmit', 'com_cckjseblod'))
-			|| NNProtect::isAdmin()
+			|| nnProtect::isAdmin()
 		);
+
+		return nnCache::set($hash,
+			$isedit
+		);
+	}
+
+	/**
+	 * Check if the component is installed
+	 *
+	 * @return bool
+	 */
+	public static function isComponentInstalled($extension_alias)
+	{
+		jimport('joomla.filesystem.file');
+
+		return JFile::exists(JPATH_ADMINISTRATOR . '/components/com_' . $extension_alias . '/' . $extension_alias . '.php');
+	}
+
+	/**
+	 * Check if the component is installed
+	 *
+	 * @return bool
+	 */
+	public static function isSystemPluginInstalled($extension_alias)
+	{
+		jimport('joomla.filesystem.file');
+
+		return JFile::exists(JPATH_PLUGINS . '/system/' . $extension_alias . '/' . $extension_alias . '.php');
 	}
 
 	/**
@@ -100,326 +176,485 @@ class NNProtect
 	 */
 	public static function getFormRegex($regex_format = 0)
 	{
-		$regex = '(<' . 'form\s[^>]*(id|name)="(adminForm|postform|submissionForm|default_action_user)")';
+		$regex = '(<' . 'form\s[^>]*((id|name)="(adminForm|postform|submissionForm|default_action_user)|action="[^"]*option=com_myjspace&(amp;)?view=see)")';
 
-		if ($regex_format)
+		if (!$regex_format)
 		{
-			$regex = '#' . $regex . '#si';
+			return $regex;
 		}
 
-		return $regex;
+		return '#' . $regex . '#si';
 	}
 
 	/**
 	 * protect all text based form fields
 	 */
-	public static function protectFields(&$str)
+	public static function protectFields(&$string)
 	{
-		if (strpos($str, '<input') === false && strpos($str, '<textarea') === false)
+		if (strpos($string, '<input') === false && strpos($string, '<textarea') === false)
 		{
 			return;
 		}
 
-		$regex = array(
-			'(<' . '(input|select|option|button)(\s[^>]*)?>)',
-			'(<' . 'textarea(\s[^>]*)?>.*?</textarea>)',
+		self::protectByRegex(
+			$string,
+			'#(?:(?:'
+			. '(?:<' . 'input\s[^>]*type\s*=\s*(?:\'|")(?:text|email|hidden)(?:\'|")[^>]*>)'
+			. '|(?:<' . 'textarea(\s[^>]*)?>.*?</textarea>)'
+			. ')\s*)+#si'
 		);
-		$regex = '#(' . implode('|', $regex) . ')#si';
-
-		self::protectByRegex($str, $regex);
 	}
 
 	/**
 	 * protect all text based form fields
 	 */
-	public static function protectScripts(&$str)
+	public static function protectScripts(&$string)
 	{
-		if (strpos($str, '</script>') === false)
+		if (strpos($string, '</script>') === false)
 		{
 			return;
 		}
 
-		$regex = '#<script[\s>].*?</script>#si';
-
-		self::protectByRegex($str, $regex);
+		self::protectByRegex(
+			$string,
+			'#<script[\s>].*?</script>#si'
+		);
 	}
 
 	/**
-	 * protect all text based form fields
+	 * protect all html tags with some type of attributes/content
 	 */
-	public static function protectHtmlTags(&$str)
+	public static function protectHtmlTags(&$string)
 	{
-		if (strpos($str, '</') === false)
+		self::protectByRegex($string, '#<[a-z][^>]*(="[^"]*"|=\'[^\']*\')+[^>]*>#si');
+	}
+
+	/**
+	 * protect text by given regex
+	 */
+	private static function protectByRegex(&$string, $regex)
+	{
+		if (preg_match_all($regex, $string, $matches) < 1)
 		{
 			return;
 		}
 
-		$regex = '#</?([a-z][a-z0-9]+)(?:\s[^>]*)?>#si';
+		$matches = array_unique($matches['0']);
 
-		self::protectByRegex($str, $regex);
-	}
-
-	/**
-	 * protect all text based form fields
-	 */
-	private static function protectByRegex(&$str, $regex)
-	{
-		if (preg_match_all($regex, $str, $matches, PREG_SET_ORDER) > 0)
+		foreach ($matches as $match)
 		{
-			foreach ($matches as $match)
-			{
-				$protected = self::$protect_a . base64_encode($match['0']) . self::$protect_b;
-				$str = str_replace($match['0'], $protected, $str);
-			}
+			$replacements[] = self::protectString($match);
 		}
+
+		$string = str_replace($matches, $replacements, $string);
 	}
 
 	/**
 	 * protect given plugin style tags
 	 */
-	public static function protectTags(&$str, $tags = array(), $protected = array())
+	public static function protectTags(&$string, $tags = array(), $include_closing_tags = true)
 	{
-		if (!is_array($tags))
-		{
-			$tags = array($tags);
-		}
+		list($tags, $protected) = self::prepareTags($tags, $include_closing_tags);
 
-		if (empty ($protected))
-		{
-			$protected = array();
-			foreach ($tags as $i => $tag)
-			{
-				$protected[$i] = base64_encode($tag);
-			}
-		}
-
-		$str = str_replace($tags, $protected, $str);
+		$string = str_replace($tags, $protected, $string);
 	}
 
-	private static function initSourcererTag()
+	/**
+	 * replace any protected tags to original
+	 */
+	public static function unprotectTags(&$string, $tags = array(), $include_closing_tags = true)
 	{
-		if (self::$sourcerer_tag === 0)
+		list($tags, $protected) = self::prepareTags($tags, $include_closing_tags);
+
+		$string = str_replace($protected, $tags, $string);
+	}
+
+	/**
+	 * protect array of strings
+	 */
+	public static function protectInString(&$string, $unprotected = array(), $protected = array())
+	{
+		$protected = empty($protected) ? self::protectArray($unprotected) : $protected;
+
+		$string = str_replace($unprotected, $protected, $string);
+	}
+
+	/**
+	 * replace any protected tags to original
+	 */
+	public static function unprotectInString(&$string, $unprotected = array(), $protected = array())
+	{
+		$protected = empty($protected) ? self::protectArray($unprotected) : $protected;
+
+		$string = str_replace($protected, $unprotected, $string);
+	}
+
+	private static function getSourcererTag()
+	{
+		if (isset(self::$sourcerer_tag))
 		{
-			return false;
+			return self::$sourcerer_tag;
 		}
 
 		require_once JPATH_PLUGINS . '/system/nnframework/helpers/parameters.php';
-		$params = NNParameters::getInstance()->getPluginParams('sourcerer');
-		self::$sourcerer_tag = isset($params->syntax_word) ? $params->syntax_word : 0;
+		$params = nnParameters::getInstance()->getPluginParams('sourcerer');
+		self::$sourcerer_tag = isset($params->syntax_word) ? $params->syntax_word : '';
 
-		return true;
+		return self::$sourcerer_tag;
 	}
 
 	/**
 	 * protect all Sourcerer blocks
 	 */
-	public static function protectSourcerer(&$str)
+	public static function protectSourcerer(&$string)
 	{
-		if (!self::initSourcererTag())
+		if (self::getSourcererTag())
 		{
 			return;
 		}
 
-		if (strpos($str, '{/' . self::$sourcerer_tag . '}') === false)
+		if (strpos($string, '{/' . self::$sourcerer_tag . '}') === false)
 		{
 			return;
 		}
 
 		$regex = '#' . preg_quote('{' . self::$sourcerer_tag, '#') . '[\s\}].*?' . preg_quote('{/' . self::$sourcerer_tag . '}', '#') . '#si';
 
-		if (preg_match_all($regex, $str, $matches, PREG_SET_ORDER) > 0)
+		if (preg_match_all($regex, $string, $matches) < 1)
 		{
-			foreach ($matches as $match)
-			{
-				$protected = self::$protect_a . base64_encode($match['0']) . self::$protect_b;
-				$str = str_replace($match['0'], $protected, $str);
-			}
+			return;
+		}
+
+		$matches = array_unique($matches['0']);
+
+		foreach ($matches as $match)
+		{
+			$string = str_replace($match, self::protectString($match), $string);
 		}
 	}
 
 	/**
 	 * protect complete adminForm
 	 */
-	public static function protectForm(&$str, $tags = array(), $protected = array())
+	public static function protectForm(&$string, $tags = array(), $include_closing_tags = true)
 	{
 		if (!self::isEditPage())
 		{
 			return;
 		}
 
-		if (!is_array($tags))
-		{
-			$tags = array($tags);
-		}
+		list($tags, $protected_tags) = self::prepareTags($tags, $include_closing_tags);
 
-		if (empty ($protected))
+		$string = preg_replace(self::getFormRegex(1), '<!-- TMP_START_EDITOR -->\1', $string);
+		$string = explode('<!-- TMP_START_EDITOR -->', $string);
+
+		foreach ($string as $i => &$string_part)
 		{
-			$protected = array();
-			foreach ($tags as $i => $tag)
+			if (empty($string_part) || !fmod($i, 2))
 			{
-				$protected[$i] = base64_encode($tag);
+				continue;
 			}
+
+			self::protectFormPart($string_part, $tags, $protected_tags);
 		}
 
-		$str = preg_replace(self::getFormRegex(1), '<!-- TMP_START_EDITOR -->\1', $str);
-		$str = explode('<!-- TMP_START_EDITOR -->', $str);
+		$string = implode('', $string);
+	}
 
-		foreach ($str as $i => $s)
+	private static function protectFormPart(&$string, $tags = array(), $protected_tags = array())
+	{
+		if (strpos($string, '</form>') === false)
 		{
-			if (!empty($s) != '' && fmod($i, 2))
-			{
-				// Protect entire form
-				if (empty($tags))
-				{
-					$s = explode('</form>', $s, 2);
-					$s['0'] = self::$protect_a . base64_encode($s['0'] . '</form>') . self::$protect_b;
-					$str[$i] = implode('', $s);
-					continue;
-				}
-
-				$pass = 0;
-				foreach ($tags as $tag)
-				{
-					if (!(strpos($s, $tag) === false))
-					{
-						$pass = 1;
-						break;
-					}
-				}
-				if ($pass)
-				{
-					$s = explode('</form>', $s, 2);
-					// protect tags only inside form fields
-					if (preg_match_all('#(<textarea[^>]*>.*?<\/textarea>|<input[^>]*>)#si', $s['0'], $matches, PREG_SET_ORDER) > 0)
-					{
-						foreach ($matches as $match)
-						{
-							$field = str_replace($tags, $protected, $match['0']);
-							$s['0'] = str_replace($match['0'], $field, $s['0']);
-						}
-					}
-					$str[$i] = implode('</form>', $s);
-				}
-			}
+			return;
 		}
 
-		$str = implode('', $str);
+		// Protect entire form
+		if (empty($tags))
+		{
+			$form_parts = explode('</form>', $string, 2);
+			$form_parts['0'] = self::protectString($form_parts['0'] . '</form>');
+			$string = implode('', $form_parts);
+
+			return;
+		}
+
+		if (!preg_match('#(?:' . implode('|', $tags) . ')#si', $string))
+		{
+			return;
+		}
+
+		$form_parts = explode('</form>', $string, 2);
+		// protect tags only inside form fields
+		if (preg_match_all('#(?:<textarea[^>]*>.*?<\/textarea>|<input[^>]*>)#si', $form_parts['0'], $matches) < 1)
+		{
+			return;
+		}
+
+		$matches = array_unique($matches['0']);
+
+		foreach ($matches as $match)
+		{
+			$field = str_replace($tags, $protected_tags, $match);
+			$form_parts['0'] = str_replace($match, $field, $form_parts['0']);
+		}
+
+		$string = implode('</form>', $form_parts);
 	}
 
 	/**
 	 * replace any protected text to original
 	 */
-	public static function unprotect(&$str)
+	public static function unprotect(&$string)
 	{
 		$regex = '#' . preg_quote(self::$protect_a, '#') . '(.*?)' . preg_quote(self::$protect_b, '#') . '#si';
-		if (preg_match_all($regex, $str, $matches, PREG_SET_ORDER) > 0)
+		while (preg_match_all($regex, $string, $matches, PREG_SET_ORDER) > 0)
 		{
 			foreach ($matches as $match)
 			{
-				$r = base64_decode($match['1']);
-				$str = str_replace($match['0'], $r, $str);
+				$string = str_replace($match['0'], base64_decode($match['1']), $string);
 			}
 		}
 	}
 
 	/**
-	 * replace any protected tags to original
+	 * prepare the tags and protected tags array
 	 */
-	public static function unprotectTags(&$str, $tags = array(), $protected = array())
+	private static function prepareTags($tags, $include_closing_tags = true)
 	{
 		if (!is_array($tags))
 		{
 			$tags = array($tags);
 		}
 
-		if (empty ($protected))
+		$hash = md5('prepareTags_' . json_encode($tags) . '_' . $include_closing_tags);
+
+		if (nnCache::has($hash))
 		{
-			$protected = array();
-			foreach ($tags as $i => $tag)
+			return nnCache::get($hash);
+		}
+
+		foreach ($tags as $i => $tag)
+		{
+			if ($tag['0'] == '{')
 			{
-				$protected[$i] = base64_encode($tag);
+				continue;
+			}
+
+			$tags[$i] = '{' . $tag;
+
+			if ($include_closing_tags)
+			{
+				$tags[] = '{/' . $tag;
 			}
 		}
 
-		$str = str_replace($protected, $tags, $str);
+		return nnCache::set($hash,
+			array($tags, self::protectArray($tags, 1))
+		);
+	}
+
+	/**
+	 * encode string
+	 */
+	public static function protectString($string, $is_tag = 0)
+	{
+		if ($is_tag)
+		{
+			return self::$protect_tags_a . base64_encode($string) . self::$protect_tags_b;
+		}
+
+		return self::$protect_a . base64_encode($string) . self::$protect_b;
+	}
+
+	/**
+	 * decode string
+	 */
+	public static function unprotectString($string, $is_tag = 0)
+	{
+		if ($is_tag)
+		{
+			return self::$protect_tags_a . base64_decode($string) . self::$protect_tags_b;
+		}
+
+		return self::$protect_a . base64_decode($string) . self::$protect_b;
+	}
+
+	/**
+	 * encode tag string
+	 */
+	public static function protectTag($string)
+	{
+		return self::protectString($string, 1);
+	}
+
+	/**
+	 * encode array of strings
+	 */
+	public static function protectArray($array, $is_tag = 0)
+	{
+		foreach ($array as &$string)
+		{
+			$string = self::protectString($string, $is_tag);
+		}
+
+		return $array;
+	}
+
+	/**
+	 * decode array of strings
+	 */
+	public static function unprotectArray($array, $is_tag = 0)
+	{
+		foreach ($array as &$string)
+		{
+			$string = self::unprotectString($string, $is_tag);
+		}
+
+		return $array;
 	}
 
 	/**
 	 * replace any protected tags to original
 	 */
-	public static function unprotectForm(&$str, $tags = array(), $protected = array())
+	public static function unprotectForm(&$string, $tags = array())
 	{
 		// Protect entire form
 		if (empty($tags))
 		{
-
-			NNProtect::unprotect($str);
+			nnProtect::unprotect($string);
 
 			return;
 		}
 
-		NNProtect::unprotectTags($str, $tags, $protected);
+		nnProtect::unprotectTags($string, $tags);
 	}
 
 	/**
 	 * remove inline comments in scrips and styles
 	 */
-	public static function removeInlineComments(&$str, $name)
+	public static function removeInlineComments(&$string, $name)
 	{
-		$str = preg_replace('#\s*/\* (START|END): ' . $name . ' [a-z]* \*/\s*#s', "\n", $str);
+		$string = preg_replace('#\s*/\* (START|END): ' . $name . ' [a-z]* \*/\s*#s', "\n", $string);
 	}
 
 	/**
 	 * remove tags from title tags
 	 */
-	public static function removeFromHtmlTagContent(&$str, $tags, $htmltags = array('title'))
+	public static function removeFromHtmlTagContent(&$string, $tags, $include_closing_tags = true, $html_tags = array('title'))
 	{
-		if (!is_array($tags))
+		list($tags, $protected) = self::prepareTags($tags, $include_closing_tags);
+
+		if (!is_array($html_tags))
 		{
-			$tags = array($tags);
+			$html_tags = array($html_tags);
 		}
-		if (!is_array($htmltags))
+
+		if (preg_match_all('#(<(' . implode('|', $html_tags) . ')(?:\s[^>]*?)>)(.*?)(</\2>)#si', $string, $matches, PREG_SET_ORDER) < 1)
 		{
-			$htmltags = array($attribs);
+			return;
 		}
-		if (preg_match_all('#(<(' . implode('|', $htmltags) . ')(?:\s[^>]*?)>)(.*?)(</\2>)#si', $str, $matches, PREG_SET_ORDER) > 0)
+
+		foreach ($matches as $match)
 		{
-			foreach ($matches as $match)
+			$content = $match['2'];
+			foreach ($tags as $tag)
 			{
-				$content = $match['2'];
-				foreach ($tags as $tag)
-				{
-					$content = preg_replace('#\{/?' . $tag . '.*?\}#si', '', $content);
-				}
-				$str = str_replace($match['0'], $match['1'] . $content . $match['3'], $str);
+				$content = preg_replace('#' . preg_quote($tag, '#') . '.*?\}#si', '', $content);
 			}
+			$string = str_replace($match['0'], $match['1'] . $content . $match['3'], $string);
 		}
 	}
 
 	/**
 	 * remove tags from tag attributes
 	 */
-	public static function removeFromHtmlTagAttributes(&$str, $tags, $attribs = array('title', 'alt'))
+	public static function removeFromHtmlTagAttributes(&$string, $tags, $attributes = array('title', 'alt'), $include_closing_tags = true)
 	{
-		if (!is_array($tags))
+		list($tags, $protected) = self::prepareTags($tags, $include_closing_tags);
+
+		if (!is_array($attributes))
 		{
-			$tags = array($tags);
+			$attributes = array($attributes);
 		}
-		if (!is_array($attribs))
+
+		if (preg_match_all('#\s(?:' . implode('|', $attributes) . ')\s*=\s*".*?"#si', $string, $matches) < 1)
 		{
-			$attribs = array($attribs);
+			return;
 		}
-		if (preg_match_all('#\s(?:' . implode('|', $attribs) . ')\s*=\s*".*?"#si', $str, $matches, PREG_SET_ORDER) > 0)
+
+		$matches = array_unique($matches['0']);
+
+		foreach ($matches as $match)
 		{
-			foreach ($matches as $match)
+			$title = $match;
+			foreach ($tags as $tag)
 			{
-				$title = $match['0'];
-				foreach ($tags as $tag)
-				{
-					$title = preg_replace('#\{/?' . $tag . '.*?\}#si', '', $title);
-				}
-				$str = str_replace($match['0'], $title, $str);
+				$title = preg_replace('#' . preg_quote($tag, '#') . '.*?\}#si', '', $title);
+			}
+			$string = str_replace($match, $title, $string);
+		}
+	}
+
+	/**
+	 * Check if article passes security levels
+	 */
+	static function articlePassesSecurity(&$article, $securtiy_levels = array())
+	{
+		if (!isset($article->created_by))
+		{
+			return true;
+		}
+
+		if (empty($securtiy_levels))
+		{
+			return true;
+		}
+
+		if (is_string($securtiy_levels))
+		{
+			$securtiy_levels = array($securtiy_levels);
+		}
+
+		if (
+			!is_array($securtiy_levels)
+			|| in_array('-1', $securtiy_levels)
+		)
+		{
+			return true;
+		}
+
+		// Lookup group level of creator
+		$user_groups = new JAccess;
+		$user_groups = $user_groups->getGroupsByUser($article->created_by);
+
+		// Return true if any of the security levels are found in the users groups
+		return count(array_intersect($user_groups, $securtiy_levels));
+	}
+
+	/**
+	 * Place an error in the message queue
+	 */
+	static function throwError($error)
+	{
+		// Return if page is not an admin page or the admin login page
+		if (
+			!JFactory::getApplication()->isAdmin()
+			|| JFactory::getUser()->get('guest')
+		)
+		{
+			return;
+		}
+
+		// Check if message is not already in queue
+		$messagequeue = JFactory::getApplication()->getMessageQueue();
+		foreach ($messagequeue as $message)
+		{
+			if ($message['message'] == $error)
+			{
+				return;
 			}
 		}
+
+		JFactory::getApplication()->enqueueMessage($error, 'error');
 	}
 }

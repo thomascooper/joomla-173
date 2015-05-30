@@ -3,11 +3,11 @@
  * NoNumber Framework Helper File: Assignments: FlexiContent
  *
  * @package         NoNumber Framework
- * @version         13.11.22
+ * @version         15.4.3
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
- * @copyright       Copyright © 2013 NoNumber All Rights Reserved
+ * @copyright       Copyright © 2015 NoNumber All Rights Reserved
  * @license         http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 
@@ -16,7 +16,7 @@ defined('_JEXEC') or die;
 /**
  * Assignments: FlexiContent
  */
-class NNFrameworkAssignmentsFlexiContent
+class nnFrameworkAssignmentsFlexiContent
 {
 	function passPageTypes(&$parent, &$params, $selection = array(), $assignment = 'all')
 	{
@@ -56,7 +56,7 @@ class NNFrameworkAssignmentsFlexiContent
 			$parent->q->clear()
 				->select('t.name')
 				->from('#__flexicontent_tags_item_relations AS x')
-				->join('LEFT', '#__flexicontent_tags AS t ON t.id = x.id')
+				->join('LEFT', '#__flexicontent_tags AS t ON t.id = x.tid')
 				->where('x.itemid = ' . (int) $parent->params->id)
 				->where('t.published = 1');
 			$parent->db->setQuery($parent->q);
@@ -83,7 +83,7 @@ class NNFrameworkAssignmentsFlexiContent
 		$parent->q->clear()
 			->select('x.type_id')
 			->from('#__flexicontent_items_ext AS x')
-			->where('x.itemid = ' . (int) $parent->params->id);
+			->where('x.item_id = ' . (int) $parent->params->id);
 		$parent->db->setQuery($parent->q);
 		$type = $parent->db->loadResult();
 

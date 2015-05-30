@@ -3,11 +3,11 @@
  * NoNumber Framework Helper File: Assignments: DateTime
  *
  * @package         NoNumber Framework
- * @version         13.11.22
+ * @version         15.4.3
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
- * @copyright       Copyright © 2013 NoNumber All Rights Reserved
+ * @copyright       Copyright © 2015 NoNumber All Rights Reserved
  * @license         http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 
@@ -16,13 +16,45 @@ defined('_JEXEC') or die;
 /**
  * Assignments: DateTime
  */
-class NNFrameworkAssignmentsDateTime
+class nnFrameworkAssignmentsDateTime
 {
 	function passDate(&$parent, &$params, $selection = array(), $assignment = 'all')
 	{
-		if ($params->publish_up || $params->publish_down)
+		if ((int) $params->publish_up || (int) $params->publish_down)
 		{
 			$now = strtotime($parent->date->format('Y-m-d H:i:s', 1));
+			if (isset($params->recurring) && $params->recurring)
+			{
+				if (!(int) $params->publish_up || !(int) $params->publish_down)
+				{
+					// no date range set
+					return ($assignment == 'include');
+				}
+
+				$up = strtotime(date('Y') . JFactory::getDate($params->publish_up)->format('-m-d H:i:s'));
+				$down = strtotime(date('Y') . JFactory::getDate($params->publish_down)->format('-m-d H:i:s'));
+
+				// pass:
+				// 1) now is between up and down
+				// 2) up is later in year than down and:
+				// 2a) now is after up
+				// 2b) now is before down
+				if (
+					($up < $now && $down > $now)
+					|| ($up > $down
+						&& (
+							$up < $now
+							|| $down > $now
+						)
+					)
+				)
+				{
+					return ($assignment == 'include');
+				}
+
+				// outside date range
+				return $parent->pass(0, $assignment);
+			}
 			if ((int) $params->publish_up)
 			{
 				if (strtotime($params->publish_up) > $now)
@@ -40,13 +72,15 @@ class NNFrameworkAssignmentsDateTime
 				}
 			}
 		}
-		// no date range set
+
+		// pass or no date range set
 		return ($assignment == 'include');
 	}
 
 	function passSeasons(&$parent, &$params, $selection = array(), $assignment = 'all')
 	{
 		$season = self::getSeason($parent->date, $params->hemisphere);
+
 		return $parent->passSimple($season, $selection, $assignment);
 	}
 
@@ -174,6 +208,7 @@ class NNFrameworkAssignmentsDateTime
 				}
 				break;
 		}
+
 		return 0;
 	}
 }

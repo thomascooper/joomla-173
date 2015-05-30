@@ -1,18 +1,17 @@
-function baseConverter(number, ob, nb)
-{
-	number = number+"";
+function baseConverter(number, ob, nb) {
+	number = number + "";
 	number = number.toUpperCase();
 	var list = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 	var dec = 0;
 	for (var i = 0; i <= number.length; i++) {
-		dec += (list.indexOf(number.charAt(i)))*(Math.pow(ob, (number.length-i-1)));
+		dec += (list.indexOf(number.charAt(i))) * (Math.pow(ob, (number.length - i - 1)));
 	}
 	number = "";
-	var magnitude = Math.floor((Math.log(dec))/(Math.log(nb)));
+	var magnitude = Math.floor((Math.log(dec)) / (Math.log(nb)));
 	for (var i = magnitude; i >= 0; i--) {
-		var amount = Math.floor(dec/Math.pow(nb, i));
-		number = number+list.charAt(amount);
-		dec -= amount*(Math.pow(nb, i));
+		var amount = Math.floor(dec / Math.pow(nb, i));
+		number = number + list.charAt(amount);
+		dec -= amount * (Math.pow(nb, i));
 	}
 	if (number.length == 0) {
 		number = 0;
@@ -21,8 +20,7 @@ function baseConverter(number, ob, nb)
 }
 
 // Converts a RGB color to HSV
-function toHSV(rgbColor)
-{
+function toHSV(rgbColor) {
 	rgbColor = rgbColor.replace('#', '');
 
 	red = baseConverter(rgbColor.substr(0, 2), 16, 10);
@@ -37,9 +35,9 @@ function toHSV(rgbColor)
 	if (blue.length == 0) {
 		blue = 0;
 	}
-	red = red/255;
-	green = green/255;
-	blue = blue/255;
+	red = red / 255;
+	green = green / 255;
+	blue = blue / 255;
 
 	maxValue = Math.max(red, green, blue);
 	minValue = Math.min(red, green, blue);
@@ -51,21 +49,21 @@ function toHSV(rgbColor)
 		saturation = 0;
 	} else {
 		if (red == maxValue) {
-			hue = (green-blue)/(maxValue-minValue)/1;
+			hue = (green - blue) / (maxValue - minValue) / 1;
 		} else if (green == maxValue) {
-			hue = 2+(blue-red)/1/(maxValue-minValue)/1;
+			hue = 2 + (blue - red) / 1 / (maxValue - minValue) / 1;
 		} else if (blue == maxValue) {
-			hue = 4+(red-green)/(maxValue-minValue)/1;
+			hue = 4 + (red - green) / (maxValue - minValue) / 1;
 		}
-		saturation = (maxValue-minValue)/maxValue;
+		saturation = (maxValue - minValue) / maxValue;
 	}
-	hue = hue*60;
+	hue = hue * 60;
 	valueBrightness = maxValue;
 
-	if (valueBrightness/1 < 0.5) {
+	if (valueBrightness / 1 < 0.5) {
 		//saturation = (maxValue - minValue) / (maxValue + minValue);
 	}
-	if (valueBrightness/1 >= 0.5) {
+	if (valueBrightness / 1 >= 0.5) {
 		//saturation = (maxValue - minValue) / (2 - maxValue - minValue);
 	}
 
@@ -73,16 +71,15 @@ function toHSV(rgbColor)
 	return returnArray;
 }
 
-function toRgb(hue, saturation, valueBrightness)
-{
-	Hi = Math.floor(hue/60);
+function toRgb(hue, saturation, valueBrightness) {
+	Hi = Math.floor(hue / 60);
 	if (hue == 360) {
 		Hi = 0;
 	}
-	f = hue/60-Hi;
-	p = (valueBrightness*(1-saturation)).toPrecision(2);
-	q = (valueBrightness*(1-(f*saturation))).toPrecision(2);
-	t = (valueBrightness*(1-((1-f)*saturation))).toPrecision(2);
+	f = hue / 60 - Hi;
+	p = (valueBrightness * (1 - saturation)).toPrecision(2);
+	q = (valueBrightness * (1 - (f * saturation))).toPrecision(2);
+	t = (valueBrightness * (1 - ((1 - f) * saturation))).toPrecision(2);
 
 	switch (Hi) {
 		case 0:
@@ -136,25 +133,24 @@ function toRgb(hue, saturation, valueBrightness)
 	green = baseConverter(green, 10, 16);
 	blue = baseConverter(blue, 10, 16);
 
-	red = red+"";
-	green = green+"";
-	blue = blue+"";
+	red = red + "";
+	green = green + "";
+	blue = blue + "";
 
 	while (red.length < 2) {
-		red = "0"+red;
+		red = "0" + red;
 	}
 	while (green.length < 2) {
-		green = "0"+green;
+		green = "0" + green;
 	}
 	while (blue.length < 2) {
-		blue = "0"+""+blue;
+		blue = "0" + "" + blue;
 	}
-	rgbColor = "#"+red+""+green+""+blue;
+	rgbColor = "#" + red + "" + green + "" + blue;
 	return rgbColor.toUpperCase();
 }
 
-function findColorByDegrees(rgbColor, degrees)
-{
+function findColorByDegrees(rgbColor, degrees) {
 	rgbColor = rgbColor.replace('#', '');
 	myArray = toHSV(rgbColor);
 	myArray[0] += degrees;
@@ -167,13 +163,12 @@ function findColorByDegrees(rgbColor, degrees)
 	return toRgb(myArray[0], myArray[1], myArray[2]);
 }
 
-function findColorByBrightness(rgbColor, brightness)
-{
+function findColorByBrightness(rgbColor, brightness) {
 
 	rgbColor = rgbColor.replace('#', '');
 	myArray = toHSV(rgbColor);
 
-	myArray[2] += brightness/100;
+	myArray[2] += brightness / 100;
 	if (myArray[2] > 1) {
 		myArray[2] = 1;
 	}
@@ -181,7 +176,7 @@ function findColorByBrightness(rgbColor, brightness)
 		myArray[2] = 0;
 	}
 
-	myArray[1] += brightness/100;
+	myArray[1] += brightness / 100;
 	if (myArray[1] > 1) {
 		myArray[1] = 1;
 	}

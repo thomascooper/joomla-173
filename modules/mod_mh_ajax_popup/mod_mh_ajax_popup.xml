@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="module" version="2.5" client="site" method="upgrade">
+    <name>MOD_MH_AJAX_POPUP</name>
+    <author>mediahof</author>
+    <creationDate>July 2011</creationDate>
+    <copyright>(C) 2011 - 2014 mediahof. All rights reserved.</copyright>
+    <license>GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html</license>
+    <authorEmail>mail@mediahof.de</authorEmail>
+    <authorUrl>www.mediahof.de</authorUrl>
+    <version>rev 36</version>
+    <description>MOD_MH_AJAX_POPUP_DESC</description>
+    <files>
+        <filename module="mod_mh_ajax_popup">mod_mh_ajax_popup.php</filename>
+        <folder>tmpl</folder>
+        <folder>js</folder>
+        <filename>helper.php</filename>
+    </files>
+    <updateservers>
+        <server type="collection" priority="1" name="mediahof">http://extensions.mediahof.de/extensions.xml</server>
+    </updateservers>
+    <languages folder="language">
+        <language tag="en-GB">en-GB/en-GB.mod_mh_ajax_popup.ini</language>
+        <language tag="en-GB">en-GB/en-GB.mod_mh_ajax_popup.sys.ini</language>
+        <language tag="de-DE">de-DE/de-DE.mod_mh_ajax_popup.ini</language>
+        <language tag="de-DE">de-DE/de-DE.mod_mh_ajax_popup.sys.ini</language>
+    </languages>
+    <config>
+        <fields name="params">
+            <fieldset name="basic" addfieldpath="/administrator/components/com_content/models/fields/">
+                <field name="contentid" type="modal_article" required="true" label="MOD_MH_AJAX_POPUP_CONTENTID_LABEL" description="MOD_MH_AJAX_POPUP_CONTENTID_DESC" />
+                <field name="textColor" type="color" default="" label="MOD_MH_AJAX_POPUP_TEXTCOLOR_LABEL" description="MOD_MH_AJAX_POPUP_TEXTCOLOR_DESC" />
+                <field name="backgroundColor" type="color" default="" label="MOD_MH_AJAX_POPUP_BGCOLOR_LABEL" description="MOD_MH_AJAX_POPUP_BGCOLOR_DESC" />
+                <field name="positionLeft" type="text" default="25" filter="integer" label="MOD_MH_AJAX_POPUP_POSITIONLEFT_LABEL" description="MOD_MH_AJAX_POPUP_POSITIONLEFT_DESC" />
+                <field name="positionTop" type="text" default="25" filter="integer" label="MOD_MH_AJAX_POPUP_POSITIONTOP_LABEL" description="MOD_MH_AJAX_POPUP_POSITIONTOP_DESC" />
+                <field name="width" type="text" default="250" filter="integer" label="MOD_MH_AJAX_POPUP_WIDTH_LABEL" description="MOD_MH_AJAX_POPUP_WIDTH_DESC" />
+                <field name="height" type="text" default="250" filter="integer" label="MOD_MH_AJAX_POPUP_HEIGHT_LABEL" description="MOD_MH_AJAX_POPUP_HEIGHT_DESC" />
+                <field name="fadeSpeed" type="text" default="100" filter="integer" label="MOD_MH_AJAX_POPUP_FADESPEED_LABEL" description="MOD_MH_AJAX_POPUP_FADESPEED_DESC" />
+                <field name="delay" type="text" default="0" filter="integer" label="MOD_MH_AJAX_POPUP_DELAY_LABEL" description="MOD_MH_AJAX_POPUP_DELAY_DESC" />
+                <field name="titleHide" type="radio" class="btn-group" default="1" label="MOD_MH_AJAX_POPUP_TITLEHIDE_LABEL" description="MOD_MH_AJAX_POPUP_TITLEHIDE_DESC">
+                    <option value="1">JHide</option>
+                    <option value="0">JShow</option>
+                </field>
+                <field name="titleText" type="text" default="Close" label="MOD_MH_AJAX_POPUP_TITLETEXT_LABEL" description="MOD_MH_AJAX_POPUP_TITLETEXT_DESC" />
+                <field name="titleColor" type="color" default="#ffffff" label="MOD_MH_AJAX_POPUP_TITLECOLOR_LABEL" description="MOD_MH_AJAX_POPUP_TITLECOLOR_DESC" />
+                <field name="titleBG" type="color" default="#88080b" label="MOD_MH_AJAX_POPUP_TITLEBG_LABEL" description="MOD_MH_AJAX_POPUP_TITLEBG_DESC" />
+                <field name="titleHeight" type="text" default="20" filter="integer" label="MOD_MH_AJAX_POPUP_TITLEHEIGHT_LABEL" description="MOD_MH_AJAX_POPUP_TITLEHEIGHT_DESC" />
+                <field name="appear" type="text" default="10" filter="integer" label="MOD_MH_AJAX_POPUP_APPEAR_LABEL" description="MOD_MH_AJAX_POPUP_APPEAR_DESC" />
+            </fieldset>
+            <fieldset name="advanced">
+                <field name="layout" type="modulelayout" label="JFIELD_ALT_LAYOUT_LABEL" description="JFIELD_ALT_MODULE_LAYOUT_DESC" />
+                <field name="moduleclass_sfx" type="text" label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL" description="COM_MODULES_FIELD_MODULECLASS_SFX_DESC" />
+            </fieldset>
+        </fields>
+    </config>
+
+</extension>

@@ -4,11 +4,11 @@
  * Displays a multiselectbox of geo locations
  *
  * @package         NoNumber Framework
- * @version         13.11.22
+ * @version         15.4.3
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
- * @copyright       Copyright © 2013 NoNumber All Rights Reserved
+ * @copyright       Copyright © 2015 NoNumber All Rights Reserved
  * @license         http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 
@@ -46,7 +46,7 @@ class JFormFieldNN_Geo extends JFormField
 			}
 			else
 			{
-				$val = NNText::prepareSelectItem($val);
+				$val = nnText::prepareSelectItem($val);
 				$options[] = JHtml::_('select.option', $key, $val);
 			}
 		}
@@ -55,6 +55,7 @@ class JFormFieldNN_Geo extends JFormField
 		$multiple = $this->get('multiple');
 
 		require_once JPATH_PLUGINS . '/system/nnframework/helpers/html.php';
+
 		return nnHtml::selectlist($options, $this->name, $this->value, $this->id, $size, $multiple);
 	}
 
@@ -322,7 +323,7 @@ class JFormFieldNN_Geo extends JFormField
 
 	// Region codes taken from https://documentation.snoobi.com/region-codes
 	public $regions = array(
-		'--AU' => '', '-AU' => 'Australia',
+		'--AU'  => '', '-AU' => 'Australia',
 		'AU-01' => 'Australia: Australian Capital Territory',
 		'AU-02' => 'Australia: New South Wales',
 		'AU-03' => 'Australia: Northern Territory',
@@ -332,7 +333,7 @@ class JFormFieldNN_Geo extends JFormField
 		'AU-07' => 'Australia: Victoria',
 		'AU-08' => 'Australia: Western Australia',
 
-		'--BR' => '', '-BR' => 'Brazil',
+		'--BR'  => '', '-BR' => 'Brazil',
 		'BR-01' => 'Brazil: Acre',
 		'BR-02' => 'Brazil: Alagoas',
 		'BR-03' => 'Brazil: Amapa',
@@ -361,7 +362,7 @@ class JFormFieldNN_Geo extends JFormField
 		'BR-28' => 'Brazil: Sergipe',
 		'BR-31' => 'Brazil: Tocantins',
 
-		'--CA' => '', '-CA' => 'Canada',
+		'--CA'  => '', '-CA' => 'Canada',
 		'CA-AB' => 'Canada: Alberta',
 		'CA-BC' => 'Canada: British Columbia',
 		'CA-MB' => 'Canada: Manitoba',
@@ -376,7 +377,7 @@ class JFormFieldNN_Geo extends JFormField
 		'CA-SK' => 'Canada: Saskatchewan',
 		'CA-YT' => 'Canada: Yukon Territory',
 
-		'--CN' => '', '-CN' => 'China',
+		'--CN'  => '', '-CN' => 'China',
 		'CN-01' => 'China: Anhui',
 		'CN-22' => 'China: Beijing',
 		'CN-33' => 'China: Chongqing',
@@ -409,7 +410,7 @@ class JFormFieldNN_Geo extends JFormField
 		'CN-29' => 'China: Yunnan',
 		'CN-02' => 'China: Zhejiang',
 
-		'--EG' => '', '-EG' => 'Egypt',
+		'--EG'  => '', '-EG' => 'Egypt',
 		'EG-01' => 'Egypt: Ad Daqahliyah',
 		'EG-02' => 'Egypt: Al Bahr al Ahmar',
 		'EG-03' => 'Egypt: Al Buhayrah',
@@ -437,7 +438,7 @@ class JFormFieldNN_Geo extends JFormField
 		'EG-27' => 'Egypt: Shamal Sina\'',
 		'EG-24' => 'Egypt: Suhaj',
 
-		'--FR' => '', '-FR' => 'France',
+		'--FR'  => '', '-FR' => 'France',
 		'FR-C1' => 'France: Alsace',
 		'FR-97' => 'France: Aquitaine',
 		'FR-98' => 'France: Auvergne',
@@ -461,7 +462,7 @@ class JFormFieldNN_Geo extends JFormField
 		'FR-B8' => 'France: Provence-Alpes-Cote d\'Azur',
 		'FR-B9' => 'France: Rhone-Alpes',
 
-		'--DE' => '', '-DE' => 'Germany',
+		'--DE'  => '', '-DE' => 'Germany',
 		'DE-01' => 'Germany: Baden-Württemberg',
 		'DE-02' => 'Germany: Bayern',
 		'DE-16' => 'Germany: Berlin',
@@ -479,7 +480,7 @@ class JFormFieldNN_Geo extends JFormField
 		'DE-10' => 'Germany: Schleswig-Holstein',
 		'DE-15' => 'Germany: Thuringen',
 
-		'--IN' => '', '-IN' => 'India',
+		'--IN'  => '', '-IN' => 'India',
 		'IN-01' => 'India: Andaman and Nicobar Islands',
 		'IN-02' => 'India: Andhra Pradesh',
 		'IN-30' => 'India: Arunachal Pradesh',
@@ -516,7 +517,7 @@ class JFormFieldNN_Geo extends JFormField
 		'IN-39' => 'India: Uttaranchal',
 		'IN-28' => 'India: West Bengal',
 
-		'--ID' => '', '-ID' => 'Indonesia',
+		'--ID'  => '', '-ID' => 'Indonesia',
 		'ID-01' => 'Indonesia: Aceh',
 		'ID-02' => 'Indonesia: Bali',
 		'ID-33' => 'Indonesia: Banten',
@@ -549,7 +550,7 @@ class JFormFieldNN_Geo extends JFormField
 		'ID-26' => 'Indonesia: Sumatera Utara',
 		'ID-10' => 'Indonesia: Yogyakarta',
 
-		'--IT' => '', '-IT' => 'Italy',
+		'--IT'  => '', '-IT' => 'Italy',
 		'IT-01' => 'Italy: Abruzzi',
 		'IT-02' => 'Italy: Basilicata',
 		'IT-03' => 'Italy: Calabria',
@@ -571,7 +572,7 @@ class JFormFieldNN_Geo extends JFormField
 		'IT-19' => 'Italy: Valle d\'Aosta',
 		'IT-20' => 'Italy: Veneto',
 
-		'--JP' => '', '-JP' => 'Japan',
+		'--JP'  => '', '-JP' => 'Japan',
 		'JP-01' => 'Japan: Aichi',
 		'JP-02' => 'Japan: Akita',
 		'JP-03' => 'Japan: Aomori',
@@ -620,7 +621,7 @@ class JFormFieldNN_Geo extends JFormField
 		'JP-45' => 'Japan: Yamaguchi',
 		'JP-46' => 'Japan: Yamanashi',
 
-		'--MX' => '', '-MX' => 'Mexico',
+		'--MX'  => '', '-MX' => 'Mexico',
 		'MX-01' => 'Mexico: Aguascalientes',
 		'MX-03' => 'Mexico: Baja California Sur',
 		'MX-02' => 'Mexico: Baja California',
@@ -654,7 +655,7 @@ class JFormFieldNN_Geo extends JFormField
 		'MX-31' => 'Mexico: Yucatan',
 		'MX-32' => 'Mexico: Zacatecas',
 
-		'--NL' => '', '-NL' => 'Netherlands',
+		'--NL'  => '', '-NL' => 'Netherlands',
 		'NL-01' => 'Netherlands: Drenthe',
 		'NL-16' => 'Netherlands: Flevoland',
 		'NL-02' => 'Netherlands: Friesland',
@@ -668,7 +669,7 @@ class JFormFieldNN_Geo extends JFormField
 		'NL-10' => 'Netherlands: Zeeland',
 		'NL-11' => 'Netherlands: Zuid-Holland',
 
-		'--NG' => '', '-NG' => 'Nigeria',
+		'--NG'  => '', '-NG' => 'Nigeria',
 		'NG-45' => 'Nigeria: Abia',
 		'NG-11' => 'Nigeria: Abuja Capital Territory',
 		'NG-35' => 'Nigeria: Adamawa',
@@ -706,8 +707,29 @@ class JFormFieldNN_Geo extends JFormField
 		'NG-43' => 'Nigeria: Taraba',
 		'NG-44' => 'Nigeria: Yobe',
 		'NG-57' => 'Nigeria: Zamfara',
+		
+		'--NO'  => '', '-NO' => 'Norway',
+		'NO-01' => 'Norway: Akershus',
+		'NO-02' => 'Norway: Aust-Agder',
+		'NO-04' => 'Norway: Buskerud',
+		'NO-05' => 'Norway: Finnmark',
+		'NO-06' => 'Norway: Hedmark',
+		'NO-07' => 'Norway: Hordaland',
+		'NO-08' => 'Norway: More og Romsdal',
+		'NO-09' => 'Norway: Nordland',
+		'NO-10' => 'Norway: Nord-Trondelag',
+		'NO-11' => 'Norway: Oppland',
+		'NO-12' => 'Norway: Oslo',
+		'NO-13' => 'Norway: Ostfold',
+		'NO-14' => 'Norway: Rogaland',
+		'NO-15' => 'Norway: Sogn og Fjordane',
+		'NO-16' => 'Norway: Sor-Trondelag',
+		'NO-17' => 'Norway: Telemark',
+		'NO-18' => 'Norway: Troms',
+		'NO-19' => 'Norway: Vest-Agder',
+		'NO-20' => 'Norway: Vestfold',
 
-		'--PH' => '', '-PH' => 'Philippines',
+		'--PH'  => '', '-PH' => 'Philippines',
 		'PH-01' => 'Philippines: Abra',
 		'PH-02' => 'Philippines: Agusan del Norte',
 		'PH-03' => 'Philippines: Agusan del Sur',
@@ -843,7 +865,7 @@ class JFormFieldNN_Geo extends JFormField
 		'PH-66' => 'Philippines: Zamboanga del Sur',
 		'PH-G7' => 'Philippines: Zamboanga',
 
-		'--RU' => '', '-RU' => 'Russian Federation',
+		'--RU'  => '', '-RU' => 'Russian Federation',
 		'RU-01' => 'Russian Federation: Adygeya',
 		'RU-02' => 'Russian Federation: Aginsky Buryatsky AO',
 		'RU-04' => 'Russian Federation: Altaisky krai',
@@ -934,7 +956,7 @@ class JFormFieldNN_Geo extends JFormField
 		'RU-88' => 'Russian Federation: Yaroslavl\'',
 		'RU-89' => 'Russian Federation: Yevrey',
 
-		'--ES' => '', '-ES' => 'Spain',
+		'--ES'  => '', '-ES' => 'Spain',
 		'ES-51' => 'Spain: Andalucia',
 		'ES-52' => 'Spain: Aragon',
 		'ES-34' => 'Spain: Asturias',
@@ -953,7 +975,7 @@ class JFormFieldNN_Geo extends JFormField
 		'ES-32' => 'Spain: Navarra',
 		'ES-59' => 'Spain: Pais Vasco',
 
-		'--TR' => '', '-TR' => 'Turkey',
+		'--TR'  => '', '-TR' => 'Turkey',
 		'TR-81' => 'Turkey: Adana',
 		'TR-02' => 'Turkey: Adiyaman',
 		'TR-03' => 'Turkey: Afyon',
@@ -1036,7 +1058,7 @@ class JFormFieldNN_Geo extends JFormField
 		'TR-66' => 'Turkey: Yozgat',
 		'TR-85' => 'Turkey: Zonguldak',
 
-		'--GB' => '', '-GB' => 'United Kingdom',
+		'--GB'  => '', '-GB' => 'United Kingdom',
 		'GB-T5' => 'United Kingdom: Aberdeen City',
 		'GB-T6' => 'United Kingdom: Aberdeenshire',
 		'GB-T7' => 'United Kingdom: Angus',
@@ -1290,7 +1312,7 @@ class JFormFieldNN_Geo extends JFormField
 		'GB-Z4' => 'United Kingdom: Wrexham',
 		'GB-Q5' => 'United Kingdom: York',
 
-		'--US' => '', '-US' => 'United States',
+		'--US'  => '', '-US' => 'United States',
 		'US-AL' => 'United States: Alabama',
 		'US-AK' => 'United States: Alaska',
 		'US-AS' => 'United States: American Samoa',
@@ -1354,7 +1376,7 @@ class JFormFieldNN_Geo extends JFormField
 		'US-WI' => 'United States: Wisconsin',
 		'US-WY' => 'United States: Wyoming',
 
-		'--VN' => '', '-VN' => 'Vietnam',
+		'--VN'  => '', '-VN' => 'Vietnam',
 		'VN-43' => 'Vietnam: An Giang',
 		'VN-53' => 'Vietnam: Ba Ria-Vung Tau',
 		'VN-02' => 'Vietnam: Bac Thai',

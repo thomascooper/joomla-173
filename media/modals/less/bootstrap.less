@@ -2,19 +2,17 @@
 * NoNumber Page stylesheet
 *
 * @package         Modals
-* @version         4.4.0
+* @version         5.3.0
 *
 * @author          Peter van Westen <peter@nonumber.nl>
 * @link            http://www.nonumber.nl
-* @copyright       Copyright © 2013 NoNumber All Rights Reserved
+* @copyright       Copyright © 2015 NoNumber All Rights Reserved
 * @license         http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
 */
-
 /*
 * You can override this stylesheet by creating your own in:
 * /templates/[YOUR TEMPLATE]/css/modals/bootstrap.css
 */
-
 @import "../../nnframework/less/init.less";
 @import "base.less";
 
@@ -28,6 +26,7 @@
 	background-color: @black;
 	.opacity(80);
 }
+
 #colorbox {
 	outline: 0;
 	top: 50%;
@@ -37,13 +36,15 @@
 	border: 1px solid rgba(0, 0, 0, .3);
 	*border: 1px solid #999; /* IE6-7 */
 	.border-radius(6px);
-	.box-shadow(0 3px 7px rgba(0,0,0,0.3));
+	.box-shadow(0 3px 7px rgba(0, 0, 0, 0.3));
 	.background-clip(padding-box);
 	margin: 0 !important;
 }
+
 #cboxContent {
 	overflow: hidden;
 }
+
 #cboxLoadedContent {
 	overflow-y: auto;
 	max-height: 400px;
@@ -52,6 +53,7 @@
 	margin-bottom: 0px;
 	max-height: none;
 }
+
 #cboxTitle {
 	border-bottom: 1px solid #eee;
 	position: absolute;
@@ -67,6 +69,9 @@
 	line-height: 24px;
 	font-weight: bold;
 	min-height: 24px;
+	small {
+		font-weight: normal;
+	}
 }
 
 .cbimg {
@@ -82,6 +87,7 @@
 	.ie7-restore-right-whitespace();
 	.box-sizing(border-box);
 }
+
 #cboxPrevious,
 #cboxNext,
 #cboxSlideshow {
@@ -90,6 +96,7 @@
 	width: 42px;
 	height: 44px;
 }
+
 #cboxCurrent,
 #cboxPrevious,
 #cboxNext,
@@ -98,15 +105,17 @@
 	background-color: @white;
 	border: 15px solid @white;
 	.border-radius(6px);
-	.box-shadow(0 0 10px rgba(0,0,0,.5));
+	.box-shadow(0 0 10px rgba(0, 0, 0, .5));
 	.opacity(0);
 }
+
 #cboxContent:hover #cboxCurrent,
 #cboxContent:hover #cboxPrevious,
 #cboxContent:hover #cboxNext,
 #cboxContent:hover #cboxSlideshow {
 	.opacity(100);
 }
+
 #cboxCurrent {
 	font-weight: bold;
 	line-height: 1em;
@@ -114,21 +123,25 @@
 	right: 0;
 	.border-radius(6px 0 6px 0);
 }
+
 #cboxPrevious {
 	background-position: 0 0;
 	left: 0;
 	.border-radius(0 6px 6px 0);
 }
+
 #cboxNext {
 	background-position: -24px 0;
 	right: 0;
 	.border-radius(6px 0 0 6px);
 }
+
 #cboxSlideshow {
 	background-position: -48px 0;
 	left: 50%;
 	right: 50%;
 }
+
 .cboxSlideshow_on #cboxSlideshow {
 	background-position: -72px 0;
 }
@@ -148,4 +161,28 @@
 	background: transparent url(../images/bootstrap/loading.gif) no-repeat 50% 50%;
 	.opacity(80);
 	height: 100%;
+}
+
+.no_title {
+	#cboxTitle {
+		height: 24px !important;
+		padding: 0;
+		//display: none !important;
+	}
+	#cboxLoadedContent {
+		margin-top: 26px !important;
+	}
+	#cboxClose {
+		right: 5px;
+		top: 5px;
+	}
+}
+
+#cboxTitle .countdown {
+	width: 100%;
+	height: 2px;
+	position: absolute;
+	top: 0;
+	left: 0;
+	background-color: @blue;
 }

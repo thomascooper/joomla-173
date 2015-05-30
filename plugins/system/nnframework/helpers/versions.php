@@ -3,17 +3,17 @@
  * NoNumber Framework Helper File: VersionCheck
  *
  * @package         NoNumber Framework
- * @version         13.11.22
+ * @version         15.4.3
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
- * @copyright       Copyright © 2013 NoNumber All Rights Reserved
+ * @copyright       Copyright © 2015 NoNumber All Rights Reserved
  * @license         http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 
 defined('_JEXEC') or die;
 
-class NNVersions
+class nnVersions
 {
 	public static $instance = null;
 
@@ -126,26 +126,36 @@ class NoNumberVersions
 
 		if ($version)
 		{
-			if (!(strpos($version, 'PRO') === false))
+			if (strpos($version, 'PRO') !== false)
 			{
 				$version = str_replace('PRO', '', $version);
 				$version .= ' <small>[PRO]</small>';
 			}
-			else if (!(strpos($version, 'FREE') === false))
+			else if (strpos($version, 'FREE') !== false)
 			{
 				$version = str_replace('FREE', '', $version);
 				$version .= ' <small>[FREE]</small>';
 			}
 			$html[] = ' v' . $version;
 		}
+
 		if ($copyright)
 		{
-			$html[] = '<br />' . JText::_('COPYRIGHT') . ' &copy; ' . date('Y') . ' NoNumber ' . JText::_('ALL_RIGHTS_RESERVED');
-			if ($jedid)
-			{
-				$html[] = '<br />' . html_entity_decode(JText::sprintf('NN_RATE', $jedid));
-			}
+			$jed_url = 'http://nonr.nl/jed-' . str_replace('_', '', strtolower($name)) . '#reviews';
+			$html[] = '<br />' . JText::_('NN_COPYRIGHT') . ' &copy; ' . date('Y') . ' NoNumber ' . JText::_('NN_ALL_RIGHTS_RESERVED');
+			$html[] = '<br /><br />'
+				. '<span class="nn_review">'
+				. html_entity_decode(JText::sprintf(
+					'NN_JED_REVIEW',
+					'<a href="' . $jed_url . '" target="_blank">',
+					'</a>'
+					. ' <a href="' . $jed_url . '" target="_blank" class="stars">'
+					. '<span class="icon-star"></span><span class="icon-star"></span><span class="icon-star"></span><span class="icon-star"></span><span class="icon-star"></span>'
+					. '</a>'
+				))
+				. '</span>';
 		}
+
 		$html[] = '</p>';
 
 		return implode('', $html);
@@ -219,6 +229,7 @@ class NoNumberVersions
 				$version = $xml['version'];
 			}
 		}
+
 		return $version;
 	}
 

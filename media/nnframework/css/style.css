@@ -2,11 +2,11 @@
  * Main stylesheet
  *
  * @package         NoNumber Framework
- * @version         13.11.22
+ * @version         15.4.3
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
- * @copyright       Copyright © 2013 NoNumber All Rights Reserved
+ * @copyright       Copyright © 2015 NoNumber All Rights Reserved
  * @license         http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 input[type="checkbox"],
@@ -115,9 +115,18 @@ button.nn_close:hover {
   filter: alpha(opacity=40);
 }
 span.nn_code {
-  font-family: monospace;
+  font-family: Monaco, Menlo, Consolas, "Courier New", monospace;
   font-size: 12px;
-  color: #666666;
+  line-height: 18px;
+  padding: 2px 4px;
+  color: #d14;
+  background-color: #f7f7f9;
+  border: 1px solid #e1e1e8;
+  white-space: nowrap;
+  display: inline-block;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
 }
 input.nn_codefield {
   font-family: monospace;
@@ -172,36 +181,50 @@ div#mc-component .nntoggler ul li {
 div#mc-component div.nn_panel {
   margin-bottom: 0 !important;
 }
+.nn_review a.stars:hover {
+  text-decoration: none;
+}
+.nn_review .icon-star {
+  color: #fcac0a;
+  margin: 0;
+}
+.nn_review .icon-star:before {
+  content: '★';
+}
 /**
  * Stylesheet for font faces
  *
  * @package         NoNumber Framework
- * @version         13.11.22
+ * @version         15.4.3
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
- * @copyright       Copyright © 2013 NoNumber All Rights Reserved
+ * @copyright       Copyright © 2015 NoNumber All Rights Reserved
  * @license         http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 @font-face {
-  font-family: 'NNIcoMoon';
-  src: url('NNIcoMoon.eot');
-  src: url('NNIcoMoon.eot?#iefix') format('embedded-opentype'), url('NNIcoMoon.woff') format('woff'), url('NNIcoMoon.ttf') format('truetype'), url('NNIcoMoon.svg#NNIcoMoon') format('svg');
+  font-family: 'NoNumber';
+  src: url('../fonts/NoNumber.eot');
+  src: url('../fonts/NoNumber.eot?#iefix') format('embedded-opentype'), url('../fonts/NoNumber.woff') format('woff'), url('../fonts/NoNumber.ttf') format('truetype'), url('../fonts/NoNumber.svg#nonumber') format('svg');
   font-weight: normal;
   font-style: normal;
 }
+@font-face {
+  font-family: 'NNIcons';
+  src: url('../fonts/NNIcons.eot');
+  src: url('../fonts/NNIcons.eot?#iefix') format('embedded-opentype'), url('../fonts/NNIcons.woff') format('woff'), url('../fonts/NNIcons.ttf') format('truetype'), url('../fonts/NNIcons.svg#NNIcons') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+.icon-nonumber,
 [class^="nnicon-"],
 [class*=" nnicon-"] {
   display: inline-block;
   width: 14px;
   height: 14px;
   *margin-right: .3em;
-  line-height: 14px;
+  line-height: 16px;
   font-size: 16px;
-}
-[class^="nnicon-"]:before,
-[class*=" nnicon-"]:before {
-  font-family: 'NNIcoMoon';
   speak: none;
   font-style: normal;
   font-weight: normal;
@@ -210,6 +233,112 @@ div#mc-component div.nn_panel {
   /* Better Font Rendering =========== */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+.icon-nonumber {
+  width: 16px !important;
+}
+.icon-nonumber:before {
+  font-family: 'NoNumber' !important;
+  font-size: 16px !important;
+}
+.btn .icon-nonumber {
+  text-indent: -2px;
+}
+.btn .icon-nonumber:before {
+  vertical-align: -3px;
+}
+.icon-nonumber-24:before {
+  vertical-align: -5px;
+}
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+  .icon-nonumber-24:before {
+    vertical-align: -3px;
+  }
+}
+.btn .icon-nonumber {
+  text-indent: -2px;
+}
+.icon-nonumber:before {
+  content: "\e000";
+}
+.icon-addtomenu:before {
+  content: "\e001";
+}
+.icon-adminbardocker:before {
+  content: "\e002";
+}
+.icon-advancedmodulemanager:before {
+  content: "\e003";
+}
+.icon-advancedtemplatemanager:before {
+  content: "\e015";
+}
+.icon-articlesanywhere:before {
+  content: "\e004";
+}
+.icon-betterpreview:before {
+  content: "\e005";
+}
+.icon-cachecleaner:before {
+  content: "\e006";
+}
+.icon-cdnforjoomla:before {
+  content: "\e007";
+}
+.icon-componentsanywhere:before {
+  content: "\e008";
+}
+.icon-contenttemplater:before {
+  content: "\e009";
+}
+.icon-dbreplacer:before {
+  content: "\e00a";
+}
+.icon-dummycontent:before {
+  content: "\e017";
+}
+.icon-emailprotector:before {
+  content: "\e00b";
+}
+.icon-iplogin:before {
+  content: "\e016";
+}
+.icon-modals:before,
+.icon-modalizer:before {
+  content: "\e00c";
+}
+.icon-modulesanywhere:before {
+  content: "\e00d";
+}
+.icon-rereplacer:before {
+  content: "\e00e";
+}
+.icon-sliders:before {
+  content: "\e00f";
+}
+.icon-snippets:before {
+  content: "\e010";
+}
+.icon-sourcerer:before {
+  content: "\e011";
+}
+.icon-tabs:before {
+  content: "\e012";
+}
+.icon-timedstyles:before {
+  content: "\e013";
+}
+.icon-tooltips:before {
+  content: "\e014";
+}
+.icon-whatnothing:before {
+  content: " ";
+  width: 16px;
+  display: inline-block;
+}
+[class^="nnicon-"]:before,
+[class*=" nnicon-"]:before {
+  font-family: 'NNIcons' !important;
 }
 .nnicon-paragraph-left:before {
   content: "\e001";
@@ -239,175 +368,91 @@ div#mc-component div.nn_panel {
   content: "\e009";
 }
 .nnicon-cog:before {
-  content: "\e010";
-}
-.nnicon-arrow-up:before {
-  content: "\e011";
-}
-.nnicon-arrow-right:before {
-  content: "\e012";
-}
-.nnicon-arrow-down:before {
-  content: "\e013";
-}
-.nnicon-arrow-left:before {
-  content: "\e014";
-}
-.nnicon-top:before {
-  content: "\e015";
-}
-.nnicon-bottom:before {
-  content: "\e016";
-}
-.nnicon-simple:before {
-  content: "\e017";
-}
-.nnicon-normal:before {
-  content: "\e018";
-}
-.nnicon-advanced:before {
-  content: "\e019";
-}
-.nnicon-home:before {
-  content: "\e020";
-}
-.nnicon-info:before {
-  content: "\e021";
-}
-.nnicon-warning:before {
-  content: "\e022";
-}
-.nnicon-not-ok:before {
-  content: "\e023";
-}
-.nnicon-link:before {
-  content: "\e024";
-}
-.nnicon-eye:before {
-  content: "\e025";
-}
-.nnicon-search:before {
-  content: "\e026";
-}
-@font-face {
-  font-family: 'NoNumber';
-  src: url('NNIcons.eot');
-  src: url('NNIcons.eot?#iefix') format('embedded-opentype'), url('NNIcons.woff') format('woff'), url('NNIcons.ttf') format('truetype'), url('NNIcons.svg#nonumber') format('svg');
-  font-weight: normal;
-  font-style: normal;
-}
-.icon-nonumber {
-  width: 16px !important;
-}
-.icon-nonumber:before {
-  font-family: 'NoNumber' !important;
-  font-size: 16px !important;
-  line-height: 16px;
-  speak: none;
-  font-style: normal;
-  font-weight: normal;
-  font-variant: normal;
-  text-transform: none;
-  /* Better Font Rendering =========== */
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  content: "";
-}
-.btn .icon-nonumber {
-  text-indent: -2px;
-}
-.icon-nonumber:before {
-  content: "\e000";
-}
-.icon-addtomenu:before {
-  content: "\e001";
-}
-.icon-adminbardocker:before {
-  content: "\e002";
-}
-.icon-advancedmodulemanager:before {
-  content: "\e003";
-}
-.icon-articlesanywhere:before {
-  content: "\e004";
-}
-.icon-betterpreview:before {
-  content: "\e005";
-}
-.icon-cachecleaner:before {
-  content: "\e006";
-}
-.icon-cdnforjoomla:before {
-  content: "\e007";
-}
-.icon-componentsanywhere:before {
-  content: "\e017";
-}
-.icon-contenttemplater:before {
-  content: "\e008";
-}
-.icon-dbreplacer:before {
-  content: "\e009";
-}
-.icon-emailprotector:before {
-  content: "\e018";
-}
-.icon-modalizer:before,
-.icon-modals:before {
   content: "\e00a";
 }
-.icon-modulesanywhere:before {
+.nnicon-arrow-up:before {
   content: "\e00b";
 }
-.icon-rereplacer:before {
+.nnicon-arrow-right:before {
   content: "\e00c";
 }
-.icon-slider:before,
-.icon-sliders:before {
+.nnicon-arrow-down:before {
   content: "\e00d";
 }
-.icon-snippets:before {
+.nnicon-arrow-left:before {
   content: "\e00e";
 }
-.icon-sourcerer:before {
+.nnicon-top:before {
   content: "\e00f";
 }
-.icon-taber:before,
-.icon-tabs:before {
+.nnicon-bottom:before {
   content: "\e010";
 }
-.icon-timedstyles:before {
+.nnicon-simple:before {
   content: "\e011";
 }
-.icon-tooltips:before {
+.nnicon-normal:before {
   content: "\e012";
 }
-.icon-whatnothing:before {
-  content: " ";
-  width: 16px;
-  display: inline-block;
-}
-.icon-src-sourcetags:before {
+.nnicon-advanced:before {
   content: "\e013";
 }
-.icon-src-nosourcetags:before {
+.nnicon-home:before {
   content: "\e014";
 }
-.icon-src-tagstyle:before {
+.nnicon-info:before {
   content: "\e015";
 }
-.icon-src-tagstylebrackets:before {
+.nnicon-warning:before {
   content: "\e016";
+}
+.nnicon-not-ok:before {
+  content: "\e017";
+}
+.nnicon-link:before {
+  content: "\e018";
+}
+.nnicon-eye:before {
+  content: "\e019";
+}
+.nnicon-search:before {
+  content: "\e01a";
+}
+.nnicon-earth:before {
+  content: "\e01f";
+}
+.icon-nonumber.icon-src-sourcetags:before,
+.nnicon-src-sourcetags:before {
+  font-family: 'NNIcons' !important;
+  content: "\e01b";
+}
+.icon-nonumber.icon-src-nosourcetags:before,
+.nnicon-src-nosourcetags:before {
+  font-family: 'NNIcons' !important;
+  content: "\e01c";
+}
+.icon-nonumber.icon-src-tagstyle:before,
+.nnicon-src-tagstyle:before {
+  font-family: 'NNIcons' !important;
+  content: "\e01d";
+}
+.icon-nonumber.icon-src-tagstylebrackets:before,
+.nnicon-src-tagstylebrackets:before {
+  font-family: 'NNIcons' !important;
+  content: "\e01e";
+}
+.icon-expired:before {
+  content: "\6e";
 }
 /**
  * Stylesheet for font faces
  *
  * @package         NoNumber Framework
- * @version         13.11.22
+ * @version         15.4.3
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
- * @copyright       Copyright © 2013 NoNumber All Rights Reserved
+ * @copyright       Copyright © 2015 NoNumber All Rights Reserved
  * @license         http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 .button-nonumber > a:after {
@@ -416,9 +461,11 @@ div#mc-component div.nn_panel {
   speak: none;
   font-size: 16px !important;
   line-height: 14px;
-  content: "\e000";
   margin-left: 4px;
   vertical-align: -3px;
+}
+.button-nonumber > a:after {
+  content: "\e000";
 }
 .button-addtomenu > a:after {
   content: "\e001";
@@ -441,58 +488,69 @@ div#mc-component div.nn_panel {
 .button-cdnforjoomla > a:after {
   content: "\e007";
 }
-.button-contenttemplater > a:after {
+.button-componentsanywhere > a:after {
   content: "\e008";
 }
-.button-dbreplacer > a:after {
+.button-contenttemplater > a:after {
   content: "\e009";
 }
-.button-modalizer > a:after,
-.button-modals > a:after {
+.button-dbreplacer > a:after {
   content: "\e00a";
 }
-.button-modulesanywhere > a:after {
+.button-dummycontent > a:after {
+  content: "\e017";
+}
+.button-emailprotector > a:after {
   content: "\e00b";
 }
-.button-rereplacer > a:after {
+.button-modals > a:after,
+.button-modalizer > a:after {
   content: "\e00c";
 }
-.button-slider > a:after,
-.button-sliders > a:after {
+.button-modulesanywhere > a:after {
   content: "\e00d";
 }
-.button-snippets > a:after {
+.button-rereplacer > a:after {
   content: "\e00e";
 }
-.button-sourcerer > a:after {
+.button-sliders > a:after {
   content: "\e00f";
 }
-.button-taber > a:after,
-.button-tabs > a:after {
+.button-snippets > a:after {
   content: "\e010";
 }
-.button-timedstyles > a:after {
+.button-sourcerer > a:after {
   content: "\e011";
 }
-.button-tooltips > a:after {
+.button-tabs > a:after {
   content: "\e012";
+}
+.button-timedstyles > a:after {
+  content: "\e013";
+}
+.button-tooltips > a:after {
+  content: "\e014";
 }
 .button-whatnothing > a:after {
   content: " ";
   width: 16px;
   display: inline-block;
 }
-.button-src-sourcetags > a:after {
-  content: "\e013";
+.button-nonumber.button-src-sourcetags > a:after {
+  font-family: 'NNIcons' !important;
+  content: "\e01b";
 }
-.button-src-nosourcetags > a:after {
-  content: "\e014";
+.button-nonumber.button-src-nosourcetags > a:after {
+  font-family: 'NNIcons' !important;
+  content: "\e01c";
 }
-.button-src-tagstyle > a:after {
-  content: "\e015";
+.button-nonumber.button-src-tagstyle > a:after {
+  font-family: 'NNIcons' !important;
+  content: "\e01d";
 }
-.button-src-tagstylebrackets > a:after {
-  content: "\e016";
+.button-nonumber.button-src-tagstylebrackets > a:after {
+  font-family: 'NNIcons' !important;
+  content: "\e01e";
 }
 .button_view_state {
   margin: 10px 0;
@@ -509,7 +567,7 @@ div#mc-component div.nn_panel {
   color: #999;
 }
 .button_view_state > div > a:before {
-  font-family: 'NNIcoMoon';
+  font-family: 'NNIcons' !important;
   font-weight: normal;
   font-style: normal;
   speak: none;
@@ -520,13 +578,13 @@ div#mc-component div.nn_panel {
   vertical-align: -3px;
 }
 .button_view_state.simple > div > a:before {
-  content: "\e017";
+  content: "\e011";
 }
 .button_view_state.normal > div > a:before {
-  content: "\e018";
+  content: "\e012";
 }
 .button_view_state.advanced > div > a:before {
-  content: "\e019";
+  content: "\e013";
 }
 .view_state_0 .button_view_state.simple,
 .view_state_1 .button_view_state.normal,

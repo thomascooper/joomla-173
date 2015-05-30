@@ -4,11 +4,11 @@
  * Displays a multiselectbox of available Akeeba Subsriptons levels
  *
  * @package         NoNumber Framework
- * @version         13.11.22
+ * @version         15.4.3
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
- * @copyright       Copyright © 2013 NoNumber All Rights Reserved
+ * @copyright       Copyright © 2015 NoNumber All Rights Reserved
  * @license         http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 
@@ -26,7 +26,7 @@ class JFormFieldNN_AkeebaSubs extends JFormField
 
 	protected function getInput()
 	{
-		if (!NNFrameworkFunctions::extensionInstalled('akeebasubs'))
+		if (!nnFrameworkFunctions::extensionInstalled('akeebasubs'))
 		{
 			return '<fieldset class="radio"><label class="nn_label nn_label_error">' . JText::_('ERROR') . ': ' . JText::sprintf('NN_FILES_NOT_FOUND', JText::_('NN_AKEEBASUBS')) . '</label></fieldset>';
 		}
@@ -42,7 +42,7 @@ class JFormFieldNN_AkeebaSubs extends JFormField
 			return '<fieldset class="radio"><label class="nn_label nn_label_error">' . JText::_('ERROR') . ': ' . JText::sprintf('NN_TABLE_NOT_FOUND', JText::_('NN_AKEEBASUBS')) . '</label></fieldset>';
 		}
 
-		$parameters = NNParameters::getInstance();
+		$parameters = nnParameters::getInstance();
 		$params = $parameters->getPluginParams('nnframework');
 		$this->max_list_count = $params->max_list_count;
 
@@ -57,6 +57,7 @@ class JFormFieldNN_AkeebaSubs extends JFormField
 		$multiple = $this->get('multiple');
 
 		require_once JPATH_PLUGINS . '/system/nnframework/helpers/html.php';
+
 		return nnHtml::selectlist($options, $this->name, $this->value, $this->id, $size, $multiple);
 	}
 
@@ -86,7 +87,7 @@ class JFormFieldNN_AkeebaSubs extends JFormField
 		$options = array();
 		foreach ($list as $item)
 		{
-			$item->name = NNText::prepareSelectItem($item->name, $item->published);
+			$item->name = nnText::prepareSelectItem($item->name, $item->published);
 			$options[] = JHtml::_('select.option', $item->id, $item->name, 'value', 'text', 0);
 		}
 

@@ -3,11 +3,11 @@
  * NoNumber Framework Helper File: Assignments: VirtueMart
  *
  * @package         NoNumber Framework
- * @version         13.11.22
+ * @version         15.4.3
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
- * @copyright       Copyright © 2013 NoNumber All Rights Reserved
+ * @copyright       Copyright © 2015 NoNumber All Rights Reserved
  * @license         http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 
@@ -16,7 +16,7 @@ defined('_JEXEC') or die;
 /**
  * Assignments: VirtueMart
  */
-class NNFrameworkAssignmentsVirtueMart
+class nnFrameworkAssignmentsVirtueMart
 {
 	function init(&$parent)
 	{
@@ -27,6 +27,9 @@ class NNFrameworkAssignmentsVirtueMart
 
 	function passPageTypes(&$parent, &$params, $selection = array(), $assignment = 'all')
 	{
+		// Because VM sucks, we have to get the view again
+		$parent->params->view = JFactory::getApplication()->input->getString('view');
+
 		return $parent->passPageTypes('com_virtuemart', $selection, $assignment, 1);
 	}
 
@@ -36,6 +39,9 @@ class NNFrameworkAssignmentsVirtueMart
 		{
 			return $parent->pass(0, $assignment);
 		}
+
+		// Because VM sucks, we have to get the view again
+		$parent->params->view = JFactory::getApplication()->input->getString('view');
 
 		$pass = (($params->inc_categories && in_array($parent->params->view, array('categories', 'category')))
 			|| ($params->inc_items && $parent->params->view == 'productdetails')
@@ -108,6 +114,9 @@ class NNFrameworkAssignmentsVirtueMart
 
 	function passProducts(&$parent, &$params, $selection = array(), $assignment = 'all')
 	{
+		// Because VM sucks, we have to get the view again
+		$parent->params->view = JFactory::getApplication()->input->getString('view');
+
 		if (!$parent->params->id || $parent->params->option != 'com_virtuemart' || $parent->params->view != 'productdetails')
 		{
 			return $parent->pass(0, $assignment);

@@ -18,7 +18,6 @@ input.nn_color_list {
   border: 1px solid #CCCCCC;
   width: 252px;
   /* IE 5.x */
-
   width: 250px;
 }
 #dhtmlgoodies_colorPicker .colorPicker_topRow {
@@ -28,7 +27,6 @@ input.nn_color_list {
   padding-left: 2px;
   height: 21px;
   /* IE 5.x */
-
   height: 17px;
 }
 #dhtmlgoodies_colorPicker #color_picker_content {
@@ -42,7 +40,6 @@ input.nn_color_list {
   clear: both;
   height: 18px;
   /* IE 5.x */
-
   height: 13px;
 }
 #dhtmlgoodies_colorPicker .colorSquare {
@@ -53,11 +50,9 @@ input.nn_color_list {
   cursor: pointer;
   width: 12px;
   /* IE 5.x */
-
   width: 10px;
   height: 12px;
   /* IE 5.x */
-
   height: 10px;
 }
 .colorPickerTab_inactive,
@@ -99,11 +94,9 @@ input.nn_color_list {
   cursor: pointer;
   width: 15px;
   /* IE 5.x */
-
   width: 11px;
   height: 15px;
   /* IE 5.x */
-
   height: 11px;
 }
 #colorPicker_statusBarTxt {
@@ -125,11 +118,9 @@ form {
   bottom: 0px;
   width: 5px;
   /* IE 5.x */
-
   width: 3px;
   height: 5px;
   /* IE 5.x */
-
   height: 3px;
 }
 .colorSliderLabel {
@@ -158,11 +149,9 @@ form {
   cursor: pointer;
   width: 188px;
   /* IE 5.x */
-
   width: 186px;
   height: 22px;
   /* IE 5.x */
-
   height: 20px;
 }
 .colorCodeDiv {

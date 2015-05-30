@@ -3,34 +3,33 @@
  * NoNumber Framework Helper File: Assignments
  *
  * @package         NoNumber Framework
- * @version         13.11.22
+ * @version         15.4.3
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
- * @copyright       Copyright © 2013 NoNumber All Rights Reserved
+ * @copyright       Copyright © 2015 NoNumber All Rights Reserved
  * @license         http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 
 defined('_JEXEC') or die;
 
+require_once __DIR__ . '/cache.php';
 require_once __DIR__ . '/functions.php';
 
 /**
  * Assignments
  * $assignment = no / include / exclude / none
  */
-class NNFrameworkAssignmentsHelper
+class nnFrameworkAssignmentsHelper
 {
 	var $db = null;
 	var $params = null;
-	var $init = 0;
+	var $init = false;
 	var $types = array();
-	var $passes = array();
 	var $maintype = '';
 	var $subtype = '';
-	var $cache = array();
 
-	function __construct()
+	public function __construct()
 	{
 		$this->db = JFactory::getDBO();
 		$this->q = $this->db->getQuery(true);
@@ -40,14 +39,15 @@ class NNFrameworkAssignmentsHelper
 		$this->date->setTimeZone($tz);
 
 		$this->has = array();
-		$this->has['flexicontent'] = NNFrameworkFunctions::extensionInstalled('flexicontent');
-		$this->has['k2'] = NNFrameworkFunctions::extensionInstalled('k2');
-		$this->has['zoo'] = NNFrameworkFunctions::extensionInstalled('zoo');
-		$this->has['akeebasubs'] = NNFrameworkFunctions::extensionInstalled('akeebasubs');
-		$this->has['hikashop'] = NNFrameworkFunctions::extensionInstalled('hikashop');
-		$this->has['mijoshop'] = NNFrameworkFunctions::extensionInstalled('mijoshop');
-		$this->has['redshop'] = NNFrameworkFunctions::extensionInstalled('redshop');
-		$this->has['virtuemart'] = NNFrameworkFunctions::extensionInstalled('virtuemart');
+		$this->has['flexicontent'] = nnFrameworkFunctions::extensionInstalled('flexicontent');
+		$this->has['k2'] = nnFrameworkFunctions::extensionInstalled('k2');
+		$this->has['zoo'] = nnFrameworkFunctions::extensionInstalled('zoo');
+		$this->has['akeebasubs'] = nnFrameworkFunctions::extensionInstalled('akeebasubs');
+		$this->has['hikashop'] = nnFrameworkFunctions::extensionInstalled('hikashop');
+		$this->has['mijoshop'] = nnFrameworkFunctions::extensionInstalled('mijoshop');
+		$this->has['redshop'] = nnFrameworkFunctions::extensionInstalled('redshop');
+		$this->has['virtuemart'] = nnFrameworkFunctions::extensionInstalled('virtuemart');
+		$this->has['cookieconfirm'] = nnFrameworkFunctions::extensionInstalled('cookieconfirm');
 
 		$this->types = array(
 			'Menu',
@@ -96,6 +96,7 @@ class NNFrameworkAssignmentsHelper
 			'VirtueMart_PageTypes',
 			'VirtueMart_Categories',
 			'VirtueMart_Products',
+			'CookieConfirm',
 			'PHP'
 		);
 		$this->nonarray = array(
@@ -110,6 +111,7 @@ class NNFrameworkAssignmentsHelper
 	function setIdNames()
 	{
 		$this->names = array();
+
 		foreach ($this->types as $type)
 		{
 			$type = explode('_', $type, 2);
@@ -119,6 +121,7 @@ class NNFrameworkAssignmentsHelper
 				$this->names[strtolower($type['1'])] = $type['1'];
 			}
 		}
+
 		$this->names['menuitems'] = 'Menu';
 		$this->names['cats'] = 'Categories';
 	}
@@ -135,7 +138,7 @@ class NNFrameworkAssignmentsHelper
 		$this->params->option = JFactory::getApplication()->input->get('option');
 		$this->params->view = JFactory::getApplication()->input->get('view');
 		$this->params->task = JFactory::getApplication()->input->get('task');
-		$this->params->layout = JFactory::getApplication()->input->get('layout');
+		$this->params->layout = JFactory::getApplication()->input->get('layout', '', 'string');
 		$this->params->id = JFactory::getApplication()->input->getInt('id', 0);
 		$this->params->Itemid = JFactory::getApplication()->input->getInt('Itemid', 0);
 
@@ -161,7 +164,7 @@ class NNFrameworkAssignmentsHelper
 		if (JFile::exists(__DIR__ . '/assignments/' . $option . '.php'))
 		{
 			require_once __DIR__ . '/assignments/' . $option . '.php';
-			$class = 'NNFrameworkAssignments' . $option;
+			$class = 'nnFrameworkAssignments' . $option;
 			if (class_exists($class))
 			{
 				$this->classes[$this->maintype] = new $class;
@@ -209,24 +212,25 @@ class NNFrameworkAssignmentsHelper
 			}
 		}
 
-		$this->init = 1;
+		$this->init = true;
 	}
 
 	function initParamsByType(&$params, $type = '')
 	{
 		$this->getAssignmentState($params->assignment);
 		$params->id = $type;
-		if (!(strpos($type, '_') === false))
-		{
-			$type = explode('_', $type, 2);
-			$params->maintype = $type['0'];
-			$params->subtype = $type['1'];
-		}
-		else
+
+		if (strpos($type, '_') === false)
 		{
 			$params->maintype = $type;
 			$params->subtype = $type;
+
+			return;
 		}
+
+		$type = explode('_', $type, 2);
+		$params->maintype = $type['0'];
+		$params->subtype = $type['1'];
 	}
 
 	function passAll(&$assignments, $match_method = 'and', $article = 0)
@@ -236,110 +240,161 @@ class NNFrameworkAssignmentsHelper
 			return 1;
 		}
 
+		$aid = ($article && isset($article->id)) ? '[' . $article->id . ']' : '';
+		$hash = md5('passAll_' . $aid . '_' . $match_method . '_' . json_encode($assignments));
+
+		if (nnCache::has($hash))
+		{
+			return nnCache::get($hash);
+		}
+
 		$this->initParams();
 
-		$aid = ($article && isset($article->id)) ? '[' . $article->id . ']' : '';
-		$id = md5($aid . json_encode($assignments));
+		jimport('joomla.filesystem.file');
 
-		if (isset($this->passes[$id]))
+		$pass = (bool) ($match_method == 'and');
+
+		foreach ($this->types as $type)
 		{
-			$pass = $this->passes[$id];
-		}
-		else
-		{
-			jimport('joomla.filesystem.file');
-			$pass = ($match_method == 'and') ? 1 : 0;
-			foreach ($this->types as $type)
+			// Break if not passed and matching method is ALL
+			// Or if  passed and matching method is ANY
+			if (
+				(!$pass && $match_method == 'and')
+				|| ($pass && $match_method == 'or')
+			)
 			{
-				if (isset($assignments[$type]))
+				break;
+			}
+
+			if (!isset($assignments[$type]))
+			{
+				continue;
+			}
+
+			$pass = $this->passAllByType($assignments[$type], $type, $article);
+		}
+
+		return nnCache::set($hash,
+			$pass
+		);
+	}
+
+	private function passAllByType(&$assignment, $type, $article = 0)
+	{
+		$aid = ($article && isset($article->id)) ? '[' . $article->id . ']' : '';
+		$hash = md5('passAllByType_' . $type . '_' . $aid . '_' . json_encode($assignment) . '_' . json_encode($article));
+
+		if (nnCache::has($hash))
+		{
+			return nnCache::get($hash);
+		}
+
+		$this->initParamsByType($assignment, $type);
+
+		$hash = md5('passAllByType_' . $type . '_' . $aid . '_' . json_encode($assignment) . '_' . json_encode($article));
+
+		if (nnCache::has($hash))
+		{
+			return nnCache::get($hash);
+		}
+
+		switch ($assignment->assignment)
+		{
+			case 'all':
+				$pass = true;
+				break;
+
+			case 'none':
+				$pass = false;
+				break;
+
+			default:
+				$c = $assignment->maintype;
+				$f = $assignment->subtype;
+				$pass = false;
+
+				if (!isset($this->classes[$c]) && JFile::exists(__DIR__ . '/assignments/' . strtolower($c) . '.php'))
 				{
-					$this->initParamsByType($assignments[$type], $type);
-					if (($pass && $match_method == 'and') || (!$pass && $match_method == 'or'))
+					require_once __DIR__ . '/assignments/' . strtolower($c) . '.php';
+					$class = 'nnFrameworkAssignments' . $c;
+					$this->classes[$c] = new $class;
+				}
+
+				if (isset($this->classes[$c]))
+				{
+					$method = 'pass' . $f;
+					if (method_exists('nnFrameworkAssignments' . $c, $method))
 					{
-						$tid = md5($type . $aid . ':' . json_encode($assignments[$type]));
-						if (isset($this->passes[$tid]))
-						{
-							$pass = $this->passes[$tid];
-						}
-						else
-						{
-							if ($assignments[$type]->assignment == 'all')
-							{
-								$pass = 1;
-							}
-							else if ($assignments[$type]->assignment == 'none')
-							{
-								$pass = 0;
-							}
-							else
-							{
-								$c = $assignments[$type]->maintype;
-								$f = $assignments[$type]->subtype;
-								if (!isset($this->classes[$c]) && JFile::exists(__DIR__ . '/assignments/' . strtolower($c) . '.php'))
-								{
-									require_once __DIR__ . '/assignments/' . strtolower($c) . '.php';
-									$class = 'NNFrameworkAssignments' . $c;
-									$this->classes[$c] = new $class;
-								}
-								if (isset($this->classes[$c]))
-								{
-									$method = 'pass' . $f;
-									if (method_exists('NNFrameworkAssignments' . $c, $method))
-									{
-										self::fixAssignment($assignments[$type], $assignments[$type]->id);
-										$pass = $this->classes[$c]->$method($this, $assignments[$type]->params, $assignments[$type]->selection, $assignments[$type]->assignment, $article);
-									}
-								}
-							}
-							$this->passes[$tid] = $pass;
-						}
+						self::fixAssignment($assignment, $assignment->id);
+						$pass = $this->classes[$c]->$method($this, $assignment->params, $assignment->selection, $assignment->assignment, $article);
 					}
 				}
-			}
-			$this->passes[$id] = $pass;
+
+				break;
 		}
 
-		return ($pass) ? 1 : 0;
+		return nnCache::set($hash,
+			$pass
+		);
+	}
+
+	function hasAssignments(&$assignments)
+	{
+		if (empty($assignments))
+		{
+			return false;
+		}
+
+		foreach ($this->types as $type)
+		{
+			if (isset($assignments[$type]) && isset($assignments[$type]->assignment) && $assignments[$type]->assignment)
+			{
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	function fixAssignment(&$a, $type = '')
 	{
 		$a->params = isset($a->params) ? $a->params : new stdClass();
 		$a->assignment = isset($a->assignment) ? $a->assignment : '';
+
 		if (!in_array($type, $this->nonarray))
 		{
 			$a->selection = isset($a->selection) ? $this->makeArray($a->selection) : array();
 		}
 	}
 
-	function pass($pass = 1, $assignment = 'all')
+	function pass($pass = true, $assignment = 'all')
 	{
-		return ($pass) ? ($assignment == 'include') : ($assignment == 'exclude');
+		return $pass ? ($assignment == 'include') : ($assignment == 'exclude');
 	}
 
 	function passSimple($values = '', $selection = array(), $assignment = 'all', $caseinsensitive = 0)
 	{
-		$values = $this->makeArray($values, 1);
+		$values = $this->makeArray($values, true);
 		$selection = $this->makeArray($selection);
 
-		$pass = 0;
+		$pass = false;
 		foreach ($values as $value)
 		{
 			if ($caseinsensitive)
 			{
 				if (in_array(strtolower($value), array_map('strtolower', $selection)))
 				{
-					$pass = 1;
+					$pass = true;
 					break;
 				}
+
+				continue;
 			}
-			else
+
+			if (in_array($value, $selection))
 			{
-				if (in_array($value, $selection))
-				{
-					$pass = 1;
-					break;
-				}
+				$pass = true;
+				break;
 			}
 		}
 
@@ -394,22 +449,25 @@ class NNFrameworkAssignmentsHelper
 
 	function getMenuItemParams($id = 0)
 	{
-		$hash = 'MenuItemParams_' . $id;
+		$hash = md5('getMenuItemParams_' . $id);
 
-		if (!isset($this->cache[$hash]))
+		if (nnCache::has($hash))
 		{
-			$this->q->clear()
-				->select('m.params')
-				->from('#__menu AS m')
-				->where('m.id = ' . (int) $id);
-			$this->db->setQuery($this->q);
-			$params = $this->db->loadResult();
-
-			$parameters = NNParameters::getInstance();
-			$this->cache[$hash] = $parameters->getParams($params);
+			return nnCache::get($hash);
 		}
 
-		return $this->cache[$hash];
+		$this->q->clear()
+			->select('m.params')
+			->from('#__menu AS m')
+			->where('m.id = ' . (int) $id);
+		$this->db->setQuery($this->q);
+		$params = $this->db->loadResult();
+
+		$parameters = nnParameters::getInstance();
+
+		return nnCache::set($hash,
+			$parameters->getParams($params)
+		);
 	}
 
 	function getParentIds($id = 0, $table = 'menu', $parent = 'parent_id', $child = 'id')
@@ -419,68 +477,87 @@ class NNFrameworkAssignmentsHelper
 			return array();
 		}
 
-		$hash = 'ParentIds_' . $id . '_' . $table . '_' . $parent . '_' . $child;
+		$hash = md5('getParentIds_' . $id . '_' . $table . '_' . $parent . '_' . $child);
 
-		$parent_ids = array();
-		if (!isset($this->cache[$hash]))
+		if (nnCache::has($hash))
 		{
-			while ($id)
-			{
-				$this->q->clear()
-					->select('t.' . $parent)
-					->from('#__' . $table . ' as t')
-					->where('t.' . $child . ' = ' . (int) $id);
-				$this->db->setQuery($this->q);
-				$id = $this->db->loadResult();
-				if ($id)
-				{
-					$parent_ids[] = $id;
-				}
-			}
-			$this->cache[$hash] = $parent_ids;
+			return nnCache::get($hash);
 		}
 
-		return $this->cache[$hash];
+		$parent_ids = array();
+
+		while ($id)
+		{
+			$this->q->clear()
+				->select('t.' . $parent)
+				->from('#__' . $table . ' as t')
+				->where('t.' . $child . ' = ' . (int) $id);
+			$this->db->setQuery($this->q);
+			$id = $this->db->loadResult();
+
+			if (!$id)
+			{
+				continue;
+			}
+
+			$parent_ids[] = $id;
+		}
+
+		return nnCache::set($hash,
+			$parent_ids
+		);
 	}
 
 	function makeArray($array = '', $onlycommas = 0, $trim = 1)
 	{
-		if (!is_array($array))
+		$hash = md5('makeArray_' . json_encode($array) . '_' . $onlycommas . '_' . $trim);
+
+		if (nnCache::has($hash))
 		{
-			if (!$onlycommas && !(strpos($array, '|') === false))
-			{
-				$array = explode('|', $array);
-			}
-			else
-			{
-				$array = explode(',', $array);
-			}
+			return nnCache::get($hash);
 		}
 
-		if (isset($array['0']) && is_array($array['0']))
+		if (!is_array($array))
+		{
+			$delimiter = ($onlycommas || strpos($array, '|') === false) ? ',' : '|';
+			$array = explode($delimiter, $array);
+		}
+		else if (isset($array['0']) && is_array($array['0']))
 		{
 			$array = $array['0'];
 		}
-
-		if ($trim)
+		else if (count($array) === 1 && strpos($array['0'], ',') !== false)
 		{
-			if ($trim && !empty($array))
+			$array = explode(',', $array['0']);
+		}
+
+		if ($trim && !empty($array))
+		{
+			foreach ($array as $k => $v)
 			{
-				foreach ($array as $k => $v)
+				if (!is_string($v))
 				{
-					if (is_string($v))
-					{
-						$array[$k] = trim($v);
-					}
+					continue;
 				}
+
+				$array[$k] = trim($v);
 			}
 		}
 
-		return $array;
+		return nnCache::set($hash,
+			$array
+		);
 	}
 
 	function getAssignmentsFromParams(&$params)
 	{
+		$hash = md5('getAssignmentsFromParams_' . json_encode($params));
+
+		if (nnCache::has($hash))
+		{
+			return nnCache::get($hash);
+		}
+
 		jimport('joomla.filesystem.file');
 
 		$assignments = array();
@@ -499,6 +576,7 @@ class NNFrameworkAssignmentsHelper
 		{
 			$assignments[$name]->params->publish_up = $params->{'assignto_' . $id . '_publish_up'};
 			$assignments[$name]->params->publish_down = $params->{'assignto_' . $id . '_publish_down'};
+			$assignments[$name]->params->recurring = isset($params->{'assignto_' . $id . '_recurring'}) ? $params->{'assignto_' . $id . '_recurring'} : 0;
 		}
 		list($id, $name) = $this->setAssignmentParams($assignments, $params, 'datetime', 'seasons');
 		if ($id)
@@ -521,9 +599,21 @@ class NNFrameworkAssignmentsHelper
 
 		$this->setAssignmentParams($assignments, $params, 'ips');
 
-		$this->setAssignmentParams($assignments, $params, 'geo', 'continents', 1);
-		$this->setAssignmentParams($assignments, $params, 'geo', 'countries', 1);
-		$this->setAssignmentParams($assignments, $params, 'geo', 'regions', 1);
+		list($id, $name) = $this->setAssignmentParams($assignments, $params, 'geo', 'continents', 1);
+		if ($id)
+		{
+			$assignments[$name]->params = (object) array('service' => isset($params->assignto_geo_service) ? $params->assignto_geo_service : '');
+		}
+		list($id, $name) = $this->setAssignmentParams($assignments, $params, 'geo', 'countries', 1);
+		if ($id)
+		{
+			$assignments[$name]->params = (object) array('service' => isset($params->assignto_geo_service) ? $params->assignto_geo_service : '');
+		}
+		list($id, $name) = $this->setAssignmentParams($assignments, $params, 'geo', 'regions', 1);
+		if ($id)
+		{
+			$assignments[$name]->params = (object) array('service' => isset($params->assignto_geo_service) ? $params->assignto_geo_service : '');
+		}
 
 		$this->setAssignmentParams($assignments, $params, 'templates');
 
@@ -700,41 +790,43 @@ class NNFrameworkAssignmentsHelper
 			$this->setAssignmentParams($assignments, $params, 'virtuemart', 'products', 1);
 		}
 
+		if ($this->has['cookieconfirm'])
+		{
+			$this->setAssignmentParams($assignments, $params, 'cookieconfirm');
+		}
+
 		$this->setAssignmentParams($assignments, $params, 'php');
 
-		return $assignments;
+		return nnCache::set($hash,
+			$assignments
+		);
 	}
 
 	function setAssignmentParams(&$assignments, &$params, $maintype, $subtype = '', $usemain = 0)
 	{
 		$id = $maintype;
 		$name = $this->names[$maintype];
+
 		if ($subtype)
 		{
+			$id = $usemain
+				? $maintype . $subtype
+				: $subtype;
 			$name .= '_' . $this->names[$subtype];
-			if ($usemain)
-			{
-				$id .= $subtype;
-			}
-			else
-			{
-				$id = $subtype;
-			}
 		}
-		if (isset($params->{'assignto_' . $id}) && $params->{'assignto_' . $id})
+
+		if (!isset($params->{'assignto_' . $id}) || !$params->{'assignto_' . $id})
 		{
-			$assignments[$name] = new stdClass;
-			$assignments[$name]->assignment = $params->{'assignto_' . $id};
-			$assignments[$name]->selection = array();
-			$assignments[$name]->params = new stdClass;
-			if (isset($params->{'assignto_' . $id . '_selection'}) && !empty($params->{'assignto_' . $id . '_selection'}))
-			{
-				$assignments[$name]->selection = $params->{'assignto_' . $id . '_selection'};
-			}
+			return array('', $name);
 		}
-		else
+
+		$assignments[$name] = new stdClass;
+		$assignments[$name]->assignment = $params->{'assignto_' . $id};
+		$assignments[$name]->selection = array();
+		$assignments[$name]->params = new stdClass;
+		if (isset($params->{'assignto_' . $id . '_selection'}) && !empty($params->{'assignto_' . $id . '_selection'}))
 		{
-			$id = '';
+			$assignments[$name]->selection = $params->{'assignto_' . $id . '_selection'};
 		}
 
 		return array($id, $name);

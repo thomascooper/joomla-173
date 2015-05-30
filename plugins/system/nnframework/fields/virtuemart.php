@@ -4,11 +4,11 @@
  * Displays a multiselectbox of available VirtueMart categories / products
  *
  * @package         NoNumber Framework
- * @version         13.11.22
+ * @version         15.4.3
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
- * @copyright       Copyright © 2013 NoNumber All Rights Reserved
+ * @copyright       Copyright © 2015 NoNumber All Rights Reserved
  * @license         http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 
@@ -27,7 +27,7 @@ class JFormFieldNN_VirtueMart extends JFormField
 
 	protected function getInput()
 	{
-		if (!NNFrameworkFunctions::extensionInstalled('virtuemart'))
+		if (!nnFrameworkFunctions::extensionInstalled('virtuemart'))
 		{
 			return '<fieldset class="radio"><label class="nn_label nn_label_error">' . JText::_('ERROR') . ': ' . JText::sprintf('NN_FILES_NOT_FOUND', JText::_('NN_VIRTUEMART')) . '</label></fieldset>';
 		}
@@ -43,26 +43,9 @@ class JFormFieldNN_VirtueMart extends JFormField
 			return '<fieldset class="radio"><label class="nn_label nn_label_error">' . JText::_('ERROR') . ': ' . JText::sprintf('NN_TABLE_NOT_FOUND', JText::_('NN_VIRTUEMART')) . '</label></fieldset>';
 		}
 
-		$parameters = NNParameters::getInstance();
+		$parameters = nnParameters::getInstance();
 		$params = $parameters->getPluginParams('nnframework');
 		$this->max_list_count = $params->max_list_count;
-
-		$query = $this->db->getQuery(true)
-			->select('config')
-			->from('#__virtuemart_configs')
-			->where('virtuemart_config_id = 1');
-		$this->db->setQuery($query);
-		$config = $this->db->loadResult();
-		$lang = substr($config, strpos($config, 'vmlang='));
-		$lang = substr($lang, 0, strpos($lang, '|'));
-		if (preg_match('#"([^"]*_[^"]*)"#', $lang, $lang))
-		{
-			$this->lang = $lang['1'];
-		}
-		else
-		{
-			$this->lang = 'en_gb';
-		}
 
 		if (!is_array($this->value))
 		{
@@ -75,6 +58,7 @@ class JFormFieldNN_VirtueMart extends JFormField
 		$multiple = $this->get('multiple');
 
 		require_once JPATH_PLUGINS . '/system/nnframework/helpers/html.php';
+
 		return nnHtml::selectlist($options, $this->name, $this->value, $this->id, $size, $multiple);
 	}
 
@@ -96,7 +80,7 @@ class JFormFieldNN_VirtueMart extends JFormField
 
 		$query->clear()
 			->select('c.virtuemart_category_id as id, cc.category_parent_id AS parent_id, l.category_name AS title, c.published')
-			->from('#__virtuemart_categories_' . $this->lang . ' AS l')
+			->from('#__virtuemart_categories_' . $this->getActiveLanguage() . ' AS l')
 			->join('', '#__virtuemart_categories AS c using (virtuemart_category_id)')
 			->join('LEFT', '#__virtuemart_category_categories AS cc ON l.virtuemart_category_id = cc.category_child_id')
 			->where('c.published > -1')
@@ -136,7 +120,7 @@ class JFormFieldNN_VirtueMart extends JFormField
 		}
 		foreach ($list as $item)
 		{
-			$item->treename = NNText::prepareSelectItem($item->treename, $item->published, '', 1);
+			$item->treename = nnText::prepareSelectItem($item->treename, $item->published, '', 1);
 			$options[] = JHtml::_('select.option', $item->id, $item->treename, 'value', 'text', 0);
 		}
 
@@ -157,13 +141,15 @@ class JFormFieldNN_VirtueMart extends JFormField
 			return -1;
 		}
 
+		$lang = $this->getActiveLanguage();
+
 		$query->clear()
 			->select('p.virtuemart_product_id as id, l.product_name AS name, p.product_sku as sku, cl.category_name AS cat, p.published')
 			->from('#__virtuemart_products AS p')
-			->join('LEFT', '#__virtuemart_products_' . $this->lang . ' AS l ON l.virtuemart_product_id = p.virtuemart_product_id')
+			->join('LEFT', '#__virtuemart_products_' . $lang . ' AS l ON l.virtuemart_product_id = p.virtuemart_product_id')
 			->join('LEFT', '#__virtuemart_product_categories AS x ON x.virtuemart_product_id = p.virtuemart_product_id')
 			->join('LEFT', '#__virtuemart_categories AS c ON c.virtuemart_category_id = x.virtuemart_category_id')
-			->join('LEFT', '#__virtuemart_categories_' . $this->lang . ' AS cl ON cl.virtuemart_category_id = c.virtuemart_category_id')
+			->join('LEFT', '#__virtuemart_categories_' . $lang . ' AS cl ON cl.virtuemart_category_id = c.virtuemart_category_id')
 			->where('p.published > -1')
 			->order('l.product_name, p.product_sku');
 		$this->db->setQuery($query);
@@ -174,11 +160,56 @@ class JFormFieldNN_VirtueMart extends JFormField
 		foreach ($list as $item)
 		{
 			$item->name = $item->name . ' [' . $item->sku . ']' . ($item->cat ? ' [' . $item->cat . ']' : '');
-			$item->name = NNText::prepareSelectItem($item->name, $item->published);
+			$item->name = nnText::prepareSelectItem($item->name, $item->published);
 			$options[] = JHtml::_('select.option', $item->id, $item->name, 'value', 'text', 0);
 		}
 
 		return $options;
+	}
+
+	private function getActiveLanguage()
+	{
+		$query = $this->db->getQuery(true)
+			->select('config')
+			->from('#__virtuemart_configs')
+			->where('virtuemart_config_id = 1');
+		$this->db->setQuery($query);
+		$config = $this->db->loadResult();
+
+		switch (true)
+		{
+			case (strpos($config, 'active_languages=') !== false):
+				$lang = substr($config, strpos($config, 'active_languages='));
+				if(strpos($lang, '|=') !== false)
+				{
+					$lang = substr($lang, 0, strpos($lang, '|'));
+				}
+				$lang = explode('=', $lang);
+				$lang = unserialize($lang[1]);
+
+				if (isset($lang[0]))
+				{
+					$lang = strtolower($lang[0]);
+					$lang = str_replace('-', '_', $lang);
+
+					return $lang;
+				}
+
+			case (strpos($config, 'vmlang=') !== false) :
+				$lang = substr($config, strpos($config, 'vmlang='));
+				if (strpos($lang, '|=') !== false)
+				{
+					$lang = substr($lang, 0, strpos($lang, '|'));
+				}
+
+				if (preg_match('#"([^"]*_[^"]*)"#', $lang, $lang))
+				{
+					return $lang['1'];
+				}
+
+			default:
+				return 'en_gb';
+		}
 	}
 
 	private function get($val, $default = '')

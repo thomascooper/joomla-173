@@ -4,11 +4,11 @@
  * Displays a multiselectbox of different browsers
  *
  * @package         NoNumber Framework
- * @version         13.11.22
+ * @version         15.4.3
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
- * @copyright       Copyright © 2013 NoNumber All Rights Reserved
+ * @copyright       Copyright © 2015 NoNumber All Rights Reserved
  * @license         http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 
@@ -89,42 +89,21 @@ class JFormFieldNN_Agents extends JFormField
 		if (empty($groups) || in_array('browsers', $groups))
 		{
 			$agents[] = array('Chrome', 'Chrome');
-			$agents[] = array('- Chrome 35', 'Chrome/35.');
-			$agents[] = array('- Chrome 34', 'Chrome/34.');
-			$agents[] = array('- Chrome 33', 'Chrome/33.');
-			$agents[] = array('- Chrome 32', 'Chrome/32.');
-			$agents[] = array('- Chrome 31', 'Chrome/31.');
 			$agents[] = array('- Chrome 30', 'Chrome/30.');
-			$agents[] = array('- Chrome 29', 'Chrome/29.');
-			$agents[] = array('- Chrome 28', 'Chrome/28.');
-			$agents[] = array('- Chrome 27', 'Chrome/27.');
-			$agents[] = array('- Chrome 26', 'Chrome/26.');
-			$agents[] = array('- Chrome 25', 'Chrome/25.');
-			$agents[] = array('- Chrome 24', 'Chrome/24.');
-			$agents[] = array('- Chrome 23', 'Chrome/23.');
-			$agents[] = array('- Chrome 22', 'Chrome/22.');
-			$agents[] = array('- Chrome 21', 'Chrome/21.');
-			//$agents[] = array('- Chrome 31-40', '#Chrome/(3[1-9]|40)\.#');
-			//$agents[] = array('- Chrome 21-30', '#Chrome/(2[1-9]|30)\.#');
+			$agents[] = array('- Chrome 41-50', '#Chrome/(4[1-9]|50)\.#');
+			$agents[] = array('- Chrome 31-40', '#Chrome/(3[1-9]|40)\.#');
+			$agents[] = array('- Chrome 21-30', '#Chrome/(2[1-9]|30)\.#');
 			$agents[] = array('- Chrome 11-20', '#Chrome/(1[1-9]|20)\.#');
 			$agents[] = array('- Chrome 1-10', '#Chrome/([1-9]|10)\.#');
 			$agents[] = '';
 			$agents[] = array('Firefox', 'Firefox');
-			$agents[] = array('- Firefox 30', 'Firefox/30.');
-			$agents[] = array('- Firefox 29', 'Firefox/29.');
-			$agents[] = array('- Firefox 28', 'Firefox/28.');
-			$agents[] = array('- Firefox 27', 'Firefox/27.');
-			$agents[] = array('- Firefox 26', 'Firefox/26.');
-			$agents[] = array('- Firefox 25', 'Firefox/25.');
-			$agents[] = array('- Firefox 24', 'Firefox/24.');
-			$agents[] = array('- Firefox 23', 'Firefox/23.');
-			$agents[] = array('- Firefox 22', 'Firefox/22.');
-			$agents[] = array('- Firefox 21', 'Firefox/21.');
-			//$agents[] = array('- Firefox 21-30', '#Firefox/(2[1-9]|30)\.#');
+			$agents[] = array('- Firefox 31-40', '#Firefox/(3[1-9]|40)\.#');
+			$agents[] = array('- Firefox 21-30', '#Firefox/(2[1-9]|30)\.#');
 			$agents[] = array('- Firefox 11-20', '#Firefox/(1[1-9]|20)\.#');
 			$agents[] = array('- Firefox 1-10', '#Firefox/([1-9]|10)\.#');
 			$agents[] = '';
 			$agents[] = array('Internet Explorer', 'MSIE');
+			$agents[] = array('- Internet Explorer 11', 'MSIE 11'); // missing MSIE is added to agent string in assingnments/agents.php
 			$agents[] = array('- Internet Explorer 10.6', 'MSIE 10.6');
 			$agents[] = array('- Internet Explorer 10.0', 'MSIE 10.0');
 			$agents[] = array('- Internet Explorer 10', 'MSIE 10');
@@ -134,15 +113,18 @@ class JFormFieldNN_Agents extends JFormField
 			$agents[] = array('- Internet Explorer 1-6', '#MSIE [1-6]\.#');
 			$agents[] = '';
 			$agents[] = array('Opera', 'Opera');
-			$agents[] = array('- Opera 13', 'Opera/13.');
-			$agents[] = array('- Opera 12', 'Opera/12.');
-			$agents[] = array('- Opera 11', 'Opera/11.');
-			$agents[] = array('- Opera 10', 'Opera/10.');
-			$agents[] = array('- Opera 1-9', '#Opera/[1-9]\.#');
+			$agents[] = array('- Opera 26', 'Opera/26.');
+			$agents[] = array('- Opera 25', 'Opera/25.');
+			$agents[] = array('- Opera 24', 'Opera/24.');
+			$agents[] = array('- Opera 23', 'Opera/23.');
+			$agents[] = array('- Opera 22', 'Opera/22.');
+			$agents[] = array('- Opera 21', 'Opera/21.');
+			$agents[] = array('- Opera 11-20', '#Opera/(1[1-9]|20)\.#');
+			$agents[] = array('- Opera 1-10', '#Opera/([1-9]|10)\.#');
 			$agents[] = '';
 			$agents[] = array('Safari', 'Safari');
-			$agents[] = array('- Safari 8', '#Version/8\..*Safari/#');
-			$agents[] = array('- Safari 7', '#Version/7\..*Safari/#');
+			//$agents[] = array('- Safari 8', '#Version/8\..*Safari/#');
+			//$agents[] = array('- Safari 7', '#Version/7\..*Safari/#');
 			$agents[] = array('- Safari 6', '#Version/6\..*Safari/#');
 			$agents[] = array('- Safari 5', '#Version/5\..*Safari/#');
 			$agents[] = array('- Safari 4', '#Version/4\..*Safari/#');
@@ -185,12 +167,13 @@ class JFormFieldNN_Agents extends JFormField
 			}
 			else
 			{
-				$agent_name = NNText::prepareSelectItem($agent['0']);
+				$agent_name = nnText::prepareSelectItem($agent['0']);
 				$options[] = JHtml::_('select.option', $agent['1'], $agent_name);
 			}
 		}
 
 		require_once JPATH_PLUGINS . '/system/nnframework/helpers/html.php';
+
 		return nnHtml::selectlist($options, $this->name, $this->value, $this->id, $size, 1);
 	}
 

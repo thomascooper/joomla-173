@@ -2,11 +2,11 @@
  * Main stylesheet
  *
  * @package         NoNumber Framework
- * @version         13.11.22
+ * @version         15.4.3
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
- * @copyright       Copyright © 2013 NoNumber All Rights Reserved
+ * @copyright       Copyright © 2015 NoNumber All Rights Reserved
  * @license         http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 @import "init.less";
@@ -122,9 +122,16 @@ button.nn_close:hover {
 	.opacity(40);
 }
 span.nn_code {
-	font-family: monospace;
+	font-family: Monaco, Menlo, Consolas, "Courier New", monospace;
 	font-size: 12px;
-	color: #666666;
+	line-height: 18px;
+	padding: 2px 4px;
+	color: #d14;
+	background-color: #f7f7f9;
+	border: 1px solid #e1e1e8;
+	white-space: nowrap;
+	display: inline-block;
+	.border-radius(3px);
 }
 input.nn_codefield {
 	font-family: monospace;
@@ -177,6 +184,19 @@ div#mc-component .nntoggler ul li {
 }
 div#mc-component div.nn_panel {
 	margin-bottom: 0 !important;
+}
+
+.nn_review {
+	a.stars:hover {
+		text-decoration: none;
+	}
+	.icon-star {
+		&:before {
+			content: '★';
+		}
+		color: mix(@yellow, @orange);
+		margin: 0;
+	}
 }
 
 @import "font.less";

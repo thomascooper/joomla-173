@@ -2,11 +2,11 @@
  * Main JavaScript file
  *
  * @package         NoNumber Framework
- * @version         13.11.22
+ * @version         15.4.3
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
- * @copyright       Copyright © 2013 NoNumber All Rights Reserved
+ * @copyright       Copyright © 2015 NoNumber All Rights Reserved
  * @license         http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 
@@ -14,14 +14,12 @@ if (typeof( window['nnScripts'] ) == "undefined") {
 	var all_scripts = document.getElementsByTagName("script");
 	var nn_script_root = all_scripts[all_scripts.length - 1].src.replace(/[^\/]*\.js$/, '');
 
-	window.addEvent('domready', function()
-	{
+	window.addEvent('domready', function() {
 		nnScripts = new nnScripts();
 	});
 
 	var nnScripts = new Class({
-		initialize: function()
-		{
+		initialize: function() {
 			var self = this;
 
 			var client = this._getClient();
@@ -101,8 +99,7 @@ if (typeof( window['nnScripts'] ) == "undefined") {
 
 			document.getElement('body').adopt(this.overlay);
 
-			this.overlay.open = function(opacity, text, subtext)
-			{
+			this.overlay.open = function(opacity, text, subtext) {
 				if (!opacity) {
 					self.overlay.close();
 				} else {
@@ -118,11 +115,9 @@ if (typeof( window['nnScripts'] ) == "undefined") {
 					self.overlay.fade(opacity);
 				}
 			};
-			this.overlay.close = function()
-			{
+			this.overlay.close = function() {
 				self.overlay.fade('out');
-				( function()
-				{
+				( function() {
 					self.overlay.setStyle('cursor', '');
 					self.overlay_text.set('text', '');
 					self.overlay_subtext.set('text', '');
@@ -130,13 +125,11 @@ if (typeof( window['nnScripts'] ) == "undefined") {
 			};
 		},
 
-		loadxml: function(url, succes, fail, query)
-		{
+		loadxml: function(url, succes, fail, query) {
 			this.loadajax(url, succes, fail, query);
 		},
 
-		loadajax: function(url, succes, fail, query, timeout)
-		{
+		loadajax: function(url, succes, fail, query, timeout) {
 			if (url.substr(0, 9) != 'index.php') {
 				url = url.replace('http://', '');
 				url = 'index.php?nn_qp=1&url=' + escape(url);
@@ -148,14 +141,12 @@ if (typeof( window['nnScripts'] ) == "undefined") {
 			var myXHR = new Request({
 				method: 'post',
 				url: url,
-				onSuccess: function(data)
-				{
+				onSuccess: function(data) {
 					if (succes) {
 						eval(succes + ';');
 					}
 				},
-				onFailure: function(data)
-				{
+				onFailure: function(data) {
 					if (fail) {
 						eval(fail + ';');
 					}
@@ -163,8 +154,7 @@ if (typeof( window['nnScripts'] ) == "undefined") {
 			}).send(query);
 		},
 
-		displayVersion: function(data, extension, version, is_pro)
-		{
+		displayVersion: function(data, extension, version, is_pro) {
 			if (!data) {
 				return;
 			}
@@ -199,10 +189,8 @@ if (typeof( window['nnScripts'] ) == "undefined") {
 			el = document.getElement('#nonumber_version_' + extension);
 			if (el) {
 				el.setStyle('display', 'block');
-				( function()
-				{
-					$each(document.getElements('div.jpane-slider'), function(el)
-					{
+				( function() {
+					$each(document.getElements('div.jpane-slider'), function(el) {
 						if (el.getStyle('height') != '0px') {
 							el.setStyle('height', 'auto');
 						}
@@ -211,8 +199,7 @@ if (typeof( window['nnScripts'] ) == "undefined") {
 			}
 		},
 
-		displayVersionOld: function(data, ext)
-		{
+		displayVersionOld: function(data, ext) {
 			if (!data) {
 				return;
 			}
@@ -230,10 +217,8 @@ if (typeof( window['nnScripts'] ) == "undefined") {
 				el = document.getElement('#nonumber_version_' + ext);
 				if (el) {
 					el.setStyle('display', 'block');
-					( function()
-					{
-						$each(document.getElements('div.jpane-slider'), function(el)
-						{
+					( function() {
+						$each(document.getElements('div.jpane-slider'), function(el) {
 							if (el.getStyle('height') != '0px') {
 								el.setStyle('height', 'auto');
 							}
@@ -243,8 +228,7 @@ if (typeof( window['nnScripts'] ) == "undefined") {
 			}
 		},
 
-		displayLicense: function(ext, state)
-		{
+		displayLicense: function(ext, state) {
 			if (!state) {
 				state = 'fail';
 			}
@@ -252,10 +236,8 @@ if (typeof( window['nnScripts'] ) == "undefined") {
 			el = document.getElement('#nonumber_license_' + ext + '_' + state);
 			if (el) {
 				el.setStyle('display', 'block');
-				( function()
-				{
-					$each(document.getElements('div.jpane-slider'), function(el)
-					{
+				( function() {
+					$each(document.getElements('div.jpane-slider'), function(el) {
 						if (el.getStyle('height') != '0px') {
 							el.setStyle('height', 'auto');
 						}
@@ -264,8 +246,7 @@ if (typeof( window['nnScripts'] ) == "undefined") {
 			}
 		},
 
-		toggleSelectListSelection: function(id)
-		{
+		toggleSelectListSelection: function(id) {
 			var el = document.getElement('#' + id);
 			if (el && el.options) {
 				for (var i = 0; i < el.options.length; i++) {
@@ -276,8 +257,7 @@ if (typeof( window['nnScripts'] ) == "undefined") {
 			}
 		},
 
-		toggleSelectListSize: function(id)
-		{
+		toggleSelectListSize: function(id) {
 			var link = document.getElement('#toggle_' + id);
 			var el = document.getElement('#' + id);
 			if (link && el) {
@@ -299,8 +279,7 @@ if (typeof( window['nnScripts'] ) == "undefined") {
 			}
 		},
 
-		in_array: function(needle, haystack, casesensitive)
-		{
+		in_array: function(needle, haystack, casesensitive) {
 			if ({}.toString.call(needle).slice(8, -1) != 'Array') {
 				needle = [needle];
 			}
@@ -324,8 +303,7 @@ if (typeof( window['nnScripts'] ) == "undefined") {
 			return false;
 		},
 
-		getObjectFromXML: function(data)
-		{
+		getObjectFromXML: function(data) {
 			if (!data) {
 				return;
 			}
@@ -362,8 +340,7 @@ if (typeof( window['nnScripts'] ) == "undefined") {
 			return obj;
 		},
 
-		compareVersions: function(num1, num2)
-		{
+		compareVersions: function(num1, num2) {
 			num1 = num1.split('.');
 			num2 = num2.split('.');
 
@@ -380,9 +357,9 @@ if (typeof( window['nnScripts'] ) == "undefined") {
 				}
 
 				let1 = num1[i].replace(/^[0-9]*(.*)/, '$1');
-				num1[i] = num1[i].toInt();
+				num1[i] = parseInt(num1[i]);
 				let2 = num2[i].replace(/^[0-9]*(.*)/, '$1');
-				num2[i] = num2[i].toInt();
+				num2[i] = parseInt(num2[i]);
 
 				if (num1[i] < num2[i]) {
 					return '<';
@@ -401,8 +378,7 @@ if (typeof( window['nnScripts'] ) == "undefined") {
 			}
 		},
 
-		_getClient: function()
-		{
+		_getClient: function() {
 			var ua = navigator.userAgent.toLowerCase();
 			return {
 				isStrict: document.compatMode == "CSS1Compat",
@@ -416,8 +392,7 @@ if (typeof( window['nnScripts'] ) == "undefined") {
 			};
 		},
 
-		_getDocHeight: function()
-		{
+		_getDocHeight: function() {
 			var client = this._getClient();
 			var h = window.innerHeight;
 			var mode = document.compatMode;
@@ -427,22 +402,18 @@ if (typeof( window['nnScripts'] ) == "undefined") {
 			return h;
 		},
 
-		_fixTop: function()
-		{
+		_fixTop: function() {
 			this.overlay.style.top = document.documentElement.scrollTop + 'px';
 		},
 
-		setRadio: function(id, value)
-		{
+		setRadio: function(id, value) {
 			value = value ? 1 : 0;
-			document.getElements('input#jform_' + id + value + ',input#jform_params_' + id + value + ',input#advancedparams_' + id + value).each(function(el)
-			{
+			document.getElements('input#jform_' + id + value + ',input#jform_params_' + id + value + ',input#advancedparams_' + id + value).each(function(el) {
 				el.click();
 			});
 		},
 
-		setToggleTitleClass: function(input, value, parents)
-		{
+		setToggleTitleClass: function(input, value, parents) {
 			el = document.getElement(input);
 			for (i = 0; i <= parents; i++) {
 				el = el.getParent();
@@ -458,26 +429,26 @@ if (typeof( window['nnScripts'] ) == "undefined") {
 		}
 	});
 
-	window.addEvent('domready', function()
-	{
+	window.addEvent('domready', function() {
 		if (typeof( is_nn ) !== 'undefined') {
-			NNFrameworkAdjustCols();
+			nnFrameworkAdjustCols();
 		}
-		document.getElements('span.nn_status').each(function(el)
-		{
+		document.getElements('span.nn_status').each(function(el) {
 			var submenu = el.getElement('div.nn_status_submenu');
 			if (submenu) {
-				el.addEvent('mouseenter', function()
-				{
+				el.addEvent('mouseenter', function() {
 					submenu.setStyle('top', el.getStyle('height').toInt() - 2).setStyle('display', 'block');
 					var el_pos = submenu.getPosition();
 					var diff = ( el_pos.x + submenu.getStyle('width').toInt() ) - window.getWidth();
 					if (diff > -10) {
 						submenu.setStyle('left', submenu.getStyle('left').toInt() - diff - 10);
 					}
+				}).addEvent('mouseleave', function() {
+					submenu.setStyle('display', 'none');
 				});
-				el.addEvent('mouseleave', function()
-				{
+
+				// needed for touchscreens
+				document.getElement('html').addEvent('click', function() {
 					submenu.setStyle('display', 'none');
 				});
 			}
@@ -487,51 +458,35 @@ if (typeof( window['nnScripts'] ) == "undefined") {
 			var preloader = document.getElement('#nn_param_preloader');
 			var container = document.getElement('#nn_param_preloader_container');
 			preloader.setStyle('visibility', 'hidden');
-			( function()
-			{
+			( function() {
 				container.innerHTML = '';
 				preloader.inject(container).setStyle('visibility', 'visible');
 			} ).delay(2000);
 		}
-
-		// remove all empty list items
-		document.getElements('li').each(function(el)
-		{
-			if (el.innerHTML.trim() == '') {
-				el.dispose();
-			}
-		});
 	});
 
-	function NNFrameworkAdjustCols()
-	{
+	function nnFrameworkAdjustCols() {
 		// correct widths
-		document.getElements('div.width-60').each(function(el)
-		{
+		document.getElements('div.width-60').each(function(el) {
 			el.setStyle('width', '51%');
 		});
-		document.getElements('div#containerwrap div.width-60').each(function(el)
-		{
+		document.getElements('div#containerwrap div.width-60').each(function(el) {
 			el.setStyle('width', '50%');
 		});
-		document.getElements('div.width-40').each(function(el)
-		{
+		document.getElements('div.width-40').each(function(el) {
 			el.setStyle('width', '49%');
 		});
-		document.getElements('.paramlist_key').each(function(el)
-		{
+		document.getElements('.paramlist_key').each(function(el) {
 			el.setStyle('width', 140).setStyle('vertical-align', 'top');
 		});
-		document.getElements('.paramlist_value').each(function(el)
-		{
+		document.getElements('.paramlist_value').each(function(el) {
 			if (el.getAttribute('colspan') == 2) {
 				el.setStyle('width', 140);
 			}
 		});
 	}
 
-	function NNFrameworkHideTD(id)
-	{
+	function nnFrameworkHideTD(id) {
 		var div = document.getElementById(id);
 		div.parentNode.style.padding = 0;
 		div.parentNode.style.height = 0;
@@ -540,26 +495,21 @@ if (typeof( window['nnScripts'] ) == "undefined") {
 		div.parentNode.parentNode.style.display = 'none';
 	}
 
-	function NNFrameworkChangeView(val)
-	{
+	function nnFrameworkChangeView(val) {
 		document.getElement('#jform_view_state' + val).click();
 		document.getElement('#view_state_div').removeClass('view_state_0').removeClass('view_state_1').removeClass('view_state_2').addClass('view_state_' + val);
 	}
 
-	function NNFrameworkCheckAll(checkbox, classname)
-	{
-		checkbox.checked = !( NNFrameworkAllChecked(classname) );
-		document.getElements('input.' + classname).each(function(el)
-		{
+	function nnFrameworkCheckAll(checkbox, classname) {
+		checkbox.checked = !( nnFrameworkAllChecked(classname) );
+		document.getElements('input.' + classname).each(function(el) {
 			el.checked = checkbox.checked;
 		});
 	}
 
-	function NNFrameworkAllChecked(classname)
-	{
+	function nnFrameworkAllChecked(classname) {
 		var allchecked = 1;
-		document.getElements('input.' + classname).each(function(el)
-		{
+		document.getElements('input.' + classname).each(function(el) {
 			if (!el.checked) {
 				allchecked = 0;
 				return 0;

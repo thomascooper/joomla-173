@@ -3,23 +3,21 @@
  * Adds slide in and out functionality to elements based on an elements value
  *
  * @package         NoNumber Framework
- * @version         13.11.22
+ * @version         15.4.3
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
- * @copyright       Copyright © 2013 NoNumber All Rights Reserved
+ * @copyright       Copyright © 2015 NoNumber All Rights Reserved
  * @license         http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 
 if (typeof( window['nnToggler'] ) == "undefined") {
-	window.addEvent('domready', function()
-	{
+	window.addEvent('domready', function() {
 		if (document.getElements('.nntoggler').length) {
 			nnToggler = new nnToggler;
 		} else {
 			// Try again 2 seconds later, because IE sometimes can't see object immediately
-			(function()
-			{
+			(function() {
 				if (document.getElements('.nntoggler').length) {
 					nnToggler = new nnToggler;
 				}
@@ -31,8 +29,7 @@ if (typeof( window['nnToggler'] ) == "undefined") {
 		togglers: {}, // holds all the toggle areas
 		elements: {}, // holds all the elements and their values that affect toggle areas
 
-		initialize: function()
-		{
+		initialize: function() {
 			this.togglers = document.getElements('.nntoggler');
 			if (!this.togglers.length) {
 				return;
@@ -43,14 +40,12 @@ if (typeof( window['nnToggler'] ) == "undefined") {
 			this.initTogglers();
 		},
 
-		initTogglers: function()
-		{
+		initTogglers: function() {
 			var self = this;
 
 			var new_togglers = {};
 
-			$each(this.togglers, function(toggler)
-			{
+			$each(this.togglers, function(toggler) {
 				toggler.setStyle('visibility', 'visible');
 
 				// make parent tds have no padding
@@ -95,42 +90,36 @@ if (typeof( window['nnToggler'] ) == "undefined") {
 			new_togglers = null;
 
 			// add effects
-			$each(this.togglers, function(toggler)
-			{
+			$each(this.togglers, function(toggler) {
 				if (toggler.nofx) {
 					toggler.fx.slide = new Fx.Slide(toggler, { 'duration': 1, 'mode': toggler.mode, onComplete: function() { self.completeSlide(toggler); } });
 				} else {
-					toggler.fx.slide = new Fx.Slide(toggler, { 'duration': 500, 'mode': toggler.mode, onStart: function() { self.startSlide(); }, onComplete: function() { self.completeSlide(toggler); } });
-					toggler.fx.fade = new Fx.Morph(toggler, { 'duration': 500 });
+					toggler.fx.slide = new Fx.Slide(toggler, { 'duration': 250, 'mode': toggler.mode, onStart: function() { self.startSlide(); }, onComplete: function() { self.completeSlide(toggler); } });
+					toggler.fx.fade = new Fx.Morph(toggler, { 'duration': 250 });
 				}
 			});
 
 			this.setElements();
 
 			// hide togglers that should be
-			$each(this.togglers, function(toggler)
-			{
+			$each(this.togglers, function(toggler) {
 				self.toggleByID(toggler.id, 1);
 			});
 
-			( function()
-			{
+			( function() {
 				document.body.setStyle('cursor', '');
 				nnScripts.overlay.close();
 			} ).delay(250);
 		},
 
-		startSlide: function()
-		{
+		startSlide: function() {
 		},
 
-		completeSlide: function(toggler)
-		{
+		completeSlide: function(toggler) {
 			toggler.getParent().setStyle('height', 'auto');
 		},
 
-		autoHeightDivs: function(toggler)
-		{
+		autoHeightDivs: function(toggler) {
 			if (typeof( toggler ) == "undefined") {
 				return;
 			}
@@ -145,27 +134,25 @@ if (typeof( window['nnToggler'] ) == "undefined") {
 					&& !el.hasClass('input')
 					&& !el.hasClass('nn_hr')
 					&& !el.hasClass('textarea_handle')
-					// GK elements
+						// GK elements
 					&& el.id.indexOf('gk_') === -1
 					&& el.className.indexOf('gk_') === -1
 					&& el.className.indexOf('switcher-') === -1
-					) {
+				) {
 					el.setStyle('height', 'auto');
 				}
 				el = el.getParent();
 			}
 		},
 
-		toggle: function(el_name)
-		{
+		toggle: function(el_name) {
 			this.setValues(el_name);
 			for (var i = 0; i < this.elements[el_name].togglers.length; i++) {
 				this.toggleByID(this.elements[el_name].togglers[i]);
 			}
 		},
 
-		toggleByID: function(id, nofx)
-		{
+		toggleByID: function(id, nofx) {
 			if (typeof( this.togglers[id] ) == "undefined") {
 				return;
 			}
@@ -195,8 +182,7 @@ if (typeof( window['nnToggler'] ) == "undefined") {
 			}
 		},
 
-		isShow: function(toggler)
-		{
+		isShow: function(toggler) {
 			var show = ( toggler.method == 'and' );
 			for (el_name in toggler.elements) {
 				var vals = toggler.elements[el_name];
@@ -217,14 +203,12 @@ if (typeof( window['nnToggler'] ) == "undefined") {
 			return show;
 		},
 
-		setValues: function(el_name)
-		{
+		setValues: function(el_name) {
 			var els = this.elements[el_name].elements;
 
 			var values = [];
 			// get value
-			$each(els, function(el)
-			{
+			$each(els, function(el) {
 				switch (el.type) {
 					case 'radio':
 					case 'checkbox':
@@ -248,11 +232,9 @@ if (typeof( window['nnToggler'] ) == "undefined") {
 			this.elements[el_name].values = values;
 		},
 
-		setElements: function()
-		{
+		setElements: function() {
 			var self = this;
-			$each(document.getElements('input, select'), function(el)
-			{
+			$each(document.getElements('input, select'), function(el) {
 				el_name = el.name.replace('@', '_').replace('[]', '').replace(/(?:jform\[params\]|jform|params|advancedparams)\[(.*?)\]/g, '\$1').trim();
 				if (el_name !== '') {
 					if (typeof( self.elements[el_name]) != "undefined") {
@@ -264,8 +246,7 @@ if (typeof( window['nnToggler'] ) == "undefined") {
 			});
 		},
 
-		setElementEvents: function(el, el_name)
-		{
+		setElementEvents: function(el, el_name) {
 			var self = this;
 			var type;
 			if (typeof( el.type ) == "undefined") {

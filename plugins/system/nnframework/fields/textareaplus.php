@@ -4,11 +4,11 @@
  * Displays a text area with extra options
  *
  * @package         NoNumber Framework
- * @version         13.11.22
+ * @version         15.4.3
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
- * @copyright       Copyright © 2013 NoNumber All Rights Reserved
+ * @copyright       Copyright © 2015 NoNumber All Rights Reserved
  * @license         http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 
@@ -25,7 +25,7 @@ class JFormFieldNN_TextAreaPlus extends JFormField
 	{
 		$this->params = $this->element->attributes();
 
-		$label = NNText::html_entity_decoder(JText::_($this->get('label')));
+		$label = nnText::html_entity_decoder(JText::_($this->get('label')));
 
 		$html = '<label id="' . $this->id . '-lbl" for="' . $this->id . '"';
 		if ($this->description)
@@ -48,6 +48,11 @@ class JFormFieldNN_TextAreaPlus extends JFormField
 		$class = trim('nn_textarea ' . $this->get('class'));
 		$class = 'class="' . $class . '"';
 		$type = $this->get('texttype');
+
+		if (is_array($this->value))
+		{
+			$this->value = trim(implode("\n", $this->value));
+		}
 
 		if ($type == 'html')
 		{

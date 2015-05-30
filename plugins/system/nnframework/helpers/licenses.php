@@ -3,17 +3,17 @@
  * NoNumber Framework Helper File: Licenses
  *
  * @package         NoNumber Framework
- * @version         13.11.22
+ * @version         15.4.3
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
- * @copyright       Copyright © 2013 NoNumber All Rights Reserved
+ * @copyright       Copyright © 2015 NoNumber All Rights Reserved
  * @license         http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 
 defined('_JEXEC') or die;
 
-class NNLicenses
+class nnLicenses
 {
 	public static $instance = null;
 
@@ -52,7 +52,7 @@ class NoNumberLicenses
 		}
 
 		$text = html_entity_decode(JText::sprintf('NN_USING_FREE_VERSION', JText::_($name)), ENT_COMPAT, 'UTF-8');
-		if (!(strpos($text, '. ') === false))
+		if (strpos($text, '. ') !== false)
 		{
 			$text = explode('. ', $text);
 			$text = '<span style="white-space:nowrap;">' . implode('.</span> <span style="white-space:nowrap;">', $text) . '</span>';
@@ -183,11 +183,11 @@ class NoNumberLicenses
 			$xml = JApplicationHelper::parseXMLInstallFile($file);
 			if ($xml && isset($xml['version']))
 			{
-				if (!(stripos($xml['version'], 'FREE') === false))
+				if (stripos($xml['version'], 'FREE') !== false)
 				{
 					$type = 'free';
 				}
-				else if (!(stripos($xml['version'], 'PRO') === false))
+				else if (stripos($xml['version'], 'PRO') !== false)
 				{
 					$type = 'pro';
 				}

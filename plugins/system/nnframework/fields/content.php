@@ -4,11 +4,11 @@
  * Displays a multiselectbox of available categories / items
  *
  * @package         NoNumber Framework
- * @version         13.11.22
+ * @version         15.4.3
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
- * @copyright       Copyright © 2013 NoNumber All Rights Reserved
+ * @copyright       Copyright © 2015 NoNumber All Rights Reserved
  * @license         http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 
@@ -29,7 +29,7 @@ class JFormFieldNN_Content extends JFormField
 		$this->params = $this->element->attributes();
 		$this->db = JFactory::getDbo();
 
-		$parameters = NNParameters::getInstance();
+		$parameters = nnParameters::getInstance();
 		$params = $parameters->getPluginParams('nnframework');
 		$this->max_list_count = $params->max_list_count;
 
@@ -45,6 +45,7 @@ class JFormFieldNN_Content extends JFormField
 		$multiple = $this->get('multiple');
 
 		require_once JPATH_PLUGINS . '/system/nnframework/helpers/html.php';
+
 		return nnHtml::selectlist($options, $this->name, $this->value, $this->id, $size, $multiple);
 	}
 
@@ -97,7 +98,7 @@ class JFormFieldNN_Content extends JFormField
 			{
 				$item->title .= ' (' . $item->language . ')';
 			}
-			$item->title = NNText::prepareSelectItem($item->title, $item->published);
+			$item->title = nnText::prepareSelectItem($item->title, $item->published);
 			$options[] = JHtml::_('select.option', $item->id, $item->title);
 		}
 
@@ -137,8 +138,8 @@ class JFormFieldNN_Content extends JFormField
 				$item->name .= ' (' . $item->language . ')';
 			}
 			$item->name .= ($item->cat ? ' [' . $item->cat . ']' : '');
-			$item->name = NNText::prepareSelectItem($item->name, $item->published);
-			$item->name = NNText::prepareSelectItem($item->name, $item->published);
+			$item->name = nnText::prepareSelectItem($item->name, $item->published);
+			$item->name = nnText::prepareSelectItem($item->name, $item->published);
 			$options[] = JHtml::_('select.option', $item->id, $item->name, 'value', 'text', 0);
 		}
 

@@ -3,11 +3,11 @@
  * NoNumber Framework Helper File: Assignments: Content
  *
  * @package         NoNumber Framework
- * @version         13.11.22
+ * @version         15.4.3
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
- * @copyright       Copyright © 2013 NoNumber All Rights Reserved
+ * @copyright       Copyright © 2015 NoNumber All Rights Reserved
  * @license         http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 
@@ -16,7 +16,7 @@ defined('_JEXEC') or die;
 /**
  * Assignments: Content
  */
-class NNFrameworkAssignmentsContent
+class nnFrameworkAssignmentsContent
 {
 	function passPageTypes(&$parent, &$params, $selection = array(), $assignment = 'all')
 	{
@@ -174,7 +174,7 @@ class NNFrameworkAssignmentsContent
 
 		if ($selection && !is_array($selection))
 		{
-			if (!(strpos($selection, '|') === false))
+			if (strpos($selection, '|') !== false)
 			{
 				$selection = explode('|', $selection);
 			}
@@ -198,7 +198,7 @@ class NNFrameworkAssignmentsContent
 			if (!$article)
 			{
 				require_once JPATH_SITE . '/components/com_content/models/article.php';
-				$model = JModel::getInstance('article', 'contentModel');
+				$model = JModelLegacy::getInstance('article', 'contentModel');
 				$article = $model->getItem($parent->params->id);
 			}
 			if (isset($article->metakey) && $article->metakey)

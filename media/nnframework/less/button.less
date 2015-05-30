@@ -2,11 +2,11 @@
  * Stylesheet for font faces
  *
  * @package         NoNumber Framework
- * @version         13.11.22
+ * @version         15.4.3
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
- * @copyright       Copyright © 2013 NoNumber All Rights Reserved
+ * @copyright       Copyright © 2015 NoNumber All Rights Reserved
  * @license         http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 
@@ -16,11 +16,13 @@
 	speak: none;
 	font-size: 16px !important;
 	line-height: 14px;
-	content: "\e000";
 	margin-left: 4px;
 	vertical-align: -3px;
 }
 
+.button-nonumber > a:after {
+	content: "\e000";
+}
 .button-addtomenu > a:after {
 	content: "\e001";
 }
@@ -42,41 +44,48 @@
 .button-cdnforjoomla > a:after {
 	content: "\e007";
 }
-.button-contenttemplater > a:after {
+.button-componentsanywhere > a:after {
 	content: "\e008";
 }
-.button-dbreplacer > a:after {
+.button-contenttemplater > a:after {
 	content: "\e009";
 }
-.button-modalizer > a:after,
-.button-modals > a:after {
+.button-dbreplacer > a:after {
 	content: "\e00a";
 }
-.button-modulesanywhere > a:after {
+.button-dummycontent > a:after {
+	content: "\e017";
+}
+.button-emailprotector > a:after {
 	content: "\e00b";
 }
-.button-rereplacer > a:after {
+.button-modals > a:after,
+.button-modalizer > a:after {
 	content: "\e00c";
 }
-.button-slider > a:after,
-.button-sliders > a:after {
+.button-modulesanywhere > a:after {
 	content: "\e00d";
 }
-.button-snippets > a:after {
+.button-rereplacer > a:after {
 	content: "\e00e";
 }
-.button-sourcerer > a:after {
+.button-sliders > a:after {
 	content: "\e00f";
 }
-.button-taber > a:after,
-.button-tabs > a:after {
+.button-snippets > a:after {
 	content: "\e010";
 }
-.button-timedstyles > a:after {
+.button-sourcerer > a:after {
 	content: "\e011";
 }
-.button-tooltips > a:after {
+.button-tabs > a:after {
 	content: "\e012";
+}
+.button-timedstyles > a:after {
+	content: "\e013";
+}
+.button-tooltips > a:after {
+	content: "\e014";
 }
 .button-whatnothing > a:after {
 	content: " ";
@@ -84,17 +93,21 @@
 	display: inline-block;
 }
 
-.button-src-sourcetags > a:after {
-	content: "\e013";
+.button-nonumber.button-src-sourcetags > a:after {
+	font-family: 'NNIcons' !important;
+	content: "\e01b";
 }
-.button-src-nosourcetags > a:after {
-	content: "\e014";
+.button-nonumber.button-src-nosourcetags > a:after {
+	font-family: 'NNIcons' !important;
+	content: "\e01c";
 }
-.button-src-tagstyle > a:after {
-	content: "\e015";
+.button-nonumber.button-src-tagstyle > a:after {
+	font-family: 'NNIcons' !important;
+	content: "\e01d";
 }
-.button-src-tagstylebrackets > a:after {
-	content: "\e016";
+.button-nonumber.button-src-tagstylebrackets > a:after {
+	font-family: 'NNIcons' !important;
+	content: "\e01e";
 }
 
 .button_view_state {
@@ -111,7 +124,7 @@
 			padding: 0 11px 0 5px;
 			color: #999;
 			&:before {
-				font-family: 'NNIcoMoon';
+				font-family: 'NNIcons' !important;
 				font-weight: normal;
 				font-style: normal;
 				speak: none;
@@ -124,13 +137,13 @@
 		}
 	}
 	&.simple > div > a:before {
-		content: "\e017";
+		content: "\e011";
 	}
 	&.normal > div > a:before {
-		content: "\e018";
+		content: "\e012";
 	}
 	&.advanced > div > a:before {
-		content: "\e019";
+		content: "\e013";
 	}
 }
 

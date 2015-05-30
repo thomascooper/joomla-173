@@ -4,11 +4,11 @@
  * Displays a hidden value of 1
  *
  * @package         NoNumber Framework
- * @version         13.11.22
+ * @version         15.4.3
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
- * @copyright       Copyright © 2013 NoNumber All Rights Reserved
+ * @copyright       Copyright © 2015 NoNumber All Rights Reserved
  * @license         http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 
@@ -34,6 +34,7 @@ class JFormFieldNN_IsSaved extends JFormField
 				$html .= '<div class="nn_panel"><div class="nn_block nn_title">' . JText::_($this->element['label']) . '</div></div>';
 			}
 		}
+
 		return $html;
 	}
 }

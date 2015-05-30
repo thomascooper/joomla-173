@@ -4,10 +4,10 @@
  * Adds slide in and out functionality to framework based on an framework value
  *
  * @package         NoNumber Framework
- * @version         13.11.22
+ * @version         15.4.3
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
- * @copyright       Copyright © 2013 NoNumber All Rights Reserved
+ * @copyright       Copyright © 2015 NoNumber All Rights Reserved
  * @license         http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 
@@ -22,7 +22,6 @@ defined('_JEXEC') or die;
  * param            The name of the reference parameter
  * value            a comma separated list of value on which to show the framework
  */
-
 class JFormFieldNN_Toggler extends JFormField
 {
 	public $type = 'Toggler';
@@ -36,6 +35,7 @@ class JFormFieldNN_Toggler extends JFormField
 	protected function getInput()
 	{
 		$field = new nnFieldToggler;
+
 		return $field->getInput($this->element->attributes());
 	}
 }

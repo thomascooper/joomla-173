@@ -4,11 +4,11 @@
  * Displays a title with a bunch of extras, like: description, image, versioncheck
  *
  * @package         NoNumber Framework
- * @version         13.11.22
+ * @version         15.4.3
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
- * @copyright       Copyright © 2013 NoNumber All Rights Reserved
+ * @copyright       Copyright © 2015 NoNumber All Rights Reserved
  * @license         http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 
@@ -56,7 +56,7 @@ class JFormFieldNN_Header extends JFormField
 			$v4 = $this->get('var4');
 			$v5 = $this->get('var5');
 
-			$description = NNText::html_entity_decoder(trim(JText::sprintf($description, $v1, $v2, $v3, $v4, $v5)));
+			$description = nnText::html_entity_decoder(trim(JText::sprintf($description, $v1, $v2, $v3, $v4, $v5)));
 		}
 
 		if ($lang_file)
@@ -108,6 +108,18 @@ class JFormFieldNN_Header extends JFormField
 			}
 		}
 
+		if (!$xml && $this->form->getValue('element'))
+		{
+			if ($this->form->getValue('folder'))
+			{
+				$xml = 'plugins/' . $this->form->getValue('folder') . '/' . $this->form->getValue('element') . '/' . $this->form->getValue('element') . '.xml';
+			}
+			else
+			{
+				$xml = 'administrator/modules/' . $this->form->getValue('element') . '/' . $this->form->getValue('element') . '.xml';
+			}
+		}
+
 		if ($xml)
 		{
 			$xml = JApplicationHelper::parseXMLInstallFile(JPATH_SITE . '/' . $xml);
@@ -118,12 +130,12 @@ class JFormFieldNN_Header extends JFormField
 			}
 			if ($version)
 			{
-				if (!(strpos($version, 'PRO') === false))
+				if (strpos($version, 'PRO') !== false)
 				{
 					$version = str_replace('PRO', '', $version);
 					$version .= ' <small style="color:green">[PRO]</small>';
 				}
-				else if (!(strpos($version, 'FREE') === false))
+				else if (strpos($version, 'FREE') !== false)
 				{
 					$version = str_replace('FREE', '', $version);
 					$version .= ' <small style="color:green">[FREE]</small>';
@@ -174,7 +186,7 @@ class JFormFieldNN_Header extends JFormField
 			{
 				$title = $link . $title . '</a>';
 			}
-			$html[] = '<h4 style="margin: 0px;">' . NNText::html_entity_decoder($title) . '</h4>';
+			$html[] = '<h4 style="margin: 0px;">' . nnText::html_entity_decoder($title) . '</h4>';
 		}
 		if ($description)
 		{
