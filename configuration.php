@@ -10,7 +10,7 @@ class JConfig {
 	public $debug = '0';
 	public $debug_lang = '0';
 	public $dbtype = 'mysqli';
-	public $host = '10.1.1.35';
+	public $host = 'wwi-db1.local';
 	public $user = 'joomla_user';
 	public $password = 'CHu=ukaW?a_w';
 	public $db = 'joomla_db';
@@ -48,10 +48,10 @@ class JConfig {
 	public $sef_suffix = '1';
 	public $unicodeslugs = '0';
 	public $feed_limit = '10';
-	public $log_path = '/var/logs/httpd';
+	public $log_path = '/var/log/niginx';
 	public $tmp_path = '/tmp';
 	public $lifetime = '75';
-	public $session_handler = 'memcache';
+	public $session_handler = 'database';
 	public $MetaRights = 'Copyright © 2012 Team Party Worldwide, LLC. All Rights Reserved.';
 	public $sitename_pagetitles = '0';
 	public $force_ssl = '0';

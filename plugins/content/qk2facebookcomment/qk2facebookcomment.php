@@ -18,7 +18,7 @@ class plgContentqk2facebookcomment extends K2Plugin
 	var $pluginName = 'Qsocial comment';
 	var $pluginNameHumanReadable = 'Social share on K2 content items';
 	
-	function plgContentqk2facebookcomment( & $subject, $params)
+	function plgContentqk2facebookcomment( $subject, $params)
 	{
 		global $pluginCount;
 		$pluginCount = 0;
@@ -69,7 +69,7 @@ class plgContentqk2facebookcomment extends K2Plugin
 		$layout = JRequest::getVar('layout');
 		// display item future
 		$displayfronpage = $this->params->get('displayfronpage');
-		if($displayfronpage ==0 && $item->featured==1){
+		if($displayfronpage ==0 &$item->featured==1){
 			return false;
 		}
 		//ex category
@@ -93,41 +93,41 @@ class plgContentqk2facebookcomment extends K2Plugin
 		
 		//display comment facebook in layout category
 		$show_category = $this->params->get('displaycategory', 0);
-	  	if($show_category == 0 && $option == 'com_k2' && $view == 'itemlist' && ($layout == 'category' ||  $layout == 'categorys')){
+	  	if($show_category == 0 &$option == 'com_k2' &$view == 'itemlist' && ($layout == 'category' ||  $layout == 'categorys')){
 	  		$fbcomment = '';
 	  	}
 		return $fbcomment;
 	}
 		
-	function onK2AfterDisplay(& $item, & $params, $limitstart) {
+	function onK2AfterDisplay($item, $params, $limitstart) {
 	
 		global $mainframe;
 			if($this->params->get('fb_position') == 5) {
-	 		$this->k2facebookcomment(& $item, & $params, $limitstart) ;
-	 		return $this->k2facebookcomment(& $item, & $params, $limitstart) ;
+	 		$this->k2facebookcomment($item, $params, $limitstart) ;
+	 		return $this->k2facebookcomment($item, $params, $limitstart) ;
 		}
 	}
 	
-	function onK2BeforeDisplayContent( & $item, & $params, $limitstart) {
+	function onK2BeforeDisplayContent( $item, $params, $limitstart) {
 	
 		global $mainframe;
 		if($this->params->get('fb_position') == 1) {
-	 		$this->k2facebookcomment(& $item, & $params, $limitstart) ;
-	 		return $this->k2facebookcomment(& $item, & $params, $limitstart) ;
+	 		$this->k2facebookcomment($item, $params, $limitstart) ;
+	 		return $this->k2facebookcomment($item, $params, $limitstart) ;
 		}
 	}
 	
-	function onK2AfterDisplayContent( & $item, & $params, $limitstart) {
+	function onK2AfterDisplayContent( $item, $params, $limitstart) {
 		global $mainframe;
 		if($this->params->get('fb_position') == 4) {
-	 		$this->k2facebookcomment(& $item, & $params, $limitstart) ;
-	 		return $this->k2facebookcomment(& $item, & $params, $limitstart) ;
+	 		$this->k2facebookcomment($item, $params, $limitstart) ;
+	 		return $this->k2facebookcomment($item, $params, $limitstart) ;
 		}elseif($this->params->get('fb_position') == 3) {
-			$html = $this->k2facebookcomment(& $item, & $params, $limitstart) ;
+			$html = $this->k2facebookcomment($item, $params, $limitstart) ;
 			$item->text = $item->text.$html;
 			return ;
 		}elseif($this->params->get('fb_position') == 2) {
-			$html = $this->k2facebookcomment(& $item, & $params, $limitstart) ;
+			$html = $this->k2facebookcomment($item, $params, $limitstart) ;
 			$item->text = $html.$item->text;
 			return ;
 		}
@@ -146,10 +146,10 @@ class plgContentqk2facebookcomment extends K2Plugin
  			$categories = $this->params->get('excludecategories', '');
  			
 		
-				if($view == 'item' && $layout == ''){
+				if($view == 'item' &$layout == ''){
 			 		$id_article = JString::strrpos(JRequest::getVar('id'), ':');
 			 		$id_article = substr_replace(JRequest::getVar('id'), '', $id_article);
-			 	} elseif ($view == 'item' && $layout == 'item'){
+			 	} elseif ($view == 'item' &$layout == 'item'){
 			 		$id_article = JRequest::getVar('id');
 			 	}
 			 	
@@ -199,7 +199,7 @@ class plgContentqk2facebookcomment extends K2Plugin
 			
  			
 			$display_category = $this->params->get('displaycategory', 0);
-		  	if($display_category == 0 && $option == 'com_k2' && $view == 'itemlist' && $layout == 'category' ){
+		  	if($display_category == 0 &$option == 'com_k2' &$view == 'itemlist' &$layout == 'category' ){
 		  		$fbcomment = '';
 		  		$display = 'yes';
 	  		} else $display = '';

@@ -14,6 +14,14 @@ defined( '_JEXEC' ) or die( 'Restricted index access' );
 
 // load and inititialize gantry class
 require_once('lib/gantry/gantry.php');
+                $user   = JFactory::getUser();
+
+                // Set user state in headers
+                if (!$user->guest) {
+                        JResponse::setHeader('X-Logged-In', 'True', true);
+                } else {
+                        JResponse::setHeader('X-Logged-In', 'False', true);
+                }
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $gantry->language; ?>" lang="<?php echo $gantry->language;?>" >

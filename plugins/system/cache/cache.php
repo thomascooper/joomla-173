@@ -51,6 +51,13 @@ class plgSystemCache extends JPlugin
 		$app	= JFactory::getApplication();
 		$user	= JFactory::getUser();
 
+                // Set user state in headers
+                if (!$user->guest) {
+                        JResponse::setHeader('X-Logged-In', 'True', true);
+                } else {
+                        JResponse::setHeader('X-Logged-In', 'False', true);
+                }
+
 		if ($app->isAdmin() || JDEBUG) {
 			return;
 		}
